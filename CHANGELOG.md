@@ -1,3 +1,14 @@
+## 0.0.5 (2024-09-21)
+
+
+### 🩹 Fixes
+
+- **build:** js-loader should not falsy return existing content that needs ast parsing ([fe06d4c](https://github.com/Coly010/ng-rspack-build/commit/fe06d4c))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.4 (2024-09-21)
 
 
