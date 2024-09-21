@@ -1,3 +1,14 @@
+## 0.0.4 (2024-09-21)
+
+
+### 🩹 Fixes
+
+- **build:** postinstall patch should correctly update exports ([a1539ad](https://github.com/Coly010/ng-rspack-build/commit/a1539ad))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.3 (2024-09-21)
 
 
