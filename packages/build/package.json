@@ -19,7 +19,7 @@
   ],
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "node ./patch/patch-angular-build.js"
+    "postinstall": "node ./src/lib/patch/patch-angular-build.js"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11"
