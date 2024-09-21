@@ -7,7 +7,7 @@ import {
 export default function loader(this: LoaderContext<unknown>, content: string) {
   const callback = this.async();
   if (
-    (this._compilation as NgRspackBuildEnhancedCompilation)[
+    !(this._compilation as NgRspackBuildEnhancedCompilation)[
       NG_RSPACK_SYMBOL_NAME
     ]
   ) {
