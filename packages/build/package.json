@@ -1,5 +1,22 @@
 {
   "name": "@ng-rspack/build",
+  "private": false,
+  "description": "Rspack Plugin and Loaders for building Angular.",
+  "author": "Colum Ferry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Coly010/ng-rspack-build/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Coly010/ng-rspack-build.git",
+    "directory": "packages/build"
+  },
+  "keywords": [
+    "Monorepo",
+    "Angular",
+    "Rspack"
+  ],
   "version": "0.0.1",
   "scripts": {
     "postinstall": "node ./patch/patch-angular-build.js"
