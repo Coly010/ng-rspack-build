@@ -1,3 +1,14 @@
+## 0.0.3 (2024-09-21)
+
+
+### 🩹 Fixes
+
+- **build:** postinstall patch should be included ([55fde7d](https://github.com/Coly010/ng-rspack-build/commit/55fde7d))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.1.0 (2024-09-21)
 
 
