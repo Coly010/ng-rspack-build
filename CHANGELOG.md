@@ -1,3 +1,15 @@
+## 0.0.6 (2024-09-22)
+
+
+### 🚀 Features
+
+- **build:** add rxjs esm resolution plugin ([719a85f](https://github.com/Coly010/ng-rspack-build/commit/719a85f))
+- **build:** expose createConfig util ([ce867e1](https://github.com/Coly010/ng-rspack-build/commit/ce867e1))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.5 (2024-09-21)
 
 
