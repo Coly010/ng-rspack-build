@@ -1,2 +1,1 @@
-export * from './lib/plugins/angular';
-export * from './lib/plugins/rxjs-esm-resolution';
+export * from './lib/utils/create-config';

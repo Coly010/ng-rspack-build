@@ -1,6 +1,6 @@
 import { Compiler, RspackPluginInstance } from '@rspack/core';
 
-export class RxjsEsmResolution implements RspackPluginInstance {
+export class RxjsEsmResolutionPlugin implements RspackPluginInstance {
   apply(compiler: Compiler) {
     compiler.hooks.normalModuleFactory.tap(
       'RxJSEsmResolution',
