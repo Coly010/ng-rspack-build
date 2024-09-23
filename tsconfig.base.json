@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ng-rspack/build": ["packages/build/src/index.ts"]
+      "@ng-rspack/build": ["packages/build/src/index.ts"],
+      "@ng-rspack/nx": ["packages/nx-plugin/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

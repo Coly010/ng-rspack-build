@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Build executor",
+  "description": "Executor to build Angular applications with Rspack.",
+  "type": "object",
+  "properties": {
+    "main": {
+      "type": "string",
+      "description": "Path to the main.ts entrypoint for the Angular application."
+    },
+    "index": {
+      "type": "string",
+      "description": "Path to the index.html template for the Angular application."
+    },
+    "tsConfig": {
+      "type": "string",
+      "description": "Path to the tsconfig file to use for TS."
+    },
+    "styles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "description": "Paths to global stylesheets to be included.",
+      "default": []
+    },
+    "scripts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "description": "Paths to global scripts to be included.",
+      "default": []
+    },
+    "polyfills": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "description": "Polyfills that should be included.",
+      "default": [
+        "zone.js"
+      ]
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "description": "Paths to assets to be included as-is.",
+      "default": []
+    },
+    "mode": {
+      "type": "string",
+      "description": "Configure Rspack mode",
+      "default": "production"
+    }
+  },
+  "required": [
+    "main",
+    "index",
+    "tsconfig"
+  ]
+}
