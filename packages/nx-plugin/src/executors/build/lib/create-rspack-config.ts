@@ -1,11 +1,12 @@
 import { BuildExecutorSchema } from '../schema';
 import { createConfig } from '@ng-rspack/build';
 import { ExecutorContext } from '@nx/devkit';
+import { Configuration } from '@rspack/core';
 
 export function createRspackConfig(
   options: BuildExecutorSchema,
   context: ExecutorContext
-) {
+): Configuration {
   const { root, name } = context.projectGraph.nodes[context.projectName].data;
 
   process.env['NODE_ENV'] = options.mode;
