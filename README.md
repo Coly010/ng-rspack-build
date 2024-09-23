@@ -1,9 +1,9 @@
-# @ng/rspack:build
-
 <div style="text-align: center;">
 
+# @ng/rspack:build
+
 [![GitHub Actions](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml/badge.svg)](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml)
-![License](https://img.shields.io/badge/License-MIT-blue)]
+![License](https://img.shields.io/badge/License-MIT-blue)
 [![npm version](https://badge.fury.io/js/@ng-rspack%2Fbuild.svg)](https://badge.fury.io/js/@ng-rspack%2Fbuild)
 
 </div>
