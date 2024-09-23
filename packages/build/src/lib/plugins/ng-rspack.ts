@@ -20,6 +20,7 @@ export interface NgRspackPluginOptions {
   scripts?: string[];
   polyfills?: string[];
   assets?: string[];
+  port?: number;
 }
 
 export class NgRspackPlugin implements RspackPluginInstance {
