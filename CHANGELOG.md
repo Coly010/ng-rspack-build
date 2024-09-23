@@ -1,3 +1,14 @@
+## 0.0.7 (2024-09-23)
+
+
+### 🚀 Features
+
+- **build:** add dev server config ([cb734b7](https://github.com/Coly010/ng-rspack-build/commit/cb734b7))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.6 (2024-09-22)
 
 
