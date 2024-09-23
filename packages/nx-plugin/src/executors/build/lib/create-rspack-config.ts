@@ -1,6 +1,6 @@
 import { BuildExecutorSchema } from '../schema';
 import { createConfig } from '@ng-rspack/build';
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { Configuration } from '@rspack/core';
 
 export function createRspackConfig(
@@ -12,7 +12,7 @@ export function createRspackConfig(
   process.env['NODE_ENV'] = options.mode;
 
   return createConfig({
-    root,
+    root: joinPathFragments(workspaceRoot, root),
     name,
     main: options.main,
     index: options.index,

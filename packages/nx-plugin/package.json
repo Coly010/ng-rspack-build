@@ -21,7 +21,7 @@
   "dependencies": {
     "@nx/devkit": "19.8.0",
     "@swc/helpers": "~0.5.11",
-    "@ng-rspack/build": "0.0.15"
+    "@ng-rspack/build": "0.0.16"
   },
   "type": "commonjs",
   "main": "./src/index.js",

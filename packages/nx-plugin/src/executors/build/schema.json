@@ -17,6 +17,10 @@
       "type": "string",
       "description": "Path to the tsconfig file to use for TS."
     },
+    "outputPath": {
+      "type": "string",
+      "description": "Path to output the built files."
+    },
     "styles": {
       "type": "array",
       "items": {
@@ -64,6 +68,7 @@
   "required": [
     "main",
     "index",
-    "tsconfig"
+    "tsConfig",
+    "outputPath"
   ]
 }
