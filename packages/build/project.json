@@ -27,11 +27,7 @@
         ]
       }
     },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
-    },
+    "nx-release-publish": {},
     "test": {
       "executor": "@nx/vite:test",
       "outputs": [

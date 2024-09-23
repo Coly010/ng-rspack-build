@@ -51,10 +51,6 @@
         "jestConfig": "packages/nx-plugin/jest.config.ts"
       }
     },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/packages/{projectName}"
-      }
-    }
+    "nx-release-publish": {}
   }
 }
