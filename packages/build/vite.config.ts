@@ -24,5 +24,6 @@ export default defineConfig({
       reportsDirectory: '../../coverage/packages/build',
       provider: 'v8',
     },
+    passWithNoTests: true,
   },
 });
