@@ -1,3 +1,18 @@
+## 0.0.8 (2024-09-23)
+
+
+### 🚀 Features
+
+- **nx:** add nx plugin ([23aacfa](https://github.com/Coly010/ng-rspack-build/commit/23aacfa))
+
+### 🩹 Fixes
+
+- **build:** use resourcePath for loaders ([5ed803d](https://github.com/Coly010/ng-rspack-build/commit/5ed803d))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.7 (2024-09-23)
 
 
