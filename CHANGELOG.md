@@ -1,3 +1,14 @@
+## 0.0.15 (2024-09-23)
+
+
+### 🩹 Fixes
+
+- **nx:** update @ng-rspack/build dep ([0facad7](https://github.com/Coly010/ng-rspack-build/commit/0facad7))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.14 (2024-09-23)
 
 This was a version bump only, there were no code changes.
