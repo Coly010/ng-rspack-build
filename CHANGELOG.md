@@ -1,3 +1,14 @@
+## 0.0.17 (2024-09-23)
+
+
+### 🩹 Fixes
+
+- **nx:** add dependency on rspack ([0308d32](https://github.com/Coly010/ng-rspack-build/commit/0308d32))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.16 (2024-09-23)
 
 
