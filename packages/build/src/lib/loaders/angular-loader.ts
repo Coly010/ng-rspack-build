@@ -17,7 +17,7 @@ export default function loader(this: LoaderContext<unknown>, content: string) {
       this._compilation as NgRspackBuildEnhancedCompilation
     )[NG_RSPACK_SYMBOL_NAME];
 
-    const request = this.resource;
+    const request = this.resourcePath;
     const contents = typescriptFileCache.get(request);
     if (contents === undefined) {
       callback(null, content);
