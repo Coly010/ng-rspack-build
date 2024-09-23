@@ -6,9 +6,9 @@ import {
 } from '@rspack/core';
 import { join, resolve } from 'path';
 
-export function createConfig(options: NgRspackPluginOptions) {
+export function createConfig(options: NgRspackPluginOptions): Configuration {
   const isProduction = process.env['NODE_ENV'] === 'production';
-  const config: Configuration = {
+  return {
     context: options.root,
     target: 'web',
     mode: isProduction ? 'production' : 'development',
@@ -160,6 +160,4 @@ export function createConfig(options: NgRspackPluginOptions) {
     },
     plugins: [new NgRspackPlugin(options)],
   };
-
-  return config;
 }
