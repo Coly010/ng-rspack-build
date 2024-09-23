@@ -1,3 +1,15 @@
+## 0.0.12 (2024-09-23)
+
+
+### 🩹 Fixes
+
+- **build:** ensure createConfig has type ([738101d](https://github.com/Coly010/ng-rspack-build/commit/738101d))
+- **nx:** ensure type for createRspackConfig ([ccb0f5c](https://github.com/Coly010/ng-rspack-build/commit/ccb0f5c))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.11 (2024-09-23)
 
 This was a version bump only, there were no code changes.
