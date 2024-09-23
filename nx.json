@@ -75,7 +75,7 @@
         "packageRoot": "dist/packages/{projectName}",
         "currentVersionResolver": "git-tag"
       },
-      "preVersionCommand": "npx nx run-many -t build"
+      "preVersionCommand": "pnpx nx run-many -t build"
     }
   },
   "plugins": [
