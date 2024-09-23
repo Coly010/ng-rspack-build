@@ -1,9 +1,25 @@
 {
   "name": "@ng-rspack/nx",
   "version": "0.0.1",
+  "author": "Colum Ferry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Coly010/ng-rspack-build/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Coly010/ng-rspack-build.git",
+    "directory": "packages/build"
+  },
+  "keywords": [
+    "Monorepo",
+    "Angular",
+    "Rspack"
+  ],
   "dependencies": {
     "@nx/devkit": "19.8.0",
-    "@swc/helpers": "~0.5.11"
+    "@swc/helpers": "~0.5.11",
+    "@ng-rspack/build": "file:../build"
   },
   "type": "commonjs",
   "main": "./src/index.js",
