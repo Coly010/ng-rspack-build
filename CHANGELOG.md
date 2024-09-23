@@ -1,3 +1,14 @@
+## 0.0.16 (2024-09-23)
+
+
+### 🩹 Fixes
+
+- **nx:** schema and root option for config ([439cd98](https://github.com/Coly010/ng-rspack-build/commit/439cd98))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.15 (2024-09-23)
 
 
