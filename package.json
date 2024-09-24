@@ -49,5 +49,6 @@
   "dependencies": {
     "@nx/devkit": "19.8.0",
     "tslib": "^2.3.0"
-  }
+  },
+  "packageManager": "pnpm@9.8.0"
 }

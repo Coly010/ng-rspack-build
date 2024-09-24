@@ -18,8 +18,6 @@ launch-templates:
           key: 'pnpm-lock.yaml'
           paths: |
             node_modules
-            ~/.cache/Cypress
-            ~/.cache/ms-playwright
             ~/.pnpm-store
           base_branch: 'main'
       - name: Install Pnpm
