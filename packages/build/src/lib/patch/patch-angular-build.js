@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+const { readFileSync, writeFileSync } = require('fs');
 
 function main() {
   const angularBuildPackageJson = require.resolve(
