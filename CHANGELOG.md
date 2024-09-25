@@ -1,3 +1,14 @@
+## 0.0.18 (2024-09-25)
+
+
+### 🚀 Features
+
+- **nx:** add serve executor ([#4](https://github.com/Coly010/ng-rspack-build/pull/4))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.17 (2024-09-23)
 
 
