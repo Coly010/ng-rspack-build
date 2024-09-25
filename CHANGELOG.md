@@ -1,3 +1,14 @@
+## 0.0.19 (2024-09-25)
+
+
+### 🩹 Fixes
+
+- **build:** ensure patch file is included in build ([571c3b8](https://github.com/Coly010/ng-rspack-build/commit/571c3b8))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.18 (2024-09-25)
 
 
