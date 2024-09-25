@@ -7,17 +7,24 @@
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/build",
         "main": "packages/build/src/index.ts",
         "tsConfig": "packages/build/tsconfig.lib.json",
-        "assets": ["packages/build/*.md"]
+        "assets": [
+          "packages/build/*.md",
+          "packages/build/src/lib/patch/patch-angular-build.js"
+        ]
       }
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "outputs": [
+        "{options.reportsDirectory}"
+      ],
       "options": {
         "reportsDirectory": "../../coverage/packages/build"
       }
