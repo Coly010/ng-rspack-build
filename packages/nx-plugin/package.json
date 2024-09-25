@@ -22,7 +22,8 @@
     "@nx/devkit": "19.8.0",
     "@swc/helpers": "~0.5.11",
     "@ng-rspack/build": "workspace:*",
-    "@rspack/core": "^1.0.5"
+    "@rspack/core": "^1.0.7",
+    "@rspack/dev-server": "^1.0.7"
   },
   "type": "commonjs",
   "main": "./src/index.js",

@@ -15,6 +15,8 @@ import {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
 } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { filter, take } from 'rxjs';
 
 // For the time being we cannot use the DOM lib because it conflicts with @types/node,
@@ -113,7 +115,7 @@ export default function (mod: any): void {
       // Wait until the application isStable to restore the form values
       newAppRef.isStable
         .pipe(
-          filter((isStable) => !!isStable),
+          filter((isStable: any) => !!isStable),
           take(1)
         )
         .subscribe(() => restoreFormValues(oldInputs, oldOptions));
