@@ -4,6 +4,11 @@
       "implementation": "./src/executors/build/executor",
       "schema": "./src/executors/build/schema.json",
       "description": "Executor to build Angular applications with Rspack."
+    },
+    "serve": {
+      "implementation": "./src/executors/serve/executor",
+      "schema": "./src/executors/serve/schema.json",
+      "description": "Executor to serve Angular applications with Rspack locally for development."
     }
   }
 }

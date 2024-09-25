@@ -1,10 +1,10 @@
 import { ExecutorContext, logger } from '@nx/devkit';
 import { createAsyncIterable } from '@nx/devkit/src/utils/async-iterable';
-import { BuildExecutorSchema } from './schema';
-import { createRspackConfig } from './lib/create-rspack-config';
-import { isMode } from '../../utils/mode-utils';
-import { createCompiler, getStatsOptions } from './lib/create-compiler';
 import { MultiStats, Stats } from '@rspack/core';
+import { BuildExecutorSchema } from './schema';
+import { createRspackConfig } from '../../utils/create-rspack-config';
+import { isMode } from '../../utils/mode-utils';
+import { createCompiler, getStatsOptions } from '../../utils/create-compiler';
 
 export async function* runExecutor(
   options: BuildExecutorSchema,
