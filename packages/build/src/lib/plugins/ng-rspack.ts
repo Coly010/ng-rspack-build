@@ -31,8 +31,10 @@ export class NgRspackPlugin implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler) {
+    const isProduction = process.env['NODE_ENV'] === 'production';
+
     new DefinePlugin({
-      ngDevMode: 'false',
+      ngDevMode: isProduction ? 'false' : 'undefined',
       ngJitMode: 'false',
     }).apply(compiler);
     if (this.pluginOptions.assets) {
