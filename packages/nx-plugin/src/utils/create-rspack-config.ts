@@ -1,10 +1,10 @@
-import { BuildExecutorSchema } from '../schema';
-import { createConfig } from '@ng-rspack/build';
 import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { Configuration } from '@rspack/core';
+import { createConfig } from '@ng-rspack/build';
+import { BuildExecutorSchema } from '../executors/build/schema';
 
 export function createRspackConfig(
-  options: BuildExecutorSchema,
+  options: BuildExecutorSchema & { port?: number },
   context: ExecutorContext
 ): Configuration {
   const { root, name } = context.projectGraph.nodes[context.projectName].data;
@@ -22,5 +22,6 @@ export function createRspackConfig(
     assets: options.assets ?? [],
     styles: options.styles ?? [],
     scripts: options.scripts ?? [],
+    port: options.port ?? 4200,
   });
 }

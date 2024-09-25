@@ -8,6 +8,7 @@ import { join, resolve } from 'path';
 
 export function createConfig(options: NgRspackPluginOptions): Configuration {
   const isProduction = process.env['NODE_ENV'] === 'production';
+  const isDevServer = process.env['WEBPACK_SERVE'] && !isProduction;
   return {
     context: options.root,
     target: 'web',
@@ -51,13 +52,13 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
     } as DevServer,
     output: {
       uniqueName: options.name,
-      hashFunction: 'xxhash64',
+      hashFunction: isProduction ? 'xxhash64' : undefined,
       publicPath: 'auto',
       clean: true,
       path: join(options.root, options.outputPath),
-      cssFilename: '[name].[contenthash].css',
-      filename: '[name].[contenthash].js',
-      chunkFilename: '[name].[contenthash].js',
+      cssFilename: isProduction ? '[name].[contenthash].css' : '[name].css',
+      filename: isProduction ? '[name].[contenthash].js' : '[name].js',
+      chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
       crossOriginLoading: false,
       trustedTypes: { policyName: 'angular#bundler' },
       scriptType: 'module',
@@ -97,7 +98,10 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
           },
           minimizer: [new SwcJsMinimizerRspackPlugin()],
         }
-      : {},
+      : {
+          minimize: false,
+          minimizer: [],
+        },
     experiments: {
       css: true,
     },
@@ -112,6 +116,16 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
         },
       },
       rules: [
+        ...(isDevServer
+          ? [
+              {
+                loader: require.resolve(
+                  '@ng-rspack/build/src/lib/loaders/hmr/hmr-loader.js'
+                ),
+                include: [join(options.root, options.main)],
+              },
+            ]
+          : []),
         {
           test: /\.?(sa|sc|c)ss$/,
           use: [

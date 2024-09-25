@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Serve executor",
+  "description": "Executor serve an Angular application locally for development.",
+  "type": "object",
+  "properties": {
+    "buildTarget": {
+      "type": "string",
+      "description": "Build target for the Angular application."
+    },
+    "port": {
+      "type": "number",
+      "description": "Port to serve the application on.",
+      "default": 4200
+    }
+  },
+  "required": ["buildTarget"]
+}

@@ -40,7 +40,12 @@ export class AngularRspackPlugin implements RspackPluginInstance {
     compiler.hooks.beforeCompile.tapAsync(
       'AngularRspackPlugin',
       async (params, callback) => {
-        const modifiedFiles = this.referencedFileTracker.update(new Set());
+        const watchingModifiedFiles = compiler.watching?.compiler?.modifiedFiles
+          ? new Set(compiler.watching.compiler.modifiedFiles)
+          : new Set<string>();
+        const modifiedFiles = this.referencedFileTracker.update(
+          watchingModifiedFiles
+        );
         // stylesheetBundler.invalidate(modifiedFiles);
         await this.angularCompilation.update(modifiedFiles);
 
@@ -96,6 +101,32 @@ export class AngularRspackPlugin implements RspackPluginInstance {
             contents,
           } of await this.angularCompilation.emitAffectedFiles()) {
             this.typeScriptFileCache.set(normalize(filename), contents);
+          }
+          if (compiler.options.devServer?.hot) {
+            compiler.hooks.afterEmit.tapAsync(
+              'AngularRspackPlugin',
+              (compilation, callback) => {
+                for (const filename of compiler.watching?.compiler
+                  ?.modifiedFiles ?? []) {
+                  const contents = this.typeScriptFileCache.get(filename);
+                  if (contents) {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
+                    compilation.assets[filename] = {
+                      source: () =>
+                        typeof contents === 'string'
+                          ? contents
+                          : Buffer.from(contents).toString('utf8'),
+                      size: () =>
+                        typeof contents === 'string'
+                          ? contents.length
+                          : Buffer.from(contents).toString('utf8').length,
+                    };
+                  }
+                }
+                callback();
+              }
+            );
           }
         } catch (e) {
           console.log('Failed to emit files from Angular Compilation', e);
