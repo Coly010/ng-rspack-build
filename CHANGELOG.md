@@ -1,3 +1,14 @@
+## 0.0.20 (2024-09-26)
+
+
+### 🚀 Features
+
+- **build:** support hmr for TS component changes and global styles ([#5](https://github.com/Coly010/ng-rspack-build/pull/5))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.19 (2024-09-25)
 
 
