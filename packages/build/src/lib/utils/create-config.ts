@@ -17,13 +17,6 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
       main: {
         import: [options.main],
       },
-      polyfills: {
-        import: options.polyfills ?? [],
-      },
-      styles: {
-        import: options.styles ?? [],
-      },
-      ...(options.scripts ? { scripts: { import: options.scripts } } : {}),
     },
     devServer: {
       allowedHosts: 'auto',
