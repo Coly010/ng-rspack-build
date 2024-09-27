@@ -1,3 +1,14 @@
+## 0.0.21 (2024-09-27)
+
+
+### 🚀 Features
+
+- **nx:** add application generator ([#6](https://github.com/Coly010/ng-rspack-build/pull/6))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.20 (2024-09-26)
 
 
