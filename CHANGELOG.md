@@ -1,3 +1,14 @@
+## 0.0.22 (2024-09-27)
+
+
+### 🚀 Features
+
+- **nx:** add app alias for application generator ([c027319](https://github.com/Coly010/ng-rspack-build/commit/c027319))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.21 (2024-09-27)
 
 
