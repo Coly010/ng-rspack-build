@@ -1,0 +1,10 @@
+{
+  "name": "ng-rspack/nx",
+  "generators": {
+    "application": {
+      "factory": "./src/generators/application/application",
+      "schema": "./src/generators/application/schema.json",
+      "description": "Add an Angular application using Rspack."
+    }
+  }
+}
