@@ -1,3 +1,14 @@
+## 0.0.23 (2024-09-28)
+
+
+### 🩹 Fixes
+
+- **nx:** ensure posix paths in project.json and deps are installed ([#12](https://github.com/Coly010/ng-rspack-build/pull/12))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.22 (2024-09-27)
 
 
