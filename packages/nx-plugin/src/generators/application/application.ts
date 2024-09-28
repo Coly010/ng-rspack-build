@@ -11,8 +11,13 @@ import {
   updateProjectConfiguration,
 } from '@nx/devkit';
 import { determineProjectNameAndRootOptions } from '@nx/devkit/src/generators/project-name-and-root-utils';
-import { basename, relative, resolve } from 'path';
-import { ngRspackBuildVersion } from '../../utils/versions';
+import { basename, relative, resolve } from 'path/posix';
+import {
+  ngRspackBuildVersion,
+  sassEmbeddedVersion,
+  sassLoaderVersion,
+  sassVersion,
+} from '../../utils/versions';
 
 export async function applicationGenerator(
   tree: Tree,
@@ -112,7 +117,12 @@ export async function applicationGenerator(
     installTask = addDependenciesToPackageJson(
       tree,
       {},
-      { '@ng-rspack/build': ngRspackBuildVersion }
+      {
+        '@ng-rspack/build': ngRspackBuildVersion,
+        sass: sassVersion,
+        'sass-loader': sassLoaderVersion,
+        'sass-embedded': sassEmbeddedVersion,
+      }
     );
   }
   if (!options.skipFormat) {
