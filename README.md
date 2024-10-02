@@ -36,3 +36,31 @@ Right now, the state of it is as follows:
   - Inline Styles
   - Template Files
   - Component Style Files
+
+## Getting started
+```bash
+# Create a new nx workspace
+npx create-nx-workspace ng-rspack-test
+# Choose options:
+# - Stack: None
+# - Package-based Monorepo
+# - CI: Do it later
+# - Remote caching: Up to you
+
+# Install the ng-rspack-build package
+npm install @ng-rspack/nx
+
+# Change into project directory and run the app generator
+cd ng-rspack-test
+npx nx g @ng-rspack/nx:app apps/myapp
+# Choose stylesheet format and e2e framework
+
+# Serve the app
+npx nx serve myapp
+
+# Build the app
+npx nx build myapp
+
+# Run the e2e tests
+npx nx e2e myapp-e2e
+```
