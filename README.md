@@ -43,15 +43,15 @@ Right now, the state of it is as follows:
 npx create-nx-workspace ng-rspack-test
 # Choose options:
 # - Stack: None
-# - Package-based Monorepo
+# - Integrated Monorepo
 # - CI: Do it later
 # - Remote caching: Up to you
 
-# Install the ng-rspack-build package
+# Change into project directory and install the ng-rspack-build package
+cd ng-rspack-test
 npm install @ng-rspack/nx
 
-# Change into project directory and run the app generator
-cd ng-rspack-test
+# Run the app generator
 npx nx g @ng-rspack/nx:app apps/myapp
 # Choose stylesheet format and e2e framework
 
