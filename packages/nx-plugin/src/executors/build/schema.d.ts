@@ -5,6 +5,7 @@ export interface BuildExecutorSchema {
   tsConfig: string;
   mode?: 'production' | 'development' | 'none';
   styles?: string[];
+  stylePreprocessorOptions?: { includePaths?: string[] }
   scripts?: string[];
   polyfills?: string[];
   assets?: string[];

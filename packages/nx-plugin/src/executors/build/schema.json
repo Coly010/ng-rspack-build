@@ -30,6 +30,19 @@
       "description": "Paths to global stylesheets to be included.",
       "default": []
     },
+    "stylePreprocessorOptions": {
+      "description": "Options to pass to style preprocessors.",
+      "type": "object",
+      "properties": {
+        "includePaths": {
+          "description": "Paths to include. Paths will be resolved to workspace root.",
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    },
     "scripts": {
       "type": "array",
       "items": {

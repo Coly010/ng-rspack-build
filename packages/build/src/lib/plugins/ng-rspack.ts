@@ -19,6 +19,7 @@ export interface NgRspackPluginOptions {
   index: string;
   tsConfig: string;
   styles?: string[];
+  stylePreprocessorOptions?: { includePaths?: string[] }
   scripts?: string[];
   polyfills?: string[];
   assets?: string[];

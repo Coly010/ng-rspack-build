@@ -1,4 +1,5 @@
 import { NgRspackPlugin, NgRspackPluginOptions } from '../plugins/ng-rspack';
+
 import {
   Configuration,
   DevServer,
@@ -9,6 +10,15 @@ import { join, resolve } from 'path';
 export function createConfig(options: NgRspackPluginOptions): Configuration {
   const isProduction = process.env['NODE_ENV'] === 'production';
   const isDevServer = process.env['WEBPACK_SERVE'] && !isProduction;
+
+  const includePaths: string[] = [];
+  if (options.stylePreprocessorOptions?.includePaths?.length) {
+    options.stylePreprocessorOptions.includePaths.forEach(
+      (includePath) =>
+        includePaths.push(join(options.root, includePath))
+    );
+  }
+
   return {
     context: options.root,
     target: 'web',
@@ -127,6 +137,9 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
               options: {
                 api: 'modern-compiler',
                 implementation: require.resolve('sass-embedded'),
+                sassOptions: {
+                  loadPaths: includePaths,
+                },
               },
             },
           ],

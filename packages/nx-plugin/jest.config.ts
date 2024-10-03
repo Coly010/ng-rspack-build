@@ -27,4 +27,7 @@ export default {
   moduleFileExtensions: ['ts', 'js', 'html'],
   testEnvironment: '',
   coverageDirectory: '../../coverage/packages/nx-plugin',
+  moduleNameMapper: {
+    '@ng-rspack/(.*)': 'packages/$1',
+  }
 };
