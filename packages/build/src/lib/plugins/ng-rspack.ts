@@ -7,11 +7,12 @@ import {
   ProgressPlugin,
   RspackPluginInstance,
 } from '@rspack/core';
-import { basename, extname, join } from 'path';
+import { basename, extname, join, relative } from 'path';
 import { RxjsEsmResolutionPlugin } from './rxjs-esm-resolution';
 import { AngularRspackPlugin } from './angular';
 
 export interface NgRspackPluginOptions {
+  workspaceRoot: string;
   root: string;
   outputPath: string;
   name: string;
@@ -19,7 +20,7 @@ export interface NgRspackPluginOptions {
   index: string;
   tsConfig: string;
   styles?: string[];
-  stylePreprocessorOptions?: { includePaths?: string[] }
+  stylePreprocessorOptions?: { includePaths?: string[] };
   scripts?: string[];
   polyfills?: string[];
   assets?: string[];
@@ -44,15 +45,23 @@ export class NgRspackPlugin implements RspackPluginInstance {
     }
     const styles = this.pluginOptions.styles ?? [];
     for (const style of styles) {
-      new EntryPlugin(compiler.context, style, {
-        name: isProduction ? this.getEntryName(style) : undefined,
-      }).apply(compiler);
+      new EntryPlugin(
+        compiler.context,
+        relative(this.pluginOptions.root, style),
+        {
+          name: isProduction ? this.getEntryName(style) : undefined,
+        }
+      ).apply(compiler);
     }
     const scripts = this.pluginOptions.scripts ?? [];
     for (const script of scripts) {
-      new EntryPlugin(compiler.context, script, {
-        name: isProduction ? this.getEntryName(script) : undefined,
-      }).apply(compiler);
+      new EntryPlugin(
+        compiler.context,
+        relative(this.pluginOptions.root, script),
+        {
+          name: isProduction ? this.getEntryName(script) : undefined,
+        }
+      ).apply(compiler);
     }
     new DefinePlugin({
       ngDevMode: isProduction ? 'false' : 'undefined',
@@ -61,7 +70,7 @@ export class NgRspackPlugin implements RspackPluginInstance {
     if (this.pluginOptions.assets) {
       new CopyRspackPlugin({
         patterns: (this.pluginOptions.assets ?? []).map((assetPath) => ({
-          from: join(this.pluginOptions.root, assetPath),
+          from: join(this.pluginOptions.workspaceRoot, assetPath),
           to: '.',
           noErrorOnMissing: true,
         })),
@@ -72,11 +81,17 @@ export class NgRspackPlugin implements RspackPluginInstance {
       minify: false,
       inject: 'body',
       scriptLoading: 'module',
-      template: join(this.pluginOptions.root, this.pluginOptions.index),
+      template: join(
+        this.pluginOptions.workspaceRoot,
+        this.pluginOptions.index
+      ),
     }).apply(compiler);
     new RxjsEsmResolutionPlugin().apply(compiler);
     new AngularRspackPlugin({
-      tsconfig: join(this.pluginOptions.root, this.pluginOptions.tsConfig),
+      tsconfig: join(
+        this.pluginOptions.workspaceRoot,
+        this.pluginOptions.tsConfig
+      ),
     }).apply(compiler);
   }
 

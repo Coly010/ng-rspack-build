@@ -1,3 +1,4 @@
+import { joinPathFragments } from '@nx/devkit';
 import { NgRspackPlugin, NgRspackPluginOptions } from '../plugins/ng-rspack';
 
 import {
@@ -5,27 +6,28 @@ import {
   DevServer,
   SwcJsMinimizerRspackPlugin,
 } from '@rspack/core';
-import { join, resolve } from 'path';
+import { join, relative, resolve } from 'path';
 
 export function createConfig(options: NgRspackPluginOptions): Configuration {
   const isProduction = process.env['NODE_ENV'] === 'production';
   const isDevServer = process.env['WEBPACK_SERVE'] && !isProduction;
 
+  const projectRoot = joinPathFragments(options.workspaceRoot, options.root);
+
   const includePaths: string[] = [];
   if (options.stylePreprocessorOptions?.includePaths?.length) {
-    options.stylePreprocessorOptions.includePaths.forEach(
-      (includePath) =>
-        includePaths.push(join(options.root, includePath))
+    options.stylePreprocessorOptions.includePaths.forEach((includePath) =>
+      includePaths.push(join(options.workspaceRoot, includePath))
     );
   }
 
   return {
-    context: options.root,
+    context: projectRoot,
     target: 'web',
     mode: isProduction ? 'production' : 'development',
     entry: {
       main: {
-        import: [options.main],
+        import: [relative(options.root, options.main)],
       },
     },
     devServer: {
@@ -58,7 +60,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
       hashFunction: isProduction ? 'xxhash64' : undefined,
       publicPath: 'auto',
       clean: true,
-      path: join(options.root, options.outputPath),
+      path: join(options.workspaceRoot, options.outputPath),
       cssFilename: isProduction ? '[name].[contenthash].css' : '[name].css',
       filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
@@ -73,7 +75,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
       mainFields: ['es2020', 'es2015', 'browser', 'module', 'main'],
       conditionNames: ['es2020', 'es2015', '...'],
       tsConfig: {
-        configFile: resolve(options.root, options.tsConfig),
+        configFile: resolve(options.workspaceRoot, options.tsConfig),
       },
     },
     optimization: isProduction
@@ -125,7 +127,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
                 loader: require.resolve(
                   '@ng-rspack/build/src/lib/loaders/hmr/hmr-loader.js'
                 ),
-                include: [join(options.root, options.main)],
+                include: [join(options.workspaceRoot, options.main)],
               },
             ]
           : []),
