@@ -1,4 +1,4 @@
-import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { Configuration } from '@rspack/core';
 import { createConfig } from '@ng-rspack/build';
 import { BuildExecutorSchema } from '../executors/build/schema';
@@ -7,12 +7,14 @@ export function createRspackConfig(
   options: BuildExecutorSchema & { port?: number },
   context: ExecutorContext
 ): Configuration {
+  const workspaceRoot = context.root;
   const { root, name } = context.projectGraph.nodes[context.projectName].data;
 
   process.env['NODE_ENV'] = options.mode;
 
   return createConfig({
-    root: joinPathFragments(workspaceRoot, root),
+    workspaceRoot,
+    root,
     name,
     main: options.main,
     index: options.index,
@@ -21,6 +23,7 @@ export function createRspackConfig(
     polyfills: options.polyfills ?? [],
     assets: options.assets ?? [],
     styles: options.styles ?? [],
+    stylePreprocessorOptions: options.stylePreprocessorOptions,
     scripts: options.scripts ?? [],
     port: options.port ?? 4200,
   });
