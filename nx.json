@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "cli": {
+    "packageManager": "pnpm"
+  },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -65,7 +68,14 @@
       "options": {
         "targetName": "lint"
       },
-      "exclude": ["e2e/**"]
+      "exclude": ["e2e/**", "integration-testing/**"]
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "testTargetName": "integration"
+      },
+      "include": ["integration-testing/**"]
     }
   ]
 }

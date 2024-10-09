@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "types": ["vitest"]
+  },
+  "extends": "../../tsconfig.base.json"
+}

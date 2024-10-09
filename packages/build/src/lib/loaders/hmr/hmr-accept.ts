@@ -13,7 +13,7 @@ import {
   isDevMode,
   ɵresetCompiledComponents,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+  // @ts-ignore
 } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
