@@ -1,11 +1,11 @@
-import { Compiler, RspackPluginInstance } from '@rspack/core';
+import { Compiler, RspackPluginInstance, RuleSetRule } from '@rspack/core';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import { FileReferenceTracker } from '@angular/build/src/tools/esbuild/angular/file-reference-tracker';
 // import { ComponentStylesheetBundler } from '@angular/build/src/tools/esbuild/angular/component-stylesheets';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { type AngularHostOptions } from '@angular/build/src/tools/angular/angular-host';
 import { maxWorkers } from '../utils/utils';
-import { compile as sassCompile } from 'sass';
+import { Options, compile as sassCompile } from 'sass';
 import { normalize } from 'path';
 import {
   NG_RSPACK_SYMBOL_NAME,
@@ -37,6 +37,60 @@ export class AngularRspackPlugin implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler) {
+    const modules = compiler.options.resolve.modules || [];
+    const rules = (compiler.options.module?.rules || []) as RuleSetRule[];
+
+    /*
+    resolve: {
+      modules: ['node_modules'],
+    },
+    
+    ...
+
+    module: {
+      rules: [
+        {
+          test: /\.?(sa|sc|c)ss$/,
+          use: [
+            {
+              ...
+              options: {
+                ...
+                sassOptions: {
+                  ...
+                }
+              },
+            },
+          ],
+          type: 'css/auto',
+        },
+      ],
+    }
+    */
+    const sassOptions = rules
+      .filter((rule) => rule?.test instanceof RegExp && rule?.test.test('.sass'))
+      .map((sassRule) => {
+        if (Array.isArray(sassRule.use)) {
+          const useWithSassOptions = sassRule.use.find((use) =>
+            typeof use !== 'string'
+              && typeof use.options === 'object'
+              && typeof use.options['sassOptions'] === 'object'
+          ) as unknown as { options: { sassOptions: { loadPaths?: string[] } } } | null;
+
+          if (useWithSassOptions) {
+            return {
+              ...useWithSassOptions.options.sassOptions,
+              loadPaths: [
+                ...modules,
+                ...(useWithSassOptions.options.sassOptions.loadPaths || []),
+              ],
+            }
+          }
+        }
+        return null;
+      })
+      .filter((sassOptions) => sassOptions)[0] as Options<'sync'>;
+
     compiler.hooks.beforeCompile.tapAsync(
       'AngularRspackPlugin',
       async (params, callback) => {
@@ -56,7 +110,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
               return '';
             }
             try {
-              const result = sassCompile(stylesheetFile);
+              const result = sassCompile(stylesheetFile, sassOptions);
               return result.css;
             } catch (e) {
               console.error(
