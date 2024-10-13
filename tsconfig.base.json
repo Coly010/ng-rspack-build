@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@ng-rspack/build": ["packages/build/src/index.ts"],
+      "@ng-rspack/integration/utils": ["integration-testing/utils/index.ts"],
       "@ng-rspack/nx": ["packages/nx-plugin/src/index.ts"]
     }
   },
