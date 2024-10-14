@@ -38,7 +38,7 @@ export async function createRspackConfig(
   if (options.tsConfig) {
     userDefinedConfig = resolveUserDefinedRspackConfig(
       pathToConfig,
-      options.tsConfig
+      join(workspaceRoot, root, options.tsConfig)
     );
   } else {
     userDefinedConfig = await import(pathToConfig).then((x) => x.default || x);

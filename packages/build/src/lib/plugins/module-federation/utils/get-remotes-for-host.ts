@@ -171,9 +171,11 @@ export function getModuleFederationConfig(
   let moduleFederationConfigPath = moduleFederationConfigPathJS;
 
   // create a no-op so this can be called with issue
-  const fullTSconfigPath = tsconfigPath.startsWith(workspaceRoot)
+  const fullTSconfigPath = tsconfigPath.startsWith(
+    join(workspaceRoot, projectRoot)
+  )
     ? tsconfigPath
-    : join(workspaceRoot, tsconfigPath);
+    : join(workspaceRoot, projectRoot, tsconfigPath);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let cleanupTranspiler = () => {};
   if (existsSync(moduleFederationConfigPathTS)) {

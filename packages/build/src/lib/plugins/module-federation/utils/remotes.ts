@@ -24,7 +24,7 @@ export function mapRemotes(
         remoteEntryExt
       );
     } else {
-      const mfRemoteName = normalizeRemoteName(nxRemoteProjectName[0]);
+      const mfRemoteName = normalizeRemoteName(nxRemoteProjectName);
       mappedRemotes[mfRemoteName] = handleStringRemote(
         nxRemoteProjectName,
         determineRemoteUrl
@@ -69,9 +69,7 @@ function handleStringRemote(
   nxRemoteProjectName: string,
   determineRemoteUrl: (nxRemoteProjectName: string) => string
 ): string {
-  const globalPrefix = `${normalizeRemoteName(nxRemoteProjectName)}@`;
-
-  return `${globalPrefix}${determineRemoteUrl(nxRemoteProjectName)}`;
+  return `${determineRemoteUrl(nxRemoteProjectName)}`;
 }
 
 /**
