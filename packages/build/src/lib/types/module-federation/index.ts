@@ -63,3 +63,14 @@ export type NgRspackModuleFederationConfigOverride = Omit<
   moduleFederationPlugin.ModuleFederationPluginOptions,
   'exposes' | 'remotes' | 'name' | 'library' | 'shared' | 'filename'
 >;
+
+export type StaticRemoteConfig = {
+  basePath: string;
+  outputPath: string;
+  urlSegment: string;
+  port: number;
+};
+export type StaticRemotesConfig = {
+  remotes: string[];
+  config: Record<string, StaticRemoteConfig> | undefined;
+};

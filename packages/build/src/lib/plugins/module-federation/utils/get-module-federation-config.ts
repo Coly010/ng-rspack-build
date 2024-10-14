@@ -31,6 +31,9 @@ export function applyDefaultEagerPackages(
   const DEFAULT_PACKAGES_TO_LOAD_EAGERLY = [
     '@angular/localize',
     '@angular/localize/init',
+    '@angular/core',
+    '@angular/core/primitives/signals',
+    '@angular/core/primitives/event-dispatch',
   ];
   for (const pkg of DEFAULT_PACKAGES_TO_LOAD_EAGERLY) {
     if (!sharedConfig[pkg]) {

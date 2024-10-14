@@ -7,6 +7,7 @@ import {
   SharedWorkspaceLibraryConfig,
 } from '../../types/module-federation';
 import { getModuleFederationConfig } from './utils/get-module-federation-config';
+import { NgRspackModuleFederationDevServerPlugin } from './ng-rspack-module-federation-dev-server-plugin';
 
 export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
   private sharedLibraries: SharedWorkspaceLibraryConfig | undefined;
@@ -15,7 +16,8 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
 
   constructor(
     private options: ModuleFederationConfig,
-    private configOverride?: NgRspackModuleFederationConfigOverride
+    private configOverride?: NgRspackModuleFederationConfigOverride,
+    private remoteOptions?: { devRemotes?: string[]; skipRemotes?: string[] }
   ) {}
 
   apply(compiler: Compiler) {
@@ -24,6 +26,12 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
     if (global.NX_GRAPH_CREATION) {
       return;
     }
+
+    // This is required to ensure Module Federation will build the project correctly
+    compiler.options.optimization.runtimeChunk = false;
+
+    const isDevServer =
+      !!process.env['WEBPACK_SERVE'] && !process.env['NG_RSPACK_INITIAL_HOST'];
 
     const config = getModuleFederationConfig(this.options);
     this.sharedLibraries = config.sharedLibraries;
@@ -48,6 +56,19 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
 
     if (this.sharedLibraries) {
       this.sharedLibraries.getReplacementPlugin().apply(compiler);
+    }
+    if (isDevServer) {
+      process.env['NG_RSPACK_INITIAL_HOST'] = 'set';
+      new NgRspackModuleFederationDevServerPlugin({
+        moduleFederationConfig: this.options,
+        host: 'localhost',
+        devRemotes: this.remoteOptions
+          ? this.remoteOptions.devRemotes ?? []
+          : [],
+        skipRemotes: this.remoteOptions
+          ? this.remoteOptions.skipRemotes ?? []
+          : [],
+      }).apply(compiler);
     }
   }
 }
