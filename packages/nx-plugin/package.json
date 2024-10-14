@@ -19,12 +19,14 @@
     "Rspack"
   ],
   "dependencies": {
-    "@nx/devkit": "19.8.0",
-    "@nx/angular": "19.8.0",
+    "@nx/devkit": "20.1.0-canary.20241012-37a7eb1",
+    "@nx/angular": "20.1.0-canary.20241012-37a7eb1",
+    "@nx/js": "20.1.0-canary.20241012-37a7eb1",
     "@swc/helpers": "~0.5.11",
     "@ng-rspack/build": "workspace:*",
-    "@rspack/core": "^1.0.7",
-    "@rspack/dev-server": "^1.0.7"
+    "@rspack/core": "^1.0.10",
+    "@rspack/dev-server": "^1.0.9",
+    "webpack-merge": "^6.0.1"
   },
   "type": "commonjs",
   "main": "./src/index.js",

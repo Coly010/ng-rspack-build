@@ -42,9 +42,7 @@ export async function applicationGenerator(
     {
       name: options.name ?? basename(options.directory),
       directory: options.directory,
-      projectNameAndRootFormat: 'as-provided',
       projectType: 'application',
-      callingGenerator: '@ng-rspack/nx:application',
     }
   );
 
