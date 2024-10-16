@@ -2,7 +2,8 @@ import { getProjectDirectory } from './project.utils';
 import { ChildProcess, exec } from 'child_process';
 
 export async function runCommand(
-  command: string
+  command: string,
+  debug?: boolean
 ): Promise<{ stdout: string; stderr: string; combinedOutput: string }> {
   return new Promise((resolve, reject) => {
     exec(
@@ -26,6 +27,10 @@ export async function runCommand(
           stderr: stripConsoleColors(stderr),
           combinedOutput: stripConsoleColors(`${stdout}${stderr}`),
         };
+
+        if (debug) {
+          console.log('>>>outputs>>debg', outputs);
+        }
 
         resolve(outputs);
       }
