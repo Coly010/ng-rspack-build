@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "NgRspackRemote",
+  "cli": "nx",
+  "title": "Ng Rspack Module Federation Remote App",
+  "description": "Create an Angular Remote Module Federation Application with Rspack.",
+  "type": "object",
+  "properties": {
+    "directory": {
+      "description": "The directory of the new application.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Which directory do you want to create the application in?"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name to give to the remote Angular app.",
+      "pattern": "^[a-zA-Z][^:]*$",
+      "x-priority": "important"
+    },
+    "host": {
+      "type": "string",
+      "description": "The name of the host app to attach this remote app to.",
+      "x-dropdown": "projects",
+      "x-priority": "important"
+    },
+    "port": {
+      "type": "number",
+      "description": "The port on which this app should be served."
+    },
+    "style": {
+      "description": "The file extension to be used for style files.",
+      "type": "string",
+      "default": "css",
+      "enum": ["css", "scss", "sass", "less"],
+      "x-prompt": {
+        "message": "Which stylesheet format would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "css",
+            "label": "CSS"
+          },
+          {
+            "value": "scss",
+            "label": "SASS(.scss)  [ https://sass-lang.com   ]"
+          },
+          {
+            "value": "sass",
+            "label": "SASS(.sass)  [ https://sass-lang.com   ]"
+          }
+        ]
+      }
+    },
+    "inlineStyle": {
+      "description": "Specifies if the style will be in the ts file.",
+      "type": "boolean",
+      "default": false,
+      "alias": "s"
+    },
+    "inlineTemplate": {
+      "description": "Specifies if the template will be in the ts file.",
+      "type": "boolean",
+      "default": false,
+      "alias": "t"
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add dependencies to `package.json`.",
+      "x-priority": "internal"
+    },
+    "unitTestRunner": {
+      "type": "string",
+      "enum": ["jest", "none"],
+      "description": "Test runner to use for unit tests.",
+      "default": "jest"
+    },
+    "e2eTestRunner": {
+      "type": "string",
+      "enum": ["playwright", "cypress", "none"],
+      "description": "Test runner to use for end to end (E2E) tests.",
+      "x-prompt": "Which E2E test runner would you like to use?",
+      "default": "playwright"
+    },
+    "linter": {
+      "description": "The tool to use for running lint checks.",
+      "type": "string",
+      "enum": ["eslint", "none"],
+      "default": "eslint"
+    },
+    "skipFormat": {
+      "description": "Skip formatting files.",
+      "type": "boolean",
+      "default": false,
+      "x-priority": "internal"
+    },
+    "setParserOptionsProject": {
+      "type": "boolean",
+      "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
+      "default": false
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the application (used for linting)."
+    }
+  },
+  "additionalProperties": false,
+  "required": ["directory"]
+}

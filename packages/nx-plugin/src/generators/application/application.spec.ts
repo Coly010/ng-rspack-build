@@ -82,5 +82,5 @@ describe('Application Generator', () => {
         },
       }
     `);
-  }, 10_000);
+  });
 });

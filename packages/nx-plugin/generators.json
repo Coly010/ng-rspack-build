@@ -6,6 +6,16 @@
       "schema": "./src/generators/application/schema.json",
       "description": "Add an Angular application using Rspack.",
       "aliases": ["app"]
+    },
+    "host": {
+      "factory": "./src/generators/host/host",
+      "schema": "./src/generators/host/schema.json",
+      "description": "Add an Angular Host Module Federation application using Rspack."
+    },
+    "remote": {
+      "factory": "./src/generators/remote/remote",
+      "schema": "./src/generators/remote/schema.json",
+      "description": "Add an Angular Remote Module Federation application using Rspack."
     }
   }
 }

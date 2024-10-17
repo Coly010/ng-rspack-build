@@ -1,5 +1,5 @@
-import { applicationGenerator as angularAppGenerator } from '@nx/angular/generators';
-import { AngularApplicationSchema } from './schema';
+import { remote as remoteAppGenerator } from '@nx/angular/generators';
+import { AngularRemoteSchema } from './schema';
 import {
   addDependenciesToPackageJson,
   formatFiles,
@@ -13,15 +13,16 @@ import {
 import { determineProjectNameAndRootOptions } from '@nx/devkit/src/generators/project-name-and-root-utils';
 import { basename, relative, resolve } from 'path/posix';
 import {
+  moduleFederationEnhancedVersion,
   ngRspackBuildVersion,
   sassEmbeddedVersion,
   sassLoaderVersion,
   sassVersion,
 } from '../../utils/versions';
 
-export async function applicationGenerator(
+export async function remoteGenerator(
   tree: Tree,
-  options: AngularApplicationSchema
+  options: AngularRemoteSchema
 ) {
   if (!options.directory && !options.name) {
     throw new Error(
@@ -46,7 +47,7 @@ export async function applicationGenerator(
     }
   );
 
-  const initTask = await angularAppGenerator(tree, {
+  const initTask = await remoteAppGenerator(tree, {
     ...options,
     name: projectName,
     directory: projectRoot,
@@ -56,7 +57,6 @@ export async function applicationGenerator(
     linter: options.linter ?? 'eslint',
     unitTestRunner: options.unitTestRunner ?? 'jest',
     e2eTestRunner: options.e2eTestRunner ?? 'playwright',
-    bundler: 'esbuild',
     ssr: false,
     addTailwind: false,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,10 +76,9 @@ export async function applicationGenerator(
     projectRoot
   );
   buildOptions.options.main = makePathRelativeToProjectRoot(
-    buildOptions.options.browser,
+    buildOptions.options.main,
     projectRoot
   );
-  delete buildOptions.options.browser;
   buildOptions.options.tsConfig = makePathRelativeToProjectRoot(
     buildOptions.options.tsConfig,
     projectRoot
@@ -90,6 +89,8 @@ export async function applicationGenerator(
   buildOptions.options.styles = buildOptions.options.styles.map((style) =>
     makePathRelativeToProjectRoot(style, projectRoot)
   );
+  buildOptions.options.customRspackConfig = './rspack.config.ts';
+  delete buildOptions.options.customWebpackConfig;
   delete buildOptions.options.scripts;
   buildOptions.configurations = {
     production: {
@@ -107,6 +108,9 @@ export async function applicationGenerator(
   const serveStaticOptions = project.targets['serve-static'];
   serveStaticOptions.options.staticFilePath = originalOutputPath;
 
+  removeWebpackConfigFiles(tree, projectRoot);
+  addRspackConfig(tree, projectRoot);
+
   updateProjectConfiguration(tree, projectName, project);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -120,6 +124,7 @@ export async function applicationGenerator(
         sass: sassVersion,
         'sass-loader': sassLoaderVersion,
         'sass-embedded': sassEmbeddedVersion,
+        '@module-federation/enhanced': moduleFederationEnhancedVersion,
       }
     );
   }
@@ -148,4 +153,25 @@ function makePathRelativeToProjectRoot(pathToReplace, projectRoot) {
   return pathToReplace;
 }
 
-export default applicationGenerator;
+function removeWebpackConfigFiles(tree: Tree, projectRoot: string) {
+  tree.delete(joinPathFragments(projectRoot, 'webpack.config.ts'));
+  tree.delete(joinPathFragments(projectRoot, 'webpack.prod.config.ts'));
+}
+
+function addRspackConfig(tree: Tree, projectRoot: string) {
+  const rspackConfigContents = `import { NgRspackModuleFederationPlugin } from '@ng-rspack/build';
+  import config from './module-federation.config';
+
+  export default {
+     plugins: [
+        new NgRspackModuleFederationPlugin(config, {dts: false})
+     ],
+  }`;
+
+  tree.write(
+    joinPathFragments(projectRoot, 'rspack.config.ts'),
+    rspackConfigContents
+  );
+}
+
+export default remoteGenerator;

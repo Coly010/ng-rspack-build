@@ -46,9 +46,7 @@
         "uniqueItems": true
       },
       "description": "Polyfills that should be included.",
-      "default": [
-        "zone.js"
-      ]
+      "default": ["zone.js"]
     },
     "assets": {
       "type": "array",
@@ -63,12 +61,11 @@
       "type": "string",
       "description": "Configure Rspack mode",
       "default": "production"
+    },
+    "customRspackConfig": {
+      "type": "string",
+      "description": "Additional rspack config to merge into the created config. Path should be relative to the project root."
     }
   },
-  "required": [
-    "main",
-    "index",
-    "tsConfig",
-    "outputPath"
-  ]
+  "required": ["main", "index", "tsConfig", "outputPath"]
 }

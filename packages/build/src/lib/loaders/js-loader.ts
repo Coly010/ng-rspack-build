@@ -18,6 +18,13 @@ export default function loader(this: LoaderContext<unknown>, content: string) {
     )[NG_RSPACK_SYMBOL_NAME];
 
     const request = this.resourcePath;
+    if (
+      request.startsWith('data:text/javascript') &&
+      request.includes('__module_federation_bundler_runtime__')
+    ) {
+      callback(null, content);
+      return;
+    }
     javascriptTransformer
       .transformFile(request, false, false)
       .then((contents) => {

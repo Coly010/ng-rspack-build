@@ -27,4 +27,5 @@ export default {
   moduleFileExtensions: ['ts', 'js', 'html'],
   testEnvironment: '',
   coverageDirectory: '../../coverage/packages/nx-plugin',
+  testTimeout: 25_000,
 };

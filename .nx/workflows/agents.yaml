@@ -27,3 +27,7 @@ launch-templates:
       - name: Pnpm Install
         script: |
           pnpm install --frozen-lockfile
+
+      - name: Ensure lsof
+        script: |
+          sudo apt-get install lsof

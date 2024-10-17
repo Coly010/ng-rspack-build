@@ -8,4 +8,5 @@ export interface BuildExecutorSchema {
   scripts?: string[];
   polyfills?: string[];
   assets?: string[];
+  customRspackConfig?: string;
 }

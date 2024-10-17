@@ -24,12 +24,22 @@
   "dependencies": {
     "@swc/helpers": "~0.5.11",
     "sass-loader": "^16.0.2",
-    "sass-embedded": "^1.79.3"
+    "sass-embedded": "^1.79.3",
+    "express": "4.21.1",
+    "http-proxy-middleware": "3.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
   },
   "peerDependencies": {
-    "@rspack/core": "^1.0.5",
+    "@rspack/core": "^1.0.10",
     "@angular/build": "^18.2.5",
-    "sass": "^1.79.3"
+    "sass": "^1.79.3",
+    "@module-federation/enhanced": "^0.6.10",
+    "@module-federation/sdk": "^0.6.10",
+    "@nx/devkit": "20.1.0-canary.20241012-37a7eb1",
+    "@nx/js": "20.1.0-canary.20241012-37a7eb1",
+    "nx": "20.1.0-canary.20241012-37a7eb1"
   },
   "type": "commonjs",
   "main": "./src/index.js",
