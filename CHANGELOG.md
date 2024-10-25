@@ -1,3 +1,13 @@
+## 0.0.24 (2024-10-25)
+
+### 🚀 Features
+
+- **build:** add support for module federation ([#21](https://github.com/Coly010/ng-rspack-build/pull/21))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.23 (2024-09-28)
 
 
