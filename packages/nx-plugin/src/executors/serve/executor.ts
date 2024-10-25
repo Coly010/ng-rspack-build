@@ -25,7 +25,7 @@ export async function* runExecutor(
 
   const buildTargetOptions = readTargetOptions(buildTarget, context);
 
-  const rspackConfig = createRspackConfig(
+  const rspackConfig = await createRspackConfig(
     { ...buildTargetOptions, port: options.port },
     context
   );

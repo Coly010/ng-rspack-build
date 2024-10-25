@@ -19,6 +19,9 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
       },
     },
     devServer: {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       allowedHosts: 'auto',
       client: {
         overlay: {

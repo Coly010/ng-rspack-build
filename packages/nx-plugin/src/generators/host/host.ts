@@ -1,5 +1,5 @@
-import { applicationGenerator as angularAppGenerator } from '@nx/angular/generators';
-import { AngularApplicationSchema } from './schema';
+import { host as hostAppGenerator } from '@nx/angular/generators';
+import { AngularHostSchema } from './schema';
 import {
   addDependenciesToPackageJson,
   formatFiles,
@@ -11,17 +11,19 @@ import {
   updateProjectConfiguration,
 } from '@nx/devkit';
 import { determineProjectNameAndRootOptions } from '@nx/devkit/src/generators/project-name-and-root-utils';
-import { basename, relative, resolve } from 'path/posix';
+import { basename, dirname, relative, resolve } from 'path/posix';
 import {
+  moduleFederationEnhancedVersion,
   ngRspackBuildVersion,
   sassEmbeddedVersion,
   sassLoaderVersion,
   sassVersion,
 } from '../../utils/versions';
+import remoteGenerator from '../remote/remote';
 
 export async function applicationGenerator(
   tree: Tree,
-  options: AngularApplicationSchema
+  options: AngularHostSchema
 ) {
   if (!options.directory && !options.name) {
     throw new Error(
@@ -46,19 +48,18 @@ export async function applicationGenerator(
     }
   );
 
-  const initTask = await angularAppGenerator(tree, {
+  const initTask = await hostAppGenerator(tree, {
     ...options,
     name: projectName,
     directory: projectRoot,
-    port: options.port ?? 4200,
     projectNameAndRootFormat: 'as-provided',
     style: options.style ?? 'css',
     linter: options.linter ?? 'eslint',
     unitTestRunner: options.unitTestRunner ?? 'jest',
     e2eTestRunner: options.e2eTestRunner ?? 'playwright',
-    bundler: 'esbuild',
     ssr: false,
     addTailwind: false,
+    remotes: [],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any);
 
@@ -76,10 +77,9 @@ export async function applicationGenerator(
     projectRoot
   );
   buildOptions.options.main = makePathRelativeToProjectRoot(
-    buildOptions.options.browser,
+    buildOptions.options.main,
     projectRoot
   );
-  delete buildOptions.options.browser;
   buildOptions.options.tsConfig = makePathRelativeToProjectRoot(
     buildOptions.options.tsConfig,
     projectRoot
@@ -90,6 +90,8 @@ export async function applicationGenerator(
   buildOptions.options.styles = buildOptions.options.styles.map((style) =>
     makePathRelativeToProjectRoot(style, projectRoot)
   );
+  buildOptions.options.customRspackConfig = './rspack.config.ts';
+  delete buildOptions.options.customWebpackConfig;
   delete buildOptions.options.scripts;
   buildOptions.configurations = {
     production: {
@@ -102,12 +104,28 @@ export async function applicationGenerator(
 
   const serveOptions = project.targets.serve;
   serveOptions.executor = '@ng-rspack/nx:serve';
-  serveOptions.options = { port: options.port ?? 4200 };
+  serveOptions.options = { port: 4200 };
 
   const serveStaticOptions = project.targets['serve-static'];
   serveStaticOptions.options.staticFilePath = originalOutputPath;
 
+  removeWebpackConfigFiles(tree, projectRoot);
+  addRspackConfig(tree, projectRoot);
+
   updateProjectConfiguration(tree, projectName, project);
+
+  if (options.remotes && Array.isArray(options.remotes)) {
+    for (let i = 0; i < options.remotes.length; i++) {
+      const port = 4201 + i;
+      const remoteName = options.remotes[i];
+      await remoteGenerator(tree, {
+        ...options,
+        directory: joinPathFragments(dirname(projectRoot), remoteName),
+        port,
+        host: projectName,
+      });
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let installTask = () => {};
@@ -120,6 +138,7 @@ export async function applicationGenerator(
         sass: sassVersion,
         'sass-loader': sassLoaderVersion,
         'sass-embedded': sassEmbeddedVersion,
+        '@module-federation/enhanced': moduleFederationEnhancedVersion,
       }
     );
   }
@@ -146,6 +165,27 @@ function makePathRelativeToProjectRoot(pathToReplace, projectRoot) {
 
   // If it's not inside the basePath, return the original path
   return pathToReplace;
+}
+
+function removeWebpackConfigFiles(tree: Tree, projectRoot: string) {
+  tree.delete(joinPathFragments(projectRoot, 'webpack.config.ts'));
+  tree.delete(joinPathFragments(projectRoot, 'webpack.prod.config.ts'));
+}
+
+function addRspackConfig(tree: Tree, projectRoot: string) {
+  const rspackConfigContents = `import { NgRspackModuleFederationPlugin } from '@ng-rspack/build';
+  import config from './module-federation.config';
+
+  export default {
+     plugins: [
+        new NgRspackModuleFederationPlugin(config, {dts: false})
+     ],
+  }`;
+
+  tree.write(
+    joinPathFragments(projectRoot, 'rspack.config.ts'),
+    rspackConfigContents
+  );
 }
 
 export default applicationGenerator;
