@@ -1,3 +1,13 @@
+## 0.0.25 (2024-10-25)
+
+### 🩹 Fixes
+
+- **repo:** update nx version ([a5f9012](https://github.com/Coly010/ng-rspack-build/commit/a5f9012))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.24 (2024-10-25)
 
 ### 🚀 Features
