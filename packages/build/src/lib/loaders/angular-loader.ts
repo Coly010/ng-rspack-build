@@ -1,4 +1,5 @@
 import type { LoaderContext } from '@rspack/core';
+import { normalize } from 'path';
 import {
   NG_RSPACK_SYMBOL_NAME,
   NgRspackBuildEnhancedCompilation,
@@ -18,15 +19,21 @@ export default function loader(this: LoaderContext<unknown>, content: string) {
     )[NG_RSPACK_SYMBOL_NAME];
 
     const request = this.resourcePath;
-    const contents = typescriptFileCache.get(request);
+    const normalizedRequest = normalize(request);
+    const contents = typescriptFileCache.get(normalizedRequest);
     if (contents === undefined) {
       callback(null, content);
     } else if (typeof contents === 'string') {
       javascriptTransformer
-        .transformData(request, contents, true /* skipLinker */, false)
+        .transformData(
+          normalizedRequest,
+          contents,
+          true /* skipLinker */,
+          false
+        )
         .then((contents) => {
           // Store as the returned Uint8Array to allow caching the fully transformed code
-          typescriptFileCache.set(request, contents);
+          typescriptFileCache.set(normalizedRequest, contents);
           callback(null, Buffer.from(contents));
         });
     } else {
