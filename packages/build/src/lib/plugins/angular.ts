@@ -100,7 +100,10 @@ export class AngularRspackPlugin implements RspackPluginInstance {
             filename,
             contents,
           } of await this.angularCompilation.emitAffectedFiles()) {
-            this.typeScriptFileCache.set(normalize(filename), contents);
+            const normalizedFilename = normalize(
+              filename.replace(/^[A-Z]:/, '')
+            );
+            this.typeScriptFileCache.set(normalizedFilename, contents);
           }
           if (compiler.options.devServer?.hot) {
             compiler.hooks.afterEmit.tapAsync(
