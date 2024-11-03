@@ -1,3 +1,13 @@
+## 0.0.26 (2024-11-03)
+
+### 🩹 Fixes
+
+- **build:** plugin should normalize paths for windows ([#24](https://github.com/Coly010/ng-rspack-build/pull/24))
+
+### ❤️  Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.25 (2024-10-25)
 
 ### 🩹 Fixes
