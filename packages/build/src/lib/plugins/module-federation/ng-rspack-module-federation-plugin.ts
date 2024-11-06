@@ -15,7 +15,7 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
   private mappedRemotes: MappedRemotes | undefined;
 
   constructor(
-    private options: ModuleFederationConfig,
+    private _options: ModuleFederationConfig,
     private configOverride?: NgRspackModuleFederationConfigOverride,
     private remoteOptions?: { devRemotes?: string[]; skipRemotes?: string[] }
   ) {}
@@ -33,15 +33,15 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
     const isDevServer =
       !!process.env['WEBPACK_SERVE'] && !process.env['NG_RSPACK_INITIAL_HOST'];
 
-    const config = getModuleFederationConfig(this.options);
+    const config = getModuleFederationConfig(this._options);
     this.sharedLibraries = config.sharedLibraries;
     this.sharedDependencies = config.sharedDependencies;
     this.mappedRemotes = config.mappedRemotes;
 
     new (require('@module-federation/enhanced/rspack').ModuleFederationPlugin)({
-      name: this.options.name.replace(/-/g, '_'),
+      name: this._options.name.replace(/-/g, '_'),
       filename: 'remoteEntry.js',
-      exposes: this.options.exposes,
+      exposes: this._options.exposes,
       remotes: this.mappedRemotes,
       shared: {
         ...(this.sharedDependencies ?? {}),
@@ -60,7 +60,7 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
     if (isDevServer) {
       process.env['NG_RSPACK_INITIAL_HOST'] = 'set';
       new NgRspackModuleFederationDevServerPlugin({
-        moduleFederationConfig: this.options,
+        moduleFederationConfig: this._options,
         host: 'localhost',
         devRemotes: this.remoteOptions
           ? this.remoteOptions.devRemotes ?? []
