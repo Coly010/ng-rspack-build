@@ -28,7 +28,7 @@ export class NgRspackModuleFederationDevServerPlugin
   private nxBin: string;
 
   constructor(
-    private options: {
+    private _options: {
       moduleFederationConfig: ModuleFederationConfig;
       devRemotes: string[];
       skipRemotes: string[];
@@ -60,10 +60,10 @@ export class NgRspackModuleFederationDevServerPlugin
         this.startRemoteProxies(
           staticRemotesConfig,
           mappedLocationOfRemotes!,
-          this.options.ssl
+          this._options.ssl
             ? {
-                pathToCert: this.options.sslCert!,
-                pathToKey: this.options.sslKey!,
+                pathToCert: this._options.sslCert!,
+                pathToKey: this._options.sslKey!,
               }
             : undefined
         );
@@ -76,50 +76,51 @@ export class NgRspackModuleFederationDevServerPlugin
     const projectGraph = readCachedProjectGraph();
     const { projects: workspaceProjects } =
       readProjectsConfigurationFromProjectGraph(projectGraph);
-    const project = workspaceProjects[this.options.moduleFederationConfig.name];
-    if (!this.options.pathToManifestFile) {
-      this.options.pathToManifestFile = getDynamicMfManifestFile(
+    const project =
+      workspaceProjects[this._options.moduleFederationConfig.name];
+    if (!this._options.pathToManifestFile) {
+      this._options.pathToManifestFile = getDynamicMfManifestFile(
         project,
         workspaceRoot
       );
     } else {
       const userPathToManifestFile = join(
         workspaceRoot,
-        this.options.pathToManifestFile
+        this._options.pathToManifestFile
       );
       if (!existsSync(userPathToManifestFile)) {
         throw new Error(
           `The provided Module Federation manifest file path does not exist. Please check the file exists at "${userPathToManifestFile}".`
         );
-      } else if (extname(this.options.pathToManifestFile) !== '.json') {
+      } else if (extname(this._options.pathToManifestFile) !== '.json') {
         throw new Error(
           `The Module Federation manifest file must be a JSON. Please ensure the file at ${userPathToManifestFile} is a JSON.`
         );
       }
 
-      this.options.pathToManifestFile = userPathToManifestFile;
+      this._options.pathToManifestFile = userPathToManifestFile;
     }
 
     validateDevRemotes(
-      { devRemotes: this.options.devRemotes },
+      { devRemotes: this._options.devRemotes },
       workspaceProjects
     );
 
-    const remoteNames = this.options.devRemotes.map((r) => r);
+    const remoteNames = this._options.devRemotes.map((r) => r);
 
     const remotes = getRemotes(
       remoteNames,
-      this.options.skipRemotes,
-      this.options.moduleFederationConfig,
+      this._options.skipRemotes,
+      this._options.moduleFederationConfig,
       {
         projectName: project.name ?? '',
         projectGraph,
         root: workspaceRoot,
       },
-      this.options.pathToManifestFile
+      this._options.pathToManifestFile
     );
 
-    this.options.staticRemotesPort ??= remotes.staticRemotePort;
+    this._options.staticRemotesPort ??= remotes.staticRemotePort;
 
     // Set NX_MF_DEV_REMOTES for the Nx Runtime Library Control Plugin
     process.env['NX_MF_DEV_REMOTES'] = JSON.stringify([
@@ -162,9 +163,9 @@ export class NgRspackModuleFederationDevServerPlugin
     }
     const mappedLocationOfRemotes: Record<string, string> = {};
     for (const app of staticRemotesConfig.remotes) {
-      mappedLocationOfRemotes[app] = `http${this.options.ssl ? 's' : ''}://${
-        this.options.host
-      }:${this.options.staticRemotesPort}/${
+      mappedLocationOfRemotes[app] = `http${this._options.ssl ? 's' : ''}://${
+        this._options.host
+      }:${this._options.staticRemotesPort}/${
         staticRemotesConfig.config?.[app].urlSegment
       }`;
     }
@@ -179,8 +180,8 @@ export class NgRspackModuleFederationDevServerPlugin
           'run-many',
           `--target=build`,
           `--projects=${staticRemotesConfig.remotes.join(',')}`,
-          ...(this.options.parallel
-            ? [`--parallel=${this.options.parallel}`]
+          ...(this._options.parallel
+            ? [`--parallel=${this._options.parallel}`]
             : []),
         ],
         {
@@ -298,7 +299,7 @@ export class NgRspackModuleFederationDevServerPlugin
       pathToHttpServer,
       [
         commonOutputDirectory!,
-        `-p=${this.options.staticRemotesPort}`,
+        `-p=${this._options.staticRemotesPort}`,
         `-a=localhost`,
         `--cors`,
       ],
