@@ -1,3 +1,13 @@
+## 0.0.27 (2024-12-19)
+
+### 🩹 Fixes
+
+- **build:** renamed option key to _option ([#26](https://github.com/Coly010/ng-rspack-build/pull/26))
+
+### ❤️ Thank You
+
+- Shane Walker @swalker326
+
 ## 0.0.26 (2024-11-03)
 
 ### 🩹 Fixes
