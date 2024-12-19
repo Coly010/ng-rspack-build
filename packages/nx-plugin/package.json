@@ -19,13 +19,13 @@
     "Rspack"
   ],
   "dependencies": {
-    "@nx/devkit": "20.0.5",
-    "@nx/angular": "20.0.5",
-    "@nx/js": "20.0.5",
+    "@nx/devkit": "20.2.2",
+    "@nx/angular": "20.2.2",
+    "@nx/js": "20.2.2",
     "@swc/helpers": "~0.5.11",
     "@ng-rspack/build": "workspace:*",
-    "@rspack/core": "^1.0.10",
-    "@rspack/dev-server": "^1.0.9",
+    "@rspack/core": "^1.1.8",
+    "@rspack/dev-server": "^1.0.10",
     "webpack-merge": "^6.0.1"
   },
   "type": "commonjs",
