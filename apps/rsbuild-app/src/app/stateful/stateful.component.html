@@ -1,0 +1,11 @@
+<form>
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" [(ngModel)]="name" />
+  </div>
+  <div>
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" [(ngModel)]="age" />
+  </div>
+  <button type="submit" (click)="submit()">Submit</button>
+</form>
