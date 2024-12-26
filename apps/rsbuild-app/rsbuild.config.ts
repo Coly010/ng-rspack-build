@@ -1,10 +1,15 @@
 import { defineConfig } from '@rsbuild/core';
-import { rsbuildAngular } from './plugin/rsbuild-angular';
+import { rsbuild } from '@ng-rspack/build';
 import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
   root: __dirname,
-  plugins: [rsbuildAngular(), pluginSass()],
+  plugins: [
+    rsbuild.pluginAngular({
+      inlineStylesExtension: 'scss',
+    }),
+    pluginSass(),
+  ],
   mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   source: {
     preEntry: ['zone.js', './src/styles.scss'],

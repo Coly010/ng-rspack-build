@@ -51,6 +51,10 @@
       "types": "./src/index.d.ts",
       "default": "./src/index.js"
     },
+    "./rsbuild": {
+      "types": "./src/lib/rsbuild/index.d.ts",
+      "default": "./src/lib/rsbuild/index.js"
+    },
     "./rspack": {
       "types": "./src/lib/rspack/index.d.ts",
       "default": "./src/lib/rspack/index.js"
@@ -70,5 +74,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "types": "./src/lib/index.d.ts"
 }

@@ -4,7 +4,7 @@ import { FileReferenceTracker } from '@angular/build/src/tools/esbuild/angular/f
 // import { ComponentStylesheetBundler } from '@angular/build/src/tools/esbuild/angular/component-stylesheets';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { type AngularHostOptions } from '@angular/build/src/tools/angular/angular-host';
-import { maxWorkers } from '../utils/utils';
+import { maxWorkers } from '../../utils/utils';
 import { compile as sassCompile } from 'sass';
 import { normalize } from 'path';
 import {
