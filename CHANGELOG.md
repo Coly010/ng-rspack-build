@@ -1,3 +1,15 @@
+## 0.0.28 (2024-12-26)
+
+### 🚀 Features
+
+- **build:** refactor package to prepare for rsbuild ([6f52e19](https://github.com/Coly010/ng-rspack-build/commit/6f52e19))
+- **build:** add rsbuild plugin ([f212c42](https://github.com/Coly010/ng-rspack-build/commit/f212c42))
+- **build:** add rsbuild plugin ([59daf98](https://github.com/Coly010/ng-rspack-build/commit/59daf98))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.27 (2024-12-19)
 
 ### 🩹 Fixes
