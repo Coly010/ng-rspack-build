@@ -31,8 +31,8 @@
     "@rspack/dev-server": ">=1.0.5 <2.0.0"
   },
   "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "executors": "./executors.json",
   "generators": "./generators.json",
   "publishConfig": {

@@ -18,6 +18,7 @@ import {
   shareWorkspaceLibraries,
 } from './share';
 import { mapRemotes, mapRemotesForSSR } from './remotes';
+import { ProjectConfiguration } from '@nx/devkit';
 
 export type ResolvedModuleFederationConfig = {
   sharedLibraries: SharedWorkspaceLibraryConfig;
@@ -69,7 +70,7 @@ export function getFunctionDeterminateRemoteUrl(isServer = false) {
       return `${mappedStaticRemotesFromEnv[remote]}/${remoteEntry}`;
     }
 
-    let remoteConfiguration = null;
+    let remoteConfiguration: ProjectConfiguration | null = null;
     try {
       remoteConfiguration = readCachedProjectConfiguration(remote);
     } catch (e) {
@@ -115,8 +116,6 @@ export function getModuleFederationConfig(
     mappedRemotes: {},
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   if (!global.NX_GRAPH_CREATION) {
     const projectGraph = readCachedProjectGraph();
 

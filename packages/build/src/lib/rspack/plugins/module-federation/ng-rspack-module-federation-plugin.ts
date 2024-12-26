@@ -21,8 +21,6 @@ export class NgRspackModuleFederationPlugin implements RspackPluginInstance {
   ) {}
 
   apply(compiler: Compiler) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     if (global.NX_GRAPH_CREATION) {
       return;
     }

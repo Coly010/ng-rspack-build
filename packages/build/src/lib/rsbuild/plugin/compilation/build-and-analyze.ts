@@ -52,16 +52,16 @@ export async function buildAndAnalyze(
       host as CompilerHost,
       nextProgram as any
     );
-    const angularCompiler = angularProgram.compiler;
-    const typeScriptProgram = angularProgram.getTsProgram();
+    angularCompiler = angularProgram.compiler;
+    typeScriptProgram = angularProgram.getTsProgram();
     augmentProgramWithVersioning(typeScriptProgram);
 
-    const builder = (builderProgram =
+    builder = builderProgram =
       ts.createEmitAndSemanticDiagnosticsBuilderProgram(
         typeScriptProgram,
         host,
         builderProgram
-      ));
+      );
 
     await angularCompiler.analyzeAsync();
 
@@ -82,12 +82,12 @@ export async function buildAndAnalyze(
   if (!options.watchMode) {
     // When not in watch mode, the startup cost of the incremental analysis can be avoided by
     // using an abstract builder that only wraps a TypeScript program.
-    builder = ts.createAbstractBuilder(typeScriptProgram!, host);
+    builder = ts.createAbstractBuilder(typeScriptProgram, host);
   }
 
   const getTypeChecker = () => builder.getProgram().getTypeChecker();
   const fileEmitter = createFileEmitter(
-    builder!,
+    builder,
     mergeTransformers({}, angularCompiler!.prepareEmit().transformers),
     () => [],
     angularCompiler!

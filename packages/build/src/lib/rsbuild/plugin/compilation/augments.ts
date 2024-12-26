@@ -24,6 +24,7 @@
  */
 
 import * as ts from 'typescript';
+// @ts-ignore
 import { CompilerHost } from '@angular/compiler-cli';
 import { normalize } from 'path';
 import { createHash } from 'node:crypto';
@@ -41,6 +42,7 @@ export function augmentHostWithResources(
   } = {}
 ) {
   const resourceHost = host as CompilerHost;
+  // @ts-ignore
   const baseGetSourceFile = (
     resourceHost as ts.CompilerHost
   ).getSourceFile.bind(resourceHost);

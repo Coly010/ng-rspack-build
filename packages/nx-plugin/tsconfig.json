@@ -1,12 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "bundler"
-  },
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../build"
+    },
     {
       "path": "./tsconfig.lib.json"
     },

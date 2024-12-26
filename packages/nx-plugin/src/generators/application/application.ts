@@ -64,7 +64,7 @@ export async function applicationGenerator(
 
   const projectOffsetFromRoot = offsetFromRoot(projectRoot);
   const project = readProjectConfiguration(tree, projectName);
-  const buildOptions = project.targets.build;
+  const buildOptions = project.targets!.build;
   buildOptions.executor = '@ng-rspack/nx:build';
   const originalOutputPath = buildOptions.options.outputPath;
   buildOptions.options.outputPath = joinPathFragments(
@@ -100,11 +100,11 @@ export async function applicationGenerator(
     },
   };
 
-  const serveOptions = project.targets.serve;
+  const serveOptions = project.targets!.serve;
   serveOptions.executor = '@ng-rspack/nx:serve';
   serveOptions.options = { port: options.port ?? 4200 };
 
-  const serveStaticOptions = project.targets['serve-static'];
+  const serveStaticOptions = project.targets!['serve-static'];
   serveStaticOptions.options.staticFilePath = originalOutputPath;
 
   updateProjectConfiguration(tree, projectName, project);

@@ -69,9 +69,9 @@ export const pluginAngular = (
       );
 
       // Only store cache if in watch mode
-      if (watchMode) {
-        augmentHostWithCaching(host, sourceFileCache);
-      }
+      // if (watchMode) {
+      //   augmentHostWithCaching(host, sourceFileCache);
+      // }
 
       fileEmitter = await buildAndAnalyze(
         rootNames,
@@ -85,7 +85,7 @@ export const pluginAngular = (
 
     api.transform(
       { test: TS_EXT_REGEX },
-      ({ code, resource, addDependency }) => {
+      async ({ code, resource, addDependency }) => {
         if (resource.includes('.ts?')) {
           // Strip the query string off the ID
           // in case of a dynamically loaded file
@@ -105,7 +105,7 @@ export const pluginAngular = (
           }
         }
 
-        const typescriptResult = fileEmitter?.(resource);
+        const typescriptResult = await fileEmitter?.(resource);
 
         if (
           typescriptResult?.warnings &&
@@ -153,7 +153,7 @@ export const pluginAngular = (
       return javascriptTransformer
         .transformData(resource, code, false, false)
         .then((contents: Uint8Array) => {
-          return { code: Buffer.from(contents).toString('utf8') };
+          return Buffer.from(contents).toString('utf8');
         });
     });
   },

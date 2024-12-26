@@ -6,6 +6,8 @@ export default defineConfig({
   root: __dirname,
   plugins: [
     rsbuild.pluginAngular({
+      root: __dirname,
+      tsconfigPath: './tsconfig.app.json',
       inlineStylesExtension: 'scss',
     }),
     pluginSass(),

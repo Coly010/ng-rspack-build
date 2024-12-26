@@ -34,4 +34,4 @@ export interface EmitFileResult {
   warnings: (string | ts.DiagnosticMessageChain)[];
 }
 
-export type FileEmitter = (file: string) => EmitFileResult | undefined;
+export type FileEmitter = (file: string) => Promise<EmitFileResult | undefined>;

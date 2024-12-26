@@ -10,7 +10,7 @@ export async function* runExecutor(
   options: BuildExecutorSchema,
   context: ExecutorContext
 ) {
-  if (!isMode(options.mode)) {
+  if (!isMode(options.mode!)) {
     throw new Error(
       `Error: ${options.mode} must be one of: 'production', 'development' or 'none'.`
     );
@@ -22,31 +22,33 @@ export async function* runExecutor(
     success: boolean;
     outfile?: string;
   }>(async ({ next, done }) => {
-    compiler.run(async (err, stats: Stats | MultiStats) => {
-      compiler.close(() => {
-        if (err) {
-          logger.error(err);
-          next({ success: false });
-          return;
-        }
-        if (!compiler || !stats) {
-          logger.error(new Error('Compiler or stats not available'));
-          next({ success: false });
-          return;
-        }
+    compiler.run(
+      async (err: Error | null, stats: Stats | MultiStats | undefined) => {
+        compiler.close(() => {
+          if (err) {
+            logger.error(err);
+            next({ success: false });
+            return;
+          }
+          if (!compiler || !stats) {
+            logger.error(new Error('Compiler or stats not available'));
+            next({ success: false });
+            return;
+          }
 
-        const statsOptions = getStatsOptions(compiler);
-        const printedStats = stats.toString(statsOptions);
-        // Avoid extra empty line when `stats: 'none'`
-        if (printedStats) {
-          console.error(printedStats);
-        }
-        next({
-          success: !stats.hasErrors(),
+          const statsOptions = getStatsOptions(compiler);
+          const printedStats = stats.toString(statsOptions);
+          // Avoid extra empty line when `stats: 'none'`
+          if (printedStats) {
+            console.error(printedStats);
+          }
+          next({
+            success: !stats.hasErrors(),
+          });
+          done();
         });
-        done();
-      });
-    });
+      }
+    );
   });
 
   yield* iterable;

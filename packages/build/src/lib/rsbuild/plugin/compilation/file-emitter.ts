@@ -26,7 +26,6 @@
 import * as ts from 'typescript';
 import { NgtscProgram } from '@angular/compiler-cli';
 import { FileEmitter } from '../models';
-import { JS_EXT_REGEX } from '../utils/regex-filters';
 
 export function createFileEmitter(
   program: ts.BuilderProgram,
@@ -34,7 +33,7 @@ export function createFileEmitter(
   onAfterEmit?: (sourceFile: ts.SourceFile) => void,
   angularCompiler?: NgtscProgram['compiler']
 ): FileEmitter {
-  return (file: string) => {
+  return async (file: string) => {
     const sourceFile = program.getSourceFile(file);
     if (!sourceFile) {
       return undefined;
@@ -56,7 +55,7 @@ export function createFileEmitter(
     program.emit(
       sourceFile,
       (filename, data) => {
-        if (JS_EXT_REGEX.test(filename)) {
+        if (/\.[cm]?js$/.test(filename)) {
           content = data;
         }
       },

@@ -44,36 +44,36 @@
     "nx": ">=20.0.0 <21.0.0"
   },
   "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "types": "./dist/lib/index.d.ts",
+      "default": "./dist/lib/index.js"
     },
     "./rsbuild": {
-      "types": "./src/lib/rsbuild/index.d.ts",
-      "default": "./src/lib/rsbuild/index.js"
+      "types": "./dist/lib/rsbuild/index.d.ts",
+      "default": "./dist/lib/rsbuild/index.js"
     },
     "./rspack": {
-      "types": "./src/lib/rspack/index.d.ts",
-      "default": "./src/lib/rspack/index.js"
+      "types": "./dist/lib/rspack/index.d.ts",
+      "default": "./dist/lib/rspack/index.js"
     },
     "./rspack/loaders/hmr-loader": {
-      "types": "./src/lib/rspack/loaders/hmr/hmr-loader.d.ts",
-      "default": "./src/lib/rspack/loaders/hmr/hmr-loader.js"
+      "types": "./dist/lib/rspack/loaders/hmr/hmr-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/hmr/hmr-loader.js"
     },
     "./rspack/loaders/js-loader": {
-      "types": "./src/lib/rspack/loaders/js-loader.d.ts",
-      "default": "./src/lib/rspack/loaders/js-loader.js"
+      "types": "./dist/lib/rspack/loaders/js-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/js-loader.js"
     },
     "./rspack/loaders/angular-loader": {
-      "types": "./src/lib/rspack/loaders/angular-loader.d.ts",
-      "default": "./src/lib/rspack/loaders/angular-loader.js"
+      "types": "./dist/lib/rspack/loaders/angular-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/angular-loader.js"
     }
   },
   "publishConfig": {
     "access": "public"
   },
-  "types": "./src/lib/index.d.ts"
+  "types": "./dist/lib/index.d.ts"
 }

@@ -15,8 +15,8 @@ function extractRemoteProjectsFromConfig(
   config: ModuleFederationConfig,
   pathToManifestFile?: string
 ) {
-  const remotes = [];
-  const dynamicRemotes = [];
+  const remotes: string[] = [];
+  const dynamicRemotes: string[] = [];
   if (pathToManifestFile && existsSync(pathToManifestFile)) {
     const moduleFederationManifestJson = readFileSync(
       pathToManifestFile,
