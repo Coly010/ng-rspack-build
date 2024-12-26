@@ -7,12 +7,10 @@
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/build",
-        "main": "packages/build/src/index.ts",
+        "main": "packages/build/src/lib/index.ts",
         "tsConfig": "packages/build/tsconfig.lib.json",
         "assets": [
           "packages/build/*.md",
@@ -22,9 +20,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": [
-        "{options.reportsDirectory}"
-      ],
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
         "reportsDirectory": "../../coverage/packages/build"
       }

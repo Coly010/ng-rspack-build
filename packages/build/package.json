@@ -44,6 +44,28 @@
   "type": "commonjs",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./rspack": {
+      "types": "./src/lib/rspack/index.d.ts",
+      "default": "./src/lib/rspack/index.js"
+    },
+    "./rspack/loaders/hmr-loader": {
+      "types": "./src/lib/rspack/loaders/hmr/hmr-loader.d.ts",
+      "default": "./src/lib/rspack/loaders/hmr/hmr-loader.js"
+    },
+    "./rspack/loaders/js-loader": {
+      "types": "./src/lib/rspack/loaders/js-loader.d.ts",
+      "default": "./src/lib/rspack/loaders/js-loader.js"
+    },
+    "./rspack/loaders/angular-loader": {
+      "types": "./src/lib/rspack/loaders/angular-loader.d.ts",
+      "default": "./src/lib/rspack/loaders/angular-loader.js"
+    }
+  },
   "publishConfig": {
     "access": "public"
   }

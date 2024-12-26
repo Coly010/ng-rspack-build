@@ -116,7 +116,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
           ? [
               {
                 loader: require.resolve(
-                  '@ng-rspack/build/src/lib/loaders/hmr/hmr-loader.js'
+                  '@ng-rspack/build/rspack/loaders/hmr/hmr-loader'
                 ),
                 include: [join(options.root, options.main)],
               },
@@ -151,7 +151,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
             },
             {
               loader: require.resolve(
-                '@ng-rspack/build/src/lib/loaders/angular-loader.js'
+                '@ng-rspack/build/rspack/loaders/angular-loader'
               ),
             },
           ],
@@ -161,7 +161,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
           use: [
             {
               loader: require.resolve(
-                '@ng-rspack/build/src/lib/loaders/js-loader.js'
+                '@ng-rspack/build/rspack/loaders/js-loader'
               ),
             },
           ],

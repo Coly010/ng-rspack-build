@@ -2,7 +2,7 @@ import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { registerTsProject } from '@nx/js/src/internal';
 import { clearRequireCache } from '@nx/devkit/src/utils/config-utils';
 import { Configuration } from '@rspack/core';
-import { createConfig } from '@ng-rspack/build';
+import { createConfig } from '@ng-rspack/build/rspack';
 import { join } from 'path';
 import { merge as rspackMerge } from 'webpack-merge';
 import { BuildExecutorSchema } from '../executors/build/schema';
@@ -15,7 +15,7 @@ export async function createRspackConfig(
 
   process.env['NODE_ENV'] = options.mode;
 
-  const createdConfig = createConfig({
+  const createdConfig: Configuration = createConfig({
     root: joinPathFragments(workspaceRoot, root),
     name,
     main: options.main,

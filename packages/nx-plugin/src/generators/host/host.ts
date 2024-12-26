@@ -173,7 +173,7 @@ function removeWebpackConfigFiles(tree: Tree, projectRoot: string) {
 }
 
 function addRspackConfig(tree: Tree, projectRoot: string) {
-  const rspackConfigContents = `import { NgRspackModuleFederationPlugin } from '@ng-rspack/build';
+  const rspackConfigContents = `import { NgRspackModuleFederationPlugin } from '@ng-rspack/build/rspack';
   import config from './module-federation.config';
 
   export default {
