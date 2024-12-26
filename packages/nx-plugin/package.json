@@ -2,7 +2,7 @@
   "name": "@ng-rspack/nx",
   "private": false,
   "description": "Nx Plugin for building Angular applications with Rspack.",
-  "version": "0.0.1",
+  "version": "0.0.29",
   "author": "Colum Ferry",
   "license": "MIT",
   "bugs": {
@@ -23,7 +23,7 @@
     "@nx/angular": "20.2.2",
     "@nx/js": "20.2.2",
     "@swc/helpers": "~0.5.11",
-    "@ng-rspack/build": "workspace:*",
+    "@ng-rspack/build": "0.0.29",
     "webpack-merge": "^6.0.1"
   },
   "peerDependencies": {
