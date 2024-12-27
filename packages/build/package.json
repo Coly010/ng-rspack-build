@@ -17,7 +17,7 @@
     "Angular",
     "Rspack"
   ],
-  "version": "0.0.32",
+  "version": "0.0.28",
   "scripts": {
     "postinstall": "node ./src/lib/patch/patch-angular-build.js"
   },
