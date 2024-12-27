@@ -2,7 +2,7 @@ import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { registerTsProject } from '@nx/js/src/internal';
 import { clearRequireCache } from '@nx/devkit/src/utils/config-utils';
 import { Configuration } from '@rspack/core';
-import { createConfig } from '@ng-rspack/build';
+import { rspack } from '@ng-rspack/build';
 import { join } from 'path';
 import { merge as rspackMerge } from 'webpack-merge';
 import { BuildExecutorSchema } from '../executors/build/schema';
@@ -11,13 +11,13 @@ export async function createRspackConfig(
   options: BuildExecutorSchema & { port?: number },
   context: ExecutorContext
 ): Promise<Configuration> {
-  const { root, name } = context.projectGraph.nodes[context.projectName].data;
+  const { root, name } = context.projectGraph.nodes[context.projectName!].data;
 
   process.env['NODE_ENV'] = options.mode;
 
-  const createdConfig = createConfig({
+  const createdConfig: Configuration = rspack.createConfig({
     root: joinPathFragments(workspaceRoot, root),
-    name,
+    name: name!,
     main: options.main,
     index: options.index,
     tsConfig: options.tsConfig,

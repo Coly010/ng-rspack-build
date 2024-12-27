@@ -17,22 +17,27 @@
     "Angular",
     "Rspack"
   ],
-  "version": "0.0.1",
+  "version": "0.0.32",
   "scripts": {
     "postinstall": "node ./src/lib/patch/patch-angular-build.js"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.11",
     "sass-loader": "^16.0.2",
     "sass-embedded": "^1.79.3",
     "express": "4.21.1",
-    "http-proxy-middleware": "3.0.3"
+    "http-proxy-middleware": "3.0.3",
+    "ts-morph": "^24.0.0",
+    "tslib": "^2.3.0",
+    "typescript": "5.6.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.21"
   },
   "peerDependencies": {
+    "@angular/compiler-cli": ">=19.0.0 <20.0.0",
+    "@angular-devkit/build-angular": ">=19.0.0 <20.0.0",
     "@rspack/core": ">=1.0.5 <2.0.0",
+    "@rsbuild/core": ">=1.0.5 <2.0.0",
     "@angular/build": ">=18.0.0 <20.0.0",
     "sass": "^1.79.3",
     "@module-federation/enhanced": "^0.8.5",
@@ -42,9 +47,36 @@
     "nx": ">=20.0.0 <21.0.0"
   },
   "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib/index.d.ts",
+      "default": "./dist/lib/index.js"
+    },
+    "./rsbuild": {
+      "types": "./dist/lib/rsbuild/index.d.ts",
+      "default": "./dist/lib/rsbuild/index.js"
+    },
+    "./rspack": {
+      "types": "./dist/lib/rspack/index.d.ts",
+      "default": "./dist/lib/rspack/index.js"
+    },
+    "./rspack/loaders/hmr-loader": {
+      "types": "./dist/lib/rspack/loaders/hmr/hmr-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/hmr/hmr-loader.js"
+    },
+    "./rspack/loaders/js-loader": {
+      "types": "./dist/lib/rspack/loaders/js-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/js-loader.js"
+    },
+    "./rspack/loaders/angular-loader": {
+      "types": "./dist/lib/rspack/loaders/angular-loader.d.ts",
+      "default": "./dist/lib/rspack/loaders/angular-loader.js"
+    }
+  },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "types": "./dist/lib/index.d.ts"
 }

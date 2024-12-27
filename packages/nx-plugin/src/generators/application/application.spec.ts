@@ -22,7 +22,7 @@ describe('Application Generator', () => {
 
     // ASSERT
     const project = readProjectConfiguration(tree, 'demo');
-    expect(project.targets.build).toMatchInlineSnapshot(`
+    expect(project.targets?.build).toMatchInlineSnapshot(`
       {
         "configurations": {
           "development": {
@@ -54,7 +54,7 @@ describe('Application Generator', () => {
         ],
       }
     `);
-    expect(project.targets.serve).toMatchInlineSnapshot(`
+    expect(project.targets?.serve).toMatchInlineSnapshot(`
       {
         "configurations": {
           "development": {
@@ -71,7 +71,7 @@ describe('Application Generator', () => {
         },
       }
     `);
-    expect(project.targets['serve-static']).toMatchInlineSnapshot(`
+    expect(project.targets?.['serve-static']).toMatchInlineSnapshot(`
       {
         "executor": "@nx/web:file-server",
         "options": {

@@ -5,38 +5,6 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/nx",
-        "main": "packages/nx-plugin/src/index.ts",
-        "tsConfig": "packages/nx-plugin/tsconfig.lib.json",
-        "assets": [
-          "packages/nx-plugin/*.md",
-          {
-            "input": "./packages/nx-plugin/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/nx-plugin/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/nx-plugin",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/nx-plugin",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
