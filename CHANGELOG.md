@@ -1,3 +1,7 @@
+## 0.0.34 (2024-12-27)
+
+This was a version bump only, there were no code changes.
+
 ## 0.0.32 (2024-12-27)
 
 ### 🩹 Fixes
