@@ -50,7 +50,7 @@ export async function buildAndAnalyze(
       rootNames,
       compilerOptions,
       host as CompilerHost,
-      nextProgram as any
+      nextProgram as NgtscProgram
     );
     angularCompiler = angularProgram.compiler;
     typeScriptProgram = angularProgram.getTsProgram();
@@ -72,7 +72,7 @@ export async function buildAndAnalyze(
         rootNames,
         compilerOptions,
         host,
-        nextProgram as any
+        nextProgram as never
       );
 
     typeScriptProgram = builder.getProgram();

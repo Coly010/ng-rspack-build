@@ -1,6 +1,4 @@
-export const ngRspackBuildVersion =
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require(require.resolve('@ng-rspack/build/package.json')).version;
+export const ngRspackBuildVersion = require('../../package.json').version;
 
 export const sassVersion = '^1.79.3';
 export const sassLoaderVersion = '^16.0.2';

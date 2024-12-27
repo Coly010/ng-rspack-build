@@ -22,9 +22,9 @@
     "@nx/devkit": "20.2.2",
     "@nx/angular": "20.2.2",
     "@nx/js": "20.2.2",
-    "@swc/helpers": "~0.5.11",
     "@ng-rspack/build": "0.0.31",
-    "webpack-merge": "^6.0.1"
+    "webpack-merge": "^6.0.1",
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
     "@rspack/core": ">=1.0.5 <2.0.0",

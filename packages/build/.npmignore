@@ -6,5 +6,6 @@ tsconfig.json
 tsconfig.lib.json
 tsconfig.spec.json
 vite.config.ts
-src
+src/**/*.ts
+!src/lib/patch
 .swcrc

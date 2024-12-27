@@ -1,8 +1,0 @@
-{
-  "name": "rsbuild-app",
-  "version": "0.0.1",
-  "private": true,
-  "devDependencies": {
-    "@ng-rspack/build": "workspace:*"
-  }
-}

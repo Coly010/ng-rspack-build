@@ -7,9 +7,6 @@
       "path": "./integration-testing/base"
     },
     {
-      "path": "./apps/rsbuild-app-e2e"
-    },
-    {
       "path": "./packages/nx-plugin"
     },
     {

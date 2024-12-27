@@ -24,7 +24,6 @@
  */
 
 import * as ts from 'typescript';
-// @ts-ignore
 import { CompilerHost } from '@angular/compiler-cli';
 import { normalize } from 'path';
 import { createHash } from 'node:crypto';
@@ -42,7 +41,6 @@ export function augmentHostWithResources(
   } = {}
 ) {
   const resourceHost = host as CompilerHost;
-  // @ts-ignore
   const baseGetSourceFile = (
     resourceHost as ts.CompilerHost
   ).getSourceFile.bind(resourceHost);
@@ -50,7 +48,7 @@ export function augmentHostWithResources(
   resourceHost.readResource = async function (fileName: string) {
     const filePath = normalize(fileName);
 
-    const content = (this as any).readFile(filePath);
+    const content = this.readFile(filePath);
 
     if (content === undefined) {
       throw new Error('Unable to locate component resource: ' + fileName);
@@ -69,7 +67,7 @@ export function augmentHostWithResources(
       // Resource file only exists for external stylesheets
       const filename =
         context.resourceFile ??
-        `${context.containingFile.replace(/\.ts$/, (...args) => {
+        `${context.containingFile.replace(/\.ts$/, () => {
           return `.${options?.inlineStylesExtension}`;
         })}`;
 

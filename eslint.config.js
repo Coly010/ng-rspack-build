@@ -1,6 +1,7 @@
 const nx = require('@nx/eslint-plugin');
 
 module.exports = [
+  { ignores: ['**/*.d.ts', '**/*.d.ts.map', '**/dist'] },
   {
     files: ['**/*.json'],
     // Override or add rules here
