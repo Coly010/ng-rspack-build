@@ -1,3 +1,13 @@
+## 0.0.32 (2024-12-27)
+
+### 🩹 Fixes
+
+- **build:** dependencies ([69fbb4a](https://github.com/Coly010/ng-rspack-build/commit/69fbb4a))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.31 (2024-12-26)
 
 This was a version bump only, there were no code changes.

@@ -17,6 +17,7 @@ module.exports = [
             'sass-embedded',
             '@angular/core',
             'rxjs',
+            '@ng-rspack/build',
           ],
         },
       ],
