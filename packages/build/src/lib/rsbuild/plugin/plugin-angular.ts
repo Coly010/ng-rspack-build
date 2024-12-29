@@ -28,6 +28,7 @@ export const pluginAngular = (
     let nextProgram: NgtscProgram | undefined | ts.Program;
     let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
     let fileEmitter: FileEmitter;
+    let isServer = false;
     const sourceFileCache = new SourceFileCache();
     const styleUrlsResolver = new StyleUrlsResolver();
     const templateUrlsResolver = new TemplateUrlsResolver();
@@ -48,6 +49,11 @@ export const pluginAngular = (
       });
     }
 
+    api.modifyRspackConfig((config, { environment }) => {
+      isServer = environment.name === 'server';
+      return config;
+    });
+
     api.onBeforeStartDevServer(() => {
       watchMode = true;
     });
@@ -65,7 +71,8 @@ export const pluginAngular = (
     api.onBeforeEnvironmentCompile(async () => {
       const { rootNames, compilerOptions, host } = setupCompilation(
         config,
-        pluginOptions
+        pluginOptions,
+        isServer
       );
 
       // Only store cache if in watch mode
@@ -150,6 +157,9 @@ export const pluginAngular = (
     );
 
     api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
+      if (!resource.includes('@angular')) {
+        return code;
+      }
       return javascriptTransformer
         .transformData(resource, code, false, false)
         .then((contents: Uint8Array) => {
