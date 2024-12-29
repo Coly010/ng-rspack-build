@@ -7,11 +7,12 @@ import { PluginAngularOptions } from '../models';
 
 export function setupCompilation(
   config: RsbuildConfig,
-  options: PluginAngularOptions
+  options: PluginAngularOptions,
+  isServer = false
 ) {
   const isProd = config.mode === 'production';
 
-  const { options: tsCompilerOptions, rootNames: rn } =
+  const { options: tsCompilerOptions, rootNames } =
     compilerCli.readConfiguration(
       config.source?.tsconfigPath ?? options.tsconfigPath,
       {
@@ -47,6 +48,10 @@ export function setupCompilation(
       isProd,
     });
   }
+
+  const rn = rootNames.filter((n) =>
+    isServer ? !n.endsWith('main.ts') : n.endsWith('main.ts')
+  );
 
   return {
     rootNames: rn,
