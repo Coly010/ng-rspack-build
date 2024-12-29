@@ -4,7 +4,16 @@ module.exports = {
     'scope-enum': () => [
       2,
       'always',
-      ['repo', 'testing', 'ci', 'build', 'nx', 'nx-e2e', 'release'],
+      [
+        'repo',
+        'testing',
+        'ci',
+        'build',
+        'nx',
+        'rsbuild-plugin-angular',
+        'nx-e2e',
+        'release',
+      ],
     ],
   },
 };
