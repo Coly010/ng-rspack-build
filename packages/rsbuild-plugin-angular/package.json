@@ -1,6 +1,6 @@
 {
   "name": "@ng-rsbuild/plugin-angular",
-  "version": "19.0.0-alpha.0",
+  "version": "19.0.0-alpha.1",
   "scripts": {
     "postinstall": "node ./dist/lib/patch/patch-angular-build.js"
   },
@@ -29,7 +29,20 @@
   "type": "commonjs",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
-  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./ssr": {
+      "types": "./dist/lib/ssr/server.d.ts",
+      "default": "./dist/lib/ssr/server.js"
+    }
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "nx": {
     "sourceRoot": "packages/rsbuild-plugin-angular/src",
     "projectType": "library",

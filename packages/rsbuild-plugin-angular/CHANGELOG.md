@@ -1,3 +1,7 @@
+## 19.0.0-alpha.1 (2024-12-29)
+
+This was a version bump only for rsbuild-plugin-angular to align it with other projects, there were no code changes.
+
 ## 19.0.0-alpha.0 (2024-12-29)
 
 ### 🚀 Features
