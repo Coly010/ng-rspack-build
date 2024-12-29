@@ -1,3 +1,14 @@
+## 0.0.35 (2024-12-29)
+
+### 🚀 Features
+
+- **build:** add ssr support ([#29](https://github.com/Coly010/ng-rspack-build/pull/29))
+- **repo:** add playground apps for testing ([#28](https://github.com/Coly010/ng-rspack-build/pull/28))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 0.0.34 (2024-12-27)
 
 This was a version bump only, there were no code changes.
