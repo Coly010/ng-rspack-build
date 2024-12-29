@@ -44,9 +44,6 @@ export default defineConfig({
           root: 'dist/server',
         },
       },
-      html: {
-        template: './src/index.html',
-      },
     },
   },
 });

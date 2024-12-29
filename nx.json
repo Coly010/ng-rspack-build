@@ -62,7 +62,7 @@
         "skipLockFileUpdate": true,
         "currentVersionResolver": "git-tag"
       },
-      "preVersionCommand": "pnpm nx run-many -t build --exclude=apps/**"
+      "preVersionCommand": "pnpm nx run-many -t build --exclude=\"apps/**\" --skip-sync"
     }
   },
   "plugins": [
@@ -88,7 +88,7 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "exclude": ["apps/**"],
+      "include": ["packages/**"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
