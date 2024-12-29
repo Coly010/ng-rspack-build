@@ -1,6 +1,6 @@
 {
   "name": "@ng-rsbuild/plugin-angular",
-  "version": "19.0.0-alpha.1",
+  "version": "19.0.0-alpha.2",
   "scripts": {
     "postinstall": "node ./dist/lib/patch/patch-angular-build.js"
   },
