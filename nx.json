@@ -52,7 +52,12 @@
   },
   "release": {
     "projects": ["packages/*"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "release/{projectName}/{version}",
     "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github"
+      },
       "workspaceChangelog": {
         "createRelease": "github"
       }
