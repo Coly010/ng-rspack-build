@@ -6,10 +6,77 @@
   "sourceRoot": "rsbuild/ssr/css/src",
   "tags": [],
   "targets": {
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+    "build": {
+      "dependsOn": ["browser", "server"],
+      "command": "echo \"Build complete!\"",
+      "configurations": {
+        "production": {
+          "env": {
+            "NODE_ENV": "production"
+          }
+        },
+        "development": {
+          "env": {
+            "NODE_ENV": "development"
+          }
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "browser": {
+      "inputs": [
+        "default",
+        {
+          "env": "NODE_ENV"
+        }
+      ],
+      "command": "npx rsbuild build --environment browser",
       "options": {
-        "buildTarget": "rsbuild-ssr-css:build"
+        "cwd": "apps/rsbuild/ssr/css"
+      },
+      "configurations": {
+        "production": {
+          "env": {
+            "NODE_ENV": "production"
+          }
+        },
+        "development": {
+          "env": {
+            "NODE_ENV": "development"
+          }
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "server": {
+      "inputs": [
+        "default",
+        {
+          "env": "NODE_ENV"
+        }
+      ],
+      "command": "npx rsbuild build --environment server",
+      "options": {
+        "cwd": "apps/rsbuild/ssr/css"
+      },
+      "configurations": {
+        "production": {
+          "env": {
+            "NODE_ENV": "production"
+          }
+        },
+        "development": {
+          "env": {
+            "NODE_ENV": "development"
+          }
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "start": {
+      "command": "node dist/server/server.js",
+      "options": {
+        "cwd": "apps/rsbuild/ssr/css"
       }
     },
     "lint": {
@@ -20,15 +87,6 @@
       "outputs": ["{options.reportsDirectory}"],
       "options": {
         "reportsDirectory": "../coverage/css"
-      }
-    },
-    "serve-static": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "rsbuild-ssr-css:build",
-        "port": 4200,
-        "staticFilePath": "dist/css/browser",
-        "spa": true
       }
     }
   }

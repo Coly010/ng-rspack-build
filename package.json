@@ -25,6 +25,7 @@
     "@module-federation/enhanced": "0.8.5",
     "@module-federation/sdk": "0.8.5",
     "@ng-rspack/build": "^0.0.35",
+    "@ng-rsbuild/plugin-angular": "19.0.0-alpha.3",
     "@nx/angular": "20.2.2",
     "@nx/eslint": "20.2.2",
     "@nx/eslint-plugin": "20.2.2",
