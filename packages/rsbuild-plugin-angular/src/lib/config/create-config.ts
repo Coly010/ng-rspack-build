@@ -1,11 +1,18 @@
-import { defineConfig } from '@rsbuild/core';
+import {
+  defineConfig,
+  type RsbuildConfig,
+  mergeRsbuildConfig,
+} from '@rsbuild/core';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
 
-export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
+export function createConfig(
+  pluginOptions: Partial<PluginAngularOptions>,
+  additionalConfig?: Partial<RsbuildConfig>
+) {
   const normalizedOptions = normalizeOptions(pluginOptions);
   const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
   const serverPolyfills = [
@@ -14,20 +21,31 @@ export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
     '@angular/platform-server/init',
   ];
 
-  const hasServer = Boolean(
-    normalizedOptions.server &&
-      existsSync(resolve(normalizedOptions.root, normalizedOptions.server))
-  );
+  const hasServer =
+    pluginOptions.server &&
+    Boolean(
+      normalizedOptions.server &&
+        existsSync(resolve(normalizedOptions.root, normalizedOptions.server))
+    );
 
   const isProd = process.env.NODE_ENV === 'production';
 
-  return defineConfig({
+  const rsbuildPluginAngularConfig = defineConfig({
     root: normalizedOptions.root,
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
     plugins: [pluginAngular(normalizedOptions)],
     mode: isProd ? 'production' : 'development',
+    server: {
+      host: 'localhost',
+      port: 4200,
+      htmlFallback: false,
+      historyApiFallback: {
+        index: '/index.html',
+        rewrites: [{ from: /^\/$/, to: 'index.html' }],
+      },
+    },
     environments: {
       browser: {
         source: {
@@ -75,4 +93,7 @@ export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
         : {}),
     },
   });
+
+  const userDefinedConfig = defineConfig(additionalConfig || {});
+  return mergeRsbuildConfig(rsbuildPluginAngularConfig, userDefinedConfig);
 }

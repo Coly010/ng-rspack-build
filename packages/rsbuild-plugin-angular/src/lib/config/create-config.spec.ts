@@ -30,6 +30,9 @@ describe('createConfig', () => {
               "assetsInclude": [
                 "./public",
               ],
+              "define": {
+                "ngJitMode": undefined,
+              },
               "entry": {
                 "index": "./src/main.ts",
               },
@@ -40,7 +43,7 @@ describe('createConfig', () => {
             },
           },
         },
-        "mode": "production",
+        "mode": "development",
         "plugins": [
           {
             "name": "plugin-angular",
@@ -51,6 +54,20 @@ describe('createConfig', () => {
           },
         ],
         "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
+        "server": {
+          "historyApiFallback": {
+            "index": "/index.html",
+            "rewrites": [
+              {
+                "from": /\\^\\\\/\\$/,
+                "to": "index.html",
+              },
+            ],
+          },
+          "host": "localhost",
+          "htmlFallback": false,
+          "port": 4200,
+        },
         "source": {
           "tsconfigPath": "./tsconfig.app.json",
         },
@@ -90,6 +107,9 @@ describe('createConfig', () => {
               "assetsInclude": [
                 "./public",
               ],
+              "define": {
+                "ngJitMode": undefined,
+              },
               "entry": {
                 "index": "./src/main.ts",
               },
@@ -104,19 +124,25 @@ describe('createConfig', () => {
               "distPath": {
                 "root": "dist/server",
               },
+              "polyfill": "entry",
               "target": "node",
             },
             "source": {
+              "define": {
+                "ngJitMode": undefined,
+                "ngServerMode": true,
+              },
               "entry": {
                 "server": "./src/server.ts",
               },
               "preEntry": [
-                "zone.js",
+                "zone.js/node",
+                "@angular/platform-server/init",
               ],
             },
           },
         },
-        "mode": "production",
+        "mode": "development",
         "plugins": [
           {
             "name": "plugin-angular",
@@ -127,6 +153,20 @@ describe('createConfig', () => {
           },
         ],
         "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
+        "server": {
+          "historyApiFallback": {
+            "index": "/index.html",
+            "rewrites": [
+              {
+                "from": /\\^\\\\/\\$/,
+                "to": "index.html",
+              },
+            ],
+          },
+          "host": "localhost",
+          "htmlFallback": false,
+          "port": 4200,
+        },
         "source": {
           "tsconfigPath": "./tsconfig.app.json",
         },
