@@ -3,7 +3,12 @@ import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, join, resolve } from 'node:path';
 
-export function createServer(bootstrap: any) {
+interface RsbuildAngularServer {
+  app: express.Express;
+  listen: (port?: number) => void;
+}
+
+export function createServer(bootstrap: any): RsbuildAngularServer {
   const serverDistFolder = dirname(__filename);
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const staticFolder = resolve(browserDistFolder, 'static');
@@ -41,8 +46,18 @@ export function createServer(bootstrap: any) {
       .catch((err) => next(err));
   });
 
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
+  return {
+    app,
+    listen: (
+      port: number = process.env['PORT']
+        ? Number.parseInt(process.env['PORT'], 10)
+        : 4000
+    ) => {
+      app.listen(port, () => {
+        console.log(
+          `Node Express server listening on http://localhost:${port}`
+        );
+      });
+    },
+  };
 }
