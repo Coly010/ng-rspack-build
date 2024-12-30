@@ -1,3 +1,14 @@
+## 19.0.0-alpha.3 (2024-12-30)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** expose express app from createServer for modification ([002d602](https://github.com/Coly010/ng-rspack-build/commit/002d602))
+- **rsbuild-plugin-angular:** correctly set ng env vars ([b81c6d8](https://github.com/Coly010/ng-rspack-build/commit/b81c6d8))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.2 (2024-12-29)
 
 ### 🚀 Features
