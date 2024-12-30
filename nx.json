@@ -57,14 +57,10 @@
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github"
-      },
-      "workspaceChangelog": {
-        "createRelease": "github"
       }
     },
     "version": {
       "generatorOptions": {
-        "skipLockFileUpdate": true,
         "currentVersionResolver": "git-tag"
       },
       "preVersionCommand": "pnpm nx run-many -t build --exclude=\"apps/**\" --skip-sync"
