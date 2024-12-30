@@ -1,3 +1,13 @@
+## 19.0.0-alpha.4 (2024-12-30)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** update dev server config ([efde6fc](https://github.com/Coly010/ng-rspack-build/commit/efde6fc))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.3 (2024-12-30)
 
 ### 🚀 Features
