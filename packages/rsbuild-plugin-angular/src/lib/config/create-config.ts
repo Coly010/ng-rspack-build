@@ -7,11 +7,19 @@ import { pluginAngular } from '../plugin/plugin-angular';
 
 export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
   const normalizedOptions = normalizeOptions(pluginOptions);
+  const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
+  const serverPolyfills = [
+    ...normalizedOptions.polyfills,
+    'zone.js/node',
+    '@angular/platform-server/init',
+  ];
 
   const hasServer = Boolean(
     normalizedOptions.server &&
       existsSync(resolve(normalizedOptions.root, normalizedOptions.server))
   );
+
+  const isProd = process.env.NODE_ENV === 'production';
 
   return defineConfig({
     root: normalizedOptions.root,
@@ -19,18 +27,19 @@ export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
     plugins: [pluginAngular(normalizedOptions)],
-    mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
+    mode: isProd ? 'production' : 'development',
     environments: {
       browser: {
         source: {
-          preEntry: [
-            ...normalizedOptions.polyfills,
-            ...normalizedOptions.styles,
-          ],
+          preEntry: [...browserPolyfills, ...normalizedOptions.styles],
           entry: {
             index: normalizedOptions.browser,
           },
           assetsInclude: normalizedOptions.assets,
+          define: {
+            ...(isProd ? { ngDevMode: 'false' } : undefined),
+            ngJitMode: pluginOptions.jit,
+          },
         },
         output: {
           target: 'web',
@@ -46,13 +55,19 @@ export function createConfig(pluginOptions: Partial<PluginAngularOptions>) {
         ? {
             server: {
               source: {
-                preEntry: [...normalizedOptions.polyfills],
+                preEntry: [...serverPolyfills],
                 entry: {
                   server: normalizedOptions.ssrEntry,
+                },
+                define: {
+                  ngServerMode: true,
+                  ...(isProd ? { ngDevMode: 'false' } : undefined),
+                  ngJitMode: pluginOptions.jit,
                 },
               },
               output: {
                 target: 'node',
+                polyfill: 'entry',
                 distPath: { root: 'dist/server' },
               },
             },

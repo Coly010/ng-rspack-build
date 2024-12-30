@@ -10,7 +10,7 @@ export function normalizeOptions(
     browser: options.browser ?? './src/main.ts',
     server: options.server ?? './src/main.server.ts',
     ssrEntry: options.ssrEntry ?? './src/server.ts',
-    polyfills: options.polyfills ?? ['zone.js'],
+    polyfills: options.polyfills ?? [],
     assets: options.assets ?? ['./public'],
     styles: options.styles ?? ['./src/styles.css'],
     scripts: options.scripts ?? [],

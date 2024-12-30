@@ -167,5 +167,13 @@ export const pluginAngular = (
           return Buffer.from(contents).toString('utf8');
         });
     });
+
+    const regexForMainServer = new RegExp(
+      `${pluginOptions.server.replace('./', '')}`
+    );
+    api.transform({ test: regexForMainServer }, ({ code }) => {
+      code = `globalThis['ngServerMode'] = true;\n${code}`;
+      return code;
+    });
   },
 });
