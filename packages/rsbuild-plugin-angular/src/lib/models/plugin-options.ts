@@ -2,8 +2,8 @@ export interface PluginAngularOptions {
   root: string;
   index: string;
   browser: string;
-  server: string;
-  ssrEntry: string;
+  server?: string;
+  ssrEntry?: string;
   polyfills: string[];
   assets: string[];
   styles: string[];
@@ -11,4 +11,5 @@ export interface PluginAngularOptions {
   jit: boolean;
   inlineStylesExtension: 'css' | 'scss' | 'sass' | 'less';
   tsconfigPath: string;
+  hasServer: boolean;
 }

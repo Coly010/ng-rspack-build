@@ -15,6 +15,7 @@ describe('createConfig', () => {
 
     expect(config).toMatchInlineSnapshot(`
       {
+        "dev": {},
         "environments": {
           "browser": {
             "html": {
@@ -26,6 +27,15 @@ describe('createConfig', () => {
               },
               "target": "web",
             },
+            "plugins": [
+              {
+                "name": "plugin-angular",
+                "post": [
+                  "plugin-angular-jit",
+                ],
+                "setup": [Function],
+              },
+            ],
             "source": {
               "assetsInclude": [
                 "./public",
@@ -44,15 +54,6 @@ describe('createConfig', () => {
           },
         },
         "mode": "development",
-        "plugins": [
-          {
-            "name": "plugin-angular",
-            "post": [
-              "plugin-angular-jit",
-            ],
-            "setup": [Function],
-          },
-        ],
         "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
         "server": {
           "historyApiFallback": {
@@ -92,6 +93,7 @@ describe('createConfig', () => {
 
     expect(config).toMatchInlineSnapshot(`
       {
+        "dev": {},
         "environments": {
           "browser": {
             "html": {
@@ -103,6 +105,15 @@ describe('createConfig', () => {
               },
               "target": "web",
             },
+            "plugins": [
+              {
+                "name": "plugin-angular",
+                "post": [
+                  "plugin-angular-jit",
+                ],
+                "setup": [Function],
+              },
+            ],
             "source": {
               "assetsInclude": [
                 "./public",
@@ -127,12 +138,22 @@ describe('createConfig', () => {
               "polyfill": "entry",
               "target": "node",
             },
+            "plugins": [
+              {
+                "name": "plugin-angular",
+                "post": [
+                  "plugin-angular-jit",
+                ],
+                "setup": [Function],
+              },
+            ],
             "source": {
               "define": {
                 "ngJitMode": undefined,
                 "ngServerMode": true,
               },
               "entry": {
+                "bootstrap": "./src/main.server.ts",
                 "server": "./src/server.ts",
               },
               "preEntry": [
@@ -143,15 +164,6 @@ describe('createConfig', () => {
           },
         },
         "mode": "development",
-        "plugins": [
-          {
-            "name": "plugin-angular",
-            "post": [
-              "plugin-angular-jit",
-            ],
-            "setup": [Function],
-          },
-        ],
         "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
         "server": {
           "historyApiFallback": {

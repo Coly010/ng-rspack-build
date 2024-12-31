@@ -1,15 +1,16 @@
 import { PluginAngularOptions } from './plugin-options';
 import { join } from 'path';
+import { existsSync } from 'fs';
 
 export function normalizeOptions(
   options: Partial<PluginAngularOptions>
 ): PluginAngularOptions {
-  return {
+  const normalizedOptions = {
     root: options.root ?? process.cwd(),
     index: options.index ?? './src/index.html',
     browser: options.browser ?? './src/main.ts',
-    server: options.server ?? './src/main.server.ts',
-    ssrEntry: options.ssrEntry ?? './src/server.ts',
+    server: options.server ?? undefined,
+    ssrEntry: options.ssrEntry ?? undefined,
     polyfills: options.polyfills ?? [],
     assets: options.assets ?? ['./public'],
     styles: options.styles ?? ['./src/styles.css'],
@@ -18,5 +19,15 @@ export function normalizeOptions(
     inlineStylesExtension: options.inlineStylesExtension ?? 'css',
     tsconfigPath:
       options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
+    hasServer: false,
   };
+  if (
+    options.server &&
+    options.ssrEntry &&
+    existsSync(join(normalizedOptions.root, options.server)) &&
+    existsSync(join(normalizedOptions.root, options.ssrEntry))
+  ) {
+    normalizedOptions.hasServer = true;
+  }
+  return normalizedOptions;
 }

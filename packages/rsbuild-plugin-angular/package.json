@@ -1,5 +1,10 @@
 {
   "name": "@ng-rsbuild/plugin-angular",
+  "keywords": [
+    "angular",
+    "rsbuild",
+    "rsbuild-plugin"
+  ],
   "version": "19.0.0-alpha.5",
   "scripts": {
     "postinstall": "node ./dist/lib/patch/patch-angular-build.js"

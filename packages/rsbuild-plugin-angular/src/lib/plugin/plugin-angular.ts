@@ -17,6 +17,7 @@ import { augmentHostWithCaching } from './compilation/augments';
 import { dirname, normalize, resolve } from 'path';
 import { JS_EXT_REGEX, TS_EXT_REGEX } from './utils/regex-filters';
 import { pluginAngularJit } from './plugin-angular-jit';
+import { fork } from 'node:child_process';
 
 export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
@@ -29,7 +30,8 @@ export const pluginAngular = (
     let nextProgram: NgtscProgram | undefined | ts.Program;
     let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
     let fileEmitter: FileEmitter;
-    let isServer = false;
+    let serverDevServerSendReload: () => void;
+    const isServer = pluginOptions.hasServer;
     const sourceFileCache = new SourceFileCache();
     const styleUrlsResolver = new StyleUrlsResolver();
     const templateUrlsResolver = new TemplateUrlsResolver();
@@ -50,10 +52,37 @@ export const pluginAngular = (
       });
     }
 
-    api.modifyRspackConfig((config, { environment }) => {
-      isServer = environment.name === 'server';
-      return config;
-    });
+    if (isServer) {
+      api.modifyRsbuildConfig((config) => {
+        config.dev ??= {};
+        config.dev.setupMiddlewares ??= [];
+        config.dev.setupMiddlewares.push((middlewares, server) => {
+          serverDevServerSendReload = () => {
+            server.sockWrite('static-changed');
+          };
+        });
+      });
+
+      api.onDevCompileDone(({ isFirstCompile, environments }) => {
+        if (isFirstCompile) {
+          const pathToServerEntry = resolve(
+            environments['server'].distPath,
+            'server.js'
+          );
+          fork(pathToServerEntry);
+        } else {
+          serverDevServerSendReload?.();
+        }
+      });
+
+      const regexForMainServer = new RegExp(
+        `${pluginOptions.server!.replace('./', '')}`
+      );
+      api.transform({ test: regexForMainServer }, ({ code }) => {
+        code = `globalThis['ngServerMode'] = true;\n${code}`;
+        return code;
+      });
+    }
 
     api.onBeforeStartDevServer(() => {
       watchMode = true;
@@ -158,7 +187,7 @@ export const pluginAngular = (
     );
 
     api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
-      if (!resource.includes('@angular')) {
+      if (!code.includes('@angular')) {
         return code;
       }
       return javascriptTransformer
@@ -166,14 +195,6 @@ export const pluginAngular = (
         .then((contents: Uint8Array) => {
           return Buffer.from(contents).toString('utf8');
         });
-    });
-
-    const regexForMainServer = new RegExp(
-      `${pluginOptions.server.replace('./', '')}`
-    );
-    api.transform({ test: regexForMainServer }, ({ code }) => {
-      code = `globalThis['ngServerMode'] = true;\n${code}`;
-      return code;
     });
   },
 });

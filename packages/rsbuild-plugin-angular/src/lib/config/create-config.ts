@@ -3,8 +3,6 @@ import {
   type RsbuildConfig,
   mergeRsbuildConfig,
 } from '@rsbuild/core';
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
@@ -21,14 +19,6 @@ export function createConfig(
     '@angular/platform-server/init',
   ];
 
-  const hasServer =
-    pluginOptions.server &&
-    Boolean(
-      normalizedOptions.server &&
-        existsSync(resolve(normalizedOptions.root, normalizedOptions.server))
-    );
-
-
   const isRunningDevServer = process.argv.splice(2)[0] === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
@@ -39,15 +29,17 @@ export function createConfig(
     },
     mode: isProd ? 'production' : 'development',
     dev: {
-      ...(isRunningDevServer && hasServer ? {
-        writeToDisk: true,
-        client: {
-          port: 4200,
-          host: 'localhost'
-        },
-        hmr: false,
-        liveReload: true
-      } : undefined),
+      ...(isRunningDevServer && normalizedOptions.hasServer
+        ? {
+            writeToDisk: (file) => !file.includes('.hot-update.'),
+            client: {
+              port: 4200,
+              host: 'localhost',
+            },
+            hmr: false,
+            liveReload: true,
+          }
+        : undefined),
     },
     server: {
       host: 'localhost',
@@ -82,14 +74,15 @@ export function createConfig(
           template: normalizedOptions.index,
         },
       },
-      ...(hasServer
+      ...(normalizedOptions.hasServer
         ? {
             server: {
               plugins: [pluginAngular(normalizedOptions)],
               source: {
                 preEntry: [...serverPolyfills],
                 entry: {
-                  server: normalizedOptions.ssrEntry,
+                  server: normalizedOptions.ssrEntry!,
+                  bootstrap: normalizedOptions.server!,
                 },
                 define: {
                   ngServerMode: true,
