@@ -28,6 +28,8 @@ export function createConfig(
         existsSync(resolve(normalizedOptions.root, normalizedOptions.server))
     );
 
+
+  const isRunningDevServer = process.argv.splice(2)[0] === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
   const rsbuildPluginAngularConfig = defineConfig({
@@ -35,8 +37,18 @@ export function createConfig(
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
-    plugins: [pluginAngular(normalizedOptions)],
     mode: isProd ? 'production' : 'development',
+    dev: {
+      ...(isRunningDevServer && hasServer ? {
+        writeToDisk: true,
+        client: {
+          port: 4200,
+          host: 'localhost'
+        },
+        hmr: false,
+        liveReload: true
+      } : undefined),
+    },
     server: {
       host: 'localhost',
       port: 4200,
@@ -48,6 +60,7 @@ export function createConfig(
     },
     environments: {
       browser: {
+        plugins: [pluginAngular(normalizedOptions)],
         source: {
           preEntry: [...browserPolyfills, ...normalizedOptions.styles],
           entry: {
@@ -72,6 +85,7 @@ export function createConfig(
       ...(hasServer
         ? {
             server: {
+              plugins: [pluginAngular(normalizedOptions)],
               source: {
                 preEntry: [...serverPolyfills],
                 entry: {
