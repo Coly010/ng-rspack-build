@@ -3,6 +3,7 @@ import {
   type RsbuildConfig,
   mergeRsbuildConfig,
 } from '@rsbuild/core';
+import { dirname } from 'path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
@@ -58,7 +59,6 @@ export function createConfig(
           entry: {
             index: normalizedOptions.browser,
           },
-          assetsInclude: normalizedOptions.assets,
           define: {
             ...(isProd ? { ngDevMode: 'false' } : undefined),
             ngJitMode: pluginOptions.jit,
@@ -69,6 +69,10 @@ export function createConfig(
           distPath: {
             root: 'dist/browser',
           },
+          copy: normalizedOptions.assets.map((srcPath) => ({
+            from: srcPath,
+            to: dirname(srcPath),
+          })),
         },
         html: {
           template: normalizedOptions.index,

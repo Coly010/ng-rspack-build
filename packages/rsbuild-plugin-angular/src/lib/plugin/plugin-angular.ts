@@ -17,7 +17,7 @@ import { augmentHostWithCaching } from './compilation/augments';
 import { dirname, normalize, resolve } from 'path';
 import { JS_EXT_REGEX, TS_EXT_REGEX } from './utils/regex-filters';
 import { pluginAngularJit } from './plugin-angular-jit';
-import { fork } from 'node:child_process';
+import { ChildProcess, fork } from 'node:child_process';
 
 export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
@@ -31,6 +31,7 @@ export const pluginAngular = (
     let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
     let fileEmitter: FileEmitter;
     let serverDevServerSendReload: () => void;
+    let serverDevServer: ChildProcess | undefined;
     let isServer = pluginOptions.hasServer;
     const sourceFileCache = new SourceFileCache();
     const styleUrlsResolver = new StyleUrlsResolver();
@@ -57,8 +58,8 @@ export const pluginAngular = (
       return config;
     });
 
-    if (isServer) {
-      api.modifyRsbuildConfig((config) => {
+    api.modifyRsbuildConfig((config) => {
+      if (isServer) {
         config.dev ??= {};
         config.dev.setupMiddlewares ??= [];
         config.dev.setupMiddlewares.push((middlewares, server) => {
@@ -66,20 +67,25 @@ export const pluginAngular = (
             server.sockWrite('static-changed');
           };
         });
-      });
+      }
+    });
 
-      api.onDevCompileDone(({ isFirstCompile, environments }) => {
-        if (isFirstCompile) {
-          const pathToServerEntry = resolve(
-            environments['server'].distPath,
-            'server.js'
-          );
-          fork(pathToServerEntry);
-        } else {
-          serverDevServerSendReload?.();
+    api.onDevCompileDone(({ environments }) => {
+      if (isServer) {
+        if (serverDevServer) {
+          serverDevServer.kill();
+          serverDevServer = undefined;
         }
-      });
+        const pathToServerEntry = resolve(
+          environments['server'].distPath,
+          'server.js'
+        );
+        serverDevServer = fork(pathToServerEntry);
+        serverDevServer.on('spawn', () => serverDevServerSendReload?.());
+      }
+    });
 
+    if (isServer) {
       const regexForMainServer = new RegExp(
         `${pluginOptions.server!.replace('./', '')}`
       );
