@@ -31,7 +31,7 @@ export const pluginAngular = (
     let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
     let fileEmitter: FileEmitter;
     let serverDevServerSendReload: () => void;
-    const isServer = pluginOptions.hasServer;
+    let isServer = pluginOptions.hasServer;
     const sourceFileCache = new SourceFileCache();
     const styleUrlsResolver = new StyleUrlsResolver();
     const templateUrlsResolver = new TemplateUrlsResolver();
@@ -51,6 +51,11 @@ export const pluginAngular = (
         config.plugins.push(pluginAngularJit());
       });
     }
+
+    api.modifyRspackConfig((config, { environment }) => {
+      isServer = isServer && environment.name === 'server';
+      return config;
+    });
 
     if (isServer) {
       api.modifyRsbuildConfig((config) => {
