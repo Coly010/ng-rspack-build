@@ -7,7 +7,7 @@
   ],
   "version": "19.0.0-alpha.8",
   "scripts": {
-    "postinstall": "node ./dist/lib/patch/patch-angular-build.js"
+    "postinstall": "node ./patch/patch-angular-build.js"
   },
   "dependencies": {
     "sass-embedded": "^1.79.3",
