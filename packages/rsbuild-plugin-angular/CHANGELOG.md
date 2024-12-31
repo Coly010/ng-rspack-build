@@ -1,3 +1,14 @@
+## 19.0.0-alpha.6 (2024-12-31)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** handle ssr dev server changes ([7475540](https://github.com/Coly010/ng-rspack-build/commit/7475540))
+- **rsbuild-plugin-angular:** setup rsbuild environments correctly ([8265f96](https://github.com/Coly010/ng-rspack-build/commit/8265f96))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.5 (2024-12-30)
 
 This was a version bump only for rsbuild-plugin-angular to align it with other projects, there were no code changes.
