@@ -1,3 +1,14 @@
+## 19.0.0-alpha.9 (2024-12-31)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** process all npm packages in build ([0361bc7](https://github.com/Coly010/ng-rspack-build/commit/0361bc7))
+- **rsbuild-plugin-angular:** ensure package patch is resolved correctly ([b11ae63](https://github.com/Coly010/ng-rspack-build/commit/b11ae63))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.8 (2024-12-31)
 
 ### 🩹 Fixes
