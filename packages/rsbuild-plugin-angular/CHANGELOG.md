@@ -1,3 +1,13 @@
+## 19.0.0-alpha.7 (2024-12-31)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** only set isServer when running in server env ([48332d1](https://github.com/Coly010/ng-rspack-build/commit/48332d1))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.6 (2024-12-31)
 
 ### 🚀 Features
