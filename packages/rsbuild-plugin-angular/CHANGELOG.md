@@ -1,3 +1,13 @@
+## 19.0.0-alpha.8 (2024-12-31)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** handle ssr dev server live reloads ([481dfcb](https://github.com/Coly010/ng-rspack-build/commit/481dfcb))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.7 (2024-12-31)
 
 ### 🩹 Fixes
