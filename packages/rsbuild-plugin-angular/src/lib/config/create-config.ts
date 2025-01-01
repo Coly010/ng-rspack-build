@@ -51,6 +51,12 @@ export function createConfig(
         rewrites: [{ from: /^\/$/, to: 'index.html' }],
       },
     },
+    tools: {
+      rspack(config) {
+        config.resolve ??= {};
+        config.resolve.extensionAlias = {};
+      },
+    },
     environments: {
       browser: {
         plugins: [pluginAngular(normalizedOptions)],

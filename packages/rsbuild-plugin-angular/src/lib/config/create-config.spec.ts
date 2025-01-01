@@ -22,6 +22,12 @@ describe('createConfig', () => {
               "template": "./src/index.html",
             },
             "output": {
+              "copy": [
+                {
+                  "from": "./public",
+                  "to": ".",
+                },
+              ],
               "distPath": {
                 "root": "dist/browser",
               },
@@ -37,9 +43,6 @@ describe('createConfig', () => {
               },
             ],
             "source": {
-              "assetsInclude": [
-                "./public",
-              ],
               "define": {
                 "ngJitMode": undefined,
               },
@@ -71,6 +74,9 @@ describe('createConfig', () => {
         },
         "source": {
           "tsconfigPath": "./tsconfig.app.json",
+        },
+        "tools": {
+          "rspack": [Function],
         },
       }
     `);

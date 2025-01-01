@@ -198,6 +198,9 @@ export const pluginAngular = (
     );
 
     api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
+      if (!code.includes('@angular')) {
+        return code;
+      }
       return javascriptTransformer
         .transformData(resource, code, false, false)
         .then((contents: Uint8Array) => {
