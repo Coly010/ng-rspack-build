@@ -6,74 +6,8 @@
   "sourceRoot": "rsbuild/ssr/css/src",
   "tags": [],
   "targets": {
-    "build": {
-      "dependsOn": ["browser", "server"],
-      "command": "echo \"Build complete!\"",
-      "configurations": {
-        "production": {
-          "env": {
-            "NODE_ENV": "production"
-          }
-        },
-        "development": {
-          "env": {
-            "NODE_ENV": "development"
-          }
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "browser": {
-      "inputs": [
-        "default",
-        {
-          "env": "NODE_ENV"
-        }
-      ],
-      "command": "npx rsbuild build --environment browser",
-      "options": {
-        "cwd": "apps/rsbuild/ssr/css"
-      },
-      "configurations": {
-        "production": {
-          "env": {
-            "NODE_ENV": "production"
-          }
-        },
-        "development": {
-          "env": {
-            "NODE_ENV": "development"
-          }
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "server": {
-      "inputs": [
-        "default",
-        {
-          "env": "NODE_ENV"
-        }
-      ],
-      "command": "npx rsbuild build --environment server",
-      "options": {
-        "cwd": "apps/rsbuild/ssr/css"
-      },
-      "configurations": {
-        "production": {
-          "env": {
-            "NODE_ENV": "production"
-          }
-        },
-        "development": {
-          "env": {
-            "NODE_ENV": "development"
-          }
-        }
-      },
-      "defaultConfiguration": "production"
-    },
     "start": {
+      "dependsOn": ["build"],
       "command": "node dist/server/server.js",
       "options": {
         "cwd": "apps/rsbuild/ssr/css"

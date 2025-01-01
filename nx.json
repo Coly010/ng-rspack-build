@@ -48,6 +48,12 @@
     },
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
+    },
+    "build": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
     }
   },
   "release": {
