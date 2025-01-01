@@ -5,7 +5,8 @@
   "scripts": {
     "prepare": "husky",
     "check-format": "pnpx nx format:check",
-    "check-commit": "pnpm exec commitlint --from HEAD~1 --to HEAD"
+    "check-commit": "pnpm exec commitlint --from HEAD~1 --to HEAD",
+    "release:rsbuild:dry": "pnpm nx release --projects=rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run"
   },
   "private": true,
   "devDependencies": {

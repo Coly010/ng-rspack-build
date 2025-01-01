@@ -11,6 +11,7 @@ module.exports = {
         'build',
         'nx',
         'rsbuild-plugin-angular',
+        'rsbuild-plugin-nx',
         'nx-e2e',
         'release',
       ],

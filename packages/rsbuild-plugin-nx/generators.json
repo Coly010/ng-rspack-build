@@ -1,0 +1,11 @@
+{
+  "name": "@ng-rsbuild/plugin-nx",
+  "generators": {
+    "application": {
+      "factory": "./dist/lib/generators/application/application",
+      "schema": "./dist/lib/generators/application/schema.json",
+      "description": "Add an Angular application using Rsbuild.",
+      "aliases": ["app"]
+    }
+  }
+}

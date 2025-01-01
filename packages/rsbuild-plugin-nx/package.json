@@ -1,0 +1,47 @@
+{
+  "name": "@ng-rsbuild/plugin-nx",
+  "private": false,
+  "description": "Nx Plugin for building Angular applications with Rspack.",
+  "version": "19.0.0-alpha.10",
+  "author": "Colum Ferry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Coly010/ng-rspack-build/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Coly010/ng-rspack-build.git",
+    "directory": "packages/nx-plugin"
+  },
+  "keywords": [
+    "Monorepo",
+    "Angular",
+    "Rspack",
+    "Nx",
+    "Nx Plugin",
+    "Rsbuild Plugin",
+    "Rsbuild"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "commonjs",
+  "main": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
+  "generators": "./generators.json",
+  "dependencies": {
+    "@nx/devkit": "20.2.2",
+    "@nx/angular": "20.2.2",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@nx/devkit": ">=20.0.0 <21.0.0",
+    "@nx/rsbuild": ">=20.0.0 <21.0.0",
+    "@nx/angular": ">=20.0.0 <21.0.0"
+  },
+  "nx": {
+    "sourceRoot": "packages/rsbuild-plugin-nx/src",
+    "projectType": "library",
+    "name": "rsbuild-plugin-nx"
+  }
+}
