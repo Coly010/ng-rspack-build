@@ -5,7 +5,8 @@
 [![GitHub Actions](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml/badge.svg)](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-[![NPM Version](https://img.shields.io/npm/v/%40ng-rspack%2Fbuild?label=%40ng-rsbuild%2Fpluigin-angular)](https://www.npmjs.com/package/@ng-rsbuild/plugin-angular)
+[![NPM Version](https://img.shields.io/npm/v/%40ng-rsbuild%2Fplugin-angular?label=%40ng-rsbuild%2Fpluigin-angular)](https://www.npmjs.com/package/@ng-rsbuild/plugin-angular)
+[![NPM Version](https://img.shields.io/npm/v/%40ng-rsbuild%2Fplugin-nx?label=%40ng-rsbuild%2Fpluigin-nx)](https://www.npmjs.com/package/@ng-rsbuild/plugin-nx)
 [![NPM Version](https://img.shields.io/npm/v/%40ng-rspack%2Fbuild?label=%40ng-rspack%2Fbuild)](https://www.npmjs.com/package/@ng-rspack/build)
 [![NPM Version](https://img.shields.io/npm/v/%40ng-rspack%2Fbuild?label=%40ng-rspack%2Fnx)](https://www.npmjs.com/package/@ng-rspack/nx)
 
@@ -15,7 +16,7 @@
 
 # Build Angular with Rspack and Rsbuild
 
-The goal of `@ng-rspack/build` and `@ng-rspack/nx` is to make easy and straightforward to build Angular applications with [rspack](https://rspack.dev) and [rsbuild](https://rsbuild.dev).
+The goal of `@ng-rsbuild/plugin-angular` and `@ng-rspack/build` is to make easy and straightforward to build Angular applications with [rspack](https://rspack.dev) and [rsbuild](https://rsbuild.dev).
 
 ## Rsbuild Support
 
@@ -72,8 +73,9 @@ const server = createServer(bootstrap);
 server.listen();
 ```
 
-5. Run the builds: `npx rsbuild build --environment browser && npx rsbuild build --environment server`
+5. Run the builds: `npx rsbuild build`
 6. Run the server: `node dist/server/server.js`
+7. Run the dev server: `npx rsbuild dev`
 
 ### Setup for CSR Application
 

@@ -6,9 +6,6 @@ Plugin providing Rsbuild support for Angular applications, both SSR and CSR.
 
 **_Thank you to [Brandon Roberts](https://x.com/brandontroberts) and [Analog](https://analogjs.org/) for their work on building Angular applications with Vite which both inspired this plugin and provided a basis for the compilation implementation._**
 
-Currently, the Rsbuild support is more feature complete than the Rspack support.
-There exists an Rsbuild plugin that can be used with a `rspack.config.ts` file to support compiling Angular applications with Rsbuild.
-
 ### Setup for SSR Application
 
 **Prerequisites**: Angular SSR Application already created with `ng new --ssr`.
@@ -57,8 +54,9 @@ const server = createServer(bootstrap);
 server.listen();
 ```
 
-5. Run the builds: `npx rsbuild build --environment browser && npx rsbuild build --environment server`
+5. Run the builds: `npx rsbuild build`
 6. Run the server: `node dist/server/server.js`
+7. Run the dev server: `npx rsbuild dev`
 
 ### Setup for CSR Application
 

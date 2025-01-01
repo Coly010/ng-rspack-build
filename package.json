@@ -6,7 +6,8 @@
     "prepare": "husky",
     "check-format": "pnpx nx format:check",
     "check-commit": "pnpm exec commitlint --from HEAD~1 --to HEAD",
-    "release:rsbuild:dry": "pnpm nx release --projects=rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run"
+    "release:rsbuild:dry": "pnpm nx release --projects=rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
+    "release:rsbuild:pre": "pnpm nx release prerelease --projects=rsbuild-plugin-angular,rsbuild-plugin-nx"
   },
   "private": true,
   "devDependencies": {
