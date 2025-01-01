@@ -1,7 +1,0 @@
-{
-  "name": "__integration__base",
-  "root": "integration-testing/base",
-  "sourceRoot": "integration-testing/base/tests",
-  "projectType": "application",
-  "targets": {}
-}
