@@ -4,6 +4,8 @@ import * as ts from 'typescript';
 import { compileString as sassCompileString } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { PluginAngularOptions } from '../../models/plugin-options';
+import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
+import { transformFileSync } from '@swc/core';
 
 export function setupCompilation(
   config: RsbuildConfig,
@@ -58,4 +60,37 @@ export function setupCompilation(
     compilerOptions,
     host,
   };
+}
+
+export async function setupCompilationWithParallelCompiltation(
+  config: RsbuildConfig,
+  options: PluginAngularOptions,
+  isServer = false
+) {
+  const { rootNames, compilerOptions, host } = setupCompilation(
+    config,
+    options,
+    isServer
+  );
+  const parallelCompilation = new ParallelCompilation(options.jit ?? false);
+
+  try {
+    await parallelCompilation.initialize(
+      config.source?.tsconfigPath ?? options.tsconfigPath,
+      {
+        modifiedFiles: new Set(rootNames),
+        async transformStylesheet(data, containingFile, stylesheetFile) {
+          const result = sassCompileString(data);
+          return result.css;
+        },
+        processWebWorker(workerFile: string, containingFile: string) {
+          return transformFileSync(workerFile).code;
+        },
+      },
+      (opts) => compilerOptions
+    );
+  } catch (e) {
+    console.error('Failed to initialize Angular Compilation', e);
+  }
+  return parallelCompilation;
 }

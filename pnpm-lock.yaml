@@ -376,6 +376,9 @@ importers:
       '@rsbuild/core':
         specifier: '>=1.0.5 <2.0.0'
         version: 1.1.13
+      '@swc/core':
+        specifier: ^1.5.7
+        version: 1.5.29(@swc/helpers@0.5.15)
       express:
         specifier: 4.21.1
         version: 4.21.1

@@ -12,4 +12,5 @@ export interface PluginAngularOptions {
   inlineStylesExtension: 'css' | 'scss' | 'sass' | 'less';
   tsconfigPath: string;
   hasServer: boolean;
+  useExperimentalParallelCompilation: boolean;
 }

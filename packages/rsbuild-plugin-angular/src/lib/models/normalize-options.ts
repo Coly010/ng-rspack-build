@@ -20,6 +20,8 @@ export function normalizeOptions(
     tsconfigPath:
       options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
     hasServer: false,
+    useExperimentalParallelCompilation:
+      options.useExperimentalParallelCompilation ?? false,
   };
   if (
     options.server &&

@@ -28,6 +28,8 @@ import * as compilerCli from '@angular/compiler-cli';
 import { CompilerHost, NgtscProgram } from '@angular/compiler-cli';
 import { augmentProgramWithVersioning } from './augments';
 import { createFileEmitter } from './file-emitter';
+import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
+import { normalize } from 'path';
 
 export async function buildAndAnalyze(
   rootNames: string[],
@@ -118,4 +120,17 @@ function mergeTransformers(
   }
 
   return result;
+}
+
+export async function buildAndAnalyzeWithParallelCompilation(
+  parallelCompilation: ParallelCompilation,
+  typescriptFileCache: Map<string, string | Uint8Array>
+) {
+  for (const {
+    filename,
+    contents,
+  } of await parallelCompilation.emitAffectedFiles()) {
+    const normalizedFilename = normalize(filename.replace(/^[A-Z]:/, ''));
+    typescriptFileCache.set(normalizedFilename, contents);
+  }
 }

@@ -10,9 +10,15 @@ import {
 } from './utils/component-resolvers';
 import { maxWorkers } from '../utils/utils';
 import { SourceFileCache } from './utils/devkit';
-import { setupCompilation } from './compilation/setup-compilation';
+import {
+  setupCompilation,
+  setupCompilationWithParallelCompiltation,
+} from './compilation/setup-compilation';
 import { normalizeOptions } from '../models/normalize-options';
-import { buildAndAnalyze } from './compilation/build-and-analyze';
+import {
+  buildAndAnalyze,
+  buildAndAnalyzeWithParallelCompilation,
+} from './compilation/build-and-analyze';
 import { augmentHostWithCaching } from './compilation/augments';
 import { dirname, normalize, resolve } from 'path';
 import { JS_EXT_REGEX, TS_EXT_REGEX } from './utils/regex-filters';
@@ -34,6 +40,7 @@ export const pluginAngular = (
     let serverDevServer: ChildProcess | undefined;
     let isServer = pluginOptions.hasServer;
     const sourceFileCache = new SourceFileCache();
+    const typescriptFileCache = new Map<string, string | Uint8Array>();
     const styleUrlsResolver = new StyleUrlsResolver();
     const templateUrlsResolver = new TemplateUrlsResolver();
     const javascriptTransformer = new JavaScriptTransformer(
@@ -110,25 +117,37 @@ export const pluginAngular = (
     });
 
     api.onBeforeEnvironmentCompile(async () => {
-      const { rootNames, compilerOptions, host } = setupCompilation(
-        config,
-        pluginOptions,
-        isServer
-      );
+      if (!pluginOptions.useExperimentalParallelCompilation) {
+        const { rootNames, compilerOptions, host } = setupCompilation(
+          config,
+          pluginOptions,
+          isServer
+        );
+        // Only store cache if in watch mode
+        if (watchMode) {
+          augmentHostWithCaching(host, sourceFileCache);
+        }
 
-      // Only store cache if in watch mode
-      // if (watchMode) {
-      //   augmentHostWithCaching(host, sourceFileCache);
-      // }
-
-      fileEmitter = await buildAndAnalyze(
-        rootNames,
-        host,
-        compilerOptions,
-        nextProgram,
-        builderProgram,
-        { watchMode, jit: pluginOptions.jit }
-      );
+        fileEmitter = await buildAndAnalyze(
+          rootNames,
+          host,
+          compilerOptions,
+          nextProgram,
+          builderProgram,
+          { watchMode, jit: pluginOptions.jit }
+        );
+      } else {
+        const parallelCompilation =
+          await setupCompilationWithParallelCompiltation(
+            config,
+            pluginOptions,
+            isServer
+          );
+        await buildAndAnalyzeWithParallelCompilation(
+          parallelCompilation,
+          typescriptFileCache
+        );
+      }
     });
 
     api.transform(
@@ -153,21 +172,38 @@ export const pluginAngular = (
           }
         }
 
-        const typescriptResult = await fileEmitter?.(resource);
+        let data: string | Uint8Array | undefined;
+        if (!pluginOptions.useExperimentalParallelCompilation) {
+          const typescriptResult = await fileEmitter?.(resource);
 
-        if (
-          typescriptResult?.warnings &&
-          typescriptResult?.warnings.length > 0
-        ) {
-          console.warn(`${typescriptResult.warnings.join('\n')}`);
+          if (
+            typescriptResult?.warnings &&
+            typescriptResult?.warnings.length > 0
+          ) {
+            console.warn(`${typescriptResult.warnings.join('\n')}`);
+          }
+
+          if (typescriptResult?.errors && typescriptResult?.errors.length > 0) {
+            console.error(`${typescriptResult.errors.join('\n')}`);
+          }
+
+          data = typescriptResult?.content ?? '';
+        } else {
+          data = typescriptFileCache.get(resource);
+          if (data === undefined) {
+            return '';
+          } else if (typeof data === 'string') {
+            await javascriptTransformer
+              .transformData(resource, data, true /* skipLinker */, false)
+              .then((contents) => {
+                // Store as the returned Uint8Array to allow caching the fully transformed code
+                typescriptFileCache.set(resource, contents);
+                data = Buffer.from(contents).toString();
+              });
+          } else {
+            data = Buffer.from(data).toString();
+          }
         }
-
-        if (typescriptResult?.errors && typescriptResult?.errors.length > 0) {
-          console.error(`${typescriptResult.errors.join('\n')}`);
-        }
-
-        // return fileEmitter
-        let data = typescriptResult?.content ?? '';
 
         if (pluginOptions.jit && data.includes('angular:jit:')) {
           data = data.replace(
@@ -178,7 +214,7 @@ export const pluginAngular = (
           templateUrls.forEach((templateUrlSet) => {
             const [templateFile, resolvedTemplateUrl] =
               templateUrlSet.split('|');
-            data = data.replace(
+            data = (data as string).replace(
               `angular:jit:template:file;${templateFile}`,
               `${resolvedTemplateUrl}?raw`
             );
@@ -186,7 +222,7 @@ export const pluginAngular = (
 
           styleUrls.forEach((styleUrlSet) => {
             const [styleFile, resolvedStyleUrl] = styleUrlSet.split('|');
-            data = data.replace(
+            data = (data as string).replace(
               `angular:jit:style:file;${styleFile}`,
               `${resolvedStyleUrl}?inline`
             );
