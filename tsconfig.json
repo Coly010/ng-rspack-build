@@ -4,9 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./integration-testing/base"
-    },
-    {
       "path": "./packages/nx-plugin"
     },
     {
