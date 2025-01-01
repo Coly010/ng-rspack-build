@@ -31,3 +31,7 @@ launch-templates:
       - name: Ensure lsof
         script: |
           sudo apt-get install lsof
+
+      - name: Install Playwright
+        script: |
+          pnpm exec playwright install --with-deps
