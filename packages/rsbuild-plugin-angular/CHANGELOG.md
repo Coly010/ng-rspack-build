@@ -1,3 +1,13 @@
+## 19.0.0-alpha.10 (2025-01-01)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** force rsbuild to use node.js module resolution ([34b6b80](https://github.com/Coly010/ng-rspack-build/commit/34b6b80))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.9 (2024-12-31)
 
 ### 🩹 Fixes
