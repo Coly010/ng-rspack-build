@@ -77,7 +77,7 @@ export async function applicationGenerator(
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let installTask = () => {};
-  if (options.skipPackageJson) {
+  if (!options.skipPackageJson) {
     installTask = addDependenciesToPackageJson(
       tree,
       {},
