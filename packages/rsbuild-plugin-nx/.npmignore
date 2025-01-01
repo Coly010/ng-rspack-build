@@ -5,6 +5,6 @@ project.json
 tsconfig.json
 tsconfig.lib.json
 tsconfig.spec.json
-vitest.config.ts
+vitest.config.mts
 src/**/*.ts
 src/**/*.json
