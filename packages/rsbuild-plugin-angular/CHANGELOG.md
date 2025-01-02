@@ -1,3 +1,13 @@
+## 19.0.0-alpha.14 (2025-01-02)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** improve build speed using parallel compilation ([becac29](https://github.com/Coly010/ng-rspack-build/commit/becac29))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.13 (2025-01-01)
 
 This was a version bump only for rsbuild-plugin-angular to align it with other projects, there were no code changes.

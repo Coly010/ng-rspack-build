@@ -1,3 +1,13 @@
+## 19.0.0-alpha.14 (2025-01-02)
+
+### 🚀 Features
+
+- **rsbuild-plugin-nx:** ensure style is set in createConfig ([d90bee5](https://github.com/Coly010/ng-rspack-build/commit/d90bee5))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.13 (2025-01-01)
 
 This was a version bump only for rsbuild-plugin-nx to align it with other projects, there were no code changes.
