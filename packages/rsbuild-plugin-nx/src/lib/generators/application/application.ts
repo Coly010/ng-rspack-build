@@ -72,7 +72,7 @@ export async function applicationGenerator(
   delete project.targets!['extract-i18n'];
   updateProjectConfiguration(tree, projectName, project);
 
-  createRsbuildConfig(tree, projectRoot, options.ssr);
+  createRsbuildConfig(tree, projectRoot, options.ssr, options.style);
   updateServer(tree, projectRoot);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -123,7 +123,12 @@ async function initNxRsbuildPlugin(tree: Tree, skipPackageJson: boolean) {
   });
 }
 
-function createRsbuildConfig(tree: Tree, projectRoot: string, ssr = false) {
+function createRsbuildConfig(
+  tree: Tree,
+  projectRoot: string,
+  ssr = false,
+  inlineStylesExtension = 'css'
+) {
   const rsbuildConfigContents = `import { createConfig } from '@ng-rsbuild/plugin-angular';
 
 export default createConfig({
@@ -132,6 +137,11 @@ export default createConfig({
       ? `
   server: './src/main.server.ts',
   ssrEntry: './src/server.ts',`
+      : ''
+  }${
+    inlineStylesExtension !== 'css'
+      ? `inlineStylesExtension: '${inlineStylesExtension}',
+  styles: ['./src/styles.${inlineStylesExtension}'],`
       : ''
   }
 });
