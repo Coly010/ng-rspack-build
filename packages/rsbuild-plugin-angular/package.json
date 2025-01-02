@@ -25,7 +25,8 @@
     "@angular/compiler-cli": ">=19.0.0 <20.0.0",
     "@angular-devkit/build-angular": ">=19.0.0 <20.0.0",
     "@rsbuild/core": ">=1.0.5 <2.0.0",
-    "@angular/build": ">=18.0.0 <20.0.0"
+    "@angular/build": ">=18.0.0 <20.0.0",
+    "@swc/core": ">=1.5.0 <1.11.0"
   },
   "type": "commonjs",
   "main": "./dist/index.js",

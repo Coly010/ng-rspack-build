@@ -7,6 +7,7 @@ import { dirname } from 'path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
+import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transformer';
 
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
@@ -28,6 +29,7 @@ export function createConfig(
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
+    plugins: [pluginHoistedJsTransformer(normalizedOptions)],
     mode: isProd ? 'production' : 'development',
     dev: {
       ...(isRunningDevServer && normalizedOptions.hasServer
@@ -92,7 +94,6 @@ export function createConfig(
                 preEntry: [...serverPolyfills],
                 entry: {
                   server: normalizedOptions.ssrEntry!,
-                  bootstrap: normalizedOptions.server!,
                 },
                 define: {
                   ngServerMode: true,

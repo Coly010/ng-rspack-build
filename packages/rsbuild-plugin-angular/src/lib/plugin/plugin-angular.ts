@@ -10,9 +10,15 @@ import {
 } from './utils/component-resolvers';
 import { maxWorkers } from '../utils/utils';
 import { SourceFileCache } from './utils/devkit';
-import { setupCompilation } from './compilation/setup-compilation';
+import {
+  setupCompilation,
+  setupCompilationWithParallelCompilation,
+} from './compilation/setup-compilation';
 import { normalizeOptions } from '../models/normalize-options';
-import { buildAndAnalyze } from './compilation/build-and-analyze';
+import {
+  buildAndAnalyze,
+  buildAndAnalyzeWithParallelCompilation,
+} from './compilation/build-and-analyze';
 import { augmentHostWithCaching } from './compilation/augments';
 import { dirname, normalize, resolve } from 'path';
 import { JS_EXT_REGEX, TS_EXT_REGEX } from './utils/regex-filters';
@@ -23,13 +29,15 @@ export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
 ): RsbuildPlugin => ({
   name: 'plugin-angular',
+  pre: ['plugin-hoisted-js-transformer'],
   post: ['plugin-angular-jit'],
   setup(api) {
     const pluginOptions = normalizeOptions(options);
     let watchMode = false;
     let nextProgram: NgtscProgram | undefined | ts.Program;
     let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
-    let fileEmitter: FileEmitter;
+    let getFileEmitter: () => FileEmitter;
+    let typescriptFileCache: Map<string, string> = new Map();
     let serverDevServerSendReload: () => void;
     let serverDevServer: ChildProcess | undefined;
     let isServer = pluginOptions.hasServer;
@@ -41,11 +49,19 @@ export const pluginAngular = (
         sourcemap: false,
         thirdPartySourcemaps: false,
         advancedOptimizations: false,
-        jit: false,
+        jit: pluginOptions.jit,
       },
       maxWorkers
     );
     const config = api.getRsbuildConfig();
+
+    if (pluginOptions.useHoistedJavascriptProcessing) {
+      const { typescriptFileCache: tsFCache, getFileEmitter: getEmitter } =
+        api.useExposed('plugin-hoisted-js-transformer');
+      getFileEmitter = getEmitter;
+      typescriptFileCache = tsFCache;
+    }
+
     if (pluginOptions.jit) {
       api.modifyRsbuildConfig((config) => {
         config.plugins ??= [];
@@ -109,27 +125,42 @@ export const pluginAngular = (
       }
     });
 
-    api.onBeforeEnvironmentCompile(async () => {
-      const { rootNames, compilerOptions, host } = setupCompilation(
-        config,
-        pluginOptions,
-        isServer
-      );
+    if (!pluginOptions.useHoistedJavascriptProcessing) {
+      api.onBeforeEnvironmentCompile(async () => {
+        if (!pluginOptions.useParallelCompilation) {
+          const { rootNames, compilerOptions, host } = setupCompilation(
+            config,
+            pluginOptions,
+            isServer
+          );
+          // Only store cache if in watch mode
+          if (watchMode) {
+            augmentHostWithCaching(host, sourceFileCache);
+          }
 
-      // Only store cache if in watch mode
-      // if (watchMode) {
-      //   augmentHostWithCaching(host, sourceFileCache);
-      // }
-
-      fileEmitter = await buildAndAnalyze(
-        rootNames,
-        host,
-        compilerOptions,
-        nextProgram,
-        builderProgram,
-        { watchMode, jit: pluginOptions.jit }
-      );
-    });
+          const emitter = await buildAndAnalyze(
+            rootNames,
+            host,
+            compilerOptions,
+            nextProgram,
+            builderProgram,
+            { watchMode, jit: pluginOptions.jit }
+          );
+          getFileEmitter = () => emitter;
+        } else {
+          const parallelCompilation =
+            await setupCompilationWithParallelCompilation(
+              config,
+              pluginOptions
+            );
+          await buildAndAnalyzeWithParallelCompilation(
+            parallelCompilation,
+            typescriptFileCache,
+            javascriptTransformer
+          );
+        }
+      });
+    }
 
     api.transform(
       { test: TS_EXT_REGEX },
@@ -153,59 +184,81 @@ export const pluginAngular = (
           }
         }
 
-        const typescriptResult = await fileEmitter?.(resource);
+        let data: string | undefined;
+        if (!pluginOptions.useParallelCompilation) {
+          const typescriptResult = await getFileEmitter?.()?.(resource);
 
-        if (
-          typescriptResult?.warnings &&
-          typescriptResult?.warnings.length > 0
-        ) {
-          console.warn(`${typescriptResult.warnings.join('\n')}`);
-        }
+          if (
+            typescriptResult?.warnings &&
+            typescriptResult?.warnings.length > 0
+          ) {
+            console.warn(`${typescriptResult.warnings.join('\n')}`);
+          }
 
-        if (typescriptResult?.errors && typescriptResult?.errors.length > 0) {
-          console.error(`${typescriptResult.errors.join('\n')}`);
-        }
+          if (typescriptResult?.errors && typescriptResult?.errors.length > 0) {
+            console.error(`${typescriptResult.errors.join('\n')}`);
+          }
 
-        // return fileEmitter
-        let data = typescriptResult?.content ?? '';
+          // return fileEmitter
+          data = typescriptResult?.content ?? '';
 
-        if (pluginOptions.jit && data.includes('angular:jit:')) {
-          data = data.replace(
-            /angular:jit:style:inline;/g,
-            'virtual:angular:jit:style:inline;'
-          );
-
-          templateUrls.forEach((templateUrlSet) => {
-            const [templateFile, resolvedTemplateUrl] =
-              templateUrlSet.split('|');
+          if (pluginOptions.jit && data.includes('angular:jit:')) {
             data = data.replace(
-              `angular:jit:template:file;${templateFile}`,
-              `${resolvedTemplateUrl}?raw`
+              /angular:jit:style:inline;/g,
+              'virtual:angular:jit:style:inline;'
             );
-          });
 
-          styleUrls.forEach((styleUrlSet) => {
-            const [styleFile, resolvedStyleUrl] = styleUrlSet.split('|');
-            data = data.replace(
-              `angular:jit:style:file;${styleFile}`,
-              `${resolvedStyleUrl}?inline`
-            );
-          });
+            templateUrls.forEach((templateUrlSet) => {
+              const [templateFile, resolvedTemplateUrl] =
+                templateUrlSet.split('|');
+              data = data?.replace(
+                `angular:jit:template:file;${templateFile}`,
+                `${resolvedTemplateUrl}?raw`
+              );
+            });
+
+            styleUrls.forEach((styleUrlSet) => {
+              const [styleFile, resolvedStyleUrl] = styleUrlSet.split('|');
+              data = data?.replace(
+                `angular:jit:style:file;${styleFile}`,
+                `${resolvedStyleUrl}?inline`
+              );
+            });
+          }
+        } else {
+          data = typescriptFileCache.get(resource);
+          if (data === undefined) {
+            return '';
+          }
         }
 
         return data;
       }
     );
 
-    api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
-      if (!code.includes('@angular')) {
-        return code;
-      }
-      return javascriptTransformer
-        .transformData(resource, code, false, false)
-        .then((contents: Uint8Array) => {
-          return Buffer.from(contents).toString('utf8');
-        });
-    });
+    if (!pluginOptions.useHoistedJavascriptProcessing) {
+      api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
+        if (!code.includes('@angular')) {
+          return code;
+        }
+        const existingTransform = typescriptFileCache.get(resource);
+        if (existingTransform) {
+          return Buffer.from(existingTransform).toString();
+        }
+        return javascriptTransformer
+          .transformData(resource, code, false, false)
+          .then((contents: Uint8Array) => {
+            const transformedCode = Buffer.from(contents).toString('utf8');
+            typescriptFileCache.set(resource, transformedCode);
+            return transformedCode;
+          });
+      });
+    }
+
+    if (pluginOptions.useParallelCompilation) {
+      api.onCloseBuild(() => {
+        process.exit();
+      });
+    }
   },
 });
