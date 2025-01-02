@@ -9,8 +9,7 @@ import { transformFileSync } from '@swc/core';
 
 export function setupCompilation(
   config: RsbuildConfig,
-  options: PluginAngularOptions,
-  isServer = false
+  options: PluginAngularOptions
 ) {
   const isProd = config.mode === 'production';
 
@@ -51,12 +50,8 @@ export function setupCompilation(
     });
   }
 
-  const rn = rootNames.filter((n) =>
-    isServer ? !n.endsWith('main.ts') : n.endsWith('main.ts')
-  );
-
   return {
-    rootNames: rn,
+    rootNames,
     compilerOptions,
     host,
   };
@@ -64,13 +59,11 @@ export function setupCompilation(
 
 export async function setupCompilationWithParallelCompiltation(
   config: RsbuildConfig,
-  options: PluginAngularOptions,
-  isServer = false
+  options: PluginAngularOptions
 ) {
   const { rootNames, compilerOptions, host } = setupCompilation(
     config,
-    options,
-    isServer
+    options
   );
   const parallelCompilation = new ParallelCompilation(options.jit ?? false);
 

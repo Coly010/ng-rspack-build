@@ -7,6 +7,7 @@ import { dirname } from 'path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
+import { pluginCacheProvider } from '../plugin/plugin-cache-provider';
 
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
@@ -25,6 +26,7 @@ export function createConfig(
 
   const rsbuildPluginAngularConfig = defineConfig({
     root: normalizedOptions.root,
+    plugins: [pluginCacheProvider(normalizedOptions)],
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },

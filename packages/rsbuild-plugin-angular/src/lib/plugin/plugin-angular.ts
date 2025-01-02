@@ -29,18 +29,17 @@ export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
 ): RsbuildPlugin => ({
   name: 'plugin-angular',
+  pre: ['plugin-cache-provider'],
   post: ['plugin-angular-jit'],
   setup(api) {
     const pluginOptions = normalizeOptions(options);
     let watchMode = false;
-    let nextProgram: NgtscProgram | undefined | ts.Program;
-    let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
-    let fileEmitter: FileEmitter;
     let serverDevServerSendReload: () => void;
     let serverDevServer: ChildProcess | undefined;
     let isServer = pluginOptions.hasServer;
-    const sourceFileCache = new SourceFileCache();
-    const typescriptFileCache = new Map<string, string | Uint8Array>();
+    const { typescriptFileCache, getFileEmitter } = api.useExposed(
+      'plugin-cache-provider'
+    );
     const styleUrlsResolver = new StyleUrlsResolver();
     const templateUrlsResolver = new TemplateUrlsResolver();
     const javascriptTransformer = new JavaScriptTransformer(
@@ -52,7 +51,6 @@ export const pluginAngular = (
       },
       maxWorkers
     );
-    const config = api.getRsbuildConfig();
     if (pluginOptions.jit) {
       api.modifyRsbuildConfig((config) => {
         config.plugins ??= [];
@@ -116,40 +114,6 @@ export const pluginAngular = (
       }
     });
 
-    api.onBeforeEnvironmentCompile(async () => {
-      if (!pluginOptions.useExperimentalParallelCompilation) {
-        const { rootNames, compilerOptions, host } = setupCompilation(
-          config,
-          pluginOptions,
-          isServer
-        );
-        // Only store cache if in watch mode
-        if (watchMode) {
-          augmentHostWithCaching(host, sourceFileCache);
-        }
-
-        fileEmitter = await buildAndAnalyze(
-          rootNames,
-          host,
-          compilerOptions,
-          nextProgram,
-          builderProgram,
-          { watchMode, jit: pluginOptions.jit }
-        );
-      } else {
-        const parallelCompilation =
-          await setupCompilationWithParallelCompiltation(
-            config,
-            pluginOptions,
-            isServer
-          );
-        await buildAndAnalyzeWithParallelCompilation(
-          parallelCompilation,
-          typescriptFileCache
-        );
-      }
-    });
-
     api.transform(
       { test: TS_EXT_REGEX },
       async ({ code, resource, addDependency }) => {
@@ -174,7 +138,7 @@ export const pluginAngular = (
 
         let data: string | Uint8Array | undefined;
         if (!pluginOptions.useExperimentalParallelCompilation) {
-          const typescriptResult = await fileEmitter?.(resource);
+          const typescriptResult = await getFileEmitter()?.(resource);
 
           if (
             typescriptResult?.warnings &&
@@ -205,6 +169,8 @@ export const pluginAngular = (
           }
         }
 
+        data = data as string;
+
         if (pluginOptions.jit && data.includes('angular:jit:')) {
           data = data.replace(
             /angular:jit:style:inline;/g,
@@ -232,16 +198,5 @@ export const pluginAngular = (
         return data;
       }
     );
-
-    api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
-      if (!code.includes('@angular')) {
-        return code;
-      }
-      return javascriptTransformer
-        .transformData(resource, code, false, false)
-        .then((contents: Uint8Array) => {
-          return Buffer.from(contents).toString('utf8');
-        });
-    });
   },
 });

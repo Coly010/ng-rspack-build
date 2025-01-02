@@ -30,6 +30,7 @@ import { augmentProgramWithVersioning } from './augments';
 import { createFileEmitter } from './file-emitter';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { normalize } from 'path';
+import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 
 export async function buildAndAnalyze(
   rootNames: string[],
@@ -124,13 +125,22 @@ function mergeTransformers(
 
 export async function buildAndAnalyzeWithParallelCompilation(
   parallelCompilation: ParallelCompilation,
-  typescriptFileCache: Map<string, string | Uint8Array>
+  typescriptFileCache: Map<string, string | Uint8Array>,
+  javascriptTransformer: JavaScriptTransformer
 ) {
   for (const {
     filename,
     contents,
   } of await parallelCompilation.emitAffectedFiles()) {
     const normalizedFilename = normalize(filename.replace(/^[A-Z]:/, ''));
-    typescriptFileCache.set(normalizedFilename, contents);
+    await javascriptTransformer
+      .transformData(normalizedFilename, contents, true /* skipLinker */, false)
+      .then((contents) => {
+        // Store as the returned Uint8Array to allow caching the fully transformed code
+        typescriptFileCache.set(
+          normalizedFilename,
+          Buffer.from(contents).toString()
+        );
+      });
   }
 }
