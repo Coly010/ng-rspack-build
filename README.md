@@ -1,5 +1,7 @@
 <div style="text-align: center;">
 
+<img src="./rsbuild-plugin-angular.png" alt="Rsbuild Plugin Angular" />
+
 # Angular Rspack and Rsbuild Tools
 
 [![GitHub Actions](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml/badge.svg)](https://github.com/Coly010/ng-rspack-build/actions/workflows/ci.yml)

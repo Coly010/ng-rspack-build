@@ -1,3 +1,8 @@
+<div style="text-align: center;">
+
+<img src="http://github.com/Coly010/ng-rspack-build/raw/main/rsbuild-plugin-angular.png" alt="Rsbuild Plugin Angular" />
+
+</div>
 # @ng-rsbuild/plugin-angular
 
 ## Rsbuild Support for Angular
