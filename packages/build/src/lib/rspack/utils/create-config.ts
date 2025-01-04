@@ -6,46 +6,53 @@ import {
 } from '@rspack/core';
 import { join, resolve } from 'path';
 
-export function createConfig(options: NgRspackPluginOptions): Configuration {
+export function createConfig(
+  options: NgRspackPluginOptions,
+  isServer = false
+): Configuration {
   const isProduction = process.env['NODE_ENV'] === 'production';
   const isDevServer = process.env['WEBPACK_SERVE'] && !isProduction;
   return {
     context: options.root,
-    target: 'web',
+    target: isServer ? 'node' : 'web',
     mode: isProduction ? 'production' : 'development',
     entry: {
-      main: {
+      [isServer ? 'server' : 'main']: {
         import: [options.main],
       },
     },
-    devServer: {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      allowedHosts: 'auto',
-      client: {
-        overlay: {
-          errors: true,
-          warnings: false,
-          runtimeErrors: true,
-        },
-        reconnect: true,
-      },
-      historyApiFallback: {
-        disableDotRule: true,
-      },
-      hot: true,
-      port: options.port ?? 4200,
-      onListening: (devServer) => {
-        if (!devServer) {
-          throw new Error('@rspack/dev-server is not defined');
-        }
+    ...(isServer
+      ? undefined
+      : {
+          devServer: {
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+            },
+            allowedHosts: 'auto',
+            client: {
+              overlay: {
+                errors: true,
+                warnings: false,
+                runtimeErrors: true,
+              },
+              reconnect: true,
+            },
+            historyApiFallback: {
+              disableDotRule: true,
+            },
+            hot: true,
+            port: options.port ?? 4200,
+            onListening: (devServer) => {
+              if (!devServer) {
+                throw new Error('@rspack/dev-server is not defined');
+              }
 
-        const port =
-          (devServer.server?.address() as { port: number })?.port ?? 4200;
-        console.log('Listening on port:', port);
-      },
-    } as DevServer,
+              const port =
+                (devServer.server?.address() as { port: number })?.port ?? 4200;
+              console.log('Listening on port:', port);
+            },
+          } as DevServer,
+        }),
     output: {
       uniqueName: options.name,
       hashFunction: isProduction ? 'xxhash64' : undefined,
@@ -57,8 +64,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
       chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
       crossOriginLoading: false,
       trustedTypes: { policyName: 'angular#bundler' },
-      scriptType: 'module',
-      module: true,
+      ...(isServer ? undefined : { scriptType: 'module', module: true }),
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.mjs', '.js'],
@@ -72,9 +78,9 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
     optimization: isProduction
       ? {
           minimize: true,
-          runtimeChunk: 'single',
+          runtimeChunk: isServer ? false : 'single',
           splitChunks: {
-            chunks: 'all',
+            chunks: isServer ? 'async' : 'all',
             minChunks: 1,
             minSize: 20000,
             maxAsyncRequests: 30,
@@ -112,7 +118,7 @@ export function createConfig(options: NgRspackPluginOptions): Configuration {
         },
       },
       rules: [
-        ...(isDevServer
+        ...(!isServer && isDevServer
           ? [
               {
                 loader: require.resolve(

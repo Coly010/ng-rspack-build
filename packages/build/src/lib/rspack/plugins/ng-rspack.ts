@@ -34,6 +34,7 @@ export class NgRspackPlugin implements RspackPluginInstance {
 
   apply(compiler: Compiler) {
     const isProduction = process.env['NODE_ENV'] === 'production';
+    const isServer = compiler.options.target === 'node';
 
     const polyfills = this.pluginOptions.polyfills ?? [];
     for (const polyfill of polyfills) {
@@ -41,21 +42,30 @@ export class NgRspackPlugin implements RspackPluginInstance {
         name: isProduction ? this.getEntryName(polyfill) : undefined,
       }).apply(compiler);
     }
-    const styles = this.pluginOptions.styles ?? [];
-    for (const style of styles) {
-      new EntryPlugin(compiler.context, style, {
-        name: isProduction ? this.getEntryName(style) : undefined,
-      }).apply(compiler);
-    }
-    const scripts = this.pluginOptions.scripts ?? [];
-    for (const script of scripts) {
-      new EntryPlugin(compiler.context, script, {
-        name: isProduction ? this.getEntryName(script) : undefined,
+    if (!isServer) {
+      const styles = this.pluginOptions.styles ?? [];
+      for (const style of styles) {
+        new EntryPlugin(compiler.context, style, {
+          name: isProduction ? this.getEntryName(style) : undefined,
+        }).apply(compiler);
+      }
+      const scripts = this.pluginOptions.scripts ?? [];
+      for (const script of scripts) {
+        new EntryPlugin(compiler.context, script, {
+          name: isProduction ? this.getEntryName(script) : undefined,
+        }).apply(compiler);
+      }
+      new HtmlRspackPlugin({
+        minify: false,
+        inject: 'body',
+        scriptLoading: 'module',
+        template: join(this.pluginOptions.root, this.pluginOptions.index),
       }).apply(compiler);
     }
     new DefinePlugin({
-      ngDevMode: isProduction ? 'false' : 'undefined',
+      ngDevMode: isProduction ? 'false' : {},
       ngJitMode: 'false',
+      ngServerMode: isServer,
     }).apply(compiler);
     if (this.pluginOptions.assets) {
       new CopyRspackPlugin({
@@ -67,16 +77,14 @@ export class NgRspackPlugin implements RspackPluginInstance {
       }).apply(compiler);
     }
     new ProgressPlugin().apply(compiler);
-    new HtmlRspackPlugin({
-      minify: false,
-      inject: 'body',
-      scriptLoading: 'module',
-      template: join(this.pluginOptions.root, this.pluginOptions.index),
-    }).apply(compiler);
     new RxjsEsmResolutionPlugin().apply(compiler);
     new AngularRspackPlugin({
       tsconfig: join(this.pluginOptions.root, this.pluginOptions.tsConfig),
     }).apply(compiler);
+
+    compiler.hooks.afterDone.tap('AngularRspackPlugin', () => {
+      process.exit();
+    });
   }
 
   private getEntryName(path: string) {
