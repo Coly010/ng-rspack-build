@@ -6,7 +6,8 @@ import { ParallelCompilation } from '@angular/build/src/tools/angular/compilatio
 import { type AngularHostOptions } from '@angular/build/src/tools/angular/angular-host';
 import { maxWorkers } from '../../utils/utils';
 import { compile as sassCompile } from 'sass';
-import { normalize } from 'path';
+import { normalize, join } from 'path';
+import * as compilerCli from '@angular/compiler-cli';
 import {
   NG_RSPACK_SYMBOL_NAME,
   NgRspackBuildEnhancedCompilation,
@@ -19,6 +20,9 @@ export class AngularRspackPlugin implements RspackPluginInstance {
   referencedFileTracker: FileReferenceTracker;
   typeScriptFileCache: Map<string, string | Uint8Array>;
   tsconfig: string;
+  isProd = process.env['NODE_ENV'] === 'production';
+  compilerOptions: compilerCli.CompilerOptions;
+  rootNames: string[];
 
   constructor(options: { tsconfig: string }) {
     this.javascriptTransformer = new JavaScriptTransformer(
@@ -34,6 +38,27 @@ export class AngularRspackPlugin implements RspackPluginInstance {
     this.referencedFileTracker = new FileReferenceTracker();
     this.typeScriptFileCache = new Map<string, string | Uint8Array>();
     this.tsconfig = options.tsconfig;
+    const { options: tsCompilerOptions, rootNames } =
+      compilerCli.readConfiguration(this.tsconfig, {
+        suppressOutputPathCheck: true,
+        outDir: undefined,
+        sourceMap: false,
+        inlineSourceMap: !this.isProd,
+        inlineSources: !this.isProd,
+        declaration: false,
+        declarationMap: false,
+        allowEmptyCodegenFiles: false,
+        annotationsAs: 'decorators',
+        enableResourceInlining: false,
+        noEmitOnError: false,
+        mapRoot: undefined,
+        sourceRoot: undefined,
+        supportTestBed: false,
+        supportJitMode: false,
+      });
+
+    this.compilerOptions = tsCompilerOptions;
+    this.rootNames = rootNames;
   }
 
   apply(compiler: Compiler) {
@@ -42,7 +67,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
       async (params, callback) => {
         const watchingModifiedFiles = compiler.watching?.compiler?.modifiedFiles
           ? new Set(compiler.watching.compiler.modifiedFiles)
-          : new Set<string>();
+          : new Set<string>(this.rootNames);
         const modifiedFiles = this.referencedFileTracker.update(
           watchingModifiedFiles
         );
@@ -75,21 +100,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
           await this.angularCompilation.initialize(
             this.tsconfig,
             hostOptions,
-            (compilerOptions) => {
-              compilerOptions['target'] = 9 /** ES2022 */;
-              compilerOptions['useDefineForClassFields'] ??= false;
-              compilerOptions['incremental'] = false; // Using cache - disabled for now
-              return {
-                ...compilerOptions,
-                noEmitOnError: false,
-                inlineSources: false,
-                inlineSourceMap: false,
-                sourceMap: undefined,
-                mapRoot: undefined,
-                sourceRoot: undefined,
-                preserveSymlinks: false,
-              };
-            }
+            () => this.compilerOptions
           );
         } catch (e) {
           console.error('Failed to initialize Angular Compilation', e);

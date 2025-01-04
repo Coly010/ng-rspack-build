@@ -55,13 +55,16 @@ export function createConfig(
         }),
     output: {
       uniqueName: options.name,
-      hashFunction: isProduction ? 'xxhash64' : undefined,
+      hashFunction: isProduction && !isServer ? 'xxhash64' : undefined,
       publicPath: 'auto',
       clean: true,
       path: join(options.root, options.outputPath),
-      cssFilename: isProduction ? '[name].[contenthash].css' : '[name].css',
-      filename: isProduction ? '[name].[contenthash].js' : '[name].js',
-      chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
+      cssFilename:
+        isProduction && !isServer ? '[name].[contenthash].css' : '[name].css',
+      filename:
+        isProduction && !isServer ? '[name].[contenthash].js' : '[name].js',
+      chunkFilename:
+        isProduction && !isServer ? '[name].[contenthash].js' : '[name].js',
       crossOriginLoading: false,
       trustedTypes: { policyName: 'angular#bundler' },
       ...(isServer ? undefined : { scriptType: 'module', module: true }),
