@@ -7,11 +7,19 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@ng-rsbuild/plugin-angular/ssr": [
+        "../../../../packages/rsbuild-plugin-angular/dist/lib/ssr/server"
+      ]
+    }
   },
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../../../../packages/rsbuild-plugin-angular"
+    },
     {
       "path": "./tsconfig.editor.json"
     },
