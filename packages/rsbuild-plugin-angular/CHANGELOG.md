@@ -1,3 +1,13 @@
+## 19.0.0-alpha.15 (2025-01-06)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** ensure ssr server serves assets correctly ([0a69b55](https://github.com/Coly010/ng-rspack-build/commit/0a69b55))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.14 (2025-01-02)
 
 ### 🚀 Features
