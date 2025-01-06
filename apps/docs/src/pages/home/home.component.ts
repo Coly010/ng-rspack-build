@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
       .benchmark-graph-container {
         position: relative;
         width: 100%;
-        height: 16px;
+        height: 8px;
         border-radius: 8px;
         background-color: var(--mat-sys-surface-container);
         border: 2px solid var(--mat-sys-surface-variant);
@@ -29,9 +29,13 @@ import { MatButtonModule } from '@angular/material/button';
           position: absolute;
           top: 0;
           left: 0;
-          height: 16px;
+          height: 8px;
           border-radius: 8px;
-          background-color: var(--mat-sys-primary);
+          background: linear-gradient(
+            to right,
+            var(--mat-sys-primary),
+            var(--mat-sys-secondary)
+          );
         }
       }
     `,
@@ -133,31 +137,55 @@ class BenchmarkGraphComponent {
         }
       }
 
-      .benchmark-graph {
-        display: flex;
-        flex-direction: column;
+      .bundler-container {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: 1fr;
         align-items: start;
-        justify-content: center;
-        flex-grow: 1;
-        width: 100%;
-        gap: 4px;
-        padding: 0.5rem;
-
-        span {
-          font-size: 1.15rem;
-          font-weight: 500;
+        @media (min-width: 960px) {
+          grid-template-columns: repeat(3, 1fr);
         }
 
-        app-benchmark-graph {
+        .graphs {
+          display: flex;
           width: 100%;
+          flex-direction: column;
+          flex-grow: 1;
+          gap: 8px;
+        }
+
+        .labels {
+          padding-left: 8px;
+          text-align: left;
+          font-size: 0.75rem;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
         }
       }
     `,
   ],
 })
 export class HomeComponent {
-  rspackBuildTime = 19.974;
-  rsbuildBuildTime = 24.69;
-  esbuildBuildTime = 28.509;
-  webpackBuildTime = 348.707;
+  rspackBuildTime = {
+    prodSsr: 19.974,
+    prod: 18.239,
+    dev: 16.477,
+  };
+  rsbuildBuildTime = {
+    prodSsr: 24.69,
+    prod: 20.49,
+    dev: 19.675,
+  };
+  esbuildBuildTime = {
+    prodSsr: 28.509,
+    prod: 24.521,
+    dev: 18.719,
+  };
+  webpackBuildTime = {
+    prodSsr: 348.707,
+    prod: 224.226,
+    dev: 234.449,
+  };
 }

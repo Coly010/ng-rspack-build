@@ -45,6 +45,107 @@
       architecture to provide blazing fast builds with an extensible plugin
       system to enhance your builds.
     </p>
+  </div>
+  <div class="benchmark-graphs">
+    <p class="info">
+      These benchmarks are based on an 8000 component application, building
+      Server and Client bundles, and run via a M3 Macbook Pro.
+    </p>
+    <div class="benchmarks">
+      <div class="bundler-container">
+        <span>Rspack</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="rspackBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rspackBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rspackBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ rspackBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ rspackBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ rspackBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Rsbuild</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ rsbuildBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ rsbuildBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ rsbuildBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Esbuild</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ esbuildBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ esbuildBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ esbuildBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Webpack</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="webpackBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="webpackBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="webpackBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ webpackBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ webpackBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ webpackBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
     <p class="note">
       <small
         >It's worth noting that the build times are currently limited by the use
@@ -52,43 +153,13 @@
         using a TS Program and the second using Babel.</small
       >
     </p>
-  </div>
-  <div class="benchmark-graphs">
-    <p class="info">
-      These benchmarks are based on an 8000 component application, building
-      Server and Client bundles, and run via a M3 Macbook Pro.
+    <p>
+      <a
+        mat-stroked-button
+        href="https://github.com/coly010/ng-bundler-benchmark"
+        target="_blank"
+        >View the Benchmarks</a
+      >
     </p>
-    <div class="benchmark-graph">
-      <span>Rspack</span>
-      <span>{{ rspackBuildTime }}s</span>
-      <app-benchmark-graph
-        [value]="rspackBuildTime"
-        [maxValue]="webpackBuildTime"
-      ></app-benchmark-graph>
-    </div>
-    <div class="benchmark-graph">
-      <span>Rsbuild</span>
-      <span>{{ rsbuildBuildTime }}s</span>
-      <app-benchmark-graph
-        [value]="rsbuildBuildTime"
-        [maxValue]="webpackBuildTime"
-      ></app-benchmark-graph>
-    </div>
-    <div class="benchmark-graph">
-      <span>Esbuild</span>
-      <span>{{ esbuildBuildTime }}s</span>
-      <app-benchmark-graph
-        [value]="esbuildBuildTime"
-        [maxValue]="webpackBuildTime"
-      ></app-benchmark-graph>
-    </div>
-    <div class="benchmark-graph">
-      <span>Webpack</span>
-      <span>{{ webpackBuildTime }}s</span>
-      <app-benchmark-graph
-        [value]="webpackBuildTime"
-        [maxValue]="webpackBuildTime"
-      ></app-benchmark-graph>
-    </div>
   </div>
 </div>
