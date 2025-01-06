@@ -20,17 +20,21 @@ export function createServer(bootstrap: any): RsbuildAngularServer {
 (()=>{function p(t,n,r,o,e,i,f,m){return{eventType:t,event:n,targetElement:r,eic:o,timeStamp:e,eia:i,eirp:f,eiack:m}}function u(t){let n=[],r=e=>{n.push(e)};return{c:t,q:n,et:[],etc:[],d:r,h:e=>{r(p(e.type,e,e.target,t,Date.now()))}}}function s(t,n,r){for(let o=0;o<n.length;o++){let e=n[o];(r?t.etc:t.et).push(e),t.c.addEventListener(e,t.h,r)}}function c(t,n,r,o,e=window){let i=u(t);e._ejsas||(e._ejsas={}),e._ejsas[n]=i,s(i,r),s(i,o,!0)}window.__jsaction_bootstrap=c;})();
 </script>`;
 
-  app.use('/static', express.static(staticFolder));
-  app.use(
-    '/favicon.ico',
-    express.static(resolve(browserDistFolder, 'favicon.ico'))
+  app.get(
+    '**',
+    express.static(browserDistFolder, {
+      maxAge: '1y',
+      index: false,
+    })
   );
+  app.use('/static', express.static(staticFolder));
 
   /**
    * Handle all other requests by rendering the Angular application.
    */
   app.get('**', async (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
+
     commonEngine
       .render({
         bootstrap,
