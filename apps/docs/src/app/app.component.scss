@@ -1,0 +1,18 @@
+
+.sidenav {
+  padding: 2rem;
+  max-width: 300px;
+}
+
+.sidenav-content {
+  height: calc(100vh - 64px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  flex-grow: 1;
+}

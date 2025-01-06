@@ -14,6 +14,7 @@ module.exports = {
         'rsbuild-plugin-nx',
         'nx-e2e',
         'release',
+        'docs',
       ],
     ],
   },
