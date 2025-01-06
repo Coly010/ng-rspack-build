@@ -13,6 +13,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../../../packages/rsbuild-plugin-angular"
+    },
+    {
       "path": "./tsconfig.editor.json"
     },
     {
