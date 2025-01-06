@@ -7,7 +7,7 @@ export default createConfig(
     server: './src/main.server.ts',
     ssrEntry: './src/server.ts',
     inlineStylesExtension: 'scss',
-    styles: ['./src/azure-blue.css', './src/styles.scss'],
+    styles: ['./src/styles.scss'],
   },
   {
     plugins: [pluginSass()],

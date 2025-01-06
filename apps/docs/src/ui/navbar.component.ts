@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     `,
   ],
   template: `
-    <mat-toolbar color="primary">
+    <mat-toolbar>
       <nav class="navbar">
         <button
           mat-icon-button

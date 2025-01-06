@@ -1,2 +1,94 @@
-<img src="logo-small.png" alt="Angular Rspack and Rsbuild Tools" />
+<div class="hero">
+  <img src="logo-small.png" alt="Angular Rspack and Rsbuild Tools" />
+  <h1>Angular Rspack and Rsbuild Tools</h1>
+  <p>Build and Serve Angular Applications with Rspack and Rsbuild</p>
+  <button mat-flat-button color="primary"><h2>Get Started</h2></button>
+</div>
 
+<div class="spacer">&nbsp;</div>
+
+<div class="info-box-container">
+  <div class="info-box">
+    <img src="rspack-logo.svg" alt="Rspack Logo" />
+    <h2>Rspack</h2>
+    <p>
+      Rspack is a drop-in replacement for Webpack, allowing migration of
+      existing Angular Webpack projects to a modern, faster build system.
+    </p>
+  </div>
+  <div class="info-box">
+    <img src="rsbuild-logo.svg" alt="Rspack Logo" />
+    <h2>Rsbuild</h2>
+    <p>
+      Rsbuild is a build tool based on Rspack, however it does not support the
+      Webpack ecosystem. It does provide OOTB Module Federation support and a
+      plugin system for extending the build.
+    </p>
+  </div>
+  <div class="info-box">
+    <img src="angular_gradient.png" alt="Rspack Logo" />
+    <h2>SSR + CSR Support</h2>
+    <p>
+      The plugins provided for Rspack and Rsbuild both support Angular Server
+      Side Rendering and Client Side Rendering.
+    </p>
+  </div>
+</div>
+
+<div class="spacer">&nbsp;</div>
+
+<div class="subsection">
+  <div class="subsection-header">
+    <h2>Lightning Fast Builds</h2>
+    <p>
+      Rspack and Rsbuild combine Rust and Typescript with a parallelized
+      architecture to provide blazing fast builds with an extensible plugin
+      system to enhance your builds.
+    </p>
+    <p class="note">
+      <small
+        >It's worth noting that the build times are currently limited by the use
+        of Angular's AOT compilation and JavaScript Transformer - the first
+        using a TS Program and the second using Babel.</small
+      >
+    </p>
+  </div>
+  <div class="benchmark-graphs">
+    <p class="info">
+      These benchmarks are based on an 8000 component application, building
+      Server and Client bundles, and run via a M3 Macbook Pro.
+    </p>
+    <div class="benchmark-graph">
+      <span>Rspack</span>
+      <span>{{ rspackBuildTime }}s</span>
+      <app-benchmark-graph
+        [value]="rspackBuildTime"
+        [maxValue]="webpackBuildTime"
+      ></app-benchmark-graph>
+    </div>
+    <div class="benchmark-graph">
+      <span>Rsbuild</span>
+      <span>{{ rsbuildBuildTime }}s</span>
+      <app-benchmark-graph
+        [value]="rsbuildBuildTime"
+        [maxValue]="webpackBuildTime"
+      ></app-benchmark-graph>
+    </div>
+    <div class="benchmark-graph">
+      <span>Esbuild</span>
+      <span>{{ esbuildBuildTime }}s</span>
+      <app-benchmark-graph
+        [value]="esbuildBuildTime"
+        [maxValue]="webpackBuildTime"
+      ></app-benchmark-graph>
+    </div>
+    <div class="benchmark-graph">
+      <span>Webpack</span>
+      <span>{{ webpackBuildTime }}s</span>
+      <app-benchmark-graph
+        [value]="webpackBuildTime"
+        [maxValue]="webpackBuildTime"
+      ></app-benchmark-graph>
+    </div>
+  </div>
+</div>
