@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from '../ui/navbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DrawerComponent } from '../ui/drawer.component';
 import { FooterComponent } from '../ui/footer.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [
