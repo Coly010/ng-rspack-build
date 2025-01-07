@@ -1,7 +1,6 @@
 import { Component, inject, computed } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import {
-  ActivatedRoute,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -88,6 +87,13 @@ export class DrawerComponent {
       isActive: false,
       href: '/api',
       label: 'API',
+      children: [
+        {
+          isActive: false,
+          href: '/api/create-config',
+          label: 'createConfig',
+        },
+      ],
     },
   ];
 }

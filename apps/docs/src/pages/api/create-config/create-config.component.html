@@ -1,0 +1,179 @@
+<h1>createConfig</h1>
+
+<p>
+  The <code>createConfig</code> function is used to create a Rsbuild
+  configuration object setup for Angular applications.
+</p>
+<p>
+  It takes an optional <code>RsbuildConfig</code> object as an argument, which
+  allows for customization of the Rsbuild configuration.
+</p>
+
+<div class="spacer"></div>
+
+<h2>Examples</h2>
+
+<div class="spacer"></div>
+
+<h2>PluginAngularOptions</h2>
+
+<p>
+  The <code>PluginAngularOptions</code> object is an object that contains the
+  following properties:
+</p>
+
+<pre>
+  <code>
+export interface PluginAngularOptions &#123;
+    root: string;
+    index: string;
+    browser: string;
+    server?: string;
+    ssrEntry?: string;
+    polyfills: string[];
+    assets: string[];
+    styles: string[];
+    scripts: string[];
+    jit: boolean;
+    inlineStylesExtension: 'css' | 'scss' | 'sass';
+    tsconfigPath: string;
+    hasServer: boolean;
+    useParallelCompilation: boolean;
+    useHoistedJavascriptProcessing: boolean;
+&#125;
+  </code>
+</pre>
+
+<div class="option-info">
+  <h3>root</h3>
+  <h4>Type: <code>string</code></h4>
+
+  <p>
+    The root directory of the project. This is the directory where the
+    <code>package.json</code> file is located.
+  </p>
+</div>
+<div class="option-info">
+  <h3>index</h3>
+  <h4>Type: <code>string</code></h4>
+  <p>
+    The path to the index file. This is used to determine the index file to use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>browser</h3>
+  <h4>Type: <code>string</code></h4>
+
+  <p>
+    The path to the browser file. This is used to determine the browser file to
+    use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>server</h3>
+  <h4>Type: <code>string</code></h4>
+
+  <p>
+    The path to the server file. This is used to determine the server file to
+    use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>ssrEntry</h3>
+  <h4>Type: <code>string</code></h4>
+
+  <p>
+    The path to the server entry file. This is used to determine the server
+    entry file to use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>polyfills</h3>
+  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+
+  <p>
+    An array of polyfills to include in the build. This is used to determine the
+    polyfills to include in the build.
+  </p>
+</div>
+<div class="option-info">
+  <h3>assets</h3>
+  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+
+  <p>
+    An array of assets to include in the build. This is used to determine the
+    assets to include in the build.
+  </p>
+</div>
+<div class="option-info">
+  <h3>styles</h3>
+  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+
+  <p>
+    An array of styles to include in the build. This is used to determine the
+    styles to include in the build.
+  </p>
+</div>
+<div class="option-info">
+  <h3>scripts</h3>
+  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+
+  <p>
+    An array of scripts to include in the build. This is used to determine the
+    scripts to include in the build.
+  </p>
+</div>
+<div class="option-info">
+  <h3>jit</h3>
+  <h4>Type: <code>boolean</code></h4>
+
+  <p>
+    A boolean value indicating whether to use the JIT mode. This is used to
+    determine whether to use the JIT mode.
+  </p>
+</div>
+<div class="option-info">
+  <h3>inlineStylesExtension</h3>
+  <h4>Type: <code>'css' | 'scss' | 'sass'</code></h4>
+
+  <p>
+    The inline styles extension to use. This is used to determine the inline
+    styles extension to use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>tsconfigPath</h3>
+  <h4>Type: <code>string</code></h4>
+
+  <p>
+    The path to the TypeScript configuration file. This is used to determine the
+    TypeScript configuration file to use.
+  </p>
+</div>
+<div class="option-info">
+  <h3>hasServer</h3>
+  <h4>Type: <code>boolean</code></h4>
+
+  <p>
+    A boolean value indicating whether the project has a server. This is used to
+    determine whether the project has a server.
+  </p>
+</div>
+<div class="option-info">
+  <h3>useParallelCompilation</h3>
+  <h4>Type: <code>boolean</code></h4>
+
+  <p>
+    A boolean value indicating whether to use parallel compilation. This is used
+    to determine whether to use parallel compilation.
+  </p>
+</div>
+<div class="option-info">
+  <h3>useHoistedJavascriptProcessing</h3>
+  <h4>Type: <code>boolean</code></h4>
+
+  <p>
+    A boolean value indicating whether to use hoisted javascript processing.
+    This is used to determine whether to use hoisted javascript processing.
+  </p>
+</div>

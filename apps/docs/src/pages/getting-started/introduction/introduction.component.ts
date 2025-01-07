@@ -9,13 +9,16 @@ import { MatIconModule } from '@angular/material/icon';
     `
       :host {
         max-width: 90vw;
+        margin: 0 auto;
+        font-size: 1.15rem;
+        line-height: 2rem;
         @media (min-width: 960px) {
           max-width: 70vw;
         }
-        margin: 0 auto;
       }
 
-      h1 {
+      h1,
+      h2 {
         padding-bottom: 2rem;
       }
 
@@ -32,6 +35,12 @@ import { MatIconModule } from '@angular/material/icon';
           align-items: center;
           gap: 0.5rem;
         }
+      }
+
+      .spacer {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        border-top: 1px solid var(--mat-sys-surface-variant);
       }
     `,
   ],

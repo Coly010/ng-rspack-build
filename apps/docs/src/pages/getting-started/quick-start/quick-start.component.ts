@@ -9,10 +9,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     `
       :host {
         max-width: 90vw;
+        margin: 0 auto;
         @media (min-width: 960px) {
           max-width: 70vw;
         }
-        margin: 0 auto;
       }
 
       h1 {

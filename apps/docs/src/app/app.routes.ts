@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { ApiComponent } from '../pages/api/api.component';
 
 export const appRoutes: Route[] = [
   {
@@ -27,6 +28,19 @@ export const appRoutes: Route[] = [
         path: '',
         redirectTo: 'quick-start',
         pathMatch: 'full',
+      },
+    ],
+  },
+  {
+    path: 'api',
+    component: ApiComponent,
+    children: [
+      {
+        path: 'create-config',
+        loadComponent: () =>
+          import('../pages/api/create-config/create-config.component').then(
+            (m) => m.CreateConfigComponent
+          ),
       },
     ],
   },
