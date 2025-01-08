@@ -9,9 +9,77 @@
   allows for customization of the Rsbuild configuration.
 </p>
 
+<pre>
+  <code>
+function createConfig(
+  options: Partial&lt;PluginAngularOptions&gt;,
+  additionalConfig?: Partial&lt;RsbuildConfig&gt;
+)
+  </code>
+</pre>
+
 <div class="spacer"></div>
 
 <h2>Examples</h2>
+
+<mat-tab-group>
+  <mat-tab label="Server-Side Rendering (SSR)">
+    <p>
+      The following example shows how to create a configuration for a SSR
+      application:
+    </p>
+    <pre class="pre-with-filename">
+      <span class="filename">rsbuild.config.ts</span>
+      <code>
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;);
+      </code>
+    </pre>
+  </mat-tab>
+  <mat-tab label="Client-Side Rendering (CSR)">
+    <p>
+      The following example shows how to create a configuration for a CSR
+      application:
+    </p>
+    <pre class="pre-with-filename">
+      <span class="filename">rsbuild.config.ts</span>
+      <code>
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+&#125;);
+      </code>
+    </pre>
+  </mat-tab>
+  <mat-tab label="Modify Rsbuild Configuration">
+    <p>
+      The following example shows how to modify the base Rsbuild configuration:
+    </p>
+    <pre class="pre-with-filename">
+      <span class="filename">rsbuild.config.ts</span>
+      <code>
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;, &#123;
+  plugins: [
+    pluginSass(),
+  ],
+  moduleFederation: &#123;&#125;,
+&#125;);
+      </code>
+    </pre>
+  </mat-tab>
+</mat-tab-group>
 
 <div class="spacer"></div>
 
@@ -45,135 +113,191 @@ export interface PluginAngularOptions &#123;
 </pre>
 
 <div class="option-info">
-  <h3>root</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="root">
+    <a href="#root"><span class="anchor-icon">#</span>root</a>
+  </h3>
+  <h4><code>string</code></h4>
 
   <p>
     The root directory of the project. This is the directory where the
-    <code>package.json</code> file is located.
+    <code>rsbuild.config.ts</code> file is located.
   </p>
 </div>
 <div class="option-info">
-  <h3>index</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="index">
+    <a href="#index"><span class="anchor-icon">#</span>index</a>
+  </h3>
+  <h4><code>string</code></h4>
   <p>
-    The path to the index file. This is used to determine the index file to use.
+    The path to the <code>index.html</code> file. This is used to determine the
+    base html template to use.
   </p>
 </div>
 <div class="option-info">
-  <h3>browser</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="browser">
+    <a href="#browser"><span class="anchor-icon">#</span>browser</a>
+  </h3>
+  <h4><code>string</code></h4>
 
   <p>
-    The path to the browser file. This is used to determine the browser file to
-    use.
+    The path to the browser entry file. This is used to determine the entry
+    point for the browser build. It is usually
+    <code>./src/main.ts</code>
   </p>
 </div>
 <div class="option-info">
-  <h3>server</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="server">
+    <a href="#server"><span class="anchor-icon">#</span>server</a>
+  </h3>
+  <h4><code>string</code></h4>
 
   <p>
-    The path to the server file. This is used to determine the server file to
-    use.
+    The path to the server entry file. This is used to determine the entry point
+    for the server build. It is usually
+    <code>./src/main.server.ts</code>
   </p>
 </div>
 <div class="option-info">
-  <h3>ssrEntry</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="ssrEntry">
+    <a href="#ssrEntry"><span class="anchor-icon">#</span>ssrEntry</a>
+  </h3>
+  <h4><code>string</code></h4>
 
   <p>
-    The path to the server entry file. This is used to determine the server
-    entry file to use.
+    The path to the node server entry file. This contains the express server
+    setup. It is usually
+    <code>./src/server.ts</code>
   </p>
 </div>
 <div class="option-info">
-  <h3>polyfills</h3>
-  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+  <h3 id="polyfills">
+    <a href="#polyfills"><span class="anchor-icon">#</span>polyfills</a>
+  </h3>
+  <h4><code>Array&lt;string&gt;</code></h4>
 
   <p>
-    An array of polyfills to include in the build. This is used to determine the
-    polyfills to include in the build.
+    An array of polyfills to include in the build. Can be either a path to a
+    polyfill file or a package name.
   </p>
 </div>
 <div class="option-info">
-  <h3>assets</h3>
-  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+  <h3 id="assets">
+    <a href="#assets"><span class="anchor-icon">#</span>assets</a>
+  </h3>
+  <h4><code>Array&lt;string&gt;</code></h4>
 
   <p>
-    An array of assets to include in the build. This is used to determine the
-    assets to include in the build.
+    An array of assets to include in the build. Can be a path to a directory or
+    a file. Resolved from the path provided in
+    <a href="#root"><code>root</code></a
+    >.
   </p>
 </div>
 <div class="option-info">
-  <h3>styles</h3>
-  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+  <h3 id="styles">
+    <a href="#styles"><span class="anchor-icon">#</span>styles</a>
+  </h3>
+  <h4><code>Array&lt;string&gt;</code></h4>
 
   <p>
-    An array of styles to include in the build. This is used to determine the
-    styles to include in the build.
+    An array of styles to include in the build. Resolved from the path provided
+    in <a href="#root"><code>root</code></a
+    >.
   </p>
 </div>
 <div class="option-info">
-  <h3>scripts</h3>
-  <h4>Type: <code>Array&lt;string&gt;</code></h4>
+  <h3 id="scripts">
+    <a href="#scripts"><span class="anchor-icon">#</span>scripts</a>
+  </h3>
+  <h4><code>Array&lt;string&gt;</code></h4>
 
   <p>
-    An array of scripts to include in the build. This is used to determine the
-    scripts to include in the build.
+    An array of scripts to include in the build. Resolved from the path provided
+    in <a href="#root"><code>root</code></a
+    >.
   </p>
 </div>
 <div class="option-info">
-  <h3>jit</h3>
-  <h4>Type: <code>boolean</code></h4>
+  <h3 id="jit">
+    <a href="#jit"><span class="anchor-icon">#</span>jit</a>
+  </h3>
+  <h4><code>boolean</code></h4>
+  <h4 class="default">Default: <code>false</code></h4>
 
   <p>
-    A boolean value indicating whether to use the JIT mode. This is used to
-    determine whether to use the JIT mode.
+    A boolean value indicating whether to use the JIT mode. This is used to tell
+    the Angular compiler to use Just-In-Time Compilation.
+    <strong>**Not Recommended**</strong>
   </p>
 </div>
 <div class="option-info">
-  <h3>inlineStylesExtension</h3>
-  <h4>Type: <code>'css' | 'scss' | 'sass'</code></h4>
+  <h3 id="inlineStylesExtension">
+    <a href="#inlineStylesExtension"
+      ><span class="anchor-icon">#</span>inlineStylesExtension</a
+    >
+  </h3>
+  <h4><code>'css' | 'scss' | 'sass'</code></h4>
+  <h4 class="default">Default: <code>css</code></h4>
 
   <p>
-    The inline styles extension to use. This is used to determine the inline
-    styles extension to use.
+    The inline styles extension to use. This is used to inform the compiler how
+    to handle inline styles, setting up Sass compilation if required.
   </p>
 </div>
 <div class="option-info">
-  <h3>tsconfigPath</h3>
-  <h4>Type: <code>string</code></h4>
+  <h3 id="tsconfigPath">
+    <a href="#tsconfigPath"><span class="anchor-icon">#</span>tsconfigPath</a>
+  </h3>
+  <h4><code>string</code></h4>
+  <h4 class="default">Default: <code>./tsconfig.app.json</code></h4>
 
   <p>
-    The path to the TypeScript configuration file. This is used to determine the
-    TypeScript configuration file to use.
+    The path to the TypeScript configuration file. This is used to set
+    `compilerOptions` for the Angular compilation.
   </p>
 </div>
 <div class="option-info">
-  <h3>hasServer</h3>
-  <h4>Type: <code>boolean</code></h4>
+  <h3 id="hasServer">
+    <a href="#hasServer"><span class="anchor-icon">#</span>hasServer</a>
+  </h3>
+  <h4><code>boolean</code></h4>
+  <h4 class="internal"><code>internal</code></h4>
 
   <p>
-    A boolean value indicating whether the project has a server. This is used to
-    determine whether the project has a server.
+    A boolean value indicating whether the project has a server. This is
+    inferred based on the presence of
+    <a href="#ssrEntry"><code>ssrEntry</code></a> and
+    <a href="#server"><code>server</code></a> and does not need to be set
+    manually.
   </p>
 </div>
 <div class="option-info">
-  <h3>useParallelCompilation</h3>
-  <h4>Type: <code>boolean</code></h4>
+  <h3 id="useParallelCompilation">
+    <a href="#useParallelCompilation"
+      ><span class="anchor-icon">#</span>useParallelCompilation</a
+    >
+  </h3>
+  <h4><code>boolean</code></h4>
+  <h4 class="default">Default: <code>true</code></h4>
 
   <p>
-    A boolean value indicating whether to use parallel compilation. This is used
-    to determine whether to use parallel compilation.
+    A boolean value indicating whether to use parallel compilation. Parallel
+    compilation uses workers to speed up the compilation process.
   </p>
 </div>
 <div class="option-info">
-  <h3>useHoistedJavascriptProcessing</h3>
-  <h4>Type: <code>boolean</code></h4>
+  <h3 id="useHoistedJavascriptProcessing">
+    <a href="#useHoistedJavascriptProcessing"
+      ><span class="anchor-icon">#</span>useHoistedJavascriptProcessing</a
+    >
+  </h3>
+  <h4><code>boolean</code></h4>
+  <h4 class="default">Default: <code>true</code></h4>
 
   <p>
     A boolean value indicating whether to use hoisted javascript processing.
-    This is used to determine whether to use hoisted javascript processing.
+    Hoisted javascript processing is a technique used to improve build speeds by
+    moving processing of the <code>JavaScriptTransformer</code> to a separate
+    plugin in order to share cache between server and browser builds.
   </p>
 </div>

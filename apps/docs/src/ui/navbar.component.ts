@@ -12,6 +12,22 @@ import { MatButtonModule } from '@angular/material/button';
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .home {
+          color: var(--mat-sys-primary);
+          text-decoration: none;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          border-radius: 2rem;
+
+          &:hover {
+            background-color: var(--mat-sys-surface-container);
+          }
+        }
       }
     `,
   ],
@@ -25,7 +41,14 @@ import { MatButtonModule } from '@angular/material/button';
         >
           <mat-icon>menu</mat-icon>
         </button>
-        <span>Rspack/Rsbuild for Angular</span>
+        <a class="home" href="/">
+          <img
+            src="logo-small.png"
+            alt="Angular Rspack and Rsbuild Tools"
+            width="36"
+          />
+          <span>Angular Rspack and Rsbuild Tools</span>
+        </a>
       </nav>
     </mat-toolbar>
   `,
