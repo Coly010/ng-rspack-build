@@ -60,7 +60,6 @@ class BenchmarkGraphComponent {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 30vh;
         padding: 1rem;
 
         h1 {
@@ -74,7 +73,7 @@ class BenchmarkGraphComponent {
       }
 
       .spacer {
-        padding: 4rem;
+        padding: 3.5rem;
       }
 
       .info-box-container {
