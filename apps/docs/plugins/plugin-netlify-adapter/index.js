@@ -7,9 +7,11 @@ module.exports = {
     const browserDistFolder = resolve(constants.PUBLISH_DIR, 'browser');
     const destination = join(dirname(constants.FUNCTIONS_DIST), 'browser');
     console.log(
-      'onPostBuild - browserDist, destination',
+      'onPostBuild - browserDist, destination, function dist',
       browserDistFolder,
-      destination
+      destination,
+      constants.FUNCTIONS_DIST,
+      constants.FUNCTIONS_SRC
     );
     cpSync(browserDistFolder, destination, {
       recursive: true,
