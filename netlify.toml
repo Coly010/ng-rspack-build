@@ -7,4 +7,4 @@
   status = 200
   to = "/.netlify/functions/server/:splat"
 [[plugins]]
-package = "/apps/docs/plugins/angular-netlify-adapter"
+package = "/apps/docs/plugins/plugin-netlify-adapter"
