@@ -1,5 +1,6 @@
 import { createServer } from '@ng-rsbuild/plugin-angular/ssr';
 import bootstrap from './main.server';
+import serverless from 'serverless-http';
 
 const server = createServer(bootstrap);
 
@@ -16,5 +17,12 @@ const server = createServer(bootstrap);
  *   res.send('Hello World!');
  * });
  */
+let _handler;
 
-server.listen();
+if (process.env['NETLIFY_BUILD']) {
+  _handler = serverless(server.app);
+} else {
+  server.listen();
+}
+
+export const handler = _handler;
