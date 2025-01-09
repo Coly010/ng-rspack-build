@@ -6,3 +6,5 @@
   from = "/*"
   status = 200
   to = "/.netlify/functions/server/:splat"
+[[plugins]]
+package = "/plugins/angular-netlify-adapter"
