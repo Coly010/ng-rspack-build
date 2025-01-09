@@ -9,9 +9,9 @@
   It is recommended to use the latest LTS version.
 </p>
 <p>Check the current Node.js version with the following command:</p>
-<pre>
-  <code>node -v</code>
-</pre>
+<app-code-block language="shell">
+node -v
+</app-code-block>
 
 <p>
   If you do not have Node.js installed in current environment, or the installed
@@ -19,15 +19,13 @@
   <a href="https://github.com/nvm-sh/nvm">nvm</a> to install. Here is an example
   of how to install via nvm:
 </p>
-<pre>
-  <code>
+<app-code-block language="shell">
 # Install Node.js LTS
 nvm install --lts
 
 # Switch to Node.js LTS
 nvm use --lts
-  </code>
-</pre>
+</app-code-block>
 
 <h3>Create a Project with Nx</h3>
 
@@ -42,8 +40,7 @@ The easiest way to get started with Angular and Rsbuild/Rspack tools is to use
       Run the following commands to create a new Nx workspace and install the
       &#64;nx/rsbuild plugin and &#64;ng-rsbuild/plugin-nx plugin:
     </p>
-    <pre>
-      <code>
+    <app-code-block language="shell">
 npx create-nx-workspace&#64;latest myorg --preset apps
 
 cd myorg
@@ -53,21 +50,16 @@ npx nx add &#64;nx/rsbuild
 npm install &#64;ng-rsbuild/nx-plugin
 
 npx nx g &#64;ng-rsbuild/nx:application myapp
-      </code>
-    </pre>
+    </app-code-block>
 
     <p>Run the following command to serve the application:</p>
-    <pre>
-      <code>
+    <app-code-block language="shell">
 npx nx dev myapp
-      </code>
-    </pre>
+    </app-code-block>
 
     <p>Run the following command to build the application:</p>
-    <pre>
-      <code>
+    <app-code-block language="shell">
 npx nx build myapp
-      </code>
-    </pre>
+    </app-code-block>
   </mat-tab>
 </mat-tab-group>

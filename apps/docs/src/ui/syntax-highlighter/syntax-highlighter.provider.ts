@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
-import shell from 'highlight.js/lib/languages/shell';
+import shell from 'highlight.js/lib/languages/bash';
 import scss from 'highlight.js/lib/languages/scss';
 import css from 'highlight.js/lib/languages/css';
 import xml from 'highlight.js/lib/languages/xml';

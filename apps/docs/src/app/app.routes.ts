@@ -36,11 +36,23 @@ export const appRoutes: Route[] = [
     component: ApiComponent,
     children: [
       {
-        path: 'create-config',
-        loadComponent: () =>
-          import('../pages/api/create-config/create-config.component').then(
-            (m) => m.CreateConfigComponent
-          ),
+        path: 'rsbuild',
+        children: [
+          {
+            path: 'create-config',
+            loadComponent: () =>
+              import('../pages/api/create-config/create-config.component').then(
+                (m) => m.CreateConfigComponent
+              ),
+          },
+          {
+            path: 'create-server',
+            loadComponent: () =>
+              import('../pages/api/create-server/create-server.component').then(
+                (m) => m.CreateServerComponent
+              ),
+          },
+        ],
       },
     ],
   },

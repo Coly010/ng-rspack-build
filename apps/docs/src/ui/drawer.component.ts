@@ -12,6 +12,7 @@ interface DrawerLink {
   isActive: boolean;
   href: string;
   label: string;
+  subheader?: boolean;
   children?: DrawerLink[];
 }
 
@@ -22,7 +23,9 @@ interface DrawerLink {
     @let activeRoute = currentRoute();
     <mat-nav-list>
       @for (link of list; track link) { @if (link.children) {
-      <div class="menu-item-header">{{ link.label }}</div>
+      <div class="menu-item-header" [class.subheader]="link.subheader">
+        {{ link.label }}
+      </div>
       @for (childLink of link.children; track childLink) {
       <a
         mat-list-item
@@ -46,6 +49,15 @@ interface DrawerLink {
         padding: 1rem;
         font-size: 1.15rem;
         font-weight: 500;
+        border-top: 1px solid var(--mat-sys-surface-variant);
+        border-bottom: 1px solid var(--mat-sys-surface-variant);
+      }
+
+      .subheader {
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-top: 1px solid var(--mat-sys-surface-variant);
+        border-bottom: 1px solid var(--mat-sys-surface-variant);
       }
     `,
   ],
@@ -87,11 +99,23 @@ export class DrawerComponent {
       isActive: false,
       href: '/api',
       label: 'API',
+      children: [],
+    },
+    {
+      isActive: false,
+      href: '/api/rsbuild',
+      label: '@ng-rsbuild/plugin-angular',
+      subheader: true,
       children: [
         {
           isActive: false,
-          href: '/api/create-config',
+          href: '/api/rsbuild/create-config',
           label: 'createConfig',
+        },
+        {
+          isActive: false,
+          href: '/api/rsbuild/create-server',
+          label: 'createServer',
         },
       ],
     },

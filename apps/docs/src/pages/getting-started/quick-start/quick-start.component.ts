@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CodeBlockComponent } from '../../../ui/code-block/code-block.component';
 
 @Component({
-  imports: [MatTabsModule],
+  imports: [MatTabsModule, CodeBlockComponent],
+  preserveWhitespaces: true,
   selector: 'app-quick-start',
   templateUrl: './quick-start.component.html',
   styles: [
