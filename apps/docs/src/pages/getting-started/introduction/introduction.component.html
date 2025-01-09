@@ -1,0 +1,79 @@
+<h1>Introduction</h1>
+
+<p>
+  Angular's compilation has always been a black box hidden behind layers of
+  abstraction and configuration, exposed via the Angular Builders from the
+  Angular CLI packages.
+</p>
+<p>
+  Originally, the underlying tool that bundled the Angular application was
+  <a href="https://webpack.js.org/">Webpack</a>. This was great as teams were
+  able to extend their builds by leveraging the vast Webpack ecosystem and
+  plugins that are available.
+</p>
+<p>
+  Over time, it became clear that the inherit slowness with Webpack build speeds
+  was becoming more and more of an issue for Angular developers.
+</p>
+<p>
+  The Angular Team decided to address this build speed issue by building out a
+  new build pipeline that leveraged
+  <a href="https://esbuild.github.io/">Esbuild</a>.
+</p>
+<p>
+  This succeeded in reducing the build times for Angular applications, however,
+  it made one crucial mistake. It left the existing Angular applications that
+  relied on the Webpack ecosystem behind, with either a difficult migration path
+  or none at all.
+</p>
+
+<div class="spacer"></div>
+
+<h2>Rspack and Rsbuild</h2>
+
+<p>
+  The solution to this problem was to create a new build pipeline that would be
+  able to leverage the existing Webpack ecosystem and plugins, while also
+  providing faster builds for Angular applications.
+</p>
+<p>
+  This is where <a href="https://rspack.dev/">Rspack</a> and
+  <a href="https://rsbuild.dev/">Rsbuild</a> come into play.
+</p>
+<p>
+  Rspack is a high performance JavaScript bundler written in Rust. It offers
+  strong compatibility with the Webpack ecosystem, allowing for
+  <em>almost</em> seamless replacement of webpack, and provides lightning fast
+  build speeds.
+</p>
+<p>
+  Because it supports the existing Webpack ecosystem, it provides an answer to
+  teams that maintain Angular applications using Webpack and want to migrate to
+  a faster build pipeline.
+</p>
+<p>
+  Rsbuild is a build tool based on Rspack, however it does not support the
+  Webpack ecosystem. It does provide out-of-the-box (OOTB) Module Federation
+  support and a plugin system for extending the build with build speeds
+  comparable to Esbuild.
+</p>
+<p>
+  This makes it a great solution for teams that want to migrate to a faster
+  build pipeline, but still want the ability to easily extend their builds and
+  use <a href="https://module-federation.io/">Module Federation</a>.
+</p>
+
+<div class="spacer"></div>
+
+<div class="disclaimer">
+  <h3>
+    <mat-icon>error</mat-icon>
+    Disclaimer
+  </h3>
+
+  <p>
+    These tools are still in development and have not been fully battle-tested.
+    They are also not provided officially by the Angular team, nor the Nx team.
+    It is purely a community effort.
+  </p>
+</div>

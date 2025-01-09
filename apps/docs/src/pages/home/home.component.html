@@ -1,0 +1,165 @@
+<div class="hero">
+  <img src="logo-small.png" alt="Angular Rspack and Rsbuild Tools" />
+  <h1>Angular Rspack and Rsbuild Tools</h1>
+  <p>Build and Serve Angular Applications with Rspack and Rsbuild</p>
+  <button mat-flat-button color="primary"><h2>Get Started</h2></button>
+</div>
+
+<div class="spacer">&nbsp;</div>
+
+<div class="info-box-container">
+  <div class="info-box">
+    <img src="rspack-logo.svg" alt="Rspack Logo" />
+    <h2>Rspack</h2>
+    <p>
+      Rspack is a drop-in replacement for Webpack, allowing migration of
+      existing Angular Webpack projects to a modern, faster build system.
+    </p>
+  </div>
+  <div class="info-box">
+    <img src="rsbuild-logo.svg" alt="Rspack Logo" />
+    <h2>Rsbuild</h2>
+    <p>
+      Rsbuild is a build tool based on Rspack, however it does not support the
+      Webpack ecosystem. It does provide OOTB Module Federation support and a
+      plugin system for extending the build.
+    </p>
+  </div>
+  <div class="info-box">
+    <img src="angular_gradient.png" alt="Rspack Logo" />
+    <h2>SSR + CSR Support</h2>
+    <p>
+      The plugins provided for Rspack and Rsbuild both support Angular Server
+      Side Rendering and Client Side Rendering.
+    </p>
+  </div>
+</div>
+
+<div class="spacer">&nbsp;</div>
+
+<div class="subsection">
+  <div class="subsection-header">
+    <h2>Lightning Fast Builds</h2>
+    <p>
+      Rspack and Rsbuild combine Rust and Typescript with a parallelized
+      architecture to provide blazing fast builds with an extensible plugin
+      system to enhance your builds.
+    </p>
+  </div>
+  <div class="benchmark-graphs">
+    <p class="info">
+      These benchmarks are based on an 8000 component application, building
+      Server and Client bundles, and run via a M3 Macbook Pro.
+    </p>
+    <div class="benchmarks">
+      <div class="bundler-container">
+        <span>Rspack</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="rspackBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rspackBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rspackBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ rspackBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ rspackBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ rspackBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Rsbuild</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="rsbuildBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ rsbuildBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ rsbuildBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ rsbuildBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Esbuild</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="esbuildBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ esbuildBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ esbuildBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ esbuildBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+
+      <div class="bundler-container">
+        <span>Webpack</span>
+        <div class="graphs">
+          <app-benchmark-graph
+            [value]="webpackBuildTime.prodSsr"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="webpackBuildTime.prod"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+          <app-benchmark-graph
+            [value]="webpackBuildTime.dev"
+            [maxValue]="webpackBuildTime.prodSsr"
+          ></app-benchmark-graph>
+        </div>
+        <div class="labels">
+          <span>{{ webpackBuildTime.prodSsr }}s <em>(Prod SSR)</em></span>
+          <span>{{ webpackBuildTime.prod }}s <em>(Prod)</em></span>
+          <span>{{ webpackBuildTime.dev }}s <em>(Dev)</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="note">
+      <small
+        >It's worth noting that the build times are currently limited by the use
+        of Angular's AOT compilation and JavaScript Transformer - the first
+        using a TS Program and the second using Babel.</small
+      >
+    </p>
+    <p>
+      <a
+        mat-stroked-button
+        href="https://github.com/coly010/ng-bundler-benchmark"
+        target="_blank"
+        >View the Benchmarks</a
+      >
+    </p>
+  </div>
+</div>
