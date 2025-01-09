@@ -6,3 +6,4 @@
 /pnpm-lock.yaml
 
 .angular
+apps/docs/src/pages/api
