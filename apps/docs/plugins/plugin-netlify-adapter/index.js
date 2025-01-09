@@ -2,7 +2,7 @@ const { dirname, resolve, join } = require('path/posix');
 const { cpSync } = require('fs');
 
 module.exports = {
-  onPostBuild: ({ constants }) => {
+  onSuccess: ({ constants }) => {
     console.log('onPostBuild - moving browser assets');
     const browserDistFolder = resolve(constants.PUBLISH_DIR, 'browser');
     const destination = join(dirname(constants.FUNCTIONS_DIST), 'browser');
