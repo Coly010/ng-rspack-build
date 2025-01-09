@@ -1,10 +1,11 @@
 <div class="hero">
-  <img src="logo-small.png" alt="Angular Rspack and Rsbuild Tools" />
+  <img src="logo-small.png" alt="Angular Rspack and Rsbuild Tools" width="128" height="128" />
   <h1>Angular Rspack and Rsbuild Tools</h1>
   <p>Build and Serve Angular Applications with Rspack and Rsbuild</p>
-  <button mat-flat-button color="primary"><h2>Get Started</h2></button>
+  <button mat-flat-button color="primary" routerLink="/getting-started/quick-start"><h2>Get Started</h2></button>
 </div>
 
+<div class="spacer"></div>
 <div class="spacer"></div>
 
 <div class="info-box-container">
@@ -35,7 +36,7 @@
   </div>
 </div>
 
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 
 <div class="subsection">
   <div class="subsection-header">
@@ -53,7 +54,7 @@
     </p>
     <div class="benchmarks">
       <div class="bundler-container">
-        <span>Rspack</span>
+        <span class="bundler-name">Rspack</span>
         <div class="graphs">
           <app-benchmark-graph
             [value]="rspackBuildTime.prodSsr"
@@ -76,7 +77,7 @@
       </div>
 
       <div class="bundler-container">
-        <span>Rsbuild</span>
+        <span class="bundler-name">Rsbuild</span>
         <div class="graphs">
           <app-benchmark-graph
             [value]="rsbuildBuildTime.prodSsr"
@@ -99,7 +100,7 @@
       </div>
 
       <div class="bundler-container">
-        <span>Esbuild</span>
+        <span class="bundler-name">Esbuild</span>
         <div class="graphs">
           <app-benchmark-graph
             [value]="esbuildBuildTime.prodSsr"
@@ -122,7 +123,7 @@
       </div>
 
       <div class="bundler-container">
-        <span>Webpack</span>
+        <span class="bundler-name">Webpack</span>
         <div class="graphs">
           <app-benchmark-graph
             [value]="webpackBuildTime.prodSsr"

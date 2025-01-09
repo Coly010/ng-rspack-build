@@ -10,7 +10,7 @@ import { CodeBlockComponent } from '../../../ui/code-block/code-block.component'
   styles: [
     `
       :host {
-        max-width: 90vw;
+        max-width: 85vw;
         margin: 0 auto;
         @media (min-width: 960px) {
           max-width: 70vw;

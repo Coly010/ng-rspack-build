@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-benchmark-graph',
@@ -51,7 +52,7 @@ class BenchmarkGraphComponent {
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, BenchmarkGraphComponent],
+  imports: [MatButtonModule, BenchmarkGraphComponent, RouterLink],
   templateUrl: './home.component.html',
   styles: [
     `
@@ -61,6 +62,11 @@ class BenchmarkGraphComponent {
         align-items: center;
         justify-content: center;
         padding: 1rem;
+        text-align: center;
+        max-height: 45vh;
+        @media (min-width: 960px) {
+          text-align: left;
+        }
 
         h1 {
           font-size: 3rem;
@@ -139,11 +145,18 @@ class BenchmarkGraphComponent {
       .bundler-container {
         padding: 1rem;
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: 1fr;
         align-items: start;
         @media (min-width: 960px) {
           grid-template-columns: repeat(3, 1fr);
+        }
+
+        .bundler-name {
+          grid-column: 1 / span 2;
+          @media (min-width: 960px) {
+            grid-column: 1;
+          }
         }
 
         .graphs {
@@ -161,6 +174,9 @@ class BenchmarkGraphComponent {
           display: flex;
           flex-direction: column;
           gap: 6px;
+          @media (max-width: 960px) {
+            align-items: end;
+          }
         }
       }
     `,

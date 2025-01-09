@@ -20,6 +20,7 @@ import { SupportedLanguages } from '../syntax-highlighter/syntax-highlighter.pro
           border-radius: 0.5rem;
           border: 1px solid var(--mat-sys-surface-variant);
           line-height: 1.5;
+          overflow-x: auto;
         }
 
         &.pre-with-filename {
