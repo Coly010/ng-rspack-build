@@ -8,11 +8,23 @@ interface RsbuildAngularServer {
   listen: (port?: number) => void;
 }
 
-export function createServer(bootstrap: any): RsbuildAngularServer {
-  const serverDistFolder = dirname(__filename);
-  const browserDistFolder = resolve(serverDistFolder, '../browser');
-  const staticFolder = resolve(browserDistFolder, 'static');
-  const indexHtml = join(browserDistFolder, 'index.html');
+export interface RsbuildAngularServerOptions {
+  serverDistFolder?: string;
+  browserDistFolder?: string;
+  staticFolder?: string;
+  indexHtml?: string;
+}
+
+export function createServer(
+  bootstrap: any,
+  opts?: RsbuildAngularServerOptions
+): RsbuildAngularServer {
+  const serverDistFolder = opts?.serverDistFolder ?? dirname(__filename);
+  const browserDistFolder =
+    opts?.browserDistFolder ?? resolve(serverDistFolder, '../browser');
+  const staticFolder =
+    opts?.staticFolder ?? resolve(browserDistFolder, 'static');
+  const indexHtml = opts?.indexHtml ?? join(browserDistFolder, 'index.html');
 
   const app = express();
   const commonEngine = new CommonEngine();
