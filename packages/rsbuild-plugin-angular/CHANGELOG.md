@@ -1,3 +1,14 @@
+## 19.0.0-alpha.16 (2025-01-09)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** allow overriding paths to static assets ([677153d](https://github.com/Coly010/ng-rspack-build/commit/677153d))
+- **docs:** initial netlify deploy test ([d6c8d0d](https://github.com/Coly010/ng-rspack-build/commit/d6c8d0d))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.15 (2025-01-06)
 
 ### 🩹 Fixes
