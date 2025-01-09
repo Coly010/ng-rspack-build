@@ -8,7 +8,7 @@ module.exports = {
     const destination = join(dirname(constants.FUNCTIONS_DIST), 'browser');
     console.log(
       'onPostBuild - browserDist, destination',
-      borwserDistFolder,
+      browserDistFolder,
       destination
     );
     cpSync(browserDistFolder, destination, {
