@@ -6,6 +6,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideSyntaxHighlighter } from '../ui/syntax-highlighter/syntax-highlighter.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    provideSyntaxHighlighter(),
   ],
 };

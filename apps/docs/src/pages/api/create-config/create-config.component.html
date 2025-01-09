@@ -9,7 +9,7 @@
   allows for customization of the Rsbuild configuration.
 </p>
 
-<app-code-block>
+<app-code-block language="typescript">
 function createConfig(
   options: Partial&lt;PluginAngularOptions&gt;,
   additionalConfig?: Partial&lt;RsbuildConfig&gt;
@@ -26,7 +26,7 @@ function createConfig(
       The following example shows how to create a configuration for a SSR
       application:
     </p>
-    <app-code-block fileName="rsbuild.config.ts">
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
 import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
 
 export default createConfig(&#123;
@@ -41,7 +41,7 @@ export default createConfig(&#123;
       The following example shows how to create a configuration for a CSR
       application:
     </p>
-    <app-code-block fileName="rsbuild.config.ts">
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
 import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
 
 export default createConfig(&#123;
@@ -53,7 +53,7 @@ export default createConfig(&#123;
     <p>
       The following example shows how to modify the base Rsbuild configuration:
     </p>
-    <app-code-block fileName="rsbuild.config.ts">
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
 import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
 
 export default createConfig(&#123;
@@ -79,7 +79,7 @@ export default createConfig(&#123;
   following properties:
 </p>
 
-<app-code-block>
+<app-code-block language="typescript">
 export interface PluginAngularOptions &#123;
     root: string;
     index: string;

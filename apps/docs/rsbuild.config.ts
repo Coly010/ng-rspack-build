@@ -7,7 +7,7 @@ export default createConfig(
     server: './src/main.server.ts',
     ssrEntry: './src/server.ts',
     inlineStylesExtension: 'scss',
-    styles: ['./src/styles.scss'],
+    styles: ['./src/styles.scss', './src/hljs.theme.scss'],
   },
   {
     plugins: [pluginSass()],

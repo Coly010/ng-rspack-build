@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { SyntaxHighlighterDirective } from '../syntax-highlighter/syntax-highlighter.directive';
+import { SupportedLanguages } from '../syntax-highlighter/syntax-highlighter.provider';
 
 @Component({
   imports: [SyntaxHighlighterDirective],
@@ -8,7 +9,7 @@ import { SyntaxHighlighterDirective } from '../syntax-highlighter/syntax-highlig
   template: `@let filename = fileName();
     <pre [class.pre-with-filename]="!!filename">@if (filename) {
     <span class="filename">{{ filename }}</span>
-  }<code highlight><ng-content></ng-content></code></pre>`,
+  }<code highlight [language]="_language()"><ng-content></ng-content></code></pre>`,
   styles: [
     `
       pre {
@@ -61,5 +62,8 @@ import { SyntaxHighlighterDirective } from '../syntax-highlighter/syntax-highlig
 })
 export class CodeBlockComponent {
   fileName = input<string>();
-  code = input<string>();
+  language = input<SupportedLanguages>();
+  _language = computed(() => {
+    return this.language() ?? 'typescript';
+  });
 }
