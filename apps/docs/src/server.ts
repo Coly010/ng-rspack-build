@@ -1,18 +1,7 @@
 import { createServer } from '@ng-rsbuild/plugin-angular/ssr';
 import bootstrap from './main.server';
-import serverless from 'serverless-http';
-import { readdirSync } from 'fs';
-import { dirname } from 'path';
 
-const netlifyOpts = {
-  browserDistFolder: '../browser',
-};
-console.log('server dirname', __dirname, readdirSync(dirname(__dirname)));
-
-const server = createServer(
-  bootstrap,
-  process.env['NETLIFY_BUILD'] ? netlifyOpts : undefined
-);
+const server = createServer(bootstrap);
 
 /** Add your custom server logic here
  *
@@ -27,11 +16,5 @@ const server = createServer(
  *   res.send('Hello World!');
  * });
  */
-let _handler;
-if (process.env['NETLIFY_BUILD']) {
-  _handler = serverless(server.app);
-} else {
-  server.listen();
-}
 
-export const handler = _handler;
+server.listen();

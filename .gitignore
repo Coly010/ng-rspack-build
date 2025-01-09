@@ -45,3 +45,5 @@ vite.config.*.timestamp*
 vitest.config.*.timestamp*
 
 .angular
+
+apps/docs/__deploy
