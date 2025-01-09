@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@use 'sass:color';
+
+/* You can add global styles to this file, and also import other style files */
+html {
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: mat.$orange-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+code.inline-code {
+  padding: 0.1rem 0.25rem;
+  background-color: var(--mat-sys-surface-container);
+  border-radius: 0.25rem;
+  border: 1px solid var(--mat-sys-surface-variant);
+}
+
+.spacer {
+  display: block;
+  padding: 1rem;
+}
+
+.spacer::after {
+  content: ' ';
+}
+
+.api-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  padding-bottom: 1.5rem;
+  h1 {
+    margin-bottom: 0;
+  }
+}
+h3.import-path {
+  display: inline-flex;
+  background-color: var(--mat-sys-surface-container);
+  border-radius: 0.25rem;
+  border: 1px solid var(--mat-sys-surface-variant);
+  align-items: center;
+  font-size: 0.75rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: monospace;
+}
