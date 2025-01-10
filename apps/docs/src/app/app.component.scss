@@ -3,17 +3,13 @@
   max-width: 300px;
 }
 
-.sidenav-content {
-  padding-top: 32px;
-  height: calc(100vh - 96px);
-}
-
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  padding-top: 64px;
   flex-grow: 1;
 }
 

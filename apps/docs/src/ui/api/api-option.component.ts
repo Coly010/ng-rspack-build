@@ -38,12 +38,12 @@ export interface ApiOption {
 
         h3 {
           position: relative;
+          margin-bottom: 0.5rem;
           font-family: monospace;
           font-size: 1rem;
           @media (min-width: 960px) {
             font-size: 1.25rem;
           }
-          margin-bottom: 0.5rem;
 
           a {
             color: var(

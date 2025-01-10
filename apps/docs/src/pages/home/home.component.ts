@@ -63,7 +63,6 @@ class BenchmarkGraphComponent {
         justify-content: center;
         padding: 1rem;
         text-align: center;
-        max-height: 45vh;
         @media (min-width: 960px) {
           text-align: left;
         }
@@ -88,9 +87,9 @@ class BenchmarkGraphComponent {
         grid-auto-rows: 1fr;
         justify-content: space-evenly;
         align-items: start;
-        gap: 1rem;
+        row-gap: 1rem;
         @media (min-width: 960px) {
-          gap: 0.5rem;
+          column-gap: 0.5rem;
           grid-template-columns: repeat(3, 1fr);
         }
       }
