@@ -20,6 +20,10 @@
 
 The goal of `@ng-rsbuild/plugin-angular` and `@ng-rspack/build` is to make easy and straightforward to build Angular applications with [Rspack](https://rspack.dev) and [Rsbuild](https://rsbuild.dev).
 
+## Documentation
+
+The documentation for this project can be found at [angular-rspack.dev](https://angular-rspack.dev).
+
 ## Rsbuild Support
 
 **_Thank you to [Brandon Roberts](https://x.com/brandontroberts) and [Analog](https://analogjs.org/) for their work on building Angular applications with Vite which both inspired this plugin and provided a basis for the compilation implementation._**
