@@ -39,7 +39,6 @@
     "@rspack/core": ">=1.0.5 <2.0.0",
     "@rsbuild/core": ">=1.0.5 <2.0.0",
     "@angular/build": ">=18.0.0 <20.0.0",
-    "sass": "^1.79.3",
     "@module-federation/enhanced": "^0.8.5",
     "@module-federation/sdk": "^0.8.5",
     "@nx/devkit": ">=20.0.0 <21.0.0",
