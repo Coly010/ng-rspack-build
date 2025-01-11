@@ -63,6 +63,13 @@ export const appRoutes: Route[] = [
               ),
           },
           {
+            path: 'with-configurations',
+            loadComponent: () =>
+              import(
+                '../pages/api/with-configurations/with-configurations.component'
+              ).then((m) => m.WithConfigurationsComponent),
+          },
+          {
             path: 'create-server',
             loadComponent: () =>
               import('../pages/api/create-server/create-server.component').then(

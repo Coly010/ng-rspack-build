@@ -137,6 +137,11 @@ export class DrawerComponent {
         },
         {
           isActive: false,
+          href: '/api/rsbuild/with-configurations',
+          label: 'withConfigurations',
+        },
+        {
+          isActive: false,
           href: '/api/rsbuild/create-server',
           label: 'createServer',
         },

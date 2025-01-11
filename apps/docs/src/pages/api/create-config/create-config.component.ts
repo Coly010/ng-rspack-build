@@ -70,6 +70,12 @@ export class CreateConfigComponent {
         'An array of scripts to include in the build. Resolved from the path provided in `root`.',
     },
     {
+      name: 'fileReplacements',
+      type: 'Array<FileReplacement>',
+      description:
+        'An array of file replacements to be used in the build. This is used to replace files during the build process.',
+    },
+    {
       name: 'jit',
       type: 'boolean',
       description:

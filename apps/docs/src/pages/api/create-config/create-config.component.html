@@ -70,12 +70,32 @@ export default createConfig(&#123;
   moduleFederation: &#123;&#125;,
 &#125;);
     </app-code-block>
-  </mat-tab>
+    </mat-tab>
+    <mat-tab label="File Replacements">
+      <p>
+        The following example shows how to use file replacements:
+      </p>
+      <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+  fileReplacements: [
+    &#123;
+      replace: './src/environments/environment.ts',
+      with: './src/environments/environment.prod.ts',
+    &#125;,
+  ],
+&#125;);
+      </app-code-block>
+    </mat-tab>
 </mat-tab-group>
 
 <div class="spacer"></div>
 
-<h2>PluginAngularOptions</h2>
+<h2 id="PluginAngularOptions">PluginAngularOptions</h2>
 
 <p>
   The <code>PluginAngularOptions</code> object is an object that contains the
