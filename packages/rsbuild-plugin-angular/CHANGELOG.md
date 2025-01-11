@@ -1,3 +1,15 @@
+## 19.0.0-alpha.17 (2025-01-11)
+
+### 🚀 Features
+
+- **rsbuild-plugin-angular:** add withConfigurations and fileReplacement support #43 ([#46](https://github.com/Coly010/ng-rspack-build/pull/46), [#43](https://github.com/Coly010/ng-rspack-build/issues/43))
+- **rsbuild-plugin-angular:** allow overriding paths to static assets ([2c6f318](https://github.com/Coly010/ng-rspack-build/commit/2c6f318))
+- **docs:** add docs site ([#42](https://github.com/Coly010/ng-rspack-build/pull/42))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.16 (2025-01-09)
 
 ### 🚀 Features
