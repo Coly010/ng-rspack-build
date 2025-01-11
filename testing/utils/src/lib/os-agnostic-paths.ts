@@ -38,8 +38,8 @@ const OS_AGNOSTIC_CWD = `<CWD>`;
  *
  */
 
+export function osAgnosticPath(filePath: undefined): undefined;
 export function osAgnosticPath(filePath: string): string;
-export function osAgnosticPath(): undefined;
 export function osAgnosticPath(filePath?: string): string | undefined {
   if (filePath == null) {
     return filePath;
