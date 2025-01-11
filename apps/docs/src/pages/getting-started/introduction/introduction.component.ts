@@ -10,8 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
       :host {
         max-width: 90vw;
         margin: 0 auto;
-        font-size: 1.15rem;
-        line-height: 2rem;
         @media (min-width: 960px) {
           max-width: 70vw;
         }

@@ -11,7 +11,7 @@ import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transfor
 
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
-  additionalConfig?: Partial<RsbuildConfig>
+  rsbuildConfigOverrides?: Partial<RsbuildConfig>
 ) {
   const normalizedOptions = normalizeOptions(pluginOptions);
   const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
@@ -112,6 +112,44 @@ export function createConfig(
     },
   });
 
-  const userDefinedConfig = defineConfig(additionalConfig || {});
+  const userDefinedConfig = defineConfig(rsbuildConfigOverrides || {});
   return mergeRsbuildConfig(rsbuildPluginAngularConfig, userDefinedConfig);
+}
+
+export function withConfigurations(
+  defaultOptions: {
+    options: Partial<PluginAngularOptions>;
+    rsbuildConfigOverrides?: Partial<RsbuildConfig>;
+  },
+  configurations: Record<
+    string,
+    {
+      options: Partial<PluginAngularOptions>;
+      rsbuildConfigOverrides?: Partial<RsbuildConfig>;
+    }
+  > = {},
+  configEnvVar = 'NGRS_CONFIG'
+) {
+  const configuration = process.env[configEnvVar] ?? 'production';
+  const mergedBuildOptionsOptions = {
+    ...defaultOptions.options,
+    ...((configuration !== 'default' && configuration in configurations
+      ? configurations[configuration]?.options
+      : {}) ?? {}),
+  };
+
+  let mergedRsbuildConfigOverrides =
+    defaultOptions.rsbuildConfigOverrides ?? {};
+  if (
+    configuration !== 'default' &&
+    configuration in configurations &&
+    configurations[configuration]?.rsbuildConfigOverrides
+  ) {
+    mergedRsbuildConfigOverrides = mergeRsbuildConfig(
+      mergedRsbuildConfigOverrides,
+      configurations[configuration]?.rsbuildConfigOverrides ?? {}
+    );
+  }
+
+  return createConfig(mergedBuildOptionsOptions, mergedRsbuildConfigOverrides);
 }

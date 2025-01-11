@@ -32,6 +32,23 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'guide',
+    children: [
+      {
+        path: 'migration',
+        children: [
+          {
+            path: 'configurations',
+            loadComponent: () =>
+              import(
+                '../pages/guide/migration/configurations/configurations.component'
+              ).then((m) => m.ConfigurationsComponent),
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: 'api',
     component: ApiComponent,
     children: [

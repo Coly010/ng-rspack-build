@@ -31,6 +31,7 @@ interface DrawerLink {
         mat-list-item
         [routerLink]="childLink.href"
         [activated]="childLink.href === activeRoute"
+        class="subheader-link-item"
         >{{ childLink.label }}</a
       >
       } } @else {
@@ -50,14 +51,17 @@ interface DrawerLink {
         font-size: 1.15rem;
         font-weight: 500;
         border-top: 1px solid var(--mat-sys-surface-variant);
-        border-bottom: 1px solid var(--mat-sys-surface-variant);
       }
 
       .subheader {
-        font-size: 0.85rem;
+        font-size: 1rem;
         font-weight: 500;
         border-top: 1px solid var(--mat-sys-surface-variant);
         border-bottom: 1px solid var(--mat-sys-surface-variant);
+      }
+
+      .subheader-link-item {
+        --mdc-list-list-item-label-text-size: 0.85rem;
       }
     `,
   ],
@@ -92,6 +96,25 @@ export class DrawerComponent {
           isActive: false,
           href: '/getting-started/quick-start',
           label: 'Quick Start',
+        },
+      ],
+    },
+    {
+      isActive: false,
+      href: '/guide',
+      label: 'Guide',
+      children: [],
+    },
+    {
+      isActive: false,
+      href: '/guide/migration',
+      label: 'Migration',
+      subheader: true,
+      children: [
+        {
+          isActive: false,
+          href: '/guide/migration/configurations',
+          label: 'Configurations',
         },
       ],
     },

@@ -2,6 +2,47 @@
 @use 'sass:color';
 
 /* You can add global styles to this file, and also import other style files */
+
+$mat-sys-info-container: #e8f4f8;
+$mat-sys-info: #006eb3;
+$mat-sys-warning-container: #fff3cd;
+$mat-sys-warning: #ff9800;
+$mat-sys-error-container: #ffebee;
+$mat-sys-error: #d32f2f;
+
+$mat-sys-info-container__dark: #2f516c;
+$mat-sys-info__dark: #005ab3;
+$mat-sys-warning-container__dark: color.invert(
+  $mat-sys-warning-container,
+  100%,
+  $space: rgb
+);
+$mat-sys-warning__dark: color.invert($mat-sys-warning, 100%, $space: rgb);
+$mat-sys-error-container__dark: color.invert(
+  $mat-sys-error-container,
+  100%,
+  $space: rgb
+);
+$mat-sys-error__dark: color.invert($mat-sys-error, 100%, $space: rgb);
+
+:root {
+  --mat-sys-info-container: #{$mat-sys-info-container};
+  --mat-sys-info: #{$mat-sys-info};
+  --mat-sys-warning-container: #{$mat-sys-warning-container};
+  --mat-sys-warning: #{$mat-sys-warning};
+  --mat-sys-error-container: #{$mat-sys-error-container};
+  --mat-sys-error: #{$mat-sys-error};
+
+  @media (prefers-color-scheme: dark) {
+    --mat-sys-info-container: #{$mat-sys-info-container__dark};
+    --mat-sys-info: #{$mat-sys-info__dark};
+    --mat-sys-warning-container: #{$mat-sys-warning-container__dark};
+    --mat-sys-warning: #{$mat-sys-warning__dark};
+    --mat-sys-error-container: #{$mat-sys-error-container__dark};
+    --mat-sys-error: #{$mat-sys-error__dark};
+  }
+}
+
 html {
   color-scheme: light dark;
   @include mat.theme(
@@ -25,6 +66,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  line-height: 1.5rem;
 }
 
 code.inline-code {

@@ -71,11 +71,18 @@ export async function setupCompilationWithParallelCompilation(
 ) {
   const { rootNames, compilerOptions } = setupCompilation(config, options);
   const parallelCompilation = new ParallelCompilation(options.jit ?? false);
+  const fileReplacements: Record<string, string> =
+    options.fileReplacements.reduce((r, f) => {
+      r[f.replace] = f.with;
+      return r;
+    }, {});
 
   try {
     await parallelCompilation.initialize(
       config.source?.tsconfigPath ?? options.tsconfigPath,
       {
+        ...compilerOptions,
+        fileReplacements,
         modifiedFiles: new Set(rootNames),
         async transformStylesheet(data) {
           const result = sassCompileString(data);
