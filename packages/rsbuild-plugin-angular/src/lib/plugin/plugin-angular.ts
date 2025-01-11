@@ -84,6 +84,12 @@ export const pluginAngular = (
           };
         });
       }
+
+      config.resolve ??= {};
+      config.resolve.alias ??= {};
+      for (const fileReplacement of options.fileReplacements ?? []) {
+        config.resolve.alias[fileReplacement.replace] = fileReplacement.with;
+      }
     });
 
     api.onDevCompileDone(({ environments }) => {

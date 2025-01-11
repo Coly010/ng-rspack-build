@@ -1,0 +1,87 @@
+<h1>Handling Configurations</h1>
+
+<p>
+  Configurations are handled slightly differently compared to the Angular
+  CLI. Rsbuild and Rspack use <code class="inline-code">mode</code> instead
+  of <code class="inline-code">configurations</code> to handle different
+  environments by default. This means that a different solution is needed to
+  handle different build configurations you may have to match the behavior
+  of Angular's configuration handling.
+</p>
+
+<p>
+  <code class="inline-code">&#64;ng-rsbuild/plugin-angular</code> provides a
+  <a routerLink="/rsbuild/api/with-configurations"
+  ><code class="inline-code">withConfigurations</code></a
+  >
+  function to help you handle this. It uses the <code class="inline-code">NGRS_CONFIG</code> environment variable to determine which configuration to use.
+  The default configuration is <code class="inline-code">production</code>.
+</p>
+
+<app-callout type="info" title="Roll your own">
+  <p>
+    You can handle configurations by yourself if you prefer, all you need
+    is some manner of detecting the environment and then merging the
+    options passed to <code class="inline-code">createConfig</code>.
+  </p>
+</app-callout>
+
+<h3>Using <code class="inline-code">withConfigurations</code></h3>
+
+<p>
+  The <code class="inline-code">withConfigurations</code> function takes two
+  arguments, the first is the default options, and the second is an object
+  of configurations. The configurations object is keyed by the name of the
+  configuration, and the value is an object with the options and
+  <code class="inline-code">rsbuildConfigOverrides</code> to be used for
+  that configuration.
+</p>
+
+<app-code-block language="typescript" fileName="rsbuild.config.ts">
+import &#123; withConfigurations &#125; from '&#64;ng-rsbuild/plugin-angular';
+export default withConfigurations(&#123;
+  options: &#123;
+    browser: './src/main.ts',
+    server: './src/main.server.ts',
+    ssrEntry: './src/server.ts',
+  &#125;,
+  rsbuildConfigOverrides: &#123;
+    plugins: [pluginSass()],
+  &#125;,
+&#125;, &#123;
+  production: &#123;
+    options: &#123;
+      fileReplacements: [
+        &#123;
+          replace: './src/environments/environment.ts',
+          with: './src/environments/environment.prod.ts',
+        &#125;,
+      ],
+    &#125;,
+  &#125;,
+&#125;);
+</app-code-block>
+
+<p>
+  The above example shows how to handle the
+  <code class="inline-code">production</code> configuration. The
+  <code class="inline-code">options</code> are the same as the default
+  options, and the
+  <code class="inline-code">rsbuildConfigOverrides</code> are the same as
+  the default <code class="inline-code">rsbuildConfigOverrides</code> but
+  with the <code class="inline-code">fileReplacements</code> property added.
+</p>
+
+<p>
+  The <code class="inline-code">NGRS_CONFIG</code> environment variable is
+  used to determine which configuration to use. If the environment variable
+  is not set, the <code class="inline-code">production</code> configuration
+  is used by default. <br />
+  If a production configuration is not provided, the default configuration is used.
+</p>
+
+<p>To run the build with the <code class="inline-code">production</code> configuration:</p>
+<app-code-block language="shell">
+NGRS_CONFIG=production npx rsbuild build
+</app-code-block>
+

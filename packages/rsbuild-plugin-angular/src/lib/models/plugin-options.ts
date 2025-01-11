@@ -1,3 +1,8 @@
+export interface FileReplacement {
+  replace: string;
+  with: string;
+}
+
 export interface PluginAngularOptions {
   root: string;
   index: string;
@@ -8,6 +13,7 @@ export interface PluginAngularOptions {
   assets: string[];
   styles: string[];
   scripts: string[];
+  fileReplacements: FileReplacement[];
   jit: boolean;
   inlineStylesExtension: 'css' | 'scss' | 'sass' | 'less';
   tsconfigPath: string;

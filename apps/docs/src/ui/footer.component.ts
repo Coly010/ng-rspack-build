@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -11,6 +12,11 @@ import { Component } from '@angular/core';
       />
       <p>Angular Rspack and Rsbuild Tools. Licensed under MIT.</p>
       <a href="https://github.com/Coly010/ng-rspack-build">GitHub</a>
+      <div class="rsbuild-callout">
+        <p>
+          Built for {{ env() }} by <a href="https://rsbuild.dev">Rsbuild</a>
+        </p>
+      </div>
     </footer>
   `,
   styles: [
@@ -23,8 +29,15 @@ import { Component } from '@angular/core';
         img {
           opacity: 0.5;
         }
+
+        .rsbuild-callout {
+          margin-top: 1rem;
+          border-top: 1px solid var(--mat-sys-surface-variant);
+        }
       }
     `,
   ],
 })
-export class FooterComponent {}
+export class FooterComponent {
+  env = computed(() => environment.name);
+}

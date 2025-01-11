@@ -1,5 +1,5 @@
 import { PluginAngularOptions } from './plugin-options';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { existsSync } from 'fs';
 
 export function normalizeOptions(
@@ -15,6 +15,7 @@ export function normalizeOptions(
     assets: options.assets ?? ['./public'],
     styles: options.styles ?? ['./src/styles.css'],
     scripts: options.scripts ?? [],
+    fileReplacements: options.fileReplacements ?? [],
     jit: options.jit ?? false,
     inlineStylesExtension: options.inlineStylesExtension ?? 'css',
     tsconfigPath:
@@ -24,6 +25,13 @@ export function normalizeOptions(
       options.useHoistedJavascriptProcessing ?? true,
     useParallelCompilation: options.useParallelCompilation ?? true,
   };
+
+  normalizedOptions.fileReplacements = options.fileReplacements
+    ? options.fileReplacements.map((fileReplacement) => ({
+        replace: resolve(normalizedOptions.root, fileReplacement.replace),
+        with: resolve(normalizedOptions.root, fileReplacement.with),
+      }))
+    : [];
   if (
     options.server &&
     options.ssrEntry &&
