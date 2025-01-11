@@ -1,0 +1,25 @@
+{
+  "name": "@ng-rspack/testing-utils",
+  "version": "0.0.1",
+  "dependencies": {
+    "ts-morph": "^24.0.0"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "private": true,
+  "nx": {
+    "sourceRoot": "testing/utils/src",
+    "projectType": "library",
+    "name": "testing-utils"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js"
+}
