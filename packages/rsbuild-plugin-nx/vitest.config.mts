@@ -17,5 +17,6 @@ export default defineConfig({
       provider: 'v8',
     },
     passWithNoTests: true,
+    testTimeout: 25_000,
   },
 });

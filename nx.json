@@ -96,7 +96,7 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["packages/**"],
+      "include": ["packages/**", "testing/*"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
