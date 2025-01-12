@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { SourceFileCache } from './source-file-cache';
+import { SourceFileCache } from '../utils/source-file-cache';
 
 export interface CompilerPluginOptions {
   sourcemap: boolean;

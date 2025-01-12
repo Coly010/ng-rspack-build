@@ -1,4 +1,7 @@
+import { platform } from 'node:os';
 import { ArrayLiteralExpression, PropertyAssignment } from 'ts-morph';
+
+export const isUsingWindows = () => platform() === 'win32';
 
 export function getTextByProperty(
   name: string,

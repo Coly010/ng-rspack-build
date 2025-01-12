@@ -68,7 +68,7 @@ function resolveUserDefinedRspackConfig(
   }
 
   const cleanupTranspiler = registerTsProject(tsConfig);
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+   
   const maybeCustomRspackConfig = require(path);
   cleanupTranspiler();
 
