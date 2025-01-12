@@ -24,7 +24,7 @@
  */
 
 import { VERSION } from '@angular/compiler-cli';
-import type { CompilerPluginOptions } from './compiler-plugin-options.js';
+import type { CompilerPluginOptions } from '../models/compiler-plugin-options';
 import * as sfc from './source-file-cache.js';
 
 const angularMajor = Number(VERSION.major);
@@ -38,7 +38,9 @@ let jt: any;
 
 if (angularMajor < 15) {
   throw new Error('AnalogJS is not compatible with Angular v14 and lower');
-} else if (angularMajor >= 15 && angularMajor < 16) {
+}
+// the imports moved between versions. the follwoing code is a workaround to make it work with all versions
+else if (angularMajor >= 15 && angularMajor < 16) {
   const cp = require('@angular-devkit/build-angular/src/builders/browser-esbuild/compiler-plugin.js');
   const {
     createJitResourceTransformer,

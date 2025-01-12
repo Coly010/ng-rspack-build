@@ -11,7 +11,7 @@ import * as path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type ts from 'typescript';
 
-const USING_WINDOWS = platform() === 'win32';
+const isUsingWindows = () => platform() === 'win32';
 const WINDOWS_SEP_REGEXP = new RegExp(`\\${path.win32.sep}`, 'g');
 
 export class SourceFileCache extends Map<string, ts.SourceFile> {
@@ -34,7 +34,7 @@ export class SourceFileCache extends Map<string, ts.SourceFile> {
       this.typeScriptFileCache.delete(pathToFileURL(file).href);
 
       // Normalize separators to allow matching TypeScript Host paths
-      if (USING_WINDOWS) {
+      if (isUsingWindows()) {
         file = file.replace(WINDOWS_SEP_REGEXP, path.posix.sep);
       }
 
