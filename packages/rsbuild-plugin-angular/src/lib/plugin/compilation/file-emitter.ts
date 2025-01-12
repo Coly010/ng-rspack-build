@@ -24,7 +24,7 @@
  */
 
 import * as ts from 'typescript';
-import { NgtscProgram } from '@angular/compiler-cli';
+import { NgtscProgram, OptimizeFor } from '@angular/compiler-cli';
 import { FileEmitter } from '../models';
 
 export function createFileEmitter(
@@ -40,7 +40,10 @@ export function createFileEmitter(
     }
 
     const diagnostics = angularCompiler
-      ? angularCompiler.getDiagnosticsForFile(sourceFile, 1)
+      ? angularCompiler.getDiagnosticsForFile(
+          sourceFile,
+          OptimizeFor.WholeProgram
+        )
       : [];
 
     const errors = diagnostics
@@ -53,6 +56,7 @@ export function createFileEmitter(
 
     let content: string | undefined;
     program.emit(
+      // When targetSource file is specified, it emits the files corresponding to that source file
       sourceFile,
       (filename, data) => {
         if (/\.[cm]?js$/.test(filename)) {
