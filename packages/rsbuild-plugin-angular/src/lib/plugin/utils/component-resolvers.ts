@@ -48,7 +48,9 @@ export class StyleUrlsResolver {
     //   ]
     // })
     // The `matchedStyleUrls` would result in: `styleUrls: [\n    './app.component.scss'\n  ]`.
-    const matchedStyleUrls = getStyleUrls(code);
+    const matchedStyleUrls = getStyleUrls(code)
+      // for type narrowing
+      .filter(v => v !== undefined);
     const entry = this.styleUrlsCache.get(id);
     // We're using `matchedStyleUrls` as a key because the code may be changing continuously,
     // resulting in the resolver being called multiple times. While the code changes, the
@@ -61,7 +63,8 @@ export class StyleUrlsResolver {
       return entry.styleUrls;
     }
 
-    const styleUrls = matchedStyleUrls.map((styleUrlPath) => {
+    const styleUrls = matchedStyleUrls
+      .map((styleUrlPath) => {
       return `${styleUrlPath}|${normalize(resolve(dirname(id), styleUrlPath))}`;
     });
 
