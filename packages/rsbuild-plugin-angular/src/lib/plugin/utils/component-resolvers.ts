@@ -71,13 +71,28 @@ export class StyleUrlsResolver {
   }
 }
 
-function getTextByProperty(name: string, properties: PropertyAssignment[]) {
+export function getTextByProperty(
+  name: string,
+  properties: PropertyAssignment[]
+) {
   return properties
     .filter((property) => property.getName() === name)
     .map((property) =>
       property.getInitializer()?.getText().replace(/['"`]/g, '')
     )
     .filter((url): url is string => url !== undefined);
+}
+
+export function getAllTextByProperty(
+  name: string,
+  properties: PropertyAssignment[]
+) {
+  return properties
+    .filter((property) => property.getName() === name)
+    .map((property) => property.getInitializer() as ArrayLiteralExpression)
+    .flatMap((array) =>
+      array.getElements().map((el) => el.getText().replace(/['"`]/g, ''))
+    );
 }
 
 export function getStyleUrls(code: string) {
@@ -87,13 +102,7 @@ export function getStyleUrls(code: string) {
     SyntaxKind.PropertyAssignment
   );
   const styleUrl = getTextByProperty('styleUrl', properties);
-  const styleUrls = properties
-    .filter((property) => property.getName() === 'styleUrls')
-    .map((property) => property.getInitializer() as ArrayLiteralExpression)
-    .flatMap((array) =>
-      array.getElements().map((el) => el.getText().replace(/['"`]/g, ''))
-    );
-
+  const styleUrls = getAllTextByProperty('styleUrls', properties);
   return [...styleUrls, ...styleUrl];
 }
 
@@ -106,7 +115,7 @@ export function getTemplateUrls(code: string) {
   return getTextByProperty('templateUrl', properties);
 }
 
-interface TemplateUrlsCacheEntry {
+export interface TemplateUrlsCacheEntry {
   code: string;
   templateUrlPaths: string[];
 }
