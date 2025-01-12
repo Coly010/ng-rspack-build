@@ -59,6 +59,7 @@ export function createFileEmitter(
       // When targetSource file is specified, it emits the files corresponding to that source file
       sourceFile,
       (filename, data) => {
+        console.log('!!!!!!!!!!!!!!!!!!', filename, data);
         if (/\.[cm]?js$/.test(filename)) {
           content = data;
         }
