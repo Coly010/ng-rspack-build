@@ -6,12 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { platform } from 'node:os';
 import * as path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type ts from 'typescript';
+import { isUsingWindows } from './utils';
 
-const isUsingWindows = () => platform() === 'win32';
 const WINDOWS_SEP_REGEXP = new RegExp(`\\${path.win32.sep}`, 'g');
 
 export class SourceFileCache extends Map<string, ts.SourceFile> {

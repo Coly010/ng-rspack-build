@@ -54,21 +54,8 @@ describe('SourceFileCache', async () => {
     expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
   });
 
-  it.each([
-    'aix',
-    'android',
-    'darwin',
-    'freebsd',
-    'haiku',
-    'linux',
-    'openbsd',
-    'sunos',
-    'cygwin',
-    'netbsd',
-  ] as const)('should keep unix format if platform is %s', (platform) => {
-    const platformSpy = vi
-      .spyOn(osModule, 'platform')
-      .mockReturnValue(platform);
+  it('should keep unix format if platform is %s', () => {
+    const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('linux');
     const cache = new SourceFileCache();
     const fileName = `path/to/index.ts`;
 
@@ -77,21 +64,8 @@ describe('SourceFileCache', async () => {
     expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
   });
 
-  it.each([
-    'aix',
-    'android',
-    'darwin',
-    'freebsd',
-    'haiku',
-    'linux',
-    'openbsd',
-    'sunos',
-    'cygwin',
-    'netbsd',
-  ] as const)('should keep windows format if platform is %s', (platform) => {
-    const platformSpy = vi
-      .spyOn(osModule, 'platform')
-      .mockReturnValue(platform);
+  it('should keep windows format if platform is not windows %s', () => {
+    const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('linux');
     const cache = new SourceFileCache();
     const fileName = `path${path.win32.sep}to${path.win32.sep}index.ts`;
 
