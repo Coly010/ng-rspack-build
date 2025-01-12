@@ -7,7 +7,7 @@ import {
   normalizeQuotes,
 } from './utils';
 import { SyntaxKind } from 'ts-morph';
-import { sourceFileFromCode } from 'testing-utils';
+import { sourceFileFromCode } from '@ng-rspack/testing-utils';
 
 vi.mock('node:os', async (importOriginal) => {
   const actual = await importOriginal<typeof osModule>();
