@@ -2,6 +2,7 @@ import { createConfig } from './create-config';
 import { vi } from 'vitest';
 
 describe('createConfig', () => {
+  const normalizedRoot = __dirname;
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -39,6 +40,9 @@ describe('createConfig', () => {
                 "post": [
                   "plugin-angular-jit",
                 ],
+                "pre": [
+                  "plugin-hoisted-js-transformer",
+                ],
                 "setup": [Function],
               },
             ],
@@ -57,7 +61,16 @@ describe('createConfig', () => {
           },
         },
         "mode": "development",
-        "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
+        "plugins": [
+          {
+            "name": "plugin-hoisted-js-transformer",
+            "post": [
+              "plugin-angular",
+            ],
+            "setup": [Function],
+          },
+        ],
+        "root": "${normalizedRoot}",
         "server": {
           "historyApiFallback": {
             "index": "/index.html",
@@ -106,6 +119,12 @@ describe('createConfig', () => {
               "template": "./src/index.html",
             },
             "output": {
+              "copy": [
+                {
+                  "from": "./public",
+                  "to": ".",
+                },
+              ],
               "distPath": {
                 "root": "dist/browser",
               },
@@ -117,13 +136,13 @@ describe('createConfig', () => {
                 "post": [
                   "plugin-angular-jit",
                 ],
+                "pre": [
+                  "plugin-hoisted-js-transformer",
+                ],
                 "setup": [Function],
               },
             ],
             "source": {
-              "assetsInclude": [
-                "./public",
-              ],
               "define": {
                 "ngJitMode": undefined,
               },
@@ -150,6 +169,9 @@ describe('createConfig', () => {
                 "post": [
                   "plugin-angular-jit",
                 ],
+                "pre": [
+                  "plugin-hoisted-js-transformer",
+                ],
                 "setup": [Function],
               },
             ],
@@ -159,7 +181,6 @@ describe('createConfig', () => {
                 "ngServerMode": true,
               },
               "entry": {
-                "bootstrap": "./src/main.server.ts",
                 "server": "./src/server.ts",
               },
               "preEntry": [
@@ -170,7 +191,16 @@ describe('createConfig', () => {
           },
         },
         "mode": "development",
-        "root": "/Users/columferry/dev/nrwl/issues/rspack-angular/ng-rspack/packages/rsbuild-plugin-angular/src/lib/config",
+        "plugins": [
+          {
+            "name": "plugin-hoisted-js-transformer",
+            "post": [
+              "plugin-angular",
+            ],
+            "setup": [Function],
+          },
+        ],
+        "root": "${normalizedRoot}",
         "server": {
           "historyApiFallback": {
             "index": "/index.html",
@@ -187,6 +217,9 @@ describe('createConfig', () => {
         },
         "source": {
           "tsconfigPath": "./tsconfig.app.json",
+        },
+        "tools": {
+          "rspack": [Function],
         },
       }
     `);
