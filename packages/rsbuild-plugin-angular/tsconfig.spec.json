@@ -10,7 +10,10 @@
       "vite/client",
       "node",
       "vitest"
-    ]
+    ],
+    "paths": {
+      "@ng-rspack/testing-utils": ["../../testing/utils/src/index.ts"]
+    }
   },
   "include": [
     "vite.config.ts",
@@ -25,11 +28,15 @@
     "src/**/*.spec.js",
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "package.json"
   ],
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../../testing/utils/tsconfig.lib.json"
     }
   ]
 }

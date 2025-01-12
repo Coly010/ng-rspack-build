@@ -1,9 +1,10 @@
 import { describe, expect } from 'vitest';
 import { SourceFileCache } from './source-file-cache.ts';
-import { sourceFileFromCode } from 'testing-utils';
+import { sourceFileFromCode } from '@ng-rspack/testing-utils';
 import { pathToFileURL } from 'node:url';
 import * as osModule from 'node:os';
 import path from 'node:path';
+import type ts from 'typescript';
 
 vi.mock('node:os', async (importOriginal) => {
   const actual = await importOriginal<typeof osModule>();
@@ -27,9 +28,9 @@ describe('SourceFileCache', async () => {
   it('should be able to set a value in the cache and get it later', () => {
     const cache = new SourceFileCache();
     const fileName = 'index.ts';
-    const sourceFile = sourceFileFromCode(
-      'console.log("Hello ng-rspack-build 🦀📦!");'
-    );
+    const sourceFile = sourceFileFromCode({
+      code: 'console.log("Hello ng-rspack-build 🦀📦!");',
+    }) as unknown as ts.SourceFile;
 
     expect(() => cache.set(fileName, sourceFile)).not.toThrow();
     expect(cache.get(fileName)).toStrictEqual(sourceFile);
