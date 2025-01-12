@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./out-tsc/vitest",
     "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "types": [
       "vitest/globals",
       "vitest/importMeta",

@@ -23,6 +23,7 @@
  * SOFTWARE.
  */
 
+import packageJson from '../../../../package.json';
 import { VERSION } from '@angular/compiler-cli';
 import type { CompilerPluginOptions } from '../models/compiler-plugin-options';
 import * as sfc from './source-file-cache.js';
@@ -37,7 +38,9 @@ let cjt: Function;
 let jt: any;
 
 if (angularMajor < 15) {
-  throw new Error('AnalogJS is not compatible with Angular v14 and lower');
+  throw new Error(
+    `${packageJson.name} is not compatible with Angular v14 and lower`
+  );
 }
 // the imports moved between versions. the follwoing code is a workaround to make it work with all versions
 else if (angularMajor >= 15 && angularMajor < 16) {
