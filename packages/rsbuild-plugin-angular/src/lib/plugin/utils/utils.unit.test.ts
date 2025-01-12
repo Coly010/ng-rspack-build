@@ -3,10 +3,10 @@ import { isUsingWindows } from './utils.ts';
 import * as osModule from 'node:os';
 
 vi.mock('node:os', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof osModule>();
 
   return {
-    ...(actual as any),
+    ...actual,
     platform: vi.fn(),
   };
 });

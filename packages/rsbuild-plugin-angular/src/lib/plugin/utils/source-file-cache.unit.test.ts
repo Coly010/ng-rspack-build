@@ -1,12 +1,12 @@
 import { describe, expect } from 'vitest';
 import { SourceFileCache } from './source-file-cache.ts';
-import type { SourceFile } from 'typescript';
+import { sourceFileFromCode } from 'testing-utils';
 import { pathToFileURL } from 'node:url';
 import * as osModule from 'node:os';
 import path from 'node:path';
 
-vi.mock('node:os', () => {
-  const actual = vi.importActual('node:os');
+vi.mock('node:os', async (importOriginal) => {
+  const actual = await importOriginal<typeof osModule>();
 
   return {
     ...actual,
@@ -27,8 +27,9 @@ describe('SourceFileCache', async () => {
   it('should be able to set a value in the cache and get it later', () => {
     const cache = new SourceFileCache();
     const fileName = 'index.ts';
-    // @TODO use createSourceFile test helper
-    const sourceFile = {} as SourceFile;
+    const sourceFile = sourceFileFromCode(
+      'console.log("Hello ng-rspack-build 🦀📦!");'
+    );
 
     expect(() => cache.set(fileName, sourceFile)).not.toThrow();
     expect(cache.get(fileName)).toStrictEqual(sourceFile);
@@ -54,7 +55,7 @@ describe('SourceFileCache', async () => {
     expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
   });
 
-  it('should keep unix format if platform is %s', () => {
+  it('should keep unix format if platform is not windows', () => {
     const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('linux');
     const cache = new SourceFileCache();
     const fileName = `path/to/index.ts`;
@@ -64,7 +65,7 @@ describe('SourceFileCache', async () => {
     expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
   });
 
-  it('should keep windows format if platform is not windows %s', () => {
+  it('should keep windows format if platform is not windows', () => {
     const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('linux');
     const cache = new SourceFileCache();
     const fileName = `path${path.win32.sep}to${path.win32.sep}index.ts`;
