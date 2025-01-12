@@ -12,7 +12,8 @@
     "noImplicitAny": false,
     "noUnusedLocals": false,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "src/lib/patch/patch-angular-build.ts"],
   "references": [],
