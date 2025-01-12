@@ -6,9 +6,7 @@ export function getTextByProperty(
 ) {
   return properties
     .filter((property) => property.getName() === name)
-    .map((property) =>
-      property.getInitializer()?.getText().replace(/['"`]/g, '')
-    )
+    .map((property) => normalizeQuotes(property.getInitializer()?.getText()))
     .filter((url): url is string => url !== undefined);
 }
 
@@ -20,6 +18,10 @@ export function getAllTextByProperty(
     .filter((property) => property.getName() === name)
     .map((property) => property.getInitializer() as ArrayLiteralExpression)
     .flatMap((array) =>
-      array.getElements().map((el) => el.getText().replace(/['"`]/g, ''))
+      array.getElements().map((el) => normalizeQuotes(el.getText()))
     );
+}
+
+export function normalizeQuotes(str?: string) {
+  return str ? str.replace(/['"`]/g, '') : str;
 }
