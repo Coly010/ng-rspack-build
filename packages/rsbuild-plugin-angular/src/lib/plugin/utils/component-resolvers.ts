@@ -54,7 +54,10 @@ export class StyleUrlsResolver {
     // resulting in the resolver being called multiple times. While the code changes, the
     // `styleUrls` may remain constant, which means we should always return the previously
     // resolved style URLs.
-    if (entry && entry.matchedStyleUrls === matchedStyleUrls) {
+    if (
+      entry &&
+      entry.matchedStyleUrls.join(',') === matchedStyleUrls.join(',')
+    ) {
       return entry.styleUrls;
     }
 
