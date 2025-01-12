@@ -34,7 +34,7 @@ describe('SourceFileCache', async () => {
     expect(cache.get(fileName)).toStrictEqual(sourceFile);
   });
 
-  it('should normalize windows file path to be OS agnostic if platform is win32', () => {
+  it('should normalize windows file path to unix format if platform is win32', () => {
     const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('win32');
     const cache = new SourceFileCache();
     const fileName = `path${path.win32.sep}to${path.win32.sep}index.ts`;
@@ -44,10 +44,56 @@ describe('SourceFileCache', async () => {
     expect([...cache.modifiedFiles]).toStrictEqual(['path/to/index.ts']);
   });
 
-  it('should keep file path unmodified if platform is not win32', () => {
+  it('should keep unix format for file path if platform is win32', () => {
     const platformSpy = vi.spyOn(osModule, 'platform').mockReturnValue('win32');
     const cache = new SourceFileCache();
     const fileName = `path/to/index.ts`;
+
+    expect(() => cache.invalidate([fileName])).not.toThrow();
+    expect(platformSpy).toHaveBeenCalledTimes(1);
+    expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
+  });
+
+  it.each([
+    'aix',
+    'android',
+    'darwin',
+    'freebsd',
+    'haiku',
+    'linux',
+    'openbsd',
+    'sunos',
+    'cygwin',
+    'netbsd',
+  ] as const)('should keep unix format if platform is %s', (platform) => {
+    const platformSpy = vi
+      .spyOn(osModule, 'platform')
+      .mockReturnValue(platform);
+    const cache = new SourceFileCache();
+    const fileName = `path/to/index.ts`;
+
+    expect(() => cache.invalidate([fileName])).not.toThrow();
+    expect(platformSpy).toHaveBeenCalledTimes(1);
+    expect([...cache.modifiedFiles]).toStrictEqual([fileName]);
+  });
+
+  it.each([
+    'aix',
+    'android',
+    'darwin',
+    'freebsd',
+    'haiku',
+    'linux',
+    'openbsd',
+    'sunos',
+    'cygwin',
+    'netbsd',
+  ] as const)('should keep windows format if platform is %s', (platform) => {
+    const platformSpy = vi
+      .spyOn(osModule, 'platform')
+      .mockReturnValue(platform);
+    const cache = new SourceFileCache();
+    const fileName = `path${path.win32.sep}to${path.win32.sep}index.ts`;
 
     expect(() => cache.invalidate([fileName])).not.toThrow();
     expect(platformSpy).toHaveBeenCalledTimes(1);
