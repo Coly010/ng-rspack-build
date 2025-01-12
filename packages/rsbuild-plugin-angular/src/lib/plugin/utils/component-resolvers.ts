@@ -24,13 +24,9 @@
  */
 
 import { dirname, resolve } from 'node:path';
-import {
-  ArrayLiteralExpression,
-  Project,
-  PropertyAssignment,
-  SyntaxKind,
-} from 'ts-morph';
+import { Project, SyntaxKind } from 'ts-morph';
 import { normalize } from 'path';
+import { getAllTextByProperty, getTextByProperty } from './utils';
 
 interface StyleUrlsCacheEntry {
   matchedStyleUrls: string[];
@@ -69,30 +65,6 @@ export class StyleUrlsResolver {
     this.styleUrlsCache.set(id, { styleUrls, matchedStyleUrls });
     return styleUrls;
   }
-}
-
-export function getTextByProperty(
-  name: string,
-  properties: PropertyAssignment[]
-) {
-  return properties
-    .filter((property) => property.getName() === name)
-    .map((property) =>
-      property.getInitializer()?.getText().replace(/['"`]/g, '')
-    )
-    .filter((url): url is string => url !== undefined);
-}
-
-export function getAllTextByProperty(
-  name: string,
-  properties: PropertyAssignment[]
-) {
-  return properties
-    .filter((property) => property.getName() === name)
-    .map((property) => property.getInitializer() as ArrayLiteralExpression)
-    .flatMap((array) =>
-      array.getElements().map((el) => el.getText().replace(/['"`]/g, ''))
-    );
 }
 
 export function getStyleUrls(code: string) {
