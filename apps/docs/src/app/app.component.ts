@@ -1,10 +1,9 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from '../ui/navbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DrawerComponent } from '../ui/drawer.component';
 import { FooterComponent } from '../ui/footer.component';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [
@@ -24,7 +23,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
       <mat-drawer-content class="sidenav-content">
         <div class="content">
           <router-outlet></router-outlet>
-          <app-footer></app-footer>
+          <app-footer>h</app-footer>
         </div>
       </mat-drawer-content>
     </mat-drawer-container>`,
