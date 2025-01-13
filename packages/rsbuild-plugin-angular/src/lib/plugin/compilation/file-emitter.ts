@@ -26,12 +26,14 @@
 import * as ts from 'typescript';
 import { NgtscProgram, OptimizeFor } from '@angular/compiler-cli';
 import { FileEmitter } from '../models';
+import { isStandardJsFile } from '../utils/regex-filters';
+import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
 
 export function createFileEmitter(
   program: ts.BuilderProgram,
   transformers: ts.CustomTransformers = {},
   onAfterEmit?: (sourceFile: ts.SourceFile) => void,
-  angularCompiler?: NgtscProgram['compiler']
+  angularCompiler?: NgCompiler
 ): FileEmitter {
   return async (file: string) => {
     const sourceFile = program.getSourceFile(file);
@@ -59,8 +61,7 @@ export function createFileEmitter(
       // When targetSource file is specified, it emits the files corresponding to that source file
       sourceFile,
       (filename, data) => {
-        console.log('!!!!!!!!!!!!!!!!!!', filename, data);
-        if (/\.[cm]?js$/.test(filename)) {
+        if (isStandardJsFile(filename)) {
           content = data;
         }
       },
