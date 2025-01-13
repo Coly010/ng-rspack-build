@@ -50,6 +50,9 @@ importers:
       '@nx/devkit':
         specifier: 20.3.0
         version: 20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      '@phenomnomnominal/tsquery':
+        specifier: ^6.1.3
+        version: 6.1.3(typescript@5.6.3)
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
@@ -192,6 +195,9 @@ importers:
       '@types/node':
         specifier: 18.16.9
         version: 18.16.9
+      '@types/prettier':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.13.0
         version: 8.19.1(@typescript-eslint/parser@8.19.1(eslint@9.18.0(jiti@2.4.2))(typescript@5.6.3))(eslint@9.18.0(jiti@2.4.2))(typescript@5.6.3)
@@ -255,6 +261,9 @@ importers:
       sass-loader:
         specifier: ^16.0.2
         version: 16.0.4(@rspack/core@1.1.8(@swc/helpers@0.5.15))(sass-embedded@1.83.1)(sass@1.83.1)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      swc-plugin-coverage-instrument:
+        specifier: ^0.0.25
+        version: 0.0.25
       tcp-port-used:
         specifier: ^1.0.2
         version: 1.0.2
@@ -2752,6 +2761,11 @@ packages:
     peerDependencies:
       typescript: ^3 || ^4 || ^5
 
+  '@phenomnomnominal/tsquery@6.1.3':
+    resolution: {integrity: sha512-CEqpJ872StsxRmwv9ePCZ4BCisrJSlREUC5XxIRYxhvODt4aQoJFFmjTgaP6meyKiiXxxN/VWPZ58j4yHXRkmw==}
+    peerDependencies:
+      typescript: ^3 || ^4 || ^5
+
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -3301,6 +3315,9 @@ packages:
   '@types/eslint@9.6.1':
     resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
 
+  '@types/esquery@1.5.4':
+    resolution: {integrity: sha512-yYO4Q8H+KJHKW1rEeSzHxcZi90durqYgWVfnh5K6ZADVBjBv2e1NEveYX5yT2bffgN7RqzH3k9930m+i2yBoMA==}
+
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
@@ -3357,6 +3374,10 @@ packages:
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
+
+  '@types/prettier@3.0.0':
+    resolution: {integrity: sha512-mFMBfMOz8QxhYVbuINtswBp9VL2b4Y0QqYHwqLz3YbgtfAcat2Dl6Y1o4e22S/OVE6Ebl9m7wWiMT2lSbAs1wA==}
+    deprecated: This is a stub types definition. prettier provides its own type definitions, so you do not need this installed.
 
   '@types/qs@6.9.17':
     resolution: {integrity: sha512-rX4/bPcfmvxHDv0XjfJELTTr+iB+tn032nPILqHm5wbthUUUuVtNGGqzhya9XUxjTP8Fpr0qYgSZZKxGY++svQ==}
@@ -8280,6 +8301,9 @@ packages:
     resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
+
+  swc-plugin-coverage-instrument@0.0.25:
+    resolution: {integrity: sha512-7watbzeySulr+7o3NbSaD2icOmEYBKf1uUQs2sBYv1cdWHEsUQETxI/CpXn+Q53vaBU0e3puWPO99OW3DVq34g==}
 
   symbol-observable@4.0.0:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==}
@@ -13506,6 +13530,12 @@ snapshots:
       esquery: 1.6.0
       typescript: 5.7.2
 
+  '@phenomnomnominal/tsquery@6.1.3(typescript@5.6.3)':
+    dependencies:
+      '@types/esquery': 1.5.4
+      esquery: 1.6.0
+      typescript: 5.6.3
+
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -14057,6 +14087,10 @@ snapshots:
       '@types/estree': 1.0.6
       '@types/json-schema': 7.0.15
 
+  '@types/esquery@1.5.4':
+    dependencies:
+      '@types/estree': 1.0.6
+
   '@types/estree@1.0.6': {}
 
   '@types/express-serve-static-core@4.19.6':
@@ -14128,6 +14162,10 @@ snapshots:
   '@types/node@18.16.9': {}
 
   '@types/parse-json@4.0.2': {}
+
+  '@types/prettier@3.0.0':
+    dependencies:
+      prettier: 2.8.8
 
   '@types/qs@6.9.17': {}
 
@@ -19926,6 +19964,8 @@ snapshots:
       css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.1.1
+
+  swc-plugin-coverage-instrument@0.0.25: {}
 
   symbol-observable@4.0.0: {}
 
