@@ -10,5 +10,5 @@ export const sourceFileFromCode = ({
 }) => {
   const project = new Project({ useInMemoryFileSystem: true });
   const tsMorphSourceFile = project.createSourceFile(path ?? 'cmp.ts', code);
-  return tsMorphSourceFile as unknown as TsSourceFile
+  return tsMorphSourceFile as unknown as TsSourceFile;
 };
