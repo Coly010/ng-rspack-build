@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { getTitle } from './get-title';
 import { DiagnosticEmissionsComponent } from './diagnostic-emissions.component';
 
-
 @Component({
   selector: 'app-root',
   imports: [DiagnosticEmissionsComponent],

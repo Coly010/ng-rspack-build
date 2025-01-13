@@ -34,10 +34,8 @@
     "sourceMap": false,
     "verbatimModuleSyntax": false
   },
-  "files": [
-    "src/main.ts"
-  ],
-  "include": [ "src/**/*.ts"],
+  "files": ["src/main.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "tmp"],
   "references": [],
   "angularCompilerOptions": {
