@@ -15,7 +15,7 @@ import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { SourceFileCache } from './utils/devkit';
 import { FileEmitter } from './models';
-import { JS_EXT_REGEX } from './utils/regex-filters';
+import { JS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { maxWorkers } from '../utils/utils';
 
 export const pluginHoistedJsTransformer = (
@@ -83,7 +83,7 @@ export const pluginHoistedJsTransformer = (
       }
     });
 
-    api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
+    api.transform({ test: JS_ALL_EXT_REGEX }, ({ code, resource }) => {
       if (!code.includes('@angular')) {
         return code;
       }

@@ -21,7 +21,7 @@ import {
 } from './compilation/build-and-analyze';
 import { augmentHostWithCaching } from './compilation/augments';
 import { dirname, normalize, resolve } from 'path';
-import { JS_EXT_REGEX, TS_EXT_REGEX } from './utils/regex-filters';
+import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { pluginAngularJit } from './plugin-angular-jit';
 import { ChildProcess, fork } from 'node:child_process';
 
@@ -169,7 +169,7 @@ export const pluginAngular = (
     }
 
     api.transform(
-      { test: TS_EXT_REGEX },
+      { test: TS_ALL_EXT_REGEX },
       async ({ code, resource, addDependency }) => {
         if (resource.includes('.ts?')) {
           // Strip the query string off the ID
@@ -243,7 +243,7 @@ export const pluginAngular = (
     );
 
     if (!pluginOptions.useHoistedJavascriptProcessing) {
-      api.transform({ test: JS_EXT_REGEX }, ({ code, resource }) => {
+      api.transform({ test: JS_ALL_EXT_REGEX }, ({ code, resource }) => {
         if (!code.includes('@angular')) {
           return code;
         }
