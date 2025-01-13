@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { SourceFileCache } from './source-file-cache';
+import { SourceFileCache } from '../utils/source-file-cache';
 export interface CompilerPluginOptions {
   sourcemap: boolean;
   tsconfig: string;

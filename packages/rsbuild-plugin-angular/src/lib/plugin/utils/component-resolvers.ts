@@ -24,13 +24,9 @@
  */
 
 import { dirname, resolve } from 'node:path';
-import {
-  ArrayLiteralExpression,
-  Project,
-  PropertyAssignment,
-  SyntaxKind,
-} from 'ts-morph';
+import { Project, SyntaxKind } from 'ts-morph';
 import { normalize } from 'path';
+import { getAllTextByProperty, getTextByProperty } from './utils';
 
 interface StyleUrlsCacheEntry {
   matchedStyleUrls: string[];
@@ -52,32 +48,29 @@ export class StyleUrlsResolver {
     //   ]
     // })
     // The `matchedStyleUrls` would result in: `styleUrls: [\n    './app.component.scss'\n  ]`.
-    const matchedStyleUrls = getStyleUrls(code);
+    const matchedStyleUrls = getStyleUrls(code)
+      // for type narrowing
+      .filter(v => v !== undefined);
     const entry = this.styleUrlsCache.get(id);
     // We're using `matchedStyleUrls` as a key because the code may be changing continuously,
     // resulting in the resolver being called multiple times. While the code changes, the
     // `styleUrls` may remain constant, which means we should always return the previously
     // resolved style URLs.
-    if (entry && entry.matchedStyleUrls === matchedStyleUrls) {
+    if (
+      entry &&
+      entry.matchedStyleUrls.join(',') === matchedStyleUrls.join(',')
+    ) {
       return entry.styleUrls;
     }
 
-    const styleUrls = matchedStyleUrls.map((styleUrlPath) => {
+    const styleUrls = matchedStyleUrls
+      .map((styleUrlPath) => {
       return `${styleUrlPath}|${normalize(resolve(dirname(id), styleUrlPath))}`;
     });
 
     this.styleUrlsCache.set(id, { styleUrls, matchedStyleUrls });
     return styleUrls;
   }
-}
-
-function getTextByProperty(name: string, properties: PropertyAssignment[]) {
-  return properties
-    .filter((property) => property.getName() === name)
-    .map((property) =>
-      property.getInitializer()?.getText().replace(/['"`]/g, '')
-    )
-    .filter((url): url is string => url !== undefined);
 }
 
 export function getStyleUrls(code: string) {
@@ -87,13 +80,7 @@ export function getStyleUrls(code: string) {
     SyntaxKind.PropertyAssignment
   );
   const styleUrl = getTextByProperty('styleUrl', properties);
-  const styleUrls = properties
-    .filter((property) => property.getName() === 'styleUrls')
-    .map((property) => property.getInitializer() as ArrayLiteralExpression)
-    .flatMap((array) =>
-      array.getElements().map((el) => el.getText().replace(/['"`]/g, ''))
-    );
-
+  const styleUrls = getAllTextByProperty('styleUrls', properties);
   return [...styleUrls, ...styleUrl];
 }
 
@@ -106,7 +93,7 @@ export function getTemplateUrls(code: string) {
   return getTextByProperty('templateUrl', properties);
 }
 
-interface TemplateUrlsCacheEntry {
+export interface TemplateUrlsCacheEntry {
   code: string;
   templateUrlPaths: string[];
 }
