@@ -1,4 +1,4 @@
-import { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
+import { Compiler, RspackPluginInstance } from '@rspack/core';
 import {
   ModuleFederationConfig,
   StaticRemoteConfig,
