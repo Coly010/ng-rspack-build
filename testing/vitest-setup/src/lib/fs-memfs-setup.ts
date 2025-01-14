@@ -41,17 +41,21 @@ beforeAll(() => {
   cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(MEMFS_VOLUME);
 });
 
-// Restores mocks usage data in arrange blocks as well as usage of the API in each "it" block.
+// Clear mock usage data in arrange blocks as well as usage of the API in each "it" block.
+// docs: https://vitest.dev/api/mock.html#mockclear
 beforeEach(() => {
-  cwdSpy.mockRestore();
+  cwdSpy.mockClear();
 });
 
-// Restores mocks usage data "it" block
+// Restore mock implementation and usage data "it" block
+// Mock implementations remain if given. => vi.fn(impl).mockRestore() === vi.fn(impl)
+// docs: https://vitest.dev/api/mock.html#mockrestore
 afterEach(() => {
   cwdSpy.mockRestore();
 });
 
-// Restores the original implementation after all "describe" block in a file
+// Restore the original implementation after all "describe" block in a file
+// docs: https://vitest.dev/api/mock.html#mockreset
 afterAll(() => {
   cwdSpy.mockReset();
 });
