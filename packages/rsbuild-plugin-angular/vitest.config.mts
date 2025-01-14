@@ -15,7 +15,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs-setup.ts'],
+    setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs.setup-file.ts'],
     reporters: ['default'],
     coverage: {
       reportsDirectory: '../../coverage/packages/rsbuild-plugin-angular',

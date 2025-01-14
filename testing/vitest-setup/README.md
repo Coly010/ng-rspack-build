@@ -1,17 +1,9 @@
-# testing-utils
+# testing-vitest-setup
 
-This library provides a set of helper functions for testing.
+This library provides a set of setup scripts for testing.
+As this package is never directly referenced, but only it's files it does not maintain a `index.ts` entry point.
 
-The many content divides into:
+## The many content divides into:
 
-- constants
-- mock helper
-- utils for OS dependent APIs
-
-## Building
-
-Run `nx build testing-utils` to build the library.
-
-## Running unit tests
-
-Run `nx test testing-utils` to execute the unit tests via [Vitest](https://vitest.dev/).
+- **Setup files** - obey to the naming pattern `<purpose>-setup-file.ts` and should be used in a `vite.config.ts` testing config under the `setupFiles` property.
+- **Global setup files** - obey to the naming pattern `<purpose>-global-setup-file.ts` and should be used in a `vite.config.ts` testing config under the `globalSetup` property.
