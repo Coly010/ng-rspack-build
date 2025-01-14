@@ -16,6 +16,20 @@ describe('resolveFileReplacements', () => {
     expect(resolveFileReplacements([], root)).toStrictEqual([]);
   });
 
+  it('should return the given FileReplacement with `replace` and `with` paths starting with given root', () => {
+    const file = '../src/lib/../main.ts';
+    const root = '/repos/project';
+
+    expect(
+      resolveFileReplacements([{ replace: file, with: file }], root)
+    ).toStrictEqual([
+      {
+        replace: '/repos/src/main.ts',
+        with: '/repos/src/main.ts',
+      },
+    ]);
+  });
+
   it('should return the given FileReplacement with `replace` and `with` paths resolved against the given root', () => {
     const file = 'src/main.ts';
     const root = '/root';
