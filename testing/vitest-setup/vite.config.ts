@@ -40,6 +40,7 @@ export default defineConfig({
     },
   },
   test: {
+    passWithNoTests: true,
     watch: false,
     globals: true,
     environment: 'node',
