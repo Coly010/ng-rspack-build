@@ -1,4 +1,5 @@
 import { Project } from 'ts-morph';
+import type { SourceFile as TsSourceFile } from 'typescript';
 
 export const sourceFileFromCode = ({
   path,
@@ -8,5 +9,6 @@ export const sourceFileFromCode = ({
   code: string;
 }) => {
   const project = new Project({ useInMemoryFileSystem: true });
-  return project.createSourceFile(path ?? 'cmp.ts', code);
+  const tsMorphSourceFile = project.createSourceFile(path ?? 'cmp.ts', code);
+  return tsMorphSourceFile as unknown as TsSourceFile;
 };
