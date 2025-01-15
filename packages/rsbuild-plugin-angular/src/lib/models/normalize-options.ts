@@ -1,44 +1,65 @@
-import { PluginAngularOptions } from './plugin-options';
-import { join, resolve } from 'path';
-import { existsSync } from 'fs';
+import { FileReplacement, PluginAngularOptions } from './plugin-options';
+import { join, resolve } from 'node:path';
+import { existsSync } from 'node:fs';
+
+/**
+ * Resolves file replacement paths to absolute paths based on the provided root directory.
+ *
+ * @param fileReplacements - Array of file replacements with relative paths.
+ * @param root - The root directory to resolve the paths against.
+ * @returns Array of file replacements resolved against the root.
+ */
+export function resolveFileReplacements(
+  fileReplacements: FileReplacement[],
+  root: string
+): FileReplacement[] {
+  return fileReplacements.map((fileReplacement) => ({
+    replace: resolve(root, fileReplacement.replace),
+    with: resolve(root, fileReplacement.with),
+  }));
+}
+
+export function getHasServer({
+  server,
+  ssrEntry,
+  root,
+}: Pick<PluginAngularOptions, 'server' | 'ssrEntry' | 'root'>): boolean {
+  return !!(
+    server &&
+    ssrEntry &&
+    existsSync(join(root, server)) &&
+    existsSync(join(root, ssrEntry))
+  );
+}
 
 export function normalizeOptions(
-  options: Partial<PluginAngularOptions>
+  options: Partial<PluginAngularOptions> = {}
 ): PluginAngularOptions {
-  const normalizedOptions = {
-    root: options.root ?? process.cwd(),
+  const {
+    root = process.cwd(),
+    fileReplacements = [],
+    server,
+    ssrEntry,
+  } = options;
+
+  return {
+    root,
     index: options.index ?? './src/index.html',
     browser: options.browser ?? './src/main.ts',
-    server: options.server ?? undefined,
-    ssrEntry: options.ssrEntry ?? undefined,
+    ...(server ? { server } : {}),
+    ...(ssrEntry ? { ssrEntry } : {}),
     polyfills: options.polyfills ?? [],
     assets: options.assets ?? ['./public'],
     styles: options.styles ?? ['./src/styles.css'],
     scripts: options.scripts ?? [],
-    fileReplacements: options.fileReplacements ?? [],
+    fileReplacements: resolveFileReplacements(fileReplacements, root),
     jit: options.jit ?? false,
     inlineStylesExtension: options.inlineStylesExtension ?? 'css',
     tsconfigPath:
       options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
-    hasServer: false,
+    hasServer: getHasServer({ server, ssrEntry, root }),
     useHoistedJavascriptProcessing:
       options.useHoistedJavascriptProcessing ?? true,
     useParallelCompilation: options.useParallelCompilation ?? true,
   };
-
-  normalizedOptions.fileReplacements = options.fileReplacements
-    ? options.fileReplacements.map((fileReplacement) => ({
-        replace: resolve(normalizedOptions.root, fileReplacement.replace),
-        with: resolve(normalizedOptions.root, fileReplacement.with),
-      }))
-    : [];
-  if (
-    options.server &&
-    options.ssrEntry &&
-    existsSync(join(normalizedOptions.root, options.server)) &&
-    existsSync(join(normalizedOptions.root, options.ssrEntry))
-  ) {
-    normalizedOptions.hasServer = true;
-  }
-  return normalizedOptions;
 }
