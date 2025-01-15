@@ -27,6 +27,7 @@ import * as ts from 'typescript';
 import { CompilerHost } from '@angular/compiler-cli';
 import { normalize } from 'path';
 import { createHash } from 'node:crypto';
+import { PluginAngularOptions } from '../../models/plugin-options';
 
 export function augmentHostWithResources(
   host: ts.CompilerHost,
@@ -35,8 +36,8 @@ export function augmentHostWithResources(
     id: string,
     options?: { ssr?: boolean }
   ) => ReturnType<any> | null,
-  options: {
-    inlineStylesExtension?: 'css' | 'scss' | 'sass' | 'less';
+  options: {} & {
+    inlineStylesExtension?: PluginAngularOptions['inlineStylesExtension'];
     isProd?: boolean;
   } = {}
 ) {
