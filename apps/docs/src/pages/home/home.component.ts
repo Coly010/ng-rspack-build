@@ -69,6 +69,7 @@ class BenchmarkGraphComponent {
 
         h1 {
           font-size: 3rem;
+          line-height: 1.5rem;
         }
 
         p {
