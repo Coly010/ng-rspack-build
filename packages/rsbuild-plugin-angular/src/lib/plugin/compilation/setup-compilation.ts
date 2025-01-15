@@ -4,8 +4,6 @@ import * as ts from 'typescript';
 import { compileString as sassCompileString } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { PluginAngularOptions } from '../../models/plugin-options';
-import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
-import { transformFileSync } from '@swc/core';
 
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   suppressOutputPathCheck: true,
@@ -73,39 +71,4 @@ export function setupCompilation(
 
 export function styleTransform(code: string) {
   return sassCompileString(code).css;
-}
-
-export async function setupCompilationWithParallelCompilation(
-  config: RsbuildConfig,
-  options: PluginAngularOptions
-) {
-  const { rootNames, compilerOptions } = setupCompilation(config, options);
-  const parallelCompilation = new ParallelCompilation(options.jit ?? false);
-  const fileReplacements: Record<string, string> =
-    options.fileReplacements.reduce((r, f) => {
-      r[f.replace] = f.with;
-      return r;
-    }, {});
-
-  try {
-    await parallelCompilation.initialize(
-      config.source?.tsconfigPath ?? options.tsconfigPath,
-      {
-        ...compilerOptions,
-        fileReplacements,
-        modifiedFiles: new Set(rootNames),
-        async transformStylesheet(data) {
-          const result = sassCompileString(data);
-          return result.css;
-        },
-        processWebWorker(workerFile: string) {
-          return transformFileSync(workerFile).code;
-        },
-      },
-      () => compilerOptions
-    );
-  } catch (e) {
-    console.error('Failed to initialize Angular Compilation', e);
-  }
-  return parallelCompilation;
 }

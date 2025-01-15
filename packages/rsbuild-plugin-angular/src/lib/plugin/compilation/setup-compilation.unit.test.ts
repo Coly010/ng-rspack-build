@@ -9,12 +9,13 @@ import {
 import {
   DEFAULT_NG_COMPILER_OPTIONS,
   setupCompilation,
+  styleTransform,
 } from './setup-compilation.ts';
 import { PluginAngularOptions } from '../../models/plugin-options.ts';
 import { RsbuildConfig, RsbuildMode } from '@rsbuild/core';
-import * as ngCli from '@angular/compiler-cli';
 import * as ts from 'typescript';
 import * as augmentModule from './augments.ts';
+import * as sassEmbedModule from 'sass-embedded';
 
 vi.mock('@angular/compiler-cli');
 
@@ -251,5 +252,25 @@ describe('setupCompilation', () => {
       'src/server.ts',
       'src/other-entry.ts',
     ]);
+  });
+});
+
+describe('styleTransform', () => {
+  const sassCompileStringSpy = vi.spyOn(sassEmbedModule, 'compileString');
+  beforeAll(() => {
+    sassCompileStringSpy.mockClear();
+  });
+
+  it('should call t and return the value of the css property', () => {
+    const code = 'test code';
+    sassCompileStringSpy.mockReturnValue({
+      // @TODO use realistic test data to help with discoverability of the usage
+      css: 'non realistic value',
+      loadedUrls: [],
+    });
+
+    expect(styleTransform(code)).toBe('non realistic value');
+    expect(sassCompileStringSpy).toHaveBeenCalledTimes(1);
+    expect(sassCompileStringSpy).toHaveBeenCalledWith(code);
   });
 });
