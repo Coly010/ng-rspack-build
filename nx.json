@@ -89,6 +89,13 @@
       "include": ["packages/**", "testing/**"]
     },
     {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "testTargetName": "integration-test"
+      },
+      "include": ["packages/rsbuild-plugin-angular/*"]
+    },
+    {
       "plugin": "@nx/playwright/plugin",
       "options": {
         "targetName": "e2e"

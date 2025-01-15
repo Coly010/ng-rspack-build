@@ -31,6 +31,7 @@ import { createFileEmitter } from './file-emitter';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { normalize } from 'path';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
+import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
 
 export async function buildAndAnalyze(
   rootNames: string[],
@@ -45,7 +46,7 @@ export async function buildAndAnalyze(
 ) {
   let builder: ts.BuilderProgram | ts.EmitAndSemanticDiagnosticsBuilderProgram;
   let typeScriptProgram: ts.Program;
-  let angularCompiler: NgtscProgram['compiler'];
+  let angularCompiler: NgCompiler;
 
   if (!options.jit) {
     // Create the Angular specific program that contains the Angular compiler
