@@ -1,3 +1,7 @@
+## 19.0.0-alpha.18 (2025-01-15)
+
+This was a version bump only for rsbuild-plugin-nx to align it with other projects, there were no code changes.
+
 ## 19.0.0-alpha.17 (2025-01-11)
 
 This was a version bump only for rsbuild-plugin-nx to align it with other projects, there were no code changes.
