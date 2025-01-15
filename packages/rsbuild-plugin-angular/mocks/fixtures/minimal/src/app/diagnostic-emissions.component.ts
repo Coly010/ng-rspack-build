@@ -11,7 +11,7 @@ export class DiagnosticEmissionsComponent {
   @Input() message!: string;
 
   // Error: Missing type annotation for the method.
-  handle Click() {
+  handleClick() {
     console.log('Button clicked!');
   }
 }

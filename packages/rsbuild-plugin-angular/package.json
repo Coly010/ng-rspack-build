@@ -48,6 +48,13 @@
   "nx": {
     "sourceRoot": "packages/rsbuild-plugin-angular/src",
     "projectType": "library",
-    "name": "rsbuild-plugin-angular"
+    "name": "rsbuild-plugin-angular",
+    "targets": {
+      "integration-test": {
+        "options": {
+          "config": "vitest.integration.config.mts"
+        }
+      }
+    }
   }
 }
