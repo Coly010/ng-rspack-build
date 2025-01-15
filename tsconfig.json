@@ -17,6 +17,9 @@
     },
     {
       "path": "./testing/utils"
+    },
+    {
+      "path": "./testing/vitest-setup"
     }
   ]
 }

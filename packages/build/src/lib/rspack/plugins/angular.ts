@@ -1,12 +1,11 @@
 import { Compiler, RspackPluginInstance } from '@rspack/core';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import { FileReferenceTracker } from '@angular/build/src/tools/esbuild/angular/file-reference-tracker';
-// import { ComponentStylesheetBundler } from '@angular/build/src/tools/esbuild/angular/component-stylesheets';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { type AngularHostOptions } from '@angular/build/src/tools/angular/angular-host';
 import { maxWorkers } from '../../utils/utils';
 import { compile as sassCompile } from 'sass';
-import { normalize, join } from 'path';
+import { normalize } from 'path';
 import * as compilerCli from '@angular/compiler-cli';
 import {
   NG_RSPACK_SYMBOL_NAME,
@@ -16,6 +15,7 @@ import {
 export class AngularRspackPlugin implements RspackPluginInstance {
   javascriptTransformer: JavaScriptTransformer;
   angularCompilation: ParallelCompilation;
+  // @TODO remove or comment
   // stylesheetBundler: ComponentStylesheetBundler;
   referencedFileTracker: FileReferenceTracker;
   typeScriptFileCache: Map<string, string | Uint8Array>;

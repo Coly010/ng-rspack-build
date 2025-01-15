@@ -37,6 +37,9 @@
     },
     {
       "path": "../../testing/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../testing/vitest-setup/tsconfig.lib.json"
     }
   ]
 }

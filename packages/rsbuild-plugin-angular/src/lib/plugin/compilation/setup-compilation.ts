@@ -1,5 +1,5 @@
 import { RsbuildConfig } from '@rsbuild/core';
-import { readConfiguration } from '@angular/compiler-cli';
+import * as compilerCli from '@angular/compiler-cli';
 import * as ts from 'typescript';
 import { compileString as sassCompileString } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
@@ -9,8 +9,6 @@ export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   suppressOutputPathCheck: true,
   outDir: undefined,
   sourceMap: false,
-  inlineSourceMap: true,
-  inlineSources: true,
   declaration: false,
   declarationMap: false,
   allowEmptyCodegenFiles: false,
@@ -35,16 +33,15 @@ export function setupCompilation(
 ) {
   const isProd = config.mode === 'production';
 
-  const parsedConfig = readConfiguration(
-    config.source?.tsconfigPath ?? options.tsconfigPath,
-    {
-      ...DEFAULT_NG_COMPILER_OPTIONS,
-      inlineSourceMap: !isProd,
-      inlineSources: !isProd,
-    }
-  );
-
-  const { options: tsCompilerOptions, rootNames } = parsedConfig;
+  const { options: tsCompilerOptions, rootNames } =
+    compilerCli.readConfiguration(
+      config.source?.tsconfigPath ?? options.tsconfigPath,
+      {
+        ...DEFAULT_NG_COMPILER_OPTIONS,
+        inlineSourceMap: !isProd,
+        inlineSources: !isProd,
+      }
+    );
 
   const compilerOptions = tsCompilerOptions;
   const host = ts.createIncrementalCompilerHost(compilerOptions);
