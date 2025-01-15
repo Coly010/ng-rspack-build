@@ -3,7 +3,7 @@ import { createFileEmitter } from './file-emitter';
 import { sourceFileFromCode } from '@ng-rspack/testing-utils';
 import { NgtscProgram } from '@angular/compiler-cli';
 
-describe.todo('createFileEmitter', () => {
+describe('createFileEmitter', () => {
   const mockSourceFile = sourceFileFromCode({
     path: 'file.ts',
     code: 'console.log("Hello, World!");',
