@@ -1,3 +1,13 @@
+## 19.0.0-alpha.18 (2025-01-15)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** allow tsconfig sourcemap pass through ([#56](https://github.com/Coly010/ng-rspack-build/pull/56))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.17 (2025-01-11)
 
 ### 🚀 Features
