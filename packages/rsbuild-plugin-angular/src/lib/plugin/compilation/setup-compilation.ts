@@ -22,8 +22,6 @@ export function setupCompilation(
         suppressOutputPathCheck: true,
         outDir: undefined,
         sourceMap: false,
-        inlineSourceMap: !isProd,
-        inlineSources: !isProd,
         declaration: false,
         declarationMap: false,
         allowEmptyCodegenFiles: false,
