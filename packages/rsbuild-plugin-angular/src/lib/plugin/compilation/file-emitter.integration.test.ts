@@ -12,7 +12,7 @@ import {
   readConfiguration,
 } from '@angular/compiler-cli';
 import path from 'node:path';
-import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
+import type { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
 import { it } from 'vitest';
 
 describe('createFileEmitter - Integration Test', () => {
