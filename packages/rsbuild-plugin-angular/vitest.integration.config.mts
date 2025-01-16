@@ -16,7 +16,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.integration.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-
+    passWithNoTests: true,
     reporters: ['default'],
     coverage: {
       reportsDirectory:
