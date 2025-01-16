@@ -4,7 +4,7 @@ import { resolve } from 'path';
 export default defineConfig({
   root: __dirname,
   cacheDir:
-    '../../node_modules/.vite/packages/rsbuild-plugin-angular/integration-test',
+    '../../node_modules/.vite/packages/rsbuild-plugin-angular/integration',
   plugins: [],
   resolve: {
     alias: {
@@ -20,7 +20,7 @@ export default defineConfig({
     reporters: ['default'],
     coverage: {
       reportsDirectory:
-        '../../coverage/packages/rsbuild-plugin-angular/integration-test',
+        '../../coverage/packages/rsbuild-plugin-angular/integration',
       provider: 'v8',
     },
   },
