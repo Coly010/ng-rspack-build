@@ -62,6 +62,6 @@ export function setupCompilation(
   };
 }
 
-export function styleTransform(code: string) {
-  return compileString(code).css;
+export function styleTransform(styles: string) {
+  return compileString(styles).css;
 }

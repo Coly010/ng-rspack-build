@@ -1,9 +1,8 @@
 import type { RsbuildConfig } from '@rsbuild/core';
-import { compileString as sassCompileString } from 'sass-embedded';
 import type { PluginAngularOptions } from '../../models/plugin-options';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { transformFileSync } from '@swc/core';
-import { setupCompilation } from './setup-compilation';
+import { setupCompilation, styleTransform } from './setup-compilation';
 
 export async function setupCompilationWithParallelCompilation(
   config: Pick<RsbuildConfig, 'source'>,
@@ -27,10 +26,9 @@ export async function setupCompilationWithParallelCompilation(
         ...compilerOptions,
         fileReplacements,
         modifiedFiles: new Set(rootNames),
-        async transformStylesheet(data) {
-          const result = sassCompileString(data);
-          return result.css;
-        },
+        // @TODO replace when [#61](https://github.com/Coly010/ng-rspack-build/issues/61) is merged
+        transformStylesheet: (styles) =>
+          Promise.resolve(styleTransform(styles)),
         processWebWorker(workerFile: string) {
           return transformFileSync(workerFile).code;
         },
