@@ -11,6 +11,7 @@ import {
   VariableStatement,
 } from 'ts-morph';
 import ScriptTarget = ts.ScriptTarget;
+import { hasPureAnnotation, hasSideEffects } from './utils';
 
 const TSLIB_DECORATE_HELPER_NAME = '__decorate';
 
@@ -24,119 +25,6 @@ const angularStaticsToWrap = new Set([
   'ɵprov',
   'INJECTOR_KEY',
 ]);
-
-function hasPureAnnotation(node: Node): boolean {
-  // first try official comment ranges
-  const leading = node.getLeadingCommentRanges() ?? [];
-  const trailing = node.getTrailingCommentRanges() ?? [];
-  for (const comment of [...leading, ...trailing]) {
-    const text = comment.getText();
-    if (
-      text.includes('@__PURE__') ||
-      text.includes('/*#__PURE__*/') ||
-      text.includes('#__PURE__') ||
-      text.includes('@pureOrBreakMyCode')
-    ) {
-      return true;
-    }
-  }
-
-  // fallback: look in the raw text
-  const rawText = node.getFullText();
-  if (
-    rawText.includes('@__PURE__') ||
-    rawText.includes('/*#__PURE__*/') ||
-    rawText.includes('#__PURE__') ||
-    rawText.includes('@pureOrBreakMyCode')
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function hasSideEffects(expression: Expression | undefined): boolean {
-  if (!expression) return false;
-
-  if (hasPureAnnotation(expression)) {
-    return false;
-  }
-
-  if (expression.isKind(SyntaxKind.CallExpression)) {
-    const callExpression = expression.asKind(SyntaxKind.CallExpression);
-    if (!callExpression) return false;
-
-    const callee = callExpression.getExpression();
-    if (callee.isKind(SyntaxKind.ParenthesizedExpression)) {
-      return false;
-    }
-    return !hasPureAnnotation(expression);
-  }
-
-  if (expression.isKind(SyntaxKind.PropertyAccessExpression)) {
-    const text = expression.getText();
-    if (
-      text.startsWith('console.') ||
-      text.startsWith('process.') ||
-      text.startsWith('globalThis.') ||
-      text.startsWith('window.') ||
-      text.startsWith('document.') ||
-      text.startsWith('global.')
-    ) {
-      return true;
-    }
-  }
-
-  if (expression.isKind(SyntaxKind.NewExpression)) {
-    return true;
-  }
-
-  if (
-    expression.isKind(SyntaxKind.FunctionExpression) ||
-    expression.isKind(SyntaxKind.ArrowFunction)
-  ) {
-    return false;
-  }
-
-  if (expression.isKind(SyntaxKind.BinaryExpression)) {
-    const binaryExpr = expression as any;
-    if (binaryExpr.operatorToken.kind === SyntaxKind.EqualsToken) {
-      const left = binaryExpr.left;
-      if (Node.isPropertyAccessExpression(left)) {
-        const propertyText = left.getText();
-        if (
-          propertyText.startsWith('console.') ||
-          propertyText.startsWith('process.') ||
-          propertyText.startsWith('globalThis.') ||
-          propertyText.startsWith('window.') ||
-          propertyText.startsWith('document.') ||
-          propertyText.startsWith('global.')
-        ) {
-          return true;
-        }
-      }
-      return hasSideEffects(binaryExpr.right);
-    }
-  }
-
-  if (
-    expression.isKind(SyntaxKind.ArrayLiteralExpression) ||
-    expression.isKind(SyntaxKind.ObjectLiteralExpression)
-  ) {
-    return false;
-  }
-
-  if (
-    expression.isKind(SyntaxKind.StringLiteral) ||
-    expression.isKind(SyntaxKind.NumericLiteral) ||
-    expression.isKind(SyntaxKind.TrueKeyword) ||
-    expression.isKind(SyntaxKind.FalseKeyword)
-  ) {
-    return false;
-  }
-
-  return false;
-}
 
 const angularStaticsToElide: Record<string, (node: Expression) => boolean> = {
   ctorParameters: (node) =>
