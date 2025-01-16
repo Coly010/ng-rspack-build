@@ -24,7 +24,7 @@
  */
 
 import * as ts from 'typescript';
-import { NgtscProgram, OptimizeFor } from '@angular/compiler-cli';
+import { OptimizeFor } from '@angular/compiler-cli';
 import { FileEmitter } from '../models';
 import { isStandardJsFile } from '../utils/regex-filters';
 import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
