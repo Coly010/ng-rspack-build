@@ -148,3 +148,21 @@ export function bindingIdentifierEquals(
   // Check if both symbols are the same
   return leftCallSymbol === declarationSymbol;
 }
+
+export function getFunctionParent(node: Node): Node | undefined {
+  let current = node.getParent();
+
+  while (current) {
+    if (
+      Node.isFunctionDeclaration(current) ||
+      Node.isFunctionExpression(current) ||
+      Node.isArrowFunction(current) ||
+      Node.isMethodDeclaration(current)
+    ) {
+      return current;
+    }
+    current = current.getParent();
+  }
+
+  return undefined;
+}
