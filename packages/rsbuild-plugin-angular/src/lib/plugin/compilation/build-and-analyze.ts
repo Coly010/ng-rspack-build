@@ -31,7 +31,7 @@ import { createFileEmitter } from './file-emitter';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { normalize } from 'path';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
-import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
+import { type NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
 
 export async function buildAndAnalyze(
   rootNames: string[],
