@@ -1,7 +1,7 @@
 import { RsbuildConfig } from '@rsbuild/core';
 import { readConfiguration } from '@angular/compiler-cli';
 import * as ts from 'typescript';
-import { compileString as sassCompileString } from 'sass-embedded';
+import * as sass from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { PluginAngularOptions } from '../../models/plugin-options';
 
@@ -70,5 +70,5 @@ export function setupCompilation(
 }
 
 export function styleTransform(code: string) {
-  return sassCompileString(code).css;
+  return sass.compileString(code).css;
 }

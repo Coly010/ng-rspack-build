@@ -14,6 +14,7 @@ import {
 import { PluginAngularOptions } from '../../models/plugin-options.ts';
 import { RsbuildConfig, RsbuildMode } from '@rsbuild/core';
 import * as ts from 'typescript';
+import * as ngCli from '@angular/compiler-cli';
 import * as augmentModule from './augments.ts';
 import * as sassEmbedModule from 'sass-embedded';
 
@@ -42,7 +43,10 @@ describe('setupCompilation', () => {
 
   const mockHost = { mocked: 'host' } as unknown as ts.CompilerHost;
 
-  let readConfigurationSpy: MockInstance<[], ngCli.AngularCompilerOptions>;
+  let readConfigurationSpy: MockInstance<
+    [string],
+    ngCli.AngularCompilerOptions
+  >;
 
   let createIncrementalCompilerHostSpy: MockInstance<
     [options: ts.CompilerOptions, system?: ts.System],
@@ -263,12 +267,11 @@ describe('styleTransform', () => {
 
   it('should call t and return the value of the css property', () => {
     const code = 'test code';
-    sassCompileStringSpy.mockReturnValue({
+    sassCompileStringSpy.mockReturnValueOnce({
       // @TODO use realistic test data to help with discoverability of the usage
       css: 'non realistic value',
       loadedUrls: [],
     });
-
     expect(styleTransform(code)).toBe('non realistic value');
     expect(sassCompileStringSpy).toHaveBeenCalledTimes(1);
     expect(sassCompileStringSpy).toHaveBeenCalledWith(code);

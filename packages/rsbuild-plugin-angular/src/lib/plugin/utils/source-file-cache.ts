@@ -6,6 +6,17 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
+/*
+
+ @ng-rspack/testing-utils:lint                                6s          Cache Miss     │
+│           > Task logs: https://cloud.nx.app/logs/lnLyIDkm0x                                      │
+│   ✖      rsbuild-plugin-angular:unit-test                            18s          Cache Miss     │
+│           > Task logs: https://cloud.nx.app/logs/rvNqMuniog                                      │
+│   ✖      rsbuild-plugin-angular:build                                19s          Cache Miss     │
+│           > Task logs: https://cloud.nx.app/logs/8vyxcksv5A
+
+* */
+
 import * as path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type ts from 'typescript';
