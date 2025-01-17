@@ -2,7 +2,7 @@ import { describe, expect } from 'vitest';
 import { styleTransform } from './setup-compilation.ts';
 
 describe('styleTransform', () => {
-  it('should call scss.compileString and return the value of the css property', () => {
+  it('should call scss.compileString and return the value of the css property', async () => {
     const code = `
       h1 {
         font-size: 40px;
@@ -12,7 +12,7 @@ describe('styleTransform', () => {
       }
     `;
 
-    expect(styleTransform(code)).toMatchInlineSnapshot(`
+    expect(await styleTransform(code)).toMatchInlineSnapshot(`
       "h1 {
         font-size: 40px;
       }

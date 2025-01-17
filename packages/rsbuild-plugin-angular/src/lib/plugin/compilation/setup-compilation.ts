@@ -1,7 +1,7 @@
 import { RsbuildConfig } from '@rsbuild/core';
 import * as compilerCli from '@angular/compiler-cli';
 import * as ts from 'typescript';
-import { compileString } from 'sass-embedded';
+import { compileStringAsync } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { PluginAngularOptions } from '../../models/plugin-options';
 
@@ -62,6 +62,14 @@ export function setupCompilation(
   };
 }
 
-export function styleTransform(styles: string) {
-  return compileString(styles).css;
+export async function styleTransform(styles: string) {
+  try {
+    return (await compileStringAsync(styles)).css;
+  } catch (e) {
+    console.error(
+      'Failed to compile styles. Continuing execution ignoring failing stylesheet...',
+      e
+    );
+    return '';
+  }
 }
