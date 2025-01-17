@@ -1,5 +1,3 @@
-import { Plugin } from '@swc/core';
-
 interface JavaScriptTransformerOptions {
   sourcemap: boolean;
   thirdPartySourcemaps: boolean;
@@ -21,17 +19,12 @@ interface JavaScriptTransformRequest {
 
 export class JavaScriptTransformer {
   #commonOptions: Required<JavaScriptTransformerOptions>;
-  #fileCacheKeyBase: Uint8Array;
-  #textDecoder = new TextDecoder();
   #loadEsmModule = new Function('modulePath', `return import(modulePath);`);
   #needsLinking:
     | typeof import('@angular/compiler-cli/linker').needsLinking
     | undefined;
 
-  constructor(
-    options: JavaScriptTransformerOptions
-    // private readonly cache?: Cache<Uint8Array>
-  ) {
+  constructor(options: JavaScriptTransformerOptions) {
     // Extract options to ensure only the named options are serialized and sent to the worker
     const {
       sourcemap,
@@ -45,10 +38,6 @@ export class JavaScriptTransformer {
       advancedOptimizations,
       jit,
     };
-    this.#fileCacheKeyBase = Buffer.from(
-      JSON.stringify(this.#commonOptions),
-      'utf-8'
-    );
   }
 
   async transformData(
@@ -57,7 +46,7 @@ export class JavaScriptTransformer {
     skipLinker: boolean,
     sideEffects?: boolean,
     instrumentForCoverage?: boolean
-  ): Promise<Uint8Array> {
+  ): Promise<string> {
     if (
       skipLinker &&
       !this.#commonOptions.advancedOptimizations &&
@@ -68,13 +57,20 @@ export class JavaScriptTransformer {
         (!!this.#commonOptions.thirdPartySourcemaps ||
           !/[\\/]node_modules[\\/]/.test(filename));
 
-      return Buffer.from(
+      return (
         keepSourcemap
           ? data
           : data.replace(/^\/\/# sourceMappingURL=[^\r\n]*/gm, ''),
         'utf-8'
       );
     }
+
+    return this.transformWithSwc(filename, data, {
+      skipLinker,
+      sideEffects,
+      instrumentForCoverage,
+      ...this.#commonOptions,
+    });
   }
 
   private async transformWithSwc(
@@ -84,15 +80,6 @@ export class JavaScriptTransformer {
   ) {
     const shouldLink =
       !options.skipLinker && (await this.requiresLinking(filename, data));
-    const useInputSourcemap =
-      options.sourcemap &&
-      (!!options.thirdPartySourcemaps ||
-        !/[\\/]node_modules[\\/]/.test(filename));
-
-    const plugins: [pluginName: string, options: any][] = [];
-    if (options.instrumentForCoverage) {
-      plugins.push(['swc-plugin-coverage-instrument', {}]);
-    }
 
     // TODO: revisit this for 3rd party deps - it is not needed for application code
     // if (shouldLink) {
@@ -100,6 +87,26 @@ export class JavaScriptTransformer {
     //   const linkerPlugin = await createLinkerPlugin(options);
     //   plugins.push(linkerPlugin);
     // }
+    const sideEffectFree = options.sideEffects === false;
+    const safeAngularPackage =
+      sideEffectFree && /[\\/]node_modules[\\/]@angular[\\/]/.test(filename);
+
+    const {
+      adjustStaticMembers,
+      adjustTypeScriptEnums,
+      elideAngularMetadata,
+      markTopLevelPure,
+    } = await import('./ast-transformations');
+
+    let transformedData = adjustStaticMembers(data, {
+      wrapDecorators: sideEffectFree,
+    });
+    transformedData = adjustTypeScriptEnums(transformedData);
+    transformedData = elideAngularMetadata(transformedData);
+    if (safeAngularPackage) {
+      transformedData = markTopLevelPure(transformedData);
+    }
+    return transformedData;
   }
 
   private async requiresLinking(

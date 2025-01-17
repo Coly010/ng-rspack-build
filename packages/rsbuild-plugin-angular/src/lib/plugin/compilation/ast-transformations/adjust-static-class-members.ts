@@ -307,7 +307,7 @@ const exportDefaultAnalysis = new WeakMap<
   ReturnType<typeof analyzeClassSiblings>
 >();
 
-export function adjustStaticClassMembers(
+export default function adjustStaticClassMembers(
   fileContent: string,
   options: { wrapDecorators?: boolean } = { wrapDecorators: false }
 ): string {

@@ -1,5 +1,5 @@
 import { describe, it, expect, assert } from 'vitest';
-import { adjustStaticClassMembers } from './adjust-static-class-members';
+import adjustStaticClassMembers from './adjust-static-class-members';
 import { format } from 'prettier';
 
 const NO_CHANGE = Symbol('NO_CHANGE');
