@@ -15,8 +15,7 @@ export function setupCompilation(
 ) {
   const isProd = config.mode === 'production';
 
-  const { options: tsCompilerOptions, rootNames } =
-    compilerCli.readConfiguration(
+  const { options: tsCompilerOptions, rootNames } = compilerCli.readConfiguration(
       config.source?.tsconfigPath ?? options.tsconfigPath,
       {
         suppressOutputPathCheck: true,
