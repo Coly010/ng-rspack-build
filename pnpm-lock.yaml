@@ -108,6 +108,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.5.0
         version: 19.6.0
+      '@commitlint/types':
+        specifier: ^19.5.0
+        version: 19.5.0
       '@eslint/js':
         specifier: ^9.8.0
         version: 9.18.0
@@ -213,6 +216,9 @@ importers:
       angular-eslint:
         specifier: ^19.0.2
         version: 19.0.2(eslint@9.18.0)(typescript-eslint@8.19.1)(typescript@5.6.3)
+      commitlint-plugin-tense:
+        specifier: ^1.0.4
+        version: 1.0.4(@commitlint/lint@19.6.0)
       eslint:
         specifier: ^9.8.0
         version: 9.18.0
@@ -2392,6 +2398,11 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
       - typescript
+    dev: true
+
+  /@commitlint/message@16.2.1:
+    resolution: {integrity: sha512-2eWX/47rftViYg7a3axYDdrgwKv32mxbycBJT6OQY/MJM7SUfYNYYvbMFOQFaA4xIVZt7t2Alyqslbl6blVwWw==}
+    engines: {node: '>=v12'}
     dev: true
 
   /@commitlint/message@19.5.0:
@@ -7942,6 +7953,18 @@ packages:
     engines: {node: '>= 12'}
     dev: true
 
+  /commitlint-plugin-tense@1.0.4(@commitlint/lint@19.6.0):
+    resolution: {integrity: sha512-QMZmrRFeJKZsIDd6YyMiY6Xh0A9csFKMcf7ytSe3w9TQo6TT7fYmBizSTpHcQwBCu2yk8s12dl47JjZwV0BAjw==}
+    peerDependencies:
+      '@commitlint/lint': '>=7.6.0'
+    dependencies:
+      '@commitlint/lint': 19.6.0
+      '@commitlint/message': 16.2.1
+      fast-tag-pos: 2.0.0
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
 
@@ -9355,6 +9378,11 @@ packages:
 
   /fast-safe-stringify@2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
+
+  /fast-tag-pos@2.0.0:
+    resolution: {integrity: sha512-BdT2WMan25s8x5obDInSy1twqAKzeqHQ7T6fbowICcIUANoCRlhWUPn1e7r4Me2Jz3tNFT71MIZf2hIn0tUrag==}
+    engines: {node: '>=0'}
+    dev: true
 
   /fast-uri@3.0.5:
     resolution: {integrity: sha512-5JnBCWpFlMo0a3ciDy/JckMzzv1U9coZrIhedq+HXxxUfDTAiS0LA8OKVao4G9BxmCVck/jtA5r3KAtRWEyD8Q==}
