@@ -144,4 +144,95 @@ describe('setupCompilation', () => {
       tsconfigPath: expect.stringMatching(/tsconfig.angular.json$/),
     });
   });
+
+  it('should augment the host with resources if not in JIT mode', () => {
+    expect(() =>
+      setupCompilation(rsBuildConfig, pluginAngularOptions)
+    ).not.toThrow();
+    expect(augmentHostWithResourcesSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should augment the host with resources if in JIT mode', () => {
+    expect(() =>
+      setupCompilation(rsBuildConfig, {
+        ...pluginAngularOptions,
+        jit: true,
+      })
+    ).not.toThrow();
+    expect(augmentHostWithResourcesSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not filter rootNames if useAllRoots is true', () => {
+    const rootNames = [
+      'src/main.ts',
+      'other/main.ts',
+      'src/server.ts',
+      'other/server.ts',
+    ];
+    readConfigurationSpy.mockReturnValue({
+      options: {},
+      rootNames,
+    });
+    const useAllRoots = true;
+
+    expect(
+      setupCompilation(rsBuildConfig, pluginAngularOptions, false, useAllRoots)
+    ).toStrictEqual(expect.objectContaining({ rootNames }));
+  });
+
+  it('should filter rootNames for files ending with "main.ts" if useAllRoots is false and isServer is false', () => {
+    const rootNames = [
+      'src/main.ts',
+      'other/main.ts',
+      'src/server.ts',
+      'other/server.ts',
+    ];
+    readConfigurationSpy.mockReturnValue({
+      options: {},
+      rootNames,
+    });
+    const useAllRoots = false;
+    const isServer = false;
+
+    expect(
+      setupCompilation(
+        rsBuildConfig,
+        pluginAngularOptions,
+        isServer,
+        useAllRoots
+      )
+    ).toStrictEqual(
+      expect.objectContaining({
+        rootNames: ['src/main.ts', 'other/main.ts'],
+      })
+    );
+  });
+
+  it('should filter rootNames for files not ending with "main.ts" if useAllRoots is false and isServer is true', () => {
+    const rootNames = [
+      'src/main.ts',
+      'other/main.ts',
+      'src/server.ts',
+      'other/server.ts',
+    ];
+    readConfigurationSpy.mockReturnValue({
+      options: {},
+      rootNames,
+    });
+    const useAllRoots = false;
+    const isServer = true;
+
+    expect(
+      setupCompilation(
+        rsBuildConfig,
+        pluginAngularOptions,
+        isServer,
+        useAllRoots
+      )
+    ).toStrictEqual(
+      expect.objectContaining({
+        rootNames: ['src/server.ts', 'other/server.ts'],
+      })
+    );
+  });
 });

@@ -27,8 +27,7 @@ describe('styleTransform', () => {
   });
 });
 
-
-describe('setupCompilation-int', () => {
+describe('setupCompilation', () => {
   const fixturesDir = path.join(
     process.cwd(),
     'mocks',
@@ -50,16 +49,6 @@ describe('setupCompilation-int', () => {
     );
   });
 
-describe('styleTransform', () => {
-  it('should call scss.compileString and return the value of the css property', async () => {
-    const code = `
-      h1 {
-        font-size: 40px;
-        code {
-          font-face: Roboto Mono;
-        }
-      }
-    `;
   it.skip('should read from correct tsconfigPath in other tsconfig', () => {
     expect(
       compilerCli.readConfiguration(
@@ -73,14 +62,6 @@ describe('styleTransform', () => {
     );
   });
 
-    expect(await styleTransform(code)).toMatchInlineSnapshot(`
-      "h1 {
-        font-size: 40px;
-      }
-      h1 code {
-        font-face: Roboto Mono;
-      }"
-    `);
   it('should create compiler options form rsBuildConfig tsconfigPath', () => {
     expect(
       setupCompilation(rsBuildMockConfig, {
@@ -121,5 +102,4 @@ describe('styleTransform', () => {
       })
     );
   });
-
 });
