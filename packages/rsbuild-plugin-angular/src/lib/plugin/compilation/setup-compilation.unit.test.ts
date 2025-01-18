@@ -163,12 +163,7 @@ describe('setupCompilation', () => {
   });
 
   it('should not filter rootNames if useAllRoots is true', () => {
-    const rootNames = [
-      'src/main.ts',
-      'other/main.ts',
-      'src/server.ts',
-      'other/server.ts',
-    ];
+    const rootNames = ['src/main.ts', 'src/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
       rootNames,
@@ -177,16 +172,12 @@ describe('setupCompilation', () => {
 
     expect(
       setupCompilation(rsBuildConfig, pluginAngularOptions, false, useAllRoots)
-    ).toStrictEqual(expect.objectContaining({ rootNames }));
+        .rootNames
+    ).toBe(rootNames);
   });
 
   it('should filter rootNames for files ending with "main.ts" if useAllRoots is false and isServer is false', () => {
-    const rootNames = [
-      'src/main.ts',
-      'other/main.ts',
-      'src/server.ts',
-      'other/server.ts',
-    ];
+    const rootNames = ['src/main.ts', 'other/main.ts', 'src/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
       rootNames,
@@ -200,21 +191,12 @@ describe('setupCompilation', () => {
         pluginAngularOptions,
         isServer,
         useAllRoots
-      )
-    ).toStrictEqual(
-      expect.objectContaining({
-        rootNames: ['src/main.ts', 'other/main.ts'],
-      })
-    );
+      ).rootNames
+    ).toStrictEqual(['src/main.ts', 'other/main.ts']);
   });
 
   it('should filter rootNames for files not ending with "main.ts" if useAllRoots is false and isServer is true', () => {
-    const rootNames = [
-      'src/main.ts',
-      'other/main.ts',
-      'src/server.ts',
-      'other/server.ts',
-    ];
+    const rootNames = ['src/main.ts', 'src/server.ts', 'other/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
       rootNames,
