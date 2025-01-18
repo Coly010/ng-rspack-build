@@ -12,7 +12,7 @@ import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transfor
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
   rsbuildConfigOverrides?: Partial<RsbuildConfig>
-) {
+): RsbuildConfig {
   const normalizedOptions = normalizeOptions(pluginOptions);
   const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
   const serverPolyfills = [
@@ -21,7 +21,7 @@ export function createConfig(
     '@angular/platform-server/init',
   ];
 
-  const isRunningDevServer = process.argv.splice(2)[0] === 'dev';
+  const isRunningDevServer = process.argv.at(2) === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
   const rsbuildPluginAngularConfig = defineConfig({
