@@ -1,8 +1,32 @@
 import { describe, expect } from 'vitest';
+import { styleTransform } from './setup-compilation.ts';
 import { setupCompilation } from './setup-compilation.ts';
 import * as compilerCli from '@angular/compiler-cli';
 import path from 'node:path';
 import rsBuildMockConfig from '../../../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
+
+describe('styleTransform', () => {
+  it('should call scss.compileString and return the value of the css property', async () => {
+    const code = `
+      h1 {
+        font-size: 40px;
+        code {
+          font-face: Roboto Mono;
+        }
+      }
+    `;
+
+    expect(await styleTransform(code)).toMatchInlineSnapshot(`
+      "h1 {
+        font-size: 40px;
+      }
+      h1 code {
+        font-face: Roboto Mono;
+      }"
+    `);
+  });
+});
+
 
 describe('setupCompilation-int', () => {
   const fixturesDir = path.join(
@@ -26,6 +50,16 @@ describe('setupCompilation-int', () => {
     );
   });
 
+describe('styleTransform', () => {
+  it('should call scss.compileString and return the value of the css property', async () => {
+    const code = `
+      h1 {
+        font-size: 40px;
+        code {
+          font-face: Roboto Mono;
+        }
+      }
+    `;
   it.skip('should read from correct tsconfigPath in other tsconfig', () => {
     expect(
       compilerCli.readConfiguration(
@@ -39,6 +73,14 @@ describe('setupCompilation-int', () => {
     );
   });
 
+    expect(await styleTransform(code)).toMatchInlineSnapshot(`
+      "h1 {
+        font-size: 40px;
+      }
+      h1 code {
+        font-face: Roboto Mono;
+      }"
+    `);
   it('should create compiler options form rsBuildConfig tsconfigPath', () => {
     expect(
       setupCompilation(rsBuildMockConfig, {

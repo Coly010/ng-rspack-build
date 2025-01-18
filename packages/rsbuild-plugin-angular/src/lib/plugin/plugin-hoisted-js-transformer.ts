@@ -2,10 +2,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { NgtscProgram } from '@angular/compiler-cli';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import * as ts from 'typescript';
-import {
-  setupCompilation,
-  setupCompilationWithParallelCompilation,
-} from './compilation/setup-compilation';
+import { setupCompilation } from './compilation/setup-compilation';
 import { augmentHostWithCaching } from './compilation/augments';
 import {
   buildAndAnalyze,
@@ -17,6 +14,7 @@ import { SourceFileCache } from './utils/devkit';
 import { FileEmitter } from './models';
 import { JS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { maxWorkers } from '../utils/utils';
+import { setupCompilationWithParallelCompilation } from './compilation/setup-with-paralell-compilation';
 
 export const pluginHoistedJsTransformer = (
   options: PluginAngularOptions

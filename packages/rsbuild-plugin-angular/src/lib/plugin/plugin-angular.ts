@@ -10,10 +10,7 @@ import {
 } from './utils/component-resolvers';
 import { maxWorkers } from '../utils/utils';
 import { SourceFileCache } from './utils/devkit';
-import {
-  setupCompilation,
-  setupCompilationWithParallelCompilation,
-} from './compilation/setup-compilation';
+import { setupCompilation } from './compilation/setup-compilation';
 import { normalizeOptions } from '../models/normalize-options';
 import {
   buildAndAnalyze,
@@ -24,6 +21,7 @@ import { dirname, normalize, resolve } from 'path';
 import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { pluginAngularJit } from './plugin-angular-jit';
 import { ChildProcess, fork } from 'node:child_process';
+import { setupCompilationWithParallelCompilation } from './compilation/setup-with-paralell-compilation';
 
 export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}

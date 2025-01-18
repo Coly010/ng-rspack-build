@@ -48,3 +48,4 @@ vitest.config.*.timestamp*
 .angular
 
 apps/docs/__deploy
+.env
