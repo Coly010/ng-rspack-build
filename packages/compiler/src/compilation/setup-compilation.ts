@@ -1,9 +1,9 @@
 import { RsbuildConfig } from '@rsbuild/core';
-import * as compilerCli from '@angular/compiler-cli';
 import * as ts from 'typescript';
 import { compileStringAsync } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { InlineStyleExtension, FileReplacement } from '../models';
+import { loadCompilerCli } from '../utils';
 
 export interface SetupCompilationOptions {
   tsconfigPath: string;
@@ -28,7 +28,7 @@ export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   supportJitMode: false,
 };
 
-export function setupCompilation(
+export async function setupCompilation(
   config: Pick<RsbuildConfig, 'mode' | 'source'>,
   options: SetupCompilationOptions,
   // @TODO isServer is only used if useAllRoots is false, so the logical order of the parameter should be changed
@@ -37,11 +37,11 @@ export function setupCompilation(
 ) {
   const isProd = config.mode === 'production';
 
-  const { options: tsCompilerOptions, rootNames } =
-    compilerCli.readConfiguration(
-      config.source?.tsconfigPath ?? options.tsconfigPath,
-      DEFAULT_NG_COMPILER_OPTIONS
-    );
+  const { readConfiguration } = await loadCompilerCli();
+  const { options: tsCompilerOptions, rootNames } = readConfiguration(
+    config.source?.tsconfigPath ?? options.tsconfigPath,
+    DEFAULT_NG_COMPILER_OPTIONS
+  );
 
   const compilerOptions = tsCompilerOptions;
   const host = ts.createIncrementalCompilerHost(compilerOptions);

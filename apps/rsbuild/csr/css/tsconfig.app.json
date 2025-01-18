@@ -23,6 +23,9 @@
   ],
   "references": [
     {
+      "path": "../../../../packages/compiler/tsconfig.lib.json"
+    },
+    {
       "path": "../../../../packages/rsbuild-plugin-angular/tsconfig.lib.json"
     }
   ]

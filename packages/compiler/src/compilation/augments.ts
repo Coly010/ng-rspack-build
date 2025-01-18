@@ -24,7 +24,7 @@
  */
 
 import * as ts from 'typescript';
-import { CompilerHost } from '@angular/compiler-cli';
+import { type CompilerHost } from '@angular/compiler-cli';
 import { normalize } from 'path';
 import { createHash } from 'node:crypto';
 import { InlineStyleExtension } from '../models';

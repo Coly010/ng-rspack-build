@@ -13,6 +13,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/compiler"
+    },
+    {
       "path": "../../packages/rsbuild-plugin-angular"
     },
     {

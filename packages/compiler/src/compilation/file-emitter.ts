@@ -24,10 +24,10 @@
  */
 
 import * as ts from 'typescript';
-import { NgtscProgram, OptimizeFor } from '@angular/compiler-cli';
 import { FileEmitter } from '../models';
 import { isStandardJsFile } from '../utils/regex-filters';
-import { NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
+import { type NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
+import { loadCompilerCli } from '../utils';
 
 export function createFileEmitter(
   program: ts.BuilderProgram,
@@ -36,6 +36,7 @@ export function createFileEmitter(
   angularCompiler?: NgCompiler
 ): FileEmitter {
   return async (file: string) => {
+    const { OptimizeFor } = await loadCompilerCli();
     const sourceFile = program.getSourceFile(file);
     if (!sourceFile) {
       return undefined;

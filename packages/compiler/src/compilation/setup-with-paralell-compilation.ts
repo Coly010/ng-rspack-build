@@ -11,7 +11,10 @@ export async function setupCompilationWithParallelCompilation(
   config: Pick<RsbuildConfig, 'source'>,
   options: SetupCompilationOptions
 ) {
-  const { rootNames, compilerOptions } = setupCompilation(config, options);
+  const { rootNames, compilerOptions } = await setupCompilation(
+    config,
+    options
+  );
   const parallelCompilation = new ParallelCompilation(options.jit ?? false);
   const fileReplacements: Record<string, string> =
     options.fileReplacements.reduce((r, f) => {

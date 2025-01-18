@@ -24,19 +24,23 @@
  */
 
 import * as ts from 'typescript';
-import * as compilerCli from '@angular/compiler-cli';
-import { CompilerHost, NgtscProgram } from '@angular/compiler-cli';
+import {
+  type CompilerHost,
+  type CompilerOptions,
+  type NgtscProgram,
+} from '@angular/compiler-cli';
 import { augmentProgramWithVersioning } from './augments';
 import { createFileEmitter } from './file-emitter';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { normalize } from 'path';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import { type NgCompiler } from '@angular/compiler-cli/src/ngtsc/core';
+import { loadCompilerCli } from '../utils';
 
 export async function buildAndAnalyze(
   rootNames: string[],
   host: ts.CompilerHost,
-  compilerOptions: compilerCli.CompilerOptions,
+  compilerOptions: CompilerOptions,
   nextProgram: NgtscProgram | undefined | ts.Program,
   builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram,
   options: {
@@ -44,13 +48,14 @@ export async function buildAndAnalyze(
     jit?: boolean;
   }
 ) {
+  const { NgtscProgram: NgProgram } = await loadCompilerCli();
   let builder: ts.BuilderProgram | ts.EmitAndSemanticDiagnosticsBuilderProgram;
   let typeScriptProgram: ts.Program;
   let angularCompiler: NgCompiler;
 
   if (!options.jit) {
     // Create the Angular specific program that contains the Angular compiler
-    const angularProgram: NgtscProgram = new compilerCli.NgtscProgram(
+    const angularProgram: NgtscProgram = new NgProgram(
       rootNames,
       compilerOptions,
       host as CompilerHost,

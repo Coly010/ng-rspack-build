@@ -51,7 +51,7 @@ export const pluginHoistedJsTransformer = (
 
     api.onBeforeEnvironmentCompile(async () => {
       if (!pluginOptions.useParallelCompilation) {
-        const { rootNames, compilerOptions, host } = setupCompilation(
+        const { rootNames, compilerOptions, host } = await setupCompilation(
           config,
           pluginOptions,
           isServer,

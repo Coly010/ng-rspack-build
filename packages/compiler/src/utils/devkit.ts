@@ -24,13 +24,17 @@
  */
 
 import packageJson from '../../package.json';
-import { VERSION } from '@angular/compiler-cli';
 import type { CompilerPluginOptions } from '../models/compiler-plugin-options';
 import * as sfc from './source-file-cache.js';
 
+const angularPackageJsonPath = require.resolve(
+  '@angular/compiler-cli/package.json'
+);
+const angularPackageJson = require(angularPackageJsonPath);
+const VERSION = angularPackageJson.version.split('.').at(0);
+
 const angularMajor = Number(VERSION.major);
-const angularMinor = Number(VERSION.minor);
-const angularPatch = Number(VERSION.patch);
+
 let sourceFileCache: any;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -93,6 +97,4 @@ export {
   sourceFileCache as SourceFileCache,
   CompilerPluginOptions,
   angularMajor,
-  angularMinor,
-  angularPatch,
 };

@@ -27,6 +27,7 @@
   },
   "type": "commonjs",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -49,7 +50,7 @@
     "@swc/core": ">=1.5.0 <1.11.0"
   },
   "nx": {
-    "sourceRoot": "packages/rsbuild-plugin-angular/src",
+    "sourceRoot": "packages/compiler/src",
     "projectType": "library",
     "name": "compiler",
     "targets": {
