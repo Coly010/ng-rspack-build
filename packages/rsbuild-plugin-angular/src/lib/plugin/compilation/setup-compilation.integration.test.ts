@@ -1,59 +1,83 @@
 import { describe, expect } from 'vitest';
 import { setupCompilation } from './setup-compilation.ts';
-import rsBuildConfig from '../../../../mocks/fixtures/integration/minimal/rsbuild.config.ts';
-
+import * as compilerCli from '@angular/compiler-cli';
+import path from 'node:path';
+import rsBuildMockConfig from '../../../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
 
 describe('setupCompilation-int', () => {
-  it('should create compiler options form rsBuildConfig tsconfigPath', () => {
-    expect({
-      root: process.cwd(),
-      source: {
-        ...rsBuildConfig.source,
-        tsconfigPath: './mocks/fixtures/integration/minimal/tsconfig.basic.json'
-      }
-    }).toStrictEqual(
+  const fixturesDir = path.join(
+    process.cwd(),
+    'mocks',
+    'fixtures',
+    'integration',
+    'minimal'
+  );
+
+  it.skip('should read from correct tsconfigPath in rsBuildMockConfig', () => {
+    expect(rsBuildMockConfig.source?.tsconfigPath).toBe(
+      './mocks/fixtures/integration/minimal/tsconfig.mock.json'
+    );
+    expect(
+      compilerCli.readConfiguration(rsBuildMockConfig.source?.tsconfigPath, {})
+    ).toStrictEqual(
       expect.objectContaining({
-        root: process.cwd(),
-        source: expect.objectContaining({
-          // tsconfigPath: './mocks/fixtures/integration/minimal/tsconfig.basic.json',
-        }),
+        rootNames: [expect.stringMatching(/mock.main.ts$/)],
       })
     );
+  });
 
+  it.skip('should read from correct tsconfigPath in other tsconfig', () => {
+    expect(
+      compilerCli.readConfiguration(
+        path.join(fixturesDir, 'tsconfig.other.mock.json'),
+        {}
+      )
+    ).toStrictEqual(
+      expect.objectContaining({
+        rootNames: [expect.stringMatching(/mock.main.ts$/)],
+      })
+    );
+  });
+
+  it('should create compiler options form rsBuildConfig tsconfigPath', () => {
+    expect(
+      setupCompilation(rsBuildMockConfig, {
+        tsconfigPath: 'irrelevant-if-tsconfig-is-in-rsbuild-config',
+        jit: false,
+        inlineStylesExtension: 'css',
+      })
+    ).toStrictEqual(
+      expect.objectContaining({
+        compilerOptions: expect.objectContaining({
+          configFilePath: expect.stringMatching(/tsconfig.mock.json$/),
+        }),
+        rootNames: [expect.stringMatching(/mock.main.ts$/)],
+      })
+    );
+  });
+
+  it('should create compiler options form ts compiler options if rsBuildConfig tsconfigPath is undefined', () => {
     expect(
       setupCompilation(
-        {  },
         {
-          tsconfigPath:
-            './mocks/fixtures/integration/minimal/tsconfig.basic.json',
+          ...rsBuildMockConfig,
+          source: {
+            ...rsBuildMockConfig.source,
+            tsconfigPath: undefined,
+          },
+        },
+        {
+          tsconfigPath: path.join(fixturesDir, 'tsconfig.other.mock.json'),
+          jit: false,
+          inlineStylesExtension: 'css',
         }
       )
-    ).toMatchInlineSnapshot(`
-      {
-        "compilerOptions": {},
-        "host": {
-          "createDirectory": [Function],
-          "createHash": [Function],
-          "directoryExists": [Function],
-          "fileExists": [Function],
-          "getCanonicalFileName": [Function],
-          "getCurrentDirectory": [Function],
-          "getDefaultLibFileName": [Function],
-          "getDefaultLibLocation": [Function],
-          "getDirectories": [Function],
-          "getEnvironmentVariable": [Function],
-          "getNewLine": [Function],
-          "getSourceFile": [Function],
-          "readDirectory": [Function],
-          "readFile": [Function],
-          "realpath": [Function],
-          "storeSignatureInfo": undefined,
-          "trace": [Function],
-          "useCaseSensitiveFileNames": [Function],
-          "writeFile": [Function],
-        },
-        "rootNames": [],
-      }
-    `);
+    ).toStrictEqual(
+      expect.objectContaining({
+        compilerOptions: expect.objectContaining({}),
+        rootNames: [expect.stringMatching(/other\/mock.main.ts$/)],
+      })
+    );
   });
+
 });

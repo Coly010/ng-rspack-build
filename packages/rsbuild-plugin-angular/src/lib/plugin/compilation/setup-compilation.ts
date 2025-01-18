@@ -9,7 +9,10 @@ import { transformFileSync } from '@swc/core';
 
 export function setupCompilation(
   config: RsbuildConfig,
-  options: PluginAngularOptions,
+  options: Pick<
+    PluginAngularOptions,
+    'tsconfigPath' | 'jit' | 'inlineStylesExtension'
+  >,
   isServer = false,
   useAllRoots = false
 ) {
