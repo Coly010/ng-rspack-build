@@ -1,5 +1,5 @@
 import { afterAll, beforeEach, describe, expect } from 'vitest';
-import packageJson from '../../../../package.json';
+import packageJson from '../../package.json';
 
 describe('devkit import', async () => {
   const VERSION = {

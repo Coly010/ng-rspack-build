@@ -3,7 +3,14 @@ import * as compilerCli from '@angular/compiler-cli';
 import * as ts from 'typescript';
 import { compileStringAsync } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
-import { PluginAngularOptions } from '../../models/plugin-options';
+import { InlineStyleExtension, FileReplacement } from '../models';
+
+export interface SetupCompilationOptions {
+  tsconfigPath: string;
+  jit: boolean;
+  inlineStylesExtension: InlineStyleExtension;
+  fileReplacements: Array<FileReplacement>;
+}
 
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   suppressOutputPathCheck: true,
@@ -23,10 +30,7 @@ export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
 
 export function setupCompilation(
   config: Pick<RsbuildConfig, 'mode' | 'source'>,
-  options: Pick<
-    PluginAngularOptions,
-    'tsconfigPath' | 'jit' | 'inlineStylesExtension'
-  >,
+  options: SetupCompilationOptions,
   // @TODO isServer is only used if useAllRoots is false, so the logical order of the parameter should be changed
   isServer = false,
   useAllRoots = false

@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import packageJson from '../../../../package.json';
+import packageJson from '../../package.json';
 import { VERSION } from '@angular/compiler-cli';
 import type { CompilerPluginOptions } from '../models/compiler-plugin-options';
 import * as sfc from './source-file-cache.js';

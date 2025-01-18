@@ -418,6 +418,36 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
 
+  packages/compiler:
+    dependencies:
+      '@angular-devkit/build-angular':
+        specifier: '>=19.0.0 <20.0.0'
+        version: 19.0.5(dgz24rgsr7pg54fkzgsycxiwee)
+      '@angular/build':
+        specifier: '>=18.0.0 <20.0.0'
+        version: 19.0.5(@angular/compiler-cli@19.0.5(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.6.3))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/platform-server@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))))(@angular/ssr@19.0.5(whst2uom2sykn2ay52lywk7vqm))(@types/node@18.16.9)(chokidar@4.0.3)(less@4.2.0)(postcss@8.4.49)(sass-embedded@1.83.1)(stylus@0.64.0)(terser@5.37.0)(typescript@5.6.3)
+      '@angular/compiler-cli':
+        specifier: '>=19.0.0 <20.0.0'
+        version: 19.0.5(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.6.3)
+      '@rsbuild/core':
+        specifier: '>=1.0.5 <2.0.0'
+        version: 1.1.13
+      '@swc/core':
+        specifier: '>=1.5.0 <1.11.0'
+        version: 1.5.29(@swc/helpers@0.5.15)
+      sass-embedded:
+        specifier: ^1.79.3
+        version: 1.83.1
+      ts-morph:
+        specifier: ^24.0.0
+        version: 24.0.0
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
+      typescript:
+        specifier: 5.6.3
+        version: 5.6.3
+
   packages/nx-plugin:
     dependencies:
       '@ng-rspack/build':
@@ -447,9 +477,6 @@ importers:
 
   packages/rsbuild-plugin-angular:
     dependencies:
-      '@angular-devkit/build-angular':
-        specifier: '>=19.0.0 <20.0.0'
-        version: 19.0.5(dgz24rgsr7pg54fkzgsycxiwee)
       '@angular/build':
         specifier: '>=18.0.0 <20.0.0'
         version: 19.0.5(@angular/compiler-cli@19.0.5(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.6.3))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/platform-server@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))))(@angular/ssr@19.0.5(whst2uom2sykn2ay52lywk7vqm))(@types/node@18.16.9)(chokidar@4.0.3)(less@4.2.0)(postcss@8.4.49)(sass-embedded@1.83.1)(stylus@0.64.0)(terser@5.37.0)(typescript@5.6.3)
@@ -462,21 +489,18 @@ importers:
       '@angular/ssr':
         specifier: '>=19.0.0 <20.0.0'
         version: 19.0.5(whst2uom2sykn2ay52lywk7vqm)
+      '@ng-rspack/compiler':
+        specifier: workspace:*
+        version: link:../compiler
       '@rsbuild/core':
         specifier: '>=1.0.5 <2.0.0'
         version: 1.1.13
-      '@swc/core':
-        specifier: '>=1.5.0 <1.11.0'
-        version: 1.5.29(@swc/helpers@0.5.15)
       express:
         specifier: 4.21.1
         version: 4.21.1
       sass-embedded:
         specifier: ^1.79.3
         version: 1.83.1
-      ts-morph:
-        specifier: ^24.0.0
-        version: 24.0.0
       tslib:
         specifier: ^2.3.0
         version: 2.8.1

@@ -1,15 +1,15 @@
 import type { RsbuildConfig } from '@rsbuild/core';
-import type { PluginAngularOptions } from '../../models/plugin-options';
 import { ParallelCompilation } from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { transformFileSync } from '@swc/core';
-import { setupCompilation, styleTransform } from './setup-compilation';
+import {
+  setupCompilation,
+  styleTransform,
+  SetupCompilationOptions,
+} from './setup-compilation';
 
 export async function setupCompilationWithParallelCompilation(
   config: Pick<RsbuildConfig, 'source'>,
-  options: Pick<
-    PluginAngularOptions,
-    'jit' | 'inlineStylesExtension' | 'fileReplacements' | 'tsconfigPath'
-  >
+  options: SetupCompilationOptions
 ) {
   const { rootNames, compilerOptions } = setupCompilation(config, options);
   const parallelCompilation = new ParallelCompilation(options.jit ?? false);

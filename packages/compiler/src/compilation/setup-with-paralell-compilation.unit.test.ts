@@ -3,10 +3,10 @@ import * as setupModule from './setup-compilation.ts';
 import ts, { type SourceFile } from 'typescript';
 import { setupCompilationWithParallelCompilation } from './setup-with-paralell-compilation.ts';
 import { type RsbuildConfig } from '@rsbuild/core';
-import { type PluginAngularOptions } from '../../models/plugin-options.ts';
 import * as parallelCompilation from '@angular/build/src/tools/angular/compilation/parallel-compilation';
 import { type AngularHostOptions } from '@angular/build/src/tools/angular/angular-host';
 import { type CompilerOptions } from '@angular/compiler-cli';
+import { SetupCompilationOptions } from './setup-compilation.ts';
 
 vi.mock('@angular/build/src/tools/angular/compilation/parallel-compilation');
 
@@ -18,10 +18,7 @@ describe('setupCompilationWithParallelCompilation', () => {
     },
   };
 
-  const pluginAngularOptions: Pick<
-    PluginAngularOptions,
-    'tsconfigPath' | 'jit' | 'inlineStylesExtension' | 'fileReplacements'
-  > = {
+  const pluginAngularOptions: SetupCompilationOptions = {
     tsconfigPath: 'tsconfig.angular.json',
     fileReplacements: [
       {

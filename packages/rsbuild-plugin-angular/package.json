@@ -10,9 +10,9 @@
     "postinstall": "node ./patch/patch-angular-build.js"
   },
   "dependencies": {
+    "@ng-rspack/compiler": "workspace:*",
     "sass-embedded": "^1.79.3",
     "express": "4.21.1",
-    "ts-morph": "^24.0.0",
     "tslib": "^2.3.0",
     "typescript": "5.6.3"
   },
@@ -23,10 +23,8 @@
     "@angular/common": ">=19.0.0 <20.0.0",
     "@angular/ssr": ">=19.0.0 <20.0.0",
     "@angular/compiler-cli": ">=19.0.0 <20.0.0",
-    "@angular-devkit/build-angular": ">=19.0.0 <20.0.0",
     "@rsbuild/core": ">=1.0.5 <2.0.0",
-    "@angular/build": ">=18.0.0 <20.0.0",
-    "@swc/core": ">=1.5.0 <1.11.0"
+    "@angular/build": ">=18.0.0 <20.0.0"
   },
   "type": "commonjs",
   "main": "./dist/index.js",

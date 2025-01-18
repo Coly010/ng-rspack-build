@@ -1,27 +1,26 @@
 import { type RsbuildPlugin } from '@rsbuild/core';
 import { NgtscProgram } from '@angular/compiler-cli';
-import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
-import * as ts from 'typescript';
-import { FileEmitter } from './models';
-import { PluginAngularOptions } from '../models/plugin-options';
 import {
+  FileEmitter,
   StyleUrlsResolver,
   TemplateUrlsResolver,
-} from './utils/component-resolvers';
-import { maxWorkers } from '../utils/utils';
-import { SourceFileCache } from './utils/devkit';
-import { setupCompilation } from './compilation/setup-compilation';
-import { normalizeOptions } from '../models/normalize-options';
-import {
+  SourceFileCache,
+  augmentHostWithCaching,
   buildAndAnalyze,
   buildAndAnalyzeWithParallelCompilation,
-} from './compilation/build-and-analyze';
-import { augmentHostWithCaching } from './compilation/augments';
+  setupCompilation,
+  setupCompilationWithParallelCompilation,
+  JS_ALL_EXT_REGEX,
+  TS_ALL_EXT_REGEX,
+} from '@ng-rspack/compiler';
+import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
+import * as ts from 'typescript';
+import { PluginAngularOptions } from '../models/plugin-options';
+import { maxWorkers } from '../utils/utils';
+import { normalizeOptions } from '../models/normalize-options';
 import { dirname, normalize, resolve } from 'path';
-import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { pluginAngularJit } from './plugin-angular-jit';
 import { ChildProcess, fork } from 'node:child_process';
-import { setupCompilationWithParallelCompilation } from './compilation/setup-with-paralell-compilation';
 
 export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
