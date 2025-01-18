@@ -34,7 +34,7 @@
     "sourceMap": false,
     "verbatimModuleSyntax": false
   },
-  "files": ["src/main.ts"],
+  "files": ["src/mock.main.ts"],
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "tmp"],
   "references": [],

@@ -16,7 +16,7 @@ import { it } from 'vitest';
 
 describe('createFileEmitter - Integration Test', () => {
   // maintains a minimal Angular project
-  const minimalAppDir = join(process.cwd(), 'mocks', 'fixtures', 'minimal');
+  const minimalAppDir = join(process.cwd(), 'mocks', 'fixtures', 'integration', 'minimal');
   // maintains a minimal Angular tsconfig that holds all options one file, no use of extends
   const tsconfigPath = join(minimalAppDir, 'tsconfig.json');
 
