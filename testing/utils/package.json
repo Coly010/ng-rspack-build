@@ -1,20 +1,11 @@
 {
   "name": "@ng-rspack/testing-utils",
   "version": "0.0.1",
-  "dependencies": {
-    "ts-morph": "^24.0.0"
-  },
-  "devDependencies": {
-    "vite-plugin-dts": "^4.5.0"
-  },
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
   "private": true,
-  "nx": {
-    "sourceRoot": "testing/utils/src",
-    "projectType": "library",
-    "name": "testing-utils"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -22,6 +13,16 @@
       "import": "./dist/index.js"
     }
   },
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.js"
+  "dependencies": {
+    "ts-morph": "^24.0.0",
+    "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "vite-plugin-dts": "^4.5.0"
+  },
+  "nx": {
+    "sourceRoot": "testing/utils/src",
+    "projectType": "library",
+    "name": "testing-utils"
+  }
 }
