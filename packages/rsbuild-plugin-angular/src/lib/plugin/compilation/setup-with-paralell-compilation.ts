@@ -26,9 +26,7 @@ export async function setupCompilationWithParallelCompilation(
         ...compilerOptions,
         fileReplacements,
         modifiedFiles: new Set(rootNames),
-        // @TODO replace when [#61](https://github.com/Coly010/ng-rspack-build/issues/61) is merged
-        transformStylesheet: (styles) =>
-          Promise.resolve(styleTransform(styles)),
+        transformStylesheet: (styles) => styleTransform(styles),
         processWebWorker(workerFile: string) {
           return transformFileSync(workerFile).code;
         },
