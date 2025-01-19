@@ -1,7 +1,8 @@
 #!/usr/bin/env ts-node
 
-import { getProjectsWithEslintTarget, lintAllProjects } from './utils';
+import { getProjectsWithEslintTarget } from './utils/nx';
 import { green } from 'ansis';
+import { lintAllProjects } from './index';
 
 (async () => {
   const projects = await getProjectsWithEslintTarget();
