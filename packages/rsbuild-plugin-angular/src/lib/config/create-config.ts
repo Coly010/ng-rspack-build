@@ -130,24 +130,27 @@ export function withConfigurations(
   > = {},
   configEnvVar = 'NGRS_CONFIG'
 ) {
-  const configuration = process.env[configEnvVar] ?? 'production';
+  const configurationMode = process.env[configEnvVar] ?? 'production';
+  const isDefault = configurationMode === 'default';
+  const isModeConfigured = configurationMode in configurations;
+
   const mergedBuildOptionsOptions = {
     ...defaultOptions.options,
-    ...((configuration !== 'default' && configuration in configurations
-      ? configurations[configuration]?.options
+    ...((!isDefault && isModeConfigured
+      ? configurations[configurationMode]?.options
       : {}) ?? {}),
   };
 
   let mergedRsbuildConfigOverrides =
     defaultOptions.rsbuildConfigOverrides ?? {};
   if (
-    configuration !== 'default' &&
-    configuration in configurations &&
-    configurations[configuration]?.rsbuildConfigOverrides
+    !isDefault &&
+    isModeConfigured &&
+    configurations[configurationMode]?.rsbuildConfigOverrides
   ) {
     mergedRsbuildConfigOverrides = mergeRsbuildConfig(
       mergedRsbuildConfigOverrides,
-      configurations[configuration]?.rsbuildConfigOverrides ?? {}
+      configurations[configurationMode]?.rsbuildConfigOverrides ?? {}
     );
   }
 

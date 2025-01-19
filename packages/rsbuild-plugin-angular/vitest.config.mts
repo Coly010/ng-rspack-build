@@ -18,7 +18,7 @@ export default defineConfig({
     setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs.setup-file.ts'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/packages/rsbuild-plugin-angular',
+      reportsDirectory: '../../coverage/packages/rsbuild-plugin-angular/unit',
       provider: 'v8',
     },
   },

@@ -55,7 +55,7 @@ export function normalizeOptions(
   options: Partial<PluginAngularOptions> = {}
 ): PluginAngularOptions {
   const {
-    root = process.cwd(),
+    root = DEFAULT_PLUGIN_ANGULAR_OPTIONS.root,
     fileReplacements = [],
     server,
     ssrEntry,
