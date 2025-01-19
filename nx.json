@@ -54,10 +54,7 @@
       "cache": true
     },
     "lint": {
-      "cache": true,
-      "options": {
-        "max-warnings": 0
-      }
+      "cache": true
     }
   },
   "release": {
