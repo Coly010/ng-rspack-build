@@ -20,7 +20,7 @@ export default defineConfig({
     reporters: ['default'],
     coverage: {
       reportsDirectory:
-        '../../coverage/packages/rsbuild-plugin-angular/integration-test',
+        '../../coverage/packages/rsbuild-plugin-angular/integration',
       provider: 'v8',
     },
   },

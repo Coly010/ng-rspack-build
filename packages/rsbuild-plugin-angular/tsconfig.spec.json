@@ -32,6 +32,7 @@
     "src/**/*.d.ts",
     "package.json"
   ],
+  "exclude": ["src/**/__snapshots__/*.ts"],
   "references": [
     {
       "path": "./tsconfig.lib.json"

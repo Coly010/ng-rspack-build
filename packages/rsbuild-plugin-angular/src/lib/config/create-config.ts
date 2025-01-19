@@ -12,7 +12,7 @@ import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transfor
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
   rsbuildConfigOverrides?: Partial<RsbuildConfig>
-) {
+): RsbuildConfig {
   const normalizedOptions = normalizeOptions(pluginOptions);
   const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
   const serverPolyfills = [
