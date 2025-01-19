@@ -30,7 +30,7 @@ export function formatRules(
     indentLevel?: number;
     type?: 'error' | 'warning';
   } = {}
-): string {
+): string[] {
   const icons = { error: '❌', warning: '⚠️' };
 
   return Array.from(Object.entries(rules))
@@ -40,30 +40,35 @@ export function formatRules(
         `${' '.repeat(indentLevel)}"${ruleId}": "off", // ${
           icons[type]
         } ${count} ${type}${count > 1 ? 's' : ''}${isFixable ? ' 🛠️' : ''}`
-    )
-    .join('\n');
+    );
 }
 
 export function getFile(
   ruleDefinitions: {
     files: string[];
-    rules: Record<string, RuleViolations>;
+    errors: Record<string, RuleViolations>;
+    warnings: Record<string, RuleViolations>;
   }[],
   { module = 'commonjs' }: { module: 'commonjs' | 'module' | 'cjs' | 'mjs' }
 ): string {
   const configTemplate = targetEslintRc(module);
 
   const formattedRules = ruleDefinitions.filter(
-    ({ rules }) => Object.values(rules).length > 0
+    ({ errors, warnings }) =>
+      Object.values(errors).length > 0 || Object.values(warnings).length > 0
   );
-  console.log(':::::: ', formattedRules);
+
   const formattedRuless = formattedRules
-    .map(({ files, rules }) => {
-      const formatted = formatRules(rules);
+    .map(({ files, errors, warnings }) => {
+      const warningLines = formatRules(warnings, { type: 'warning' });
+      const errorLines = formatRules(errors);
       return `  {
         files: ${JSON.stringify(files)},
         rules: {
-${formatted}
+          // rules with warnings: ${warningLines.length}
+          ${warningLines.length ? warningLines.join('\n') : ''}
+          // rules with errors: ${warningLines.length}
+          ${errorLines.length ? errorLines.join('\n') : ''}
         }
       }`;
     })

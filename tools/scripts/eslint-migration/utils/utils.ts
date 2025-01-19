@@ -13,7 +13,9 @@ export const parseExistingConfig = async (
   configPath: string,
   testFilePatterns = TEST_FILE_PATTERNS
 ): Promise<{ general: Set<string>; test: Set<string> }> => {
-  if (!existsSync(configPath)) return { general: new Set(), test: new Set() };
+  if (!existsSync(configPath)) {
+    return { general: new Set(), test: new Set() };
+  }
 
   const configUrl = pathToFileURL(configPath);
   const config: ConfigEntry[] = (await import(configUrl.toString())).default;

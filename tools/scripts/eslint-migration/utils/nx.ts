@@ -18,12 +18,18 @@ export function getEslintConfigPath(project: ProjectConfiguration) {
   );
 }
 
-export async function getProjectsWithEslintTarget() {
+export async function getProjectsWithEslintTarget(projects?: string[]) {
   const graph = await createProjectGraphAsync({ exitOnError: true });
   return Object.values(
     readProjectsConfigurationFromProjectGraph(graph).projects
   )
     .filter((project) => 'lint' in (project.targets ?? {}))
+    .filter((project) => {
+      if (Array.isArray(projects) && projects.length >= 0) {
+        return projects.some((name) => name === project.name);
+      }
+      return true;
+    })
     .filter((project) => {
       const optEslintConfig = project.targets?.lint.options?.eslintConfig;
       const potentialEslintCinfig = [

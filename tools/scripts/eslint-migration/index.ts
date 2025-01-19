@@ -1,4 +1,9 @@
-import { collectRuleViolations, parseExistingConfig } from './utils/utils';
+import {
+  collectRuleViolations,
+  parseExistingConfig,
+  RuleCollection,
+  RulesCollectionResult,
+} from './utils/utils';
 import { cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
 import { getFile } from './utils/file-creation';
@@ -30,6 +35,8 @@ export const lintAllProjects = async (projects: any[]) => {
           console.log(yellow(`  • Rules are already disabled. Skipping.\n`));
         } else if (lintResult === 'updated') {
           console.log(green(`  ✔ Rules updated successfully.\n`));
+        } else if (lintResult === 'valid') {
+          console.log(green(`  ✔ Rules passing. Ready for migration.\n`));
         } else {
           console.log(
             red(
@@ -60,68 +67,67 @@ export const TEST_FILE_PATTERNS = [
 export const lintProject = async (
   project: any,
   eslintConfig: string
-): Promise<'skipped' | 'updated' | 'error'> => {
+): Promise<'skipped' | 'updated' | 'error' | 'valid'> => {
+  const nextConfigPath = `${project.root}/eslint.next.config.js`;
+  const { general: existingGeneral, test: existingTest } =
+    await parseExistingConfig(eslintConfig);
+  // const targetEsLintConfig = existsSync(nextConfigPath) ? nextConfigPath : eslintConfig;
+
+  const eslint = new ESLint({
+    overrideConfigFile: eslintConfig,
+    errorOnUnmatchedPattern: false,
+  });
+
+  const results = await eslint.lintFiles(
+    project.targets.lint.options.lintFilePatterns ?? project.root
+  );
+
+  let result: RulesCollectionResult;
   try {
-    const nextConfigPath = `${project.root}/eslint.next.config.js`;
-    const { general: existingGeneral, test: existingTest } =
-      await parseExistingConfig(eslintConfig);
+    result = collectRuleViolations(results, TEST_FILE_PATTERNS);
+  } catch (error) {
+    console.error(`Error collecting lint violations: ${project.name}`, error);
+  }
+  const { failingRules, warningRules, testFailingRules, testWarningRules } =
+    result;
 
-    if (existingGeneral.size > 0 || existingTest.size > 0) {
-      return 'skipped';
+  const totalViolations = Object.values(result)
+    .flatMap((map) => Object.values(Object.fromEntries(map)))
+    .map(([count]) => count)
+    .reduce<number>((acc, curr) => acc + curr, 0); // Sum up all violations
+
+  // If there are no rule violations, we don't need to update the config.
+  if (totalViolations === 0) {
+    if (existsSync(nextConfigPath)) {
+      await copyFile(nextConfigPath, eslintConfig); // Restore the original config
+      await rm(nextConfigPath); // Remove the temporary next config
     }
-
-    const eslint = new ESLint({
-      overrideConfigFile: eslintConfig,
-      errorOnUnmatchedPattern: false,
-    });
-
-    const results = await eslint.lintFiles(
-      project.targets.lint.options.lintFilePatterns ?? project.root
+    console.log(
+      green(`  ✔ Project "${project.name}" has no ESLint errors remaining.\n`)
     );
+    return 'skipped';
+  }
 
-    const { failingRules, warningRules, testFailingRules, testWarningRules } =
-      collectRuleViolations(results, TEST_FILE_PATTERNS);
+  const content = getFile(
+    [
+      {
+        files: ['**/*'],
+        errors: Object.fromEntries(failingRules),
+        warnings: Object.fromEntries(warningRules),
+      },
+      {
+        files: TEST_FILE_PATTERNS,
+        errors: Object.fromEntries(testFailingRules),
+        warnings: Object.fromEntries(testWarningRules),
+      },
+    ],
+    { module: 'commonjs' }
+  );
 
-    // If there are no rule violations, we don't need to update the config.
-    const totalViolations = Object.values(collectRuleViolations)
-      .map(([count]) => count) // Extract the first element (number of violations)
-      .reduce((acc, curr) => acc + curr, 0); // Sum up all violations
-
-    if (totalViolations === 0) {
-      if (existsSync(nextConfigPath)) {
-        await copyFile(nextConfigPath, eslintConfig); // Restore the original config
-        await rm(nextConfigPath); // Remove the temporary next config
-      }
-      console.log(
-        green(`  ✔ Project "${project.name}" has no ESLint errors remaining.\n`)
-      );
-      return 'skipped';
-    }
-
-    const content = getFile(
-      [
-        {
-          files: ['**/*'],
-          rules: {
-            ...Object.fromEntries(failingRules),
-            ...Object.fromEntries(warningRules),
-          },
-        },
-        {
-          files: TEST_FILE_PATTERNS,
-          rules: {
-            ...Object.fromEntries(testFailingRules),
-            ...Object.fromEntries(testWarningRules),
-          },
-        },
-      ],
-      { module: 'commonjs' }
-    );
-
+  try {
     if (!existsSync(nextConfigPath)) {
       await copyFile(eslintConfig, nextConfigPath);
     }
-
     await writeFile(eslintConfig, content.trim());
     return 'updated';
   } catch (error) {
