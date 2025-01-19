@@ -3,6 +3,15 @@ const baseConfig = require('../../eslint.config.js');
 module.exports = [
   ...baseConfig,
   {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
     files: ['**/*.json'],
     rules: {
       '@nx/dependency-checks': [
