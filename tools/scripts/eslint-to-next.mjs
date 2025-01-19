@@ -31,8 +31,12 @@ const parseExistingConfig = async (configPath) => {
   config.forEach((entry) => {
     if (!entry.files || !Array.isArray(entry.files)) return; // Skip if files is undefined or not an array
     if (entry.files.includes('**/*')) {
-      Object.keys(entry.rules || {}).forEach((ruleId) => generalRules.add(ruleId));
-    } else if (TEST_FILE_PATTERNS.some((pattern) => entry.files.includes(pattern))) {
+      Object.keys(entry.rules || {}).forEach((ruleId) =>
+        generalRules.add(ruleId)
+      );
+    } else if (
+      TEST_FILE_PATTERNS.some((pattern) => entry.files.includes(pattern))
+    ) {
       Object.keys(entry.rules || {}).forEach((ruleId) => testRules.add(ruleId));
     }
   });
@@ -51,7 +55,8 @@ for (let i = 0; i < projects.length; i++) {
   const project = projects[i];
 
   const options = project.targets.lint.options;
-  const eslintConfig = options.eslintConfig ?? `${project.root}/eslint.config.js`;
+  const eslintConfig =
+    options.eslintConfig ?? `${project.root}/eslint.config.js`;
   const patterns = options.lintFilePatterns ?? project.root;
 
   console.info(
@@ -61,14 +66,19 @@ for (let i = 0; i < projects.length; i++) {
   );
 
   if (!existsSync(eslintConfig)) {
-    console.error(`ERROR: ${eslintConfig} does not exist but lint target is defined in project ${project.name}.`);
+    console.error(
+      `ERROR: ${eslintConfig} does not exist but lint target is defined in project ${project.name}.`
+    );
     continue;
   }
 
-  const { general: existingGeneral, test: existingTest } = await parseExistingConfig(eslintConfig);
+  const { general: existingGeneral, test: existingTest } =
+    await parseExistingConfig(eslintConfig);
 
   if (existingGeneral.size > 0 || existingTest.size > 0) {
-    console.info(`• Rules are already disabled for project "${project.name}". Skipping updates.`);
+    console.info(
+      `• Rules are already disabled for project "${project.name}". Skipping updates.`
+    );
     continue;
   }
 
@@ -107,15 +117,20 @@ for (let i = 0; i < projects.length; i++) {
     }
   }
 
-  const formatRules = (rules, indentLevel = 6) =>
-    Array.from(rules.values())
-      .sort((a, b) => a.localeCompare(b))
+  const formatRules = (rules, indentLevel = 6) => {
+    const ruleEntries = Array.from(rules.entries()).sort(([a], [b]) =>
+      a.localeCompare(b)
+    );
+    return ruleEntries
       .map(
-        (ruleId, i, arr) =>
+        ([ruleId, count], i) =>
           ' '.repeat(indentLevel) +
-          `"${ruleId}": "off"${i === arr.length - 1 ? '' : ','}`
+          `"${ruleId}": "off"${
+            i === ruleEntries.length - 1 ? '' : ','
+          } // ${count} ${count === 1 ? 'violation' : 'violations'}`
       )
       .join('\n');
+  };
 
   const nextConfigPath = `${project.root}/eslint.next.config.js`;
   if (!existsSync(nextConfigPath)) {
