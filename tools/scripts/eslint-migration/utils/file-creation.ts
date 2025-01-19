@@ -34,7 +34,14 @@ export function formatRules(
   const icons = { error: '❌', warning: '⚠️' };
 
   return Array.from(Object.entries(rules))
-    .sort(([a], [b]) => a.localeCompare(b)) // Sort rules alphabetically
+    .sort(([ruleA, [countA, fixableA]], [ruleB, [countB, fixableB]]) => {
+      // Sort by number of issues (descending)
+      if (countB !== countA) return countB - countA;
+      // Sort by fixable (fixable first)
+      if (fixableA !== fixableB) return fixableB ? 1 : -1;
+      // Sort alphabetically by rule ID
+      return ruleA.localeCompare(ruleB);
+    })
     .map(
       ([ruleId, [count, isFixable]]) =>
         `${' '.repeat(indentLevel)}"${ruleId}": "off", // ${
@@ -42,6 +49,7 @@ export function formatRules(
         } ${count} ${type}${count > 1 ? 's' : ''}${isFixable ? ' 🛠️' : ''}`
     );
 }
+
 
 export function getFile(
   ruleDefinitions: {
@@ -65,10 +73,11 @@ export function getFile(
       return `  {
         files: ${JSON.stringify(files)},
         rules: {
+          // rules with errors: ${warningLines.length}
+          ${errorLines.length ? errorLines.join('\n') : ''},
           // rules with warnings: ${warningLines.length}
           ${warningLines.length ? warningLines.join('\n') : ''}
-          // rules with errors: ${warningLines.length}
-          ${errorLines.length ? errorLines.join('\n') : ''}
+
         }
       }`;
     })
