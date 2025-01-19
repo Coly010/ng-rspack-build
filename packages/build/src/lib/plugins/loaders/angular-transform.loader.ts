@@ -13,7 +13,7 @@ export default function loader(this: LoaderContext<unknown>, content: string) {
   } else {
     const { typescriptFileCache } = (this._compilation as NgRspackCompilation)[
       NG_RSPACK_SYMBOL_NAME
-    ];
+    ]();
 
     const request = this.resourcePath;
     const normalizedRequest = normalize(request);

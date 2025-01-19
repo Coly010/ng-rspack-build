@@ -1,5 +1,7 @@
 import {
   Compiler,
+  Compilation,
+  sources,
   RspackPluginInstance,
   RspackOptionsNormalized,
 } from '@rspack/core';
@@ -16,6 +18,11 @@ import {
   buildAndAnalyzeWithParallelCompilation,
 } from '@ng-rspack/compiler';
 import { dirname, normalize, resolve } from 'path';
+import {
+  Hash,
+  MapOptions,
+  RawSourceMap,
+} from '@rspack/core/compiled/webpack-sources';
 
 const PLUGIN_NAME = 'AngularRspackPlugin';
 type Awaited<T> = T extends Promise<infer U> ? U : T;
@@ -55,6 +62,19 @@ export class AngularRspackPlugin implements RspackPluginInstance {
       PLUGIN_NAME,
       async (compiler, callback) => {
         await this.setupCompilation(compiler.options.resolve.tsConfig);
+
+        compiler.hooks.beforeCompile.tapAsync(
+          PLUGIN_NAME,
+          async (params, callback) => {
+            await buildAndAnalyzeWithParallelCompilation(
+              this.#angularCompilation,
+              this.#typescriptFileCache,
+              this.#javascriptTransformer
+            );
+            callback();
+          }
+        );
+
         callback();
       }
     );
@@ -62,22 +82,37 @@ export class AngularRspackPlugin implements RspackPluginInstance {
     compiler.hooks.watchRun.tapAsync(
       PLUGIN_NAME,
       async (compiler, callback) => {
-        await this.setupCompilation(compiler.options.resolve.tsConfig);
-        callback();
-      }
-    );
+        if (
+          !compiler.hooks.beforeCompile.taps.some(
+            (tap) => tap.name === PLUGIN_NAME
+          )
+        ) {
+          compiler.hooks.beforeCompile.tapAsync(
+            PLUGIN_NAME,
+            async (params, callback) => {
+              const watchingModifiedFiles = compiler.watching?.compiler
+                ?.modifiedFiles
+                ? new Set(compiler.watching.compiler.modifiedFiles)
+                : new Set<string>();
+              await this.setupCompilation(compiler.options.resolve.tsConfig);
+              await this.#angularCompilation.update(watchingModifiedFiles);
 
-    compiler.hooks.beforeCompile.tapAsync(
-      PLUGIN_NAME,
-      async (params, callback) => {
-        const watchingModifiedFiles = compiler.watching?.compiler?.modifiedFiles
-          ? new Set(compiler.watching.compiler.modifiedFiles)
-          : new Set<string>();
-        await buildAndAnalyzeWithParallelCompilation(
-          this.#angularCompilation,
-          this.#typescriptFileCache,
-          this.#javascriptTransformer
-        );
+              await buildAndAnalyzeWithParallelCompilation(
+                this.#angularCompilation,
+                this.#typescriptFileCache,
+                this.#javascriptTransformer
+              );
+              compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
+                watchingModifiedFiles.forEach((file) => {
+                  compilation.fileDependencies.add(file);
+                });
+              });
+
+              callback();
+            }
+          );
+        }
+
         callback();
       }
     );
@@ -97,36 +132,34 @@ export class AngularRspackPlugin implements RspackPluginInstance {
     );
 
     compiler.hooks.compilation.tap('AngularRspackPlugin', (compilation) => {
-      (compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME] = {
+      (compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME] = () => ({
         javascriptTransformer: this
           .#javascriptTransformer as unknown as JavaScriptTransformer,
         typescriptFileCache: this.#typescriptFileCache,
-      };
+      });
     });
   }
 
   private async setupCompilation(
     tsConfig: RspackOptionsNormalized['resolve']['tsConfig']
   ) {
-    if (!this.#angularCompilation) {
-      const tsconfigPath = tsConfig
-        ? typeof tsConfig === 'string'
-          ? tsConfig
-          : tsConfig.configFile
-        : this.#_options.tsconfigPath;
-      this.#angularCompilation = await setupCompilationWithParallelCompilation(
-        {
-          source: {
-            tsconfigPath: tsconfigPath,
-          },
-        },
-        {
-          jit: this.#_options.jit,
+    const tsconfigPath = tsConfig
+      ? typeof tsConfig === 'string'
+        ? tsConfig
+        : tsConfig.configFile
+      : this.#_options.tsconfigPath;
+    this.#angularCompilation = await setupCompilationWithParallelCompilation(
+      {
+        source: {
           tsconfigPath: tsconfigPath,
-          inlineStylesExtension: this.#_options.inlineStylesExtension,
-          fileReplacements: this.#_options.fileReplacements,
-        }
-      );
-    }
+        },
+      },
+      {
+        jit: this.#_options.jit,
+        tsconfigPath: tsconfigPath,
+        inlineStylesExtension: this.#_options.inlineStylesExtension,
+        fileReplacements: this.#_options.fileReplacements,
+      }
+    );
   }
 }

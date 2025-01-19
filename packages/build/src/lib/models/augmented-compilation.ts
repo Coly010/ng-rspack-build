@@ -8,5 +8,5 @@ export type NG_RSPACK_COMPILATION_STATE = {
   typescriptFileCache: Map<string, string>;
 };
 export type NgRspackCompilation = Compilation & {
-  [NG_RSPACK_SYMBOL_NAME]: NG_RSPACK_COMPILATION_STATE;
+  [NG_RSPACK_SYMBOL_NAME]: () => NG_RSPACK_COMPILATION_STATE;
 };

@@ -8,7 +8,7 @@ export default function loader(this: LoaderContext<unknown>, content: string) {
   } else {
     const { javascriptTransformer, typescriptFileCache } = (
       this._compilation as NgRspackCompilation
-    )[NG_RSPACK_SYMBOL_NAME];
+    )[NG_RSPACK_SYMBOL_NAME]();
 
     const request = this.resourcePath;
     if (
