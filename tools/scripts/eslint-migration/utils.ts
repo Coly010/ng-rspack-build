@@ -100,15 +100,21 @@ export const lintProject = async (
       });
     });
 
-    const formatRules = (rules, indentLevel = 6, type:'error' | 'warning' = 'error') => {
-      const ruleEntries = Array.from(rules.entries()).sort(([a], [b]) => a.localeCompare(b));
+    const formatRules = (
+      rules,
+      indentLevel = 6,
+      type: 'error' | 'warning' = 'error'
+    ) => {
+      const ruleEntries = Array.from(rules.entries()).sort(([a], [b]) =>
+        a.localeCompare(b)
+      );
       return ruleEntries
         .map(
           ([ruleId, count], i) =>
             ' '.repeat(indentLevel) +
-            `"${ruleId}": "off"${i === ruleEntries.length - 1 ? '' : ','} // ${count} ${
-              count === 1 ? type : `${type}s`
-            }`
+            `"${ruleId}": "off"${
+              i === ruleEntries.length - 1 ? '' : ','
+            } // ${count} ${count === 1 ? type : `${type}s`}`
         )
         .join('\n');
     };
@@ -170,12 +176,26 @@ export async function getProjectsWithEslintTarget() {
       ];
 
       try {
-        const hasEslintConfig: boolean = potentialEslintCinfig.some(file => existsSync(file));
-        (hasEslintConfig === false &&
-          console.log(yellow(`  • 'Skipping project ${bold(project.name)} because it does not have an eslintConfig`)));
+        const hasEslintConfig: boolean = potentialEslintCinfig.some((file) =>
+          existsSync(file)
+        );
+        hasEslintConfig === false &&
+          console.log(
+            yellow(
+              `  • 'Skipping project ${bold(
+                project.name
+              )} because it does not have an eslintConfig`
+            )
+          );
         return hasEslintConfig;
       } catch (e) {
-        console.log(yellow(`  • 'Skipping project ${bold(project.name)} loading because of eslintConfig error: ${e}`));
+        console.log(
+          yellow(
+            `  • 'Skipping project ${bold(
+              project.name
+            )} loading because of eslintConfig error: ${e}`
+          )
+        );
         return false;
       }
     })
@@ -198,11 +218,12 @@ export const lintAllProjects = async (projects: any[]) => {
       );
 
       const eslintConfig =
-        project.targets?.lint.options?.eslintConfig ?? [
-        ...['cjs', 'mjs', 'js'].map((ext) =>
-          join(project.root, `eslint.config.${ext}`)
-        ),
-      ].find((file) => existsSync(file));
+        project.targets?.lint.options?.eslintConfig ??
+        [
+          ...['cjs', 'mjs', 'js'].map((ext) =>
+            join(project.root, `eslint.config.${ext}`)
+          ),
+        ].find((file) => existsSync(file));
 
       try {
         const lintResult = await lintProject(project, eslintConfig);
