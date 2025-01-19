@@ -69,7 +69,7 @@ export function createConfig(
           },
           define: {
             ...(isProd ? { ngDevMode: 'false' } : undefined),
-            ngJitMode: pluginOptions.jit,
+            ngJitMode: pluginOptions.jit, // @TODO: use normalizedOptions
           },
         },
         output: {
@@ -98,7 +98,7 @@ export function createConfig(
                 define: {
                   ngServerMode: true,
                   ...(isProd ? { ngDevMode: 'false' } : undefined),
-                  ngJitMode: pluginOptions.jit,
+                  ngJitMode: pluginOptions.jit, // @TODO: use normalizedOptions
                 },
               },
               output: {
