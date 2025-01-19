@@ -8,7 +8,6 @@ const {
 module.exports = tseslint.config([
   ...typescript,
   ...node,
-  { ignores: ['**/*.d.ts', '**/*.d.ts.map', '**/dist'] },
   {
     files: ['**/*.json'],
     // Override or add rules here
@@ -42,5 +41,18 @@ module.exports = tseslint.config([
     rules: {
       'unicorn/prefer-ternary': 'warn',
     },
+  },
+  {
+    ignores: [
+      '**/*.d.ts',
+      '**/*.d.ts.map',
+      '**/dist',
+      '**/*.mock.*',
+      '**/code-pushup.config.ts',
+      '**/mocks/fixtures/**',
+      '**/__snapshots__/**',
+      '**/dist',
+      '**/*.md',
+    ],
   },
 ]);
