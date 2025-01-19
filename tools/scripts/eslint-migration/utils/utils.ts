@@ -2,9 +2,7 @@ import { ESLint } from 'eslint';
 import { minimatch } from 'minimatch';
 import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'url';
-import { join } from 'path';
 import { TEST_FILE_PATTERNS } from '../index';
-import { ProjectConfiguration } from 'nx/src/config/workspace-json-project-json';
 
 type ConfigEntry = {
   files: string[];

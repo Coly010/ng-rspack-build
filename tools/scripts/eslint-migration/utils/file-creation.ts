@@ -53,7 +53,11 @@ export function getFile(
 ): string {
   const configTemplate = targetEslintRc(module);
 
-  const formattedRules = ruleDefinitions
+  const formattedRules = ruleDefinitions.filter(
+    ({ rules }) => Object.values(rules).length > 0
+  );
+  console.log(':::::: ', formattedRules);
+  const formattedRuless = formattedRules
     .map(({ files, rules }) => {
       const formatted = formatRules(rules);
       return `  {
@@ -65,5 +69,5 @@ ${formatted}
     })
     .join(',\n');
 
-  return configTemplate.replace('/* <RULES> */', formattedRules);
+  return configTemplate.replace('/* <RULES> */', formattedRuless);
 }

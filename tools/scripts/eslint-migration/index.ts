@@ -3,7 +3,7 @@ import { cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
 import { getFile } from './utils/file-creation';
 import { existsSync } from 'node:fs';
-import { copyFile, writeFile } from 'node:fs/promises';
+import { copyFile, writeFile, rm } from 'node:fs/promises';
 import { getEslintConfigPath } from './utils/nx';
 
 /**
@@ -32,7 +32,9 @@ export const lintAllProjects = async (projects: any[]) => {
           console.log(green(`  ✔ Rules updated successfully.\n`));
         } else {
           console.log(
-            red(`  ✘ An error occurred while processing the project.\n`)
+            red(
+              `  ✘ An error occurred while processing project ${project.name}.\n`
+            )
           );
         }
       } catch (error) {
@@ -60,6 +62,7 @@ export const lintProject = async (
   eslintConfig: string
 ): Promise<'skipped' | 'updated' | 'error'> => {
   try {
+    const nextConfigPath = `${project.root}/eslint.next.config.js`;
     const { general: existingGeneral, test: existingTest } =
       await parseExistingConfig(eslintConfig);
 
@@ -78,6 +81,22 @@ export const lintProject = async (
 
     const { failingRules, warningRules, testFailingRules, testWarningRules } =
       collectRuleViolations(results, TEST_FILE_PATTERNS);
+
+    // If there are no rule violations, we don't need to update the config.
+    const totalViolations = Object.values(collectRuleViolations)
+      .map(([count]) => count) // Extract the first element (number of violations)
+      .reduce((acc, curr) => acc + curr, 0); // Sum up all violations
+
+    if (totalViolations === 0) {
+      if (existsSync(nextConfigPath)) {
+        await copyFile(nextConfigPath, eslintConfig); // Restore the original config
+        await rm(nextConfigPath); // Remove the temporary next config
+      }
+      console.log(
+        green(`  ✔ Project "${project.name}" has no ESLint errors remaining.\n`)
+      );
+      return 'skipped';
+    }
 
     const content = getFile(
       [
@@ -99,7 +118,6 @@ export const lintProject = async (
       { module: 'commonjs' }
     );
 
-    const nextConfigPath = `${project.root}/eslint.next.config.js`;
     if (!existsSync(nextConfigPath)) {
       await copyFile(eslintConfig, nextConfigPath);
     }
