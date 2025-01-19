@@ -1,11 +1,27 @@
-const nextEslintConfig = require('../../../../eslint.config');
+const baseConfig = require('../../../../eslint.config');
 
 module.exports = [
-  ...nextEslintConfig,
+  ...baseConfig,
   {
-        files: ["**/*"],
-        rules: {
-
-        }
-      }
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
+    files: ['**/*'],
+    rules: {},
+  },
 ];

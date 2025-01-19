@@ -1,7 +1,16 @@
-const baseConfig = require('../../../../eslint.config.js');
+const baseConfig = require('../../../../eslint.config');
 
 module.exports = [
   ...baseConfig,
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
   {
     files: ['**/*.ts'],
     languageOptions: {
@@ -20,7 +29,7 @@ module.exports = [
           ignoredFiles: [
             '{projectRoot}/eslint.config.{js,cjs,mjs}',
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
-          ]
+          ],
         },
       ],
     },
