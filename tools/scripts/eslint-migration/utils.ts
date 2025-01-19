@@ -100,17 +100,21 @@ export const lintProject = async (
       });
     });
 
-    const formatRules = (rules: Map<string, number>): string =>
-      Array.from(rules.entries())
-        .sort(([a], [b]) => a.localeCompare(b))
+    const formatRules = (rules, indentLevel = 6, type:'error' | 'warning' = 'error') => {
+      const ruleEntries = Array.from(rules.entries()).sort(([a], [b]) => a.localeCompare(b));
+      return ruleEntries
         .map(
-          ([ruleId, count], i, arr) =>
-            `  "${ruleId}": "off"${
-              i === arr.length - 1 ? '' : ','
-            } // ${count} ${count === 1 ? 'violation' : 'violations'}`
+          ([ruleId, count], i) =>
+            ' '.repeat(indentLevel) +
+            `"${ruleId}": "off"${i === ruleEntries.length - 1 ? '' : ','} // ${count} ${
+              count === 1 ? type : `${type}s`
+            }`
         )
         .join('\n');
+    };
 
+    const failingRulesCount = formatRules(failingRules);
+    const warningRulesCount = formatRules(warningRules, 6, 'warning');
     const flatConfig = `
 const nextEslintConfig = require('./eslint.next.config');
 
@@ -119,8 +123,8 @@ module.exports = [
   {
     files: ["**/*"],
     rules: {
-${formatRules(failingRules)}
-${formatRules(warningRules)}
+${failingRulesCount}${failingRulesCount && warningRulesCount ? '\n,\n' : ''}
+${warningRulesCount}
     }
   }${
     testFailingRules.size > 0 || testWarningRules.size > 0
@@ -166,9 +170,12 @@ export async function getProjectsWithEslintTarget() {
       ];
 
       try {
-        return potentialEslintCinfig.some(file => existsSync(file));
+        const hasEslintConfig: boolean = potentialEslintCinfig.some(file => existsSync(file));
+        (hasEslintConfig === false &&
+          console.log(yellow(`  • 'Skipping project ${bold(project.name)} because it does not have an eslintConfig`)));
+        return hasEslintConfig;
       } catch (e) {
-        console.log(yellow(`  • 'Skipping project ${bold(project.name)} because it does not have an eslintConfig \n`));
+        console.log(yellow(`  • 'Skipping project ${bold(project.name)} loading because of eslintConfig error: ${e}`));
         return false;
       }
     })
