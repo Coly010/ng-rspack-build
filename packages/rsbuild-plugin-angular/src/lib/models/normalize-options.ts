@@ -63,6 +63,9 @@ export function normalizeOptions(
 
   return {
     ...DEFAULT_PLUGIN_ANGULAR_OPTIONS,
+    ...(root != null ? { root } : {}),
+    ...(server != null ? { server } : {}),
+    ...(ssrEntry != null ? { ssrEntry } : {}),
     fileReplacements: resolveFileReplacements(fileReplacements, root),
     hasServer: getHasServer({ server, ssrEntry, root }),
   };

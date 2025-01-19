@@ -1,5 +1,6 @@
 import { describe, expect } from 'vitest';
 import {
+  DEFAULT_PLUGIN_ANGULAR_OPTIONS,
   getHasServer,
   normalizeOptions,
   resolveFileReplacements,
@@ -7,7 +8,6 @@ import {
 import { vol } from 'memfs';
 
 import { MEMFS_VOLUME } from '@ng-rspack/testing-utils';
-import path from 'node:path';
 
 describe('resolveFileReplacements', () => {
   it('should work with empty results', () => {
@@ -124,22 +124,7 @@ describe('getHasServer', () => {
 });
 
 describe('normalizeOptions', () => {
-  const defaultOptions = {
-    root: process.cwd(),
-    index: './src/index.html',
-    browser: './src/main.ts',
-    polyfills: [],
-    assets: ['./public'],
-    styles: ['./src/styles.css'],
-    scripts: [],
-    fileReplacements: [],
-    jit: false,
-    inlineStylesExtension: 'css',
-    tsconfigPath: path.join(process.cwd(), 'tsconfig.app.json'),
-    hasServer: false,
-    useHoistedJavascriptProcessing: true,
-    useParallelCompilation: true,
-  };
+  const defaultOptions = DEFAULT_PLUGIN_ANGULAR_OPTIONS;
 
   it('should apply default values when no options are provided', () => {
     const result = normalizeOptions();
