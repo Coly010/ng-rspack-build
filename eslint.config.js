@@ -4,7 +4,6 @@ const { default: node } = require('@code-pushup/eslint-config/node.js');
 const {
   default: typescript,
 } = require('@code-pushup/eslint-config/typescript.js');
-// const  vitest = require('@code-pushup/eslint-config/vitest.js');
 
 module.exports = tseslint.config([
   ...typescript,
@@ -40,6 +39,8 @@ module.exports = tseslint.config([
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here
-    rules: {},
+    rules: {
+      'unicorn/prefer-ternary': 'warn',
+    },
   },
 ]);
