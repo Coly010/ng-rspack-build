@@ -35,10 +35,10 @@ export function formatRules(
 
   return Array.from(Object.entries(rules))
     .sort(([ruleA, [countA, fixableA]], [ruleB, [countB, fixableB]]) => {
+      // Sort by fixable (fixable first)
+      if (fixableA !== fixableB) return fixableB ? -1 : 1;
       // Sort by number of issues (descending)
       if (countB !== countA) return countB - countA;
-      // Sort by fixable (fixable first)
-      if (fixableA !== fixableB) return fixableB ? 1 : -1;
       // Sort alphabetically by rule ID
       return ruleA.localeCompare(ruleB);
     })
