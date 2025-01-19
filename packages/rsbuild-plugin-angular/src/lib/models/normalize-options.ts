@@ -59,10 +59,12 @@ export function normalizeOptions(
     fileReplacements = [],
     server,
     ssrEntry,
+    ...restOptions
   } = options;
 
   return {
     ...DEFAULT_PLUGIN_ANGULAR_OPTIONS,
+    ...restOptions,
     ...(root != null ? { root } : {}),
     ...(server != null ? { server } : {}),
     ...(ssrEntry != null ? { ssrEntry } : {}),
