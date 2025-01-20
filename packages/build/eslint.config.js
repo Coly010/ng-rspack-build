@@ -2,7 +2,7 @@ const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
   ...nextEslintConfig,
-    {
+  {
     files: ["**/*"],
     rules: {
       // ⚠️ Warnings: 3

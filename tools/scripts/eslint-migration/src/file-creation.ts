@@ -74,7 +74,7 @@ export function getFile(
       const errorRules = `\n${intent}// ❌ Errors: ${errorLines.length}\n${errorLines.join('\n')}`;
       const warningRules = `\n${intent}// ⚠️ Warnings: ${warningLines.length}\n${warningLines.join('\n')}`;
 
-      return `  {
+      return `{
     files: ${JSON.stringify(files)},
     rules: {${errorLines.length > 0 ? errorRules : ''}${warningLines.length > 0 ? warningRules : ''}
     }
