@@ -1,75 +1,29 @@
-import { NgRspackPlugin, NgRspackPluginOptions } from '../plugins/ng-rspack';
+import { NgRspackPlugin } from '../plugins/ng-rspack';
 import {
   Configuration,
   DevServer,
   SwcJsMinimizerRspackPlugin,
 } from '@rspack/core';
 import { merge as rspackMerge } from 'webpack-merge';
-import { join, resolve } from 'path';
+import { join } from 'path';
+import { AngularRspackPluginOptions, normalizeOptions } from '../models';
 
 export function createConfig(
-  options: NgRspackPluginOptions,
-  isServer = false,
+  options: AngularRspackPluginOptions,
   rspackConfigOverrides?: Partial<Configuration>
-): Configuration {
+): Configuration[] {
+  const normalizedOptions = normalizeOptions(options);
   const isProduction = process.env['NODE_ENV'] === 'production';
-  const isDevServer = process.env['WEBPACK_SERVE'] && !isProduction;
+
   const defaultConfig = {
     context: options.root,
-    target: isServer ? 'node' : 'web',
     mode: isProduction ? 'production' : 'development',
-    entry: {
-      [isServer ? 'server' : 'main']: {
-        import: [options.main],
-      },
-    },
-    ...(isDevServer
-      ? undefined
-      : {
-          devServer: {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-            },
-            allowedHosts: 'auto',
-            client: {
-              overlay: {
-                errors: true,
-                warnings: false,
-                runtimeErrors: true,
-              },
-              reconnect: true,
-            },
-            historyApiFallback: {
-              disableDotRule: true,
-            },
-            hot: true,
-            port: options.port ?? 4200,
-            onListening: (devServer) => {
-              if (!devServer) {
-                throw new Error('@rspack/dev-server is not defined');
-              }
-
-              const port =
-                (devServer.server?.address() as { port: number })?.port ?? 4200;
-              console.log('Listening on port:', port);
-            },
-          } as DevServer,
-        }),
     output: {
-      uniqueName: options.name,
-      hashFunction: isProduction && !isServer ? 'xxhash64' : undefined,
+      uniqueName: 'rspack-angular',
       publicPath: 'auto',
       clean: true,
-      path: join(options.root, options.outputPath),
-      cssFilename:
-        isProduction && !isServer ? '[name].[contenthash].css' : '[name].css',
-      filename:
-        isProduction && !isServer ? '[name].[contenthash].js' : '[name].js',
-      chunkFilename:
-        isProduction && !isServer ? '[name].[contenthash].js' : '[name].js',
       crossOriginLoading: false,
       trustedTypes: { policyName: 'angular#bundler' },
-      ...(isServer ? undefined : { scriptType: 'module', module: true }),
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.mjs', '.js'],
@@ -77,38 +31,9 @@ export function createConfig(
       mainFields: ['es2020', 'es2015', 'browser', 'module', 'main'],
       conditionNames: ['es2020', 'es2015', '...'],
       tsConfig: {
-        configFile: resolve(options.root, options.tsConfig),
+        configFile: normalizedOptions.tsconfigPath,
       },
     },
-    optimization: isProduction
-      ? {
-          minimize: true,
-          runtimeChunk: isServer ? false : 'single',
-          splitChunks: {
-            chunks: isServer ? 'async' : 'all',
-            minChunks: 1,
-            minSize: 20000,
-            maxAsyncRequests: 30,
-            maxInitialRequests: 30,
-            cacheGroups: {
-              defaultVendors: {
-                test: /[\\/]node_modules[\\/]/,
-                priority: -10,
-                reuseExistingChunk: true,
-              },
-              default: {
-                minChunks: 2,
-                priority: -20,
-                reuseExistingChunk: true,
-              },
-            },
-          },
-          minimizer: [new SwcJsMinimizerRspackPlugin()],
-        }
-      : {
-          minimize: false,
-          minimizer: [],
-        },
     experiments: {
       css: true,
     },
@@ -169,8 +94,160 @@ export function createConfig(
         },
       ],
     },
-    plugins: [new NgRspackPlugin(options)],
+    plugins: [new NgRspackPlugin(normalizedOptions)],
   };
 
-  return rspackMerge(defaultConfig, (rspackConfigOverrides as unknown) ?? {});
+  const configs: Configuration[] = [];
+  if (normalizedOptions.hasServer) {
+    const serverConfig = {
+      ...defaultConfig,
+      target: 'node',
+      entry: {
+        server: {
+          import: [normalizedOptions.ssrEntry],
+        },
+      },
+      output: {
+        ...defaultConfig.output,
+        publicPath: 'auto',
+        clean: true,
+        path: join(normalizedOptions.root, 'dist', 'server'),
+        filename: '[name].js',
+        chunkFilename: '[name].js',
+      },
+      optimization: isProduction
+        ? {
+            minimize: true,
+            runtimeChunk: false,
+            splitChunks: {
+              chunks: 'async',
+              minChunks: 1,
+              minSize: 20000,
+              maxAsyncRequests: 30,
+              maxInitialRequests: 30,
+              cacheGroups: {
+                defaultVendors: {
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: -10,
+                  reuseExistingChunk: true,
+                },
+                default: {
+                  minChunks: 2,
+                  priority: -20,
+                  reuseExistingChunk: true,
+                },
+              },
+            },
+            minimizer: [new SwcJsMinimizerRspackPlugin()],
+          }
+        : {
+            minimize: false,
+            minimizer: [],
+          },
+      plugins: [
+        new NgRspackPlugin({
+          ...normalizedOptions,
+          polyfills: ['zone.js/node'],
+        }),
+      ],
+    };
+    const mergedConfig = rspackMerge(
+      serverConfig,
+      (rspackConfigOverrides as unknown) ?? {}
+    );
+    configs.push(mergedConfig);
+  }
+
+  const browserConfig = {
+    ...defaultConfig,
+    target: 'web',
+    entry: {
+      main: {
+        import: [normalizedOptions.browser],
+      },
+    },
+    devServer: {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      allowedHosts: 'auto',
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false,
+          runtimeErrors: true,
+        },
+        reconnect: true,
+      },
+      historyApiFallback: {
+        disableDotRule: true,
+      },
+      hot: true,
+      port: 4200,
+      onListening: (devServer) => {
+        if (!devServer) {
+          throw new Error('@rspack/dev-server is not defined');
+        }
+
+        const port =
+          (devServer.server?.address() as { port: number })?.port ?? 4200;
+        console.log('Listening on port:', port);
+      },
+    } as DevServer,
+
+    output: {
+      ...defaultConfig.output,
+      hashFunction: isProduction ? 'xxhash64' : undefined,
+      publicPath: 'auto',
+      clean: true,
+      path: join(normalizedOptions.root, 'dist', 'browser'),
+      cssFilename: isProduction ? '[name].[contenthash].css' : '[name].css',
+      filename: isProduction ? '[name].[contenthash].js' : '[name].js',
+      chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
+      scriptType: 'module',
+      module: true,
+    },
+    optimization: isProduction
+      ? {
+          minimize: true,
+          runtimeChunk: 'single',
+          splitChunks: {
+            chunks: 'all',
+            minChunks: 1,
+            minSize: 20000,
+            maxAsyncRequests: 30,
+            maxInitialRequests: 30,
+            cacheGroups: {
+              defaultVendors: {
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+                reuseExistingChunk: true,
+              },
+              default: {
+                minChunks: 2,
+                priority: -20,
+                reuseExistingChunk: true,
+              },
+            },
+          },
+          minimizer: [new SwcJsMinimizerRspackPlugin()],
+        }
+      : {
+          minimize: false,
+          minimizer: [],
+        },
+    plugins: [
+      new NgRspackPlugin({
+        ...normalizedOptions,
+        polyfills: ['zone.js'],
+        hasServer: false,
+      }),
+    ],
+  };
+  const mergedConfig = rspackMerge(
+    browserConfig,
+    (rspackConfigOverrides as unknown) ?? {}
+  );
+  configs.push(mergedConfig);
+  return configs;
 }

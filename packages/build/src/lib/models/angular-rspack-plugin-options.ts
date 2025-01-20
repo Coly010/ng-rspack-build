@@ -5,14 +5,17 @@ import type {
 
 export interface AngularRspackPluginOptions {
   root: string;
-  main: string;
+  index: string;
+  browser: string;
+  server?: string;
+  ssrEntry?: string;
   polyfills: string[];
   assets: string[];
   styles: string[];
   scripts: string[];
-  index?: string;
   fileReplacements: FileReplacement[];
   jit: boolean;
   inlineStylesExtension: InlineStyleExtension;
   tsconfigPath: string;
+  hasServer: boolean;
 }

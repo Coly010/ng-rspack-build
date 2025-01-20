@@ -1,7 +1,7 @@
 import { FileReplacement } from '@ng-rspack/compiler';
-import { resolve } from 'path';
-import { join } from 'node:path';
 import { AngularRspackPluginOptions } from './angular-rspack-plugin-options';
+import { join, resolve } from 'node:path';
+import { existsSync } from 'node:fs';
 
 /**
  * Resolves file replacement paths to absolute paths based on the provided root directory.
@@ -20,15 +20,35 @@ export function resolveFileReplacements(
   }));
 }
 
+export function getHasServer({
+  server,
+  ssrEntry,
+  root,
+}: Pick<AngularRspackPluginOptions, 'server' | 'ssrEntry' | 'root'>): boolean {
+  return !!(
+    server &&
+    ssrEntry &&
+    existsSync(join(root, server)) &&
+    existsSync(join(root, ssrEntry))
+  );
+}
+
 export function normalizeOptions(
   options: Partial<AngularRspackPluginOptions> = {}
 ): AngularRspackPluginOptions {
-  const { root = process.cwd(), fileReplacements = [] } = options;
+  const {
+    root = process.cwd(),
+    fileReplacements = [],
+    server,
+    ssrEntry,
+  } = options;
 
   return {
     root,
     index: options.index ?? './src/index.html',
-    main: options.main ?? './src/main.ts',
+    browser: options.browser ?? './src/main.ts',
+    ...(server ? { server } : {}),
+    ...(ssrEntry ? { ssrEntry } : {}),
     polyfills: options.polyfills ?? [],
     assets: options.assets ?? ['./public'],
     styles: options.styles ?? ['./src/styles.css'],
@@ -38,5 +58,6 @@ export function normalizeOptions(
     inlineStylesExtension: options.inlineStylesExtension ?? 'css',
     tsconfigPath:
       options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
+    hasServer: getHasServer({ server, ssrEntry, root }),
   };
 }

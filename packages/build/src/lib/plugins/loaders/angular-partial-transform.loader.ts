@@ -3,7 +3,10 @@ import { NG_RSPACK_SYMBOL_NAME, NgRspackCompilation } from '../../models';
 
 export default function loader(this: LoaderContext<unknown>, content: string) {
   const callback = this.async();
-  if (!(this._compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME]) {
+  if (
+    (this._compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME] ===
+    undefined
+  ) {
     callback(null, content);
   } else {
     const { javascriptTransformer, typescriptFileCache } = (

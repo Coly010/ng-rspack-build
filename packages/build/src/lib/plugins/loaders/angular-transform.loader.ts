@@ -8,7 +8,10 @@ const templateUrlsResolver = new TemplateUrlsResolver();
 
 export default function loader(this: LoaderContext<unknown>, content: string) {
   const callback = this.async();
-  if (!(this._compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME]) {
+  if (
+    (this._compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME] ===
+    undefined
+  ) {
     callback(null, content);
   } else {
     const { typescriptFileCache } = (this._compilation as NgRspackCompilation)[

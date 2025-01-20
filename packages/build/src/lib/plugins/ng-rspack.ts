@@ -10,40 +10,29 @@ import {
 import { basename, extname, join } from 'path';
 import { RxjsEsmResolutionPlugin } from './rxjs-esm-resolution';
 import { AngularRspackPlugin } from './angular-rspack-plugin';
-
-export interface NgRspackPluginOptions {
-  root: string;
-  outputPath: string;
-  name: string;
-  main: string;
-  index: string;
-  tsConfig: string;
-  styles?: string[];
-  scripts?: string[];
-  polyfills?: string[];
-  assets?: string[];
-  port?: number;
-  jit?: boolean;
-}
+import { AngularRspackPluginOptions } from '../models';
 
 export class NgRspackPlugin implements RspackPluginInstance {
-  pluginOptions: NgRspackPluginOptions;
+  pluginOptions: AngularRspackPluginOptions;
 
-  constructor(options: NgRspackPluginOptions) {
+  constructor(options: AngularRspackPluginOptions) {
     this.pluginOptions = options;
   }
 
   apply(compiler: Compiler) {
     const isProduction = process.env['NODE_ENV'] === 'production';
-    const isServer = compiler.options.target === 'node';
 
     const polyfills = this.pluginOptions.polyfills ?? [];
-    for (const polyfill of polyfills) {
-      new EntryPlugin(compiler.context, polyfill, {
-        name: isProduction ? this.getEntryName(polyfill) : undefined,
-      }).apply(compiler);
+    if (polyfills.length > 0) {
+      compiler.hooks.entryOption.tap('NgRspackPlugin', (context, entry) => {
+        const keys = Object.keys(entry);
+        for (const key of keys) {
+          const entryValue = entry[key];
+          entryValue.import = [...polyfills, ...entryValue.import];
+        }
+      });
     }
-    if (!isServer) {
+    if (!this.pluginOptions.hasServer) {
       const styles = this.pluginOptions.styles ?? [];
       for (const style of styles) {
         new EntryPlugin(compiler.context, style, {
@@ -66,7 +55,7 @@ export class NgRspackPlugin implements RspackPluginInstance {
     new DefinePlugin({
       ngDevMode: isProduction ? 'false' : {},
       ngJitMode: this.pluginOptions.jit ?? 'false',
-      ngServerMode: isServer,
+      ngServerMode: this.pluginOptions.hasServer,
     }).apply(compiler);
     if (this.pluginOptions.assets) {
       new CopyRspackPlugin({
@@ -80,12 +69,12 @@ export class NgRspackPlugin implements RspackPluginInstance {
     new ProgressPlugin().apply(compiler);
     new RxjsEsmResolutionPlugin().apply(compiler);
     new AngularRspackPlugin({
-      tsconfigPath: join(this.pluginOptions.root, this.pluginOptions.tsConfig),
+      tsconfigPath: this.pluginOptions.tsconfigPath?.startsWith(
+        this.pluginOptions.tsconfigPath
+      )
+        ? this.pluginOptions.tsconfigPath
+        : join(this.pluginOptions.root, this.pluginOptions.tsconfigPath),
     }).apply(compiler);
-
-    compiler.hooks.afterDone.tap('AngularRspackPlugin', () => {
-      process.exit();
-    });
   }
 
   private getEntryName(path: string) {

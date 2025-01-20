@@ -1,7 +1,5 @@
 import {
   Compiler,
-  Compilation,
-  sources,
   RspackPluginInstance,
   RspackOptionsNormalized,
 } from '@rspack/core';
@@ -18,11 +16,6 @@ import {
   buildAndAnalyzeWithParallelCompilation,
 } from '@ng-rspack/compiler';
 import { dirname, normalize, resolve } from 'path';
-import {
-  Hash,
-  MapOptions,
-  RawSourceMap,
-} from '@rspack/core/compiled/webpack-sources';
 
 const PLUGIN_NAME = 'AngularRspackPlugin';
 type Awaited<T> = T extends Promise<infer U> ? U : T;
@@ -131,12 +124,16 @@ export class AngularRspackPlugin implements RspackPluginInstance {
       }
     );
 
-    compiler.hooks.compilation.tap('AngularRspackPlugin', (compilation) => {
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       (compilation as NgRspackCompilation)[NG_RSPACK_SYMBOL_NAME] = () => ({
         javascriptTransformer: this
           .#javascriptTransformer as unknown as JavaScriptTransformer,
         typescriptFileCache: this.#typescriptFileCache,
       });
+    });
+
+    compiler.hooks.afterDone.tap(PLUGIN_NAME, () => {
+      this.#angularCompilation.close();
     });
   }
 
