@@ -3,6 +3,8 @@ import { styleTransform } from './setup-compilation.ts';
 import { setupCompilation } from './setup-compilation.ts';
 import * as compilerCli from '@angular/compiler-cli';
 import path from 'node:path';
+// @TODO At the moment this tests rely on another function (createConfig)
+// The tests should be free of any dependencies.
 import rsBuildMockConfig from '../../../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
 
 describe('styleTransform', () => {
@@ -36,6 +38,7 @@ describe('setupCompilation', () => {
     'minimal'
   );
 
+  // @TODO remove when test data are independent onbjects
   it.skip('should read from correct tsconfigPath in rsBuildMockConfig', () => {
     expect(rsBuildMockConfig.source?.tsconfigPath).toBe(
       './mocks/fixtures/integration/minimal/tsconfig.mock.json'
@@ -49,6 +52,7 @@ describe('setupCompilation', () => {
     );
   });
 
+  // @TODO remove when test data are independent onbjects
   it.skip('should read from correct tsconfigPath in other tsconfig', () => {
     expect(
       compilerCli.readConfiguration(
