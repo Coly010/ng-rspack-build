@@ -9,23 +9,24 @@ import nextEslintConfig from './eslint.next.config';
 
 export default [
   ...nextEslintConfig,
-/* <RULES> */
+  <RULES>
 ];
-`
-    : `
+` : `
 const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
   ...nextEslintConfig,
-/* <RULES> */
+  <RULES>
 ];
 `;
+
+const DEFAULT_INDENT_LEVEL = 6;
 
 export function formatRules(
   rules: Record<string, RuleViolations>,
   {
-    indentLevel = 6,
-    type = 'error',
+    indentLevel = DEFAULT_INDENT_LEVEL,
+    type = 'error'
   }: {
     indentLevel?: number;
     type?: 'error' | 'warning';
@@ -56,30 +57,29 @@ export function getFile(
     errors: Record<string, RuleViolations>;
     warnings: Record<string, RuleViolations>;
   }[],
-  { module = 'commonjs' }: { module: 'commonjs' | 'module' | 'cjs' | 'mjs' }
+  {
+    module = 'commonjs',
+    indentLevel = DEFAULT_INDENT_LEVEL
+  }: { module: 'commonjs' | 'module' | 'cjs' | 'mjs', indentLevel: number }
 ): string {
   const configTemplate = targetEslintRc(module);
-
+  const intent = ' '.repeat(indentLevel);
   const formattedRules = ruleDefinitions.filter(
     ({ errors, warnings }) =>
       Object.values(errors).length > 0 || Object.values(warnings).length > 0
-  );
-
-  const formattedRuless = formattedRules
+  )
     .map(({ files, errors, warnings }) => {
       const warningLines = formatRules(warnings, { type: 'warning' });
       const errorLines = formatRules(errors);
-      return `  {
-        files: ${JSON.stringify(files)},
-        rules: {
-          // ❌ Errors: ${errorLines.length}
-          ${errorLines.length ? errorLines.join('\n') : ''}
-          // ⚠️ Warnings: ${warningLines.length}
-          ${warningLines.length ? warningLines.join('\n') : ''}
-        }
-      }`;
-    })
-    .join(',\n');
+      const errorRules = `\n${intent}// ❌ Errors: ${errorLines.length}\n${errorLines.join('\n')}`;
+      const warningRules = `\n${intent}// ⚠️ Warnings: ${warningLines.length}\n${warningLines.join('\n')}`;
 
-  return configTemplate.replace('/* <RULES> */', formattedRuless);
+      return `  {
+    files: ${JSON.stringify(files)},
+    rules: {${errorLines.length > 0 ? errorRules : ''}${warningLines.length > 0 ? warningRules : ''}
+    }
+  }`;
+    }).join(',\n');
+
+  return configTemplate.replace('<RULES>', formattedRules);
 }

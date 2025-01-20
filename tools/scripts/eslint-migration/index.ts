@@ -13,12 +13,14 @@ import { getFile } from './src/file-creation';
 import { existsSync } from 'node:fs';
 import { copyFile, readFile, rm, writeFile } from 'node:fs/promises';
 import { getEslintConfigPath } from './src/nx';
+import { ProjectConfiguration } from 'nx/src/config/workspace-json-project-json';
+import { dirname } from 'path';
 
 /**
  * Lints all projects.
  * @param projects List of Nx projects to lint.
  */
-export const lintAllProjects = async (projects: any[]) => {
+export const lintAllProjects = async (projects: ProjectConfiguration[]) => {
   let allResults: RuleSummary = {
     fixableErrors: 0,
     fixableWarnings: 0,
@@ -28,10 +30,13 @@ export const lintAllProjects = async (projects: any[]) => {
   };
   await Promise.all(
     projects.map(async (project, index) => {
-      const eslintConfig = getEslintConfigPath(project);
-
       try {
-        const result = await lintProject(project, eslintConfig);
+        const result = await lintCodeBase({
+          lintFilePatterns:
+            project.targets.lint?.options?.lintFilePatterns ?? project.root,
+          name: project.name,
+          eslintConfig: getEslintConfigPath(project),
+        });
 
         console.log(
           cyan(
@@ -120,30 +125,60 @@ type LintResultSuccess = {
 type LintResultError = { status: 'error'; data: RulesCollectionResult };
 type LintResult = LintResultError | LintResultSuccess;
 
-export const lintProject = async (
-  project: any,
-  eslintConfig: string
-): Promise<LintResult> => {
-  const projectName = bold(project.name);
-  const nextConfigPath = `${project.root}/eslint.next.config.js`;
-
+/**
+ *  1. Prepare migration:
+ *  Does the next file exist in the file system?
+ *     - if it does, use it to create the eslintConfig
+ *     - else, rename the existing `eslint.config.js` to `eslint.next.config.js`
+ *  2. Lint the files with the `eslint.next.config.js` and collect rule violations
+ *    - if there are any violations, generate the updated ESLint configuration
+ *    - else, return data
+ *  3. Generate the updated ESLint configuration
+ *
+ * @param project
+ * @param eslintConfig
+ */
+export const lintCodeBase = async ({
+  name,
+  lintFilePatterns,
+  eslintConfig,
+}: {
+  eslintConfig: string;
+  name: string;
+  lintFilePatterns: string[];
+}): Promise<LintResult> => {
+  const targetName = bold(name);
+  const nextConfigPath = `${dirname(eslintConfig)}/eslint.next.config.js`;
   try {
-    console.log(
-      yellow(`🚀 Starting migration plan for project: ${projectName}`)
-    );
+    // 1. Prepare migration:
+    // Does the next file exist in the file system?
+    //    - if it does not, rename the existing `eslint.config.js` to `eslint.next.config.js`
+    if (!existsSync(nextConfigPath)) {
+      await copyFile(eslintConfig, nextConfigPath);
+      console.log(
+        green(
+          `✔ Created create target config inc. all rules on: "${nextConfigPath}"`
+        )
+      );
+    }
 
+    // 2. Lint the files with the `eslint.next.config.js` and collect rule violations
+    //   - if there are any violations, generate the updated ESLint configuration
+    //   - else, return data
+
+    console.log(yellow(`🚀 Starting migration plan for target: ${targetName}`));
+
+    // create config
     const eslint = new ESLint({
-      overrideConfigFile: eslintConfig,
+      overrideConfigFile: nextConfigPath,
       errorOnUnmatchedPattern: false,
     });
 
-    // Lint the files in the project
-    const results = await eslint.lintFiles(
-      project.targets.lint.options.lintFilePatterns ?? project.root
-    );
+    // lint the files
+    const results = await eslint.lintFiles(lintFilePatterns);
 
     console.log(
-      green(`✔ Successfully linted files for project: ${projectName}`)
+      green(`✔ Successfully linted files for target: ${targetName}`)
     );
 
     // Collect rule violations
@@ -152,7 +187,7 @@ export const lintProject = async (
       result = collectRuleViolations(results, TEST_FILE_PATTERNS);
       console.log(
         green(
-          `✔ Collected rule violations for project: ${projectName} (${bold(
+          `✔ Collected rule violations for project: ${targetName} (${bold(
             `${Object.values(result).flatMap((m) => [...m.keys()]).length}`
           )} total rules)`
         )
@@ -160,14 +195,13 @@ export const lintProject = async (
     } catch (error) {
       console.error(
         red(
-          `❌ Error collecting rule violations for project: ${projectName}\nError: ${error.message}`
+          `❌ Error collecting rule violations for target: ${targetName}\nError: ${error.message}`
         )
       );
       throw error;
     }
 
-    const { failingRules, warningRules, testFailingRules, testWarningRules } =
-      result;
+    const { failingRules, warningRules, testFailingRules, testWarningRules } = result;
 
     const totalViolations = Object.values(result)
       .flatMap((map) => Object.values(Object.fromEntries(map)))
@@ -176,15 +210,7 @@ export const lintProject = async (
 
     // Handle no-violations scenario
     if (totalViolations === 0) {
-      if (existsSync(nextConfigPath)) {
-        await copyFile(nextConfigPath, eslintConfig); // Restore original config
-        await rm(nextConfigPath); // Remove temporary config
-      }
-      console.log(
-        green(
-          `✔ Project "${projectName}" has no ESLint violations. No updates were necessary.\n`
-        )
-      );
+      console.log(green(`✔ No updates for target "${targetName}".`));
       return { status: 'valid', data: result };
     }
 
@@ -205,12 +231,6 @@ export const lintProject = async (
       { module: 'commonjs' }
     );
 
-    // Create backup if it doesn't already exist
-    if (!existsSync(nextConfigPath)) {
-      await copyFile(eslintConfig, nextConfigPath);
-      console.log(green(`✔ Created backup config: "${nextConfigPath}"`));
-    }
-
     // Avoid redundant writes
     const existingContent = existsSync(eslintConfig)
       ? await readFile(eslintConfig, 'utf8')
@@ -218,7 +238,7 @@ export const lintProject = async (
     if (existingContent.trim() === content.trim()) {
       console.log(
         green(
-          `✔ ESLint config for project "${projectName}" is already up to date.\n`
+          `✔ ESLint config for project "${targetName}" is already up to date.\n`
         )
       );
       return { status: 'skipped', data: result };
@@ -228,14 +248,14 @@ export const lintProject = async (
     await writeFile(eslintConfig, content.trim());
     console.log(
       green(
-        `🎉 Migration successful for project "${projectName}". Rules updated!\n`
+        `🎉 Migration successful for project "${targetName}". Rules updated!\n`
       )
     );
 
     return { status: 'updated', data: result };
   } catch (error) {
     console.error(
-      red(`❌ Failed to process project "${projectName}" due to an error.\n`)
+      red(`❌ Failed to process project "${targetName}" due to an error.\n`)
     );
     console.error(red(`   Error details: ${error.message}`));
     return { status: 'error', data: {}, error };
