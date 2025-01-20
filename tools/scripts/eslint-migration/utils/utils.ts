@@ -94,13 +94,18 @@ export type RuleSummary = {
   totalWarnings: number;
   fixableErrors: number;
   fixableWarnings: number;
-  ruleCounts: Record<string, { errors: number; warnings: number; fixable: boolean }>;
+  ruleCounts: Record<
+    string,
+    { errors: number; warnings: number; fixable: boolean }
+  >;
 };
 
 /**
  * Aggregates rule violations from a RulesCollectionResult into a summary.
  */
-export function aggregateRuleSummary(results: RulesCollectionResult): RuleSummary {
+export function aggregateRuleSummary(
+  results: RulesCollectionResult
+): RuleSummary {
   const summary: RuleSummary = {
     totalErrors: 0,
     totalWarnings: 0,
@@ -159,19 +164,25 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
       merged.fixableWarnings += summary.fixableWarnings;
 
       // Merge ruleCounts
-      Object.entries(summary.ruleCounts).forEach(([ruleId, { errors, warnings, fixable }]) => {
-        if (!merged.ruleCounts[ruleId]) {
-          merged.ruleCounts[ruleId] = { errors: 0, warnings: 0, fixable: false };
-        }
+      Object.entries(summary.ruleCounts).forEach(
+        ([ruleId, { errors, warnings, fixable }]) => {
+          if (!merged.ruleCounts[ruleId]) {
+            merged.ruleCounts[ruleId] = {
+              errors: 0,
+              warnings: 0,
+              fixable: false,
+            };
+          }
 
-        merged.ruleCounts[ruleId].errors += errors;
-        merged.ruleCounts[ruleId].warnings += warnings;
+          merged.ruleCounts[ruleId].errors += errors;
+          merged.ruleCounts[ruleId].warnings += warnings;
 
-        // Mark as fixable if any summary marks it as fixable
-        if (fixable) {
-          merged.ruleCounts[ruleId].fixable = true;
+          // Mark as fixable if any summary marks it as fixable
+          if (fixable) {
+            merged.ruleCounts[ruleId].fixable = true;
+          }
         }
-      });
+      );
 
       return merged;
     },
@@ -184,52 +195,59 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
     }
   );
 }
+
 export function printRuleSummary(summary: RuleSummary): void {
-  console.log(bold("ESLint Rule Summary:\n"));
+  console.log(bold('ESLint Rule Summary:\n'));
 
-  console.log(`${green("✔ Fixable Errors:")} ${bold(summary.fixableErrors)}`);
-  console.log(`${green("✔ Fixable Warnings:")} ${bold(summary.fixableWarnings)}`);
-  console.log(`${red("❌ Total:")} ${bold(summary.totalErrors)}`);
-  console.log(`${yellow("⚠️ Total:")} ${bold(summary.totalWarnings)}\n`);
+  console.log(`${green(`✔ 🛠️ Fixable Errors: ${bold(summary.fixableErrors)}`)}`);
+  console.log(`${green(`✔ 🛠️ Fixable Warnings: ${bold(summary.fixableWarnings)}`)}`);
+  console.log(`${red(`❌ Total Errors: ${bold(summary.totalErrors)}`)}`);
+  console.log(`${yellow(`⚠️ Total Warnings: ${bold(summary.totalWarnings)}`)}\n`);
 
-  console.log(bold("Rule Details:"));
+  console.log(bold('Rule Details By Effort:'));
 
   Object.entries(summary.ruleCounts)
-    .sort(([ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-           [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]) => {
-      // Sort by type (errors before warnings)
-      if (errorsA > 0 && warningsA === 0 && (errorsB === 0 && warningsB > 0)) return -1;
-      if (errorsB > 0 && warningsB === 0 && (errorsA === 0 && warningsA > 0)) return 1;
+    .sort(
+      (
+        [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+        [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+      ) => {
+        // Sort by type (errors before warnings)
+        if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
+          return -1;
+        if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
+          return 1;
 
-      // Sort fixable errors before non-fixable
-      if (errorsA > 0 && errorsB > 0) {
-        if (fixableA !== fixableB) return fixableB ? -1 : 1;
+        // Sort fixable errors before non-fixable
+        if (errorsA > 0 && errorsB > 0) {
+          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+        }
+
+        // Sort fixable warnings before non-fixable
+        if (warningsA > 0 && warningsB > 0) {
+          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+        }
+
+        // Sort by total number of issues (errors + warnings, descending)
+        const totalA = errorsA + warningsA;
+        const totalB = errorsB + warningsB;
+        if (totalA !== totalB) return totalB - totalA;
+
+        // Sort alphabetically by rule ID
+        return ruleA.localeCompare(ruleB);
       }
-
-      // Sort fixable warnings before non-fixable
-      if (warningsA > 0 && warningsB > 0) {
-        if (fixableA !== fixableB) return fixableB ? -1 : 1;
-      }
-
-      // Sort by total number of issues (errors + warnings, descending)
-      const totalA = errorsA + warningsA;
-      const totalB = errorsB + warningsB;
-      if (totalA !== totalB) return totalB - totalA;
-
-      // Sort alphabetically by rule ID
-      return ruleA.localeCompare(ruleB);
-    })
+    )
     .forEach(([ruleId, { errors, warnings, fixable }]) => {
-      const errorPart = errors ? `${red(`❌ ${errors}`)}` : "";
-      const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : "";
-      const fixableTag = fixable ? green("🛠️") : "";
+      const errorPart = errors ? `${red(`❌ ${errors}`)}` : '';
+      const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : '';
+      const fixableTag = fixable ? green('🛠️') : '';
 
       console.log(
-        `- ${bold(ruleId)}: ${[errorPart, warningPart]
+        `- [ ] ${bold(ruleId)}: ${[errorPart, warningPart]
           .filter(Boolean)
-          .join(", ")} ${fixableTag}`
+          .join(', ')} ${fixableTag}`
       );
     });
 
-  console.log("\n");
+  console.log('\n');
 }
