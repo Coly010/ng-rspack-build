@@ -11,13 +11,16 @@ export default [
   ...nextEslintConfig,
   <RULES>
 ];
-` : `
+
+`
+    : `
 const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
   ...nextEslintConfig,
   <RULES>
 ];
+
 `;
 
 const DEFAULT_INDENT_LEVEL = 6;
@@ -26,7 +29,7 @@ export function formatRules(
   rules: Record<string, RuleViolations>,
   {
     indentLevel = DEFAULT_INDENT_LEVEL,
-    type = 'error'
+    type = 'error',
   }: {
     indentLevel?: number;
     type?: 'error' | 'warning';
@@ -59,27 +62,36 @@ export function getFile(
   }[],
   {
     module = 'commonjs',
-    indentLevel = DEFAULT_INDENT_LEVEL
-  }: { module: 'commonjs' | 'module' | 'cjs' | 'mjs', indentLevel: number }
+    indentLevel = DEFAULT_INDENT_LEVEL,
+  }: { module: 'commonjs' | 'module' | 'cjs' | 'mjs'; indentLevel: number }
 ): string {
   const configTemplate = targetEslintRc(module);
   const intent = ' '.repeat(indentLevel);
-  const formattedRules = ruleDefinitions.filter(
-    ({ errors, warnings }) =>
-      Object.values(errors).length > 0 || Object.values(warnings).length > 0
-  )
+  const formattedRules = ruleDefinitions
+    .filter(
+      ({ errors, warnings }) =>
+        Object.values(errors).length > 0 || Object.values(warnings).length > 0
+    )
     .map(({ files, errors, warnings }) => {
       const warningLines = formatRules(warnings, { type: 'warning' });
       const errorLines = formatRules(errors);
-      const errorRules = `\n${intent}// ❌ Errors: ${errorLines.length}\n${errorLines.join('\n')}`;
-      const warningRules = `\n${intent}// ⚠️ Warnings: ${warningLines.length}\n${warningLines.join('\n')}`;
+      const fileLines = JSON.stringify(files).replace(/"/g, "'");
+      const errorRules = `\n${intent}// ❌ Errors: ${
+        errorLines.length
+      }\n${errorLines.join('\n').replace(/"/g, "'")}`;
+      const warningRules = `\n${intent}// ⚠️ Warnings: ${
+        warningLines.length
+      }\n${warningLines.join('\n').replace(/"/g, "'")}`;
 
       return `{
-    files: ${JSON.stringify(files)},
-    rules: {${errorLines.length > 0 ? errorRules : ''}${warningLines.length > 0 ? warningRules : ''}
-    }
-  }`;
-    }).join(',\n');
+    files: ${fileLines},
+    rules: {${errorLines.length > 0 ? errorRules : ''}${
+        warningLines.length > 0 ? warningRules : ''
+      }
+    },
+  },`;
+    })
+    .join(',\n');
 
   return configTemplate.replace('<RULES>', formattedRules);
 }

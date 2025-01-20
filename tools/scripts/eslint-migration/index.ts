@@ -177,9 +177,7 @@ export const lintCodeBase = async ({
     // lint the files
     const results = await eslint.lintFiles(lintFilePatterns);
 
-    console.log(
-      green(`✔ Successfully linted files for target: ${targetName}`)
-    );
+    console.log(green(`✔ Successfully linted files for target: ${targetName}`));
 
     // Collect rule violations
     let result: RulesCollectionResult;
@@ -201,7 +199,8 @@ export const lintCodeBase = async ({
       throw error;
     }
 
-    const { failingRules, warningRules, testFailingRules, testWarningRules } = result;
+    const { failingRules, warningRules, testFailingRules, testWarningRules } =
+      result;
 
     const totalViolations = Object.values(result)
       .flatMap((map) => Object.values(Object.fromEntries(map)))
