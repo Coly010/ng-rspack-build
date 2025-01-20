@@ -267,7 +267,7 @@ export async function mdRuleSummary(
           .join(', ')} ${fixableTag}\n`;
       });
   } else {
-    console.log('No rules violated 🎉');
+    md +='No rules violated 🎉';
   }
 
   //  await mkdir(path.dirname(file)).catch()
