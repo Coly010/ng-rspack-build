@@ -199,10 +199,16 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
 export function printRuleSummary(summary: RuleSummary): void {
   console.log(bold('ESLint Rule Summary:\n'));
 
-  console.log(`${green(`✔ 🛠️ Fixable Errors: ${bold(summary.fixableErrors)}`)}`);
-  console.log(`${green(`✔ 🛠️ Fixable Warnings: ${bold(summary.fixableWarnings)}`)}`);
+  console.log(
+    `${green(`✔ 🛠️ Fixable Errors: ${bold(summary.fixableErrors)}`)}`
+  );
+  console.log(
+    `${green(`✔ 🛠️ Fixable Warnings: ${bold(summary.fixableWarnings)}`)}`
+  );
   console.log(`${red(`❌ Total Errors: ${bold(summary.totalErrors)}`)}`);
-  console.log(`${yellow(`⚠️ Total Warnings: ${bold(summary.totalWarnings)}`)}\n`);
+  console.log(
+    `${yellow(`⚠️ Total Warnings: ${bold(summary.totalWarnings)}`)}\n`
+  );
 
   console.log(bold('Rule Details By Effort:'));
 

@@ -1,9 +1,12 @@
 import {
   aggregateRuleSummary,
-  collectRuleViolations, mergeRuleSummaries,
-  parseExistingConfig, printRuleSummary,
+  collectRuleViolations,
+  mergeRuleSummaries,
+  parseExistingConfig,
+  printRuleSummary,
   RuleCollection,
-  RulesCollectionResult, RuleSummary
+  RulesCollectionResult,
+  RuleSummary,
 } from './utils/utils';
 import { cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
@@ -39,9 +42,12 @@ export const lintAllProjects = async (projects: any[]) => {
           )
         );
 
-        if(result.status !== 'error') {
-          allResults = mergeRuleSummaries([allResults, aggregateRuleSummary(result.data)]);
-         // console.log(result.data);
+        if (result.status !== 'error') {
+          allResults = mergeRuleSummaries([
+            allResults,
+            aggregateRuleSummary(result.data),
+          ]);
+          // console.log(result.data);
         }
 
         switch (result.status) {
@@ -56,9 +62,7 @@ export const lintAllProjects = async (projects: any[]) => {
             break;
           case 'error':
             console.log(
-              red(
-                `  ✘ Error for project ${project.name}.\n${result.error}`
-              )
+              red(`  ✘ Error for project ${project.name}.\n${result.error}`)
             );
             break;
           default:
@@ -77,7 +81,7 @@ export const lintAllProjects = async (projects: any[]) => {
     })
   );
 
-   printRuleSummary(allResults);
+  printRuleSummary(allResults);
 };
 
 export const TEST_FILE_PATTERNS = [
@@ -90,8 +94,11 @@ export const TEST_FILE_PATTERNS = [
   '*.stories.ts',
 ];
 
-type LintResultSuccess = {status: 'skipped' | 'updated'| 'valid', data: RulesCollectionResult};
-type LintResultError = {status: 'error', data: RulesCollectionResult};
+type LintResultSuccess = {
+  status: 'skipped' | 'updated' | 'valid';
+  data: RulesCollectionResult;
+};
+type LintResultError = { status: 'error'; data: RulesCollectionResult };
 type LintResult = LintResultError | LintResultSuccess;
 
 export const lintProject = async (
@@ -133,7 +140,7 @@ export const lintProject = async (
       console.log(
         green(`  ✔ Project "${project.name}" has no ESLint errors remaining.\n`)
       );
-      return {status: 'skipped', data: result};
+      return { status: 'skipped', data: result };
     }
 
     const content = getFile(
@@ -156,9 +163,9 @@ export const lintProject = async (
       await copyFile(eslintConfig, nextConfigPath);
     }
     await writeFile(eslintConfig, content.trim());
-    return {status: 'updated', data: result};
+    return { status: 'updated', data: result };
   } catch (error) {
     console.error(`Error processing project: ${project.name}`, error);
-    return {status: 'error', data: {}, error};
+    return { status: 'error', data: {}, error };
   }
 };

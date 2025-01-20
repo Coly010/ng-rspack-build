@@ -50,7 +50,6 @@ export function formatRules(
     );
 }
 
-
 export function getFile(
   ruleDefinitions: {
     files: string[];
