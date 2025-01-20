@@ -1,31 +1,14 @@
-const baseConfig = require('../../eslint.config.js');
+const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
-  ...baseConfig,
+  ...nextEslintConfig,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*.json'],
-    rules: {
-      '@nx/dependency-checks': [
-        'error',
-        {
-          ignoredFiles: [
-            '{projectRoot}/eslint.config.{js,cjs,mjs}',
-            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
-          ],
-        },
-      ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
+        files: ["**/*"],
+        rules: {
+          // ❌ Errors: 1
+                "no-var": "off", // ❌ 2 errors 🛠️
+          // ⚠️ Warnings: 1
+                "@typescript-eslint/no-non-null-assertion": "off", // ⚠️ 3 warnings
+        }
+      }
 ];

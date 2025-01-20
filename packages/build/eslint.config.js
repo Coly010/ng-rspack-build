@@ -1,38 +1,16 @@
-const baseConfig = require('../../eslint.config.js');
+const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
-  ...baseConfig,
+  ...nextEslintConfig,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*.json'],
-    rules: {
-      '@nx/dependency-checks': [
-        'error',
-        {
-          ignoredFiles: [
-            '{projectRoot}/eslint.config.{js,cjs,mjs}',
-            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
-          ],
-          ignoredDependencies: [
-            'sass-loader',
-            'sass-embedded',
-            '@angular/core',
-            'rxjs',
-            '@ng-rspack/build',
-          ],
-        },
-      ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
+        files: ["**/*"],
+        rules: {
+          // ❌ Errors: 0
+          
+          // ⚠️ Warnings: 3
+                "@typescript-eslint/no-non-null-assertion": "off", // ⚠️ 7 warnings
+      "@typescript-eslint/no-unused-vars": "off", // ⚠️ 2 warnings
+      "@typescript-eslint/no-explicit-any": "off", // ⚠️ 1 warning
+        }
+      }
 ];

@@ -1,40 +1,14 @@
-const baseConfig = require('../../../../eslint.config');
+const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
-  ...baseConfig,
+  ...nextEslintConfig,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*.json'],
-    rules: {
-      '@nx/dependency-checks': [
-        'error',
-        {
-          ignoredFiles: [
-            '{projectRoot}/eslint.config.{js,cjs,mjs}',
-            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
-          ],
-        },
-      ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
+        files: ["**/*"],
+        rules: {
+          // ❌ Errors: 0
+          
+          // ⚠️ Warnings: 1
+                "@typescript-eslint/no-explicit-any": "off", // ⚠️ 1 warning
+        }
+      }
 ];

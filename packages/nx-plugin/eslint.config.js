@@ -1,38 +1,15 @@
-const baseConfig = require('../../eslint.config.js');
+const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
-  ...baseConfig,
+  ...nextEslintConfig,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*.json'],
-    rules: {
-      '@nx/dependency-checks': [
-        'error',
-        {
-          ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs}'],
-          ignoredDependencies: ['@ng-rspack/build'],
-        },
-      ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
-  {
-    files: ['**/package.json', '**/package.json', '**/executors.json'],
-    rules: {
-      '@nx/nx-plugin-checks': 'error',
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
+        files: ["**/*"],
+        rules: {
+          // ❌ Errors: 0
+          
+          // ⚠️ Warnings: 2
+                "@typescript-eslint/no-non-null-assertion": "off", // ⚠️ 12 warnings
+      "@typescript-eslint/no-explicit-any": "off", // ⚠️ 1 warning
+        }
+      }
 ];

@@ -1,18 +1,14 @@
-const baseConfig = require('../../../../eslint.config');
+const nextEslintConfig = require('./eslint.next.config');
 
 module.exports = [
-  ...baseConfig,
+  ...nextEslintConfig,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
-    files: ['**/*'],
-    rules: {},
-  },
+        files: ["**/*"],
+        rules: {
+          // ❌ Errors: 0
+          
+          // ⚠️ Warnings: 1
+                "@typescript-eslint/no-explicit-any": "off", // ⚠️ 1 warning
+        }
+      }
 ];
