@@ -94,7 +94,7 @@ export function createConfig(
         },
       ],
     },
-    plugins: [new NgRspackPlugin(normalizedOptions)],
+    plugins: [],
   };
 
   const configs: Configuration[] = [];
@@ -145,6 +145,7 @@ export function createConfig(
             minimizer: [],
           },
       plugins: [
+        ...defaultConfig.plugins,
         new NgRspackPlugin({
           ...normalizedOptions,
           polyfills: ['zone.js/node'],
@@ -172,6 +173,10 @@ export function createConfig(
       },
       allowedHosts: 'auto',
       client: {
+        webSocketURL: {
+          hostname: 'localhost',
+          port: 4200,
+        },
         overlay: {
           errors: true,
           warnings: false,
@@ -179,10 +184,15 @@ export function createConfig(
         },
         reconnect: true,
       },
+      hot: false,
+      liveReload: true,
       historyApiFallback: {
-        disableDotRule: true,
+        index: '/index.html',
+        rewrites: [{ from: /^\/$/, to: 'index.html' }],
       },
-      hot: true,
+      devMiddleware: {
+        writeToDisk: (file) => !file.includes('.hot-update.'),
+      },
       port: 4200,
       onListening: (devServer) => {
         if (!devServer) {
@@ -237,6 +247,7 @@ export function createConfig(
           minimizer: [],
         },
     plugins: [
+      ...defaultConfig.plugins,
       new NgRspackPlugin({
         ...normalizedOptions,
         polyfills: ['zone.js'],
@@ -248,6 +259,6 @@ export function createConfig(
     browserConfig,
     (rspackConfigOverrides as unknown) ?? {}
   );
-  configs.push(mergedConfig);
+  configs.unshift(mergedConfig);
   return configs;
 }

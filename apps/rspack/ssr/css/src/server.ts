@@ -1,4 +1,4 @@
-import { createServer } from '@ng-rsbuild/plugin-angular/ssr';
+import { createServer } from '@ng-rspack/build/ssr';
 import bootstrap from './main.server';
 
 const server = createServer(bootstrap);

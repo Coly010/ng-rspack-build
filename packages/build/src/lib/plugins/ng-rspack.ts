@@ -66,7 +66,6 @@ export class NgRspackPlugin implements RspackPluginInstance {
         })),
       }).apply(compiler);
     }
-    new ProgressPlugin().apply(compiler);
     new RxjsEsmResolutionPlugin().apply(compiler);
     new AngularRspackPlugin({
       tsconfigPath: this.pluginOptions.tsconfigPath?.startsWith(
