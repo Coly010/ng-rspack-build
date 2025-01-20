@@ -196,7 +196,7 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
 }
 
 export function printRuleSummary(summary: RuleSummary): void {
-  console.log(bold('ESLint Rule Summary:\n'));
+  console.log(bold('ESLint Migration Overview:\n'));
 
   console.log(
     `${green(`✔ 🛠️ Fixable Errors: ${bold(summary.fixableErrors)}`)}`
@@ -267,14 +267,14 @@ export async function mdRuleSummary(
           .join(', ')} ${fixableTag}\n`;
       });
   } else {
-    md +='No rules violated 🎉';
+    md += 'No rules violated 🎉';
   }
 
   //  await mkdir(path.dirname(file)).catch()
   await writeFile(file, md);
 }
 
-function sortByEffort  (
+function sortByEffort(
   [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
   [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
 ) {

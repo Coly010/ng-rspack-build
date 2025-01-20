@@ -51,23 +51,41 @@ export const lintAllProjects = async (projects: any[]) => {
 
         switch (result.status) {
           case 'skipped':
-            console.log(yellow(`  • Rules are already disabled. Skipping.\n`));
+            console.log(
+              yellow(
+                `  • Project "${project.name}" already has rules disabled. No changes made.\n`
+              )
+            );
             break;
           case 'updated':
-            console.log(green(`  ✔ Rules updated successfully.\n`));
+            console.log(
+              green(
+                `  ✔ Project "${project.name}" has been successfully updated with new rule configurations.\n`
+              )
+            );
             break;
           case 'valid':
-            console.log(green(`  ✔ Rules passing. Ready for migration.\n`));
+            console.log(
+              green(
+                `  ✔ Project "${project.name}" has no ESLint violations. All rules are passing.\n`
+              )
+            );
             break;
           case 'error':
-            console.log(
-              red(`  ✘ Error for project ${project.name}.\n${result.error}`)
+            console.error(
+              red(
+                `  ✘ An error occurred while processing project "${
+                  project.name
+                }".\n   Details: ${
+                  result.error?.message || 'No additional details available.'
+                }\n`
+              )
             );
             break;
           default:
-            console.log(
+            console.error(
               red(
-                `  ✘ Unknown status ${result.status} for project ${project.name}.\n`
+                `  ✘ Unexpected status "${result.status}" encountered for project "${project.name}". This should be reported.\n`
               )
             );
         }
@@ -111,7 +129,7 @@ export const lintProject = async (
 
   try {
     console.log(
-      yellow(`🚀 Starting ESLint migration for project: ${projectName}`)
+      yellow(`🚀 Starting migration plan for project: ${projectName}`)
     );
 
     const eslint = new ESLint({
