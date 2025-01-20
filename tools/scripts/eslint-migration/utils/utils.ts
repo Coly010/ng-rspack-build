@@ -3,7 +3,7 @@ import { minimatch } from 'minimatch';
 import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'url';
 import { TEST_FILE_PATTERNS } from '../index';
-import { bold, green, red, yellow } from 'colorette';
+import { bold, green, red, yellow } from 'ansis';
 
 type ConfigEntry = {
   files: string[];
@@ -184,8 +184,6 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
     }
   );
 }
-
-
 export function printRuleSummary(summary: RuleSummary): void {
   console.log(bold("ESLint Rule Summary:\n"));
 
@@ -197,13 +195,29 @@ export function printRuleSummary(summary: RuleSummary): void {
   console.log(bold("Rule Details:"));
 
   Object.entries(summary.ruleCounts)
-    .sort(([_, a], [__, b]) => {
-      // Sort non-fixable rules first, then by total issues (errors + warnings), then alphabetically
-      if (a.fixable !== b.fixable) return a.fixable ? 1 : -1;
-      const totalA = a.errors + a.warnings;
-      const totalB = b.errors + b.warnings;
+    .sort(([ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+           [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]) => {
+      // Sort by type (errors before warnings)
+      if (errorsA > 0 && warningsA === 0 && (errorsB === 0 && warningsB > 0)) return -1;
+      if (errorsB > 0 && warningsB === 0 && (errorsA === 0 && warningsA > 0)) return 1;
+
+      // Sort fixable errors before non-fixable
+      if (errorsA > 0 && errorsB > 0) {
+        if (fixableA !== fixableB) return fixableB ? -1 : 1;
+      }
+
+      // Sort fixable warnings before non-fixable
+      if (warningsA > 0 && warningsB > 0) {
+        if (fixableA !== fixableB) return fixableB ? -1 : 1;
+      }
+
+      // Sort by total number of issues (errors + warnings, descending)
+      const totalA = errorsA + warningsA;
+      const totalB = errorsB + warningsB;
       if (totalA !== totalB) return totalB - totalA;
-      return _.localeCompare(__);
+
+      // Sort alphabetically by rule ID
+      return ruleA.localeCompare(ruleB);
     })
     .forEach(([ruleId, { errors, warnings, fixable }]) => {
       const errorPart = errors ? `${red(`❌ ${errors}`)}` : "";

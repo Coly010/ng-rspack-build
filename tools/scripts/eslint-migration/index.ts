@@ -17,7 +17,13 @@ import { getEslintConfigPath } from './utils/nx';
  * @param projects List of Nx projects to lint.
  */
 export const lintAllProjects = async (projects: any[]) => {
-  let allResults: RuleSummary;
+  let allResults: RuleSummary = {
+    fixableErrors: 0,
+    fixableWarnings: 0,
+    totalErrors: 0,
+    totalWarnings: 0,
+    ruleCounts: {},
+  };
   await Promise.all(
     projects.map(async (project, index) => {
       const eslintConfig = getEslintConfigPath(project);
@@ -34,7 +40,8 @@ export const lintAllProjects = async (projects: any[]) => {
         );
 
         if(result.status !== 'error') {
-          allResults = mergeRuleSummaries(allResults, aggregateRuleSummary(result.data));
+          allResults = mergeRuleSummaries([allResults, aggregateRuleSummary(result.data)]);
+         // console.log(result.data);
         }
 
         switch (result.status) {
@@ -70,7 +77,7 @@ export const lintAllProjects = async (projects: any[]) => {
     })
   );
 
-  printRuleSummary(allResults);
+   printRuleSummary(allResults);
 };
 
 export const TEST_FILE_PATTERNS = [
