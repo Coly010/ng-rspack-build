@@ -2,16 +2,15 @@
 
 ---
 
-- **Fixable Errors:** 2
+- **Fixable Errors:** 0
 - **Fixable Warnings:** 0
-- **Total Errors:** 2
-- **Total Warnings:** 49
+- **Total Errors:** 0
+- **Total Warnings:** 10
 
 ---
 
 ## Rule Details By Effort
 
-- [x] **no-var**: ❌ 2 🛠️
-- [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 26 
-- [x] **@typescript-eslint/no-unused-vars**: ⚠️ 13 
-- [x] **@typescript-eslint/no-explicit-any**: ⚠️ 10 
+- [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 7
+- [x] **@typescript-eslint/no-unused-vars**: ⚠️ 2
+- [x] **@typescript-eslint/no-explicit-any**: ⚠️ 1
