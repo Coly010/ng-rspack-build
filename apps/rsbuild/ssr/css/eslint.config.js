@@ -7,6 +7,6 @@ module.exports = [
     rules: {
       // ⚠️ Warnings: 1
       '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
-    }
-  }
+    },
+  },
 ];
