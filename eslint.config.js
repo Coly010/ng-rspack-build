@@ -1,13 +1,7 @@
 const nx = require('@nx/eslint-plugin');
 const tseslint = require('typescript-eslint');
-const { default: node } = require('@code-pushup/eslint-config/node.js');
-const {
-  default: typescript,
-} = require('@code-pushup/eslint-config/typescript.js');
 
-module.exports = tseslint.config([
-  ...typescript,
-  ...node,
+module.exports = tseslint.config(
   {
     files: ['**/*.json'],
     // Override or add rules here
@@ -38,9 +32,7 @@ module.exports = tseslint.config([
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here
-    rules: {
-      'unicorn/prefer-ternary': 'warn',
-    },
+    rules: {},
   },
   {
     ignores: [
@@ -54,5 +46,5 @@ module.exports = tseslint.config([
       '**/dist',
       '**/*.md',
     ],
-  },
-]);
+  }
+);
