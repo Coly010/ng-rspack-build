@@ -209,54 +209,57 @@ export function printRuleSummary(summary: RuleSummary): void {
     `${yellow(`⚠️ Total Warnings: ${bold(summary.totalWarnings)}`)}\n`
   );
 
-  console.log(bold('Rule Details By Effort:'));
+  const rules = Object.entries(summary.ruleCounts);
+  if (rules.length > 0) {
+    console.log(bold('Rule Details By Effort:'));
 
-  Object.entries(summary.ruleCounts)
-    .sort(
-      (
-        [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-        [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
-      ) => {
-        // Sort by type (errors before warnings)
-        if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
-          return -1;
-        if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
-          return 1;
+    rules
+      .sort(
+        (
+          [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+          [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+        ) => {
+          // Sort by type (errors before warnings)
+          if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
+            return -1;
+          if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
+            return 1;
 
-        // Sort fixable errors before non-fixable
-        if (errorsA > 0 && errorsB > 0) {
-          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          // Sort fixable errors before non-fixable
+          if (errorsA > 0 && errorsB > 0) {
+            if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          }
+
+          // Sort fixable warnings before non-fixable
+          if (warningsA > 0 && warningsB > 0) {
+            if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          }
+
+          // Sort by total number of issues (errors + warnings, descending)
+          const totalA = errorsA + warningsA;
+          const totalB = errorsB + warningsB;
+          if (totalA !== totalB) return totalB - totalA;
+
+          // Sort alphabetically by rule ID
+          return ruleA.localeCompare(ruleB);
         }
+      )
+      .forEach(([ruleId, { errors, warnings, fixable }]) => {
+        const errorPart = errors ? `${red(`❌ ${errors}`)}` : '';
+        const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : '';
+        const fixableTag = fixable ? green('🛠️') : '';
 
-        // Sort fixable warnings before non-fixable
-        if (warningsA > 0 && warningsB > 0) {
-          if (fixableA !== fixableB) return fixableB ? -1 : 1;
-        }
-
-        // Sort by total number of issues (errors + warnings, descending)
-        const totalA = errorsA + warningsA;
-        const totalB = errorsB + warningsB;
-        if (totalA !== totalB) return totalB - totalA;
-
-        // Sort alphabetically by rule ID
-        return ruleA.localeCompare(ruleB);
-      }
-    )
-    .forEach(([ruleId, { errors, warnings, fixable }]) => {
-      const errorPart = errors ? `${red(`❌ ${errors}`)}` : '';
-      const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : '';
-      const fixableTag = fixable ? green('🛠️') : '';
-
-      console.log(
-        `- [ ] ${bold(ruleId)}: ${[errorPart, warningPart]
-          .filter(Boolean)
-          .join(', ')} ${fixableTag}`
-      );
-    });
-
+        console.log(
+          `- ${bold(ruleId)}: ${[errorPart, warningPart]
+            .filter(Boolean)
+            .join(', ')} ${fixableTag}`
+        );
+      });
+  } else {
+    console.log('No rules violated 🎉');
+  }
   console.log('\n');
 }
-
 
 export async function mdRuleSummary(
   summary: RuleSummary,
@@ -277,49 +280,54 @@ export async function mdRuleSummary(
   md += `- **Total Warnings:** ${summary.totalWarnings}\n\n`;
 
   md += '---\n\n';
-  md += '## Rule Details By Effort\n\n';
+  const rules = Object.entries(summary.ruleCounts);
+  if (rules.length > 0) {
+    md += '## Rule Details By Effort\n\n';
 
-  Object.entries(summary.ruleCounts)
-    .sort(
-      (
-        [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-        [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
-      ) => {
-        // Sort by type (errors before warnings)
-        if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
-          return -1;
-        if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
-          return 1;
+    rules
+      .sort(
+        (
+          [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+          [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+        ) => {
+          // Sort by type (errors before warnings)
+          if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
+            return -1;
+          if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
+            return 1;
 
-        // Sort fixable errors before non-fixable
-        if (errorsA > 0 && errorsB > 0) {
-          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          // Sort fixable errors before non-fixable
+          if (errorsA > 0 && errorsB > 0) {
+            if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          }
+
+          // Sort fixable warnings before non-fixable
+          if (warningsA > 0 && warningsB > 0) {
+            if (fixableA !== fixableB) return fixableB ? -1 : 1;
+          }
+
+          // Sort by total number of issues (errors + warnings, descending)
+          const totalA = errorsA + warningsA;
+          const totalB = errorsB + warningsB;
+          if (totalA !== totalB) return totalB - totalA;
+
+          // Sort alphabetically by rule ID
+          return ruleA.localeCompare(ruleB);
         }
+      )
+      .forEach(([ruleId, { errors, warnings, fixable }]) => {
+        const errorPart = errors ? `❌ ${errors}` : '';
+        const warningPart = warnings ? `⚠️ ${warnings}` : '';
+        const fixableTag = fixable ? '🛠️' : '';
 
-        // Sort fixable warnings before non-fixable
-        if (warningsA > 0 && warningsB > 0) {
-          if (fixableA !== fixableB) return fixableB ? -1 : 1;
-        }
+        md += `- [x] **${ruleId}**: ${[errorPart, warningPart]
+          .filter(Boolean)
+          .join(', ')} ${fixableTag}\n`;
+      });
+  } else {
+    console.log('No rules violated 🎉');
+  }
 
-        // Sort by total number of issues (errors + warnings, descending)
-        const totalA = errorsA + warningsA;
-        const totalB = errorsB + warningsB;
-        if (totalA !== totalB) return totalB - totalA;
-
-        // Sort alphabetically by rule ID
-        return ruleA.localeCompare(ruleB);
-      }
-    )
-    .forEach(([ruleId, { errors, warnings, fixable }]) => {
-      const errorPart = errors ? `❌ ${errors}` : '';
-      const warningPart = warnings ? `⚠️ ${warnings}` : '';
-      const fixableTag = fixable ? '🛠️' : '';
-
-      md += `- [ ] **${ruleId}**: ${[errorPart, warningPart]
-        .filter(Boolean)
-        .join(', ')} ${fixableTag}\n`;
-    });
-
-//  await mkdir(path.dirname(file)).catch()
+  //  await mkdir(path.dirname(file)).catch()
   await writeFile(file, md);
 }

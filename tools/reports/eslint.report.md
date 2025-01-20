@@ -11,6 +11,6 @@
 
 ## Rule Details By Effort
 
-- [ ] **@typescript-eslint/no-non-null-assertion**: ⚠️ 7 
-- [ ] **@typescript-eslint/no-unused-vars**: ⚠️ 2 
-- [ ] **@typescript-eslint/no-explicit-any**: ⚠️ 1 
+- [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 7
+- [x] **@typescript-eslint/no-unused-vars**: ⚠️ 2
+- [x] **@typescript-eslint/no-explicit-any**: ⚠️ 1
