@@ -1,8 +1,9 @@
 import {
-  collectRuleViolations,
-  parseExistingConfig,
+  aggregateRuleSummary,
+  collectRuleViolations, mergeRuleSummaries,
+  parseExistingConfig, printRuleSummary,
   RuleCollection,
-  RulesCollectionResult,
+  RulesCollectionResult, RuleSummary
 } from './utils/utils';
 import { cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
@@ -16,12 +17,13 @@ import { getEslintConfigPath } from './utils/nx';
  * @param projects List of Nx projects to lint.
  */
 export const lintAllProjects = async (projects: any[]) => {
+  let allResults: RuleSummary;
   await Promise.all(
     projects.map(async (project, index) => {
       const eslintConfig = getEslintConfigPath(project);
 
       try {
-        const lintResult = await lintProject(project, eslintConfig);
+        const result = await lintProject(project, eslintConfig);
 
         console.log(
           cyan(
@@ -31,18 +33,33 @@ export const lintAllProjects = async (projects: any[]) => {
           )
         );
 
-        if (lintResult === 'skipped') {
-          console.log(yellow(`  • Rules are already disabled. Skipping.\n`));
-        } else if (lintResult === 'updated') {
-          console.log(green(`  ✔ Rules updated successfully.\n`));
-        } else if (lintResult === 'valid') {
-          console.log(green(`  ✔ Rules passing. Ready for migration.\n`));
-        } else {
-          console.log(
-            red(
-              `  ✘ An error occurred while processing project ${project.name}.\n`
-            )
-          );
+        if(result.status !== 'error') {
+          allResults = mergeRuleSummaries(allResults, aggregateRuleSummary(result.data));
+        }
+
+        switch (result.status) {
+          case 'skipped':
+            console.log(yellow(`  • Rules are already disabled. Skipping.\n`));
+            break;
+          case 'updated':
+            console.log(green(`  ✔ Rules updated successfully.\n`));
+            break;
+          case 'valid':
+            console.log(green(`  ✔ Rules passing. Ready for migration.\n`));
+            break;
+          case 'error':
+            console.log(
+              red(
+                `  ✘ Error for project ${project.name}.\n${result.error}`
+              )
+            );
+            break;
+          default:
+            console.log(
+              red(
+                `  ✘ Unknown status ${result.status} for project ${project.name}.\n`
+              )
+            );
         }
       } catch (error) {
         console.error(
@@ -52,6 +69,8 @@ export const lintAllProjects = async (projects: any[]) => {
       }
     })
   );
+
+  printRuleSummary(allResults);
 };
 
 export const TEST_FILE_PATTERNS = [
@@ -64,15 +83,16 @@ export const TEST_FILE_PATTERNS = [
   '*.stories.ts',
 ];
 
+type LintResultSuccess = {status: 'skipped' | 'updated'| 'valid', data: RulesCollectionResult};
+type LintResultError = {status: 'error', data: RulesCollectionResult};
+type LintResult = LintResultError | LintResultSuccess;
+
 export const lintProject = async (
   project: any,
   eslintConfig: string
-): Promise<'skipped' | 'updated' | 'error' | 'valid'> => {
+): Promise<LintResult> => {
   try {
     const nextConfigPath = `${project.root}/eslint.next.config.js`;
-    const { general: existingGeneral, test: existingTest } =
-      await parseExistingConfig(eslintConfig);
-    // const targetEsLintConfig = existsSync(nextConfigPath) ? nextConfigPath : eslintConfig;
 
     const eslint = new ESLint({
       overrideConfigFile: eslintConfig,
@@ -106,7 +126,7 @@ export const lintProject = async (
       console.log(
         green(`  ✔ Project "${project.name}" has no ESLint errors remaining.\n`)
       );
-      return 'skipped';
+      return {status: 'skipped', data: result};
     }
 
     const content = getFile(
@@ -129,9 +149,9 @@ export const lintProject = async (
       await copyFile(eslintConfig, nextConfigPath);
     }
     await writeFile(eslintConfig, content.trim());
-    return 'updated';
+    return {status: 'updated', data: result};
   } catch (error) {
     console.error(`Error processing project: ${project.name}`, error);
-    return 'error';
+    return {status: 'error', data: {}, error};
   }
 };
