@@ -73,7 +73,7 @@ export function getFile(
         files: ${JSON.stringify(files)},
         rules: {
           // ❌ Errors: ${errorLines.length}
-          ${errorLines.length ? errorLines.join('\n') : ''},
+          ${errorLines.length ? errorLines.concat(',').join('\n') : ''}
           // ⚠️ Warnings: ${warningLines.length}
           ${warningLines.length ? warningLines.join('\n') : ''}
         }

@@ -4,6 +4,8 @@ import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'url';
 import { TEST_FILE_PATTERNS } from '../index';
 import { bold, green, red, yellow } from 'ansis';
+import { writeFile } from 'fs/promises';
+import path from 'node:path';
 
 type ConfigEntry = {
   files: string[];
@@ -100,9 +102,6 @@ export type RuleSummary = {
   >;
 };
 
-/**
- * Aggregates rule violations from a RulesCollectionResult into a summary.
- */
 export function aggregateRuleSummary(
   results: RulesCollectionResult
 ): RuleSummary {
@@ -258,10 +257,6 @@ export function printRuleSummary(summary: RuleSummary): void {
   console.log('\n');
 }
 
-import { writeFile } from 'fs/promises';
-import path from 'path';
-import { mkdirp } from '@rspack/core/dist/util/fs';
-import { mkdir } from 'node:fs/promises';
 
 export async function mdRuleSummary(
   summary: RuleSummary,

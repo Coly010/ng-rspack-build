@@ -106,7 +106,6 @@ export const lintProject = async (
 ): Promise<LintResult> => {
   try {
     const nextConfigPath = `${project.root}/eslint.next.config.js`;
-
     const eslint = new ESLint({
       overrideConfigFile: eslintConfig,
       errorOnUnmatchedPattern: false,
