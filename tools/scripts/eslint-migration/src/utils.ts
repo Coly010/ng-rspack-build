@@ -214,36 +214,7 @@ export function printRuleSummary(summary: RuleSummary): void {
     console.log(bold('Rule Details By Effort:'));
 
     rules
-      .sort(
-        (
-          [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-          [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
-        ) => {
-          // Sort by type (errors before warnings)
-          if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
-            return -1;
-          if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
-            return 1;
-
-          // Sort fixable errors before non-fixable
-          if (errorsA > 0 && errorsB > 0) {
-            if (fixableA !== fixableB) return fixableB ? -1 : 1;
-          }
-
-          // Sort fixable warnings before non-fixable
-          if (warningsA > 0 && warningsB > 0) {
-            if (fixableA !== fixableB) return fixableB ? -1 : 1;
-          }
-
-          // Sort by total number of issues (errors + warnings, descending)
-          const totalA = errorsA + warningsA;
-          const totalB = errorsB + warningsB;
-          if (totalA !== totalB) return totalB - totalA;
-
-          // Sort alphabetically by rule ID
-          return ruleA.localeCompare(ruleB);
-        }
-      )
+      .sort(sortByEffort)
       .forEach(([ruleId, { errors, warnings, fixable }]) => {
         const errorPart = errors ? `${red(`❌ ${errors}`)}` : '';
         const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : '';
@@ -285,36 +256,7 @@ export async function mdRuleSummary(
     md += '## Rule Details By Effort\n\n';
 
     rules
-      .sort(
-        (
-          [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-          [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
-        ) => {
-          // Sort by type (errors before warnings)
-          if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
-            return -1;
-          if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
-            return 1;
-
-          // Sort fixable errors before non-fixable
-          if (errorsA > 0 && errorsB > 0) {
-            if (fixableA !== fixableB) return fixableB ? -1 : 1;
-          }
-
-          // Sort fixable warnings before non-fixable
-          if (warningsA > 0 && warningsB > 0) {
-            if (fixableA !== fixableB) return fixableB ? -1 : 1;
-          }
-
-          // Sort by total number of issues (errors + warnings, descending)
-          const totalA = errorsA + warningsA;
-          const totalB = errorsB + warningsB;
-          if (totalA !== totalB) return totalB - totalA;
-
-          // Sort alphabetically by rule ID
-          return ruleA.localeCompare(ruleB);
-        }
-      )
+      .sort(sortByEffort)
       .forEach(([ruleId, { errors, warnings, fixable }]) => {
         const errorPart = errors ? `❌ ${errors}` : '';
         const warningPart = warnings ? `⚠️ ${warnings}` : '';
@@ -330,4 +272,33 @@ export async function mdRuleSummary(
 
   //  await mkdir(path.dirname(file)).catch()
   await writeFile(file, md);
+}
+
+function sortByEffort  (
+  [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+  [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+) {
+  // Sort by type (errors before warnings)
+  if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
+    return -1;
+  if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
+    return 1;
+
+  // Sort fixable errors before non-fixable
+  if (errorsA > 0 && errorsB > 0) {
+    if (fixableA !== fixableB) return fixableB ? -1 : 1;
+  }
+
+  // Sort fixable warnings before non-fixable
+  if (warningsA > 0 && warningsB > 0) {
+    if (fixableA !== fixableB) return fixableB ? -1 : 1;
+  }
+
+  // Sort by total number of issues (errors + warnings, descending)
+  const totalA = errorsA + warningsA;
+  const totalB = errorsB + warningsB;
+  if (totalA !== totalB) return totalB - totalA;
+
+  // Sort alphabetically by rule ID
+  return ruleA.localeCompare(ruleB);
 }
