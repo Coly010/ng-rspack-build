@@ -1,19 +1,17 @@
 import {
   aggregateRuleSummary,
-  collectRuleViolations,
+  collectRuleViolations, mdRuleSummary,
   mergeRuleSummaries,
-  parseExistingConfig,
   printRuleSummary,
-  RuleCollection,
   RulesCollectionResult,
-  RuleSummary,
-} from './utils/utils';
+  RuleSummary
+} from './src/utils';
 import { cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
-import { getFile } from './utils/file-creation';
+import { getFile } from './src/file-creation';
 import { existsSync } from 'node:fs';
-import { copyFile, writeFile, rm } from 'node:fs/promises';
-import { getEslintConfigPath } from './utils/nx';
+import { copyFile, rm, writeFile } from 'node:fs/promises';
+import { getEslintConfigPath } from './src/nx';
 
 /**
  * Lints all projects.
@@ -82,6 +80,7 @@ export const lintAllProjects = async (projects: any[]) => {
   );
 
   printRuleSummary(allResults);
+  await mdRuleSummary(allResults);
 };
 
 export const TEST_FILE_PATTERNS = [

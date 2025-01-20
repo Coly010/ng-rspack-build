@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { getProjectsWithEslintTarget } from './utils/nx';
+import { getProjectsWithEslintTarget } from './src/nx';
 import { gray, green } from 'ansis';
 import { lintAllProjects } from './index';
 

@@ -257,3 +257,74 @@ export function printRuleSummary(summary: RuleSummary): void {
 
   console.log('\n');
 }
+
+import { writeFile } from 'fs/promises';
+import path from 'path';
+import { mkdirp } from '@rspack/core/dist/util/fs';
+import { mkdir } from 'node:fs/promises';
+
+export async function mdRuleSummary(
+  summary: RuleSummary,
+  file: string = path.join(
+    process.cwd(),
+    'tools',
+    'reports',
+    'eslint.report.md'
+  )
+): Promise<void> {
+  let md = '';
+  md += '# ESLint Rule Summary\n\n';
+  md += '---\n\n';
+
+  md += `- **Fixable Errors:** ${summary.fixableErrors}\n`;
+  md += `- **Fixable Warnings:** ${summary.fixableWarnings}\n`;
+  md += `- **Total Errors:** ${summary.totalErrors}\n`;
+  md += `- **Total Warnings:** ${summary.totalWarnings}\n\n`;
+
+  md += '---\n\n';
+  md += '## Rule Details By Effort\n\n';
+
+  Object.entries(summary.ruleCounts)
+    .sort(
+      (
+        [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
+        [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+      ) => {
+        // Sort by type (errors before warnings)
+        if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
+          return -1;
+        if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
+          return 1;
+
+        // Sort fixable errors before non-fixable
+        if (errorsA > 0 && errorsB > 0) {
+          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+        }
+
+        // Sort fixable warnings before non-fixable
+        if (warningsA > 0 && warningsB > 0) {
+          if (fixableA !== fixableB) return fixableB ? -1 : 1;
+        }
+
+        // Sort by total number of issues (errors + warnings, descending)
+        const totalA = errorsA + warningsA;
+        const totalB = errorsB + warningsB;
+        if (totalA !== totalB) return totalB - totalA;
+
+        // Sort alphabetically by rule ID
+        return ruleA.localeCompare(ruleB);
+      }
+    )
+    .forEach(([ruleId, { errors, warnings, fixable }]) => {
+      const errorPart = errors ? `❌ ${errors}` : '';
+      const warningPart = warnings ? `⚠️ ${warnings}` : '';
+      const fixableTag = fixable ? '🛠️' : '';
+
+      md += `- [ ] **${ruleId}**: ${[errorPart, warningPart]
+        .filter(Boolean)
+        .join(', ')} ${fixableTag}\n`;
+    });
+
+//  await mkdir(path.dirname(file)).catch()
+  await writeFile(file, md);
+}
