@@ -5,9 +5,8 @@ import { gray, green } from 'ansis';
 import { lintAllProjects } from './index';
 
 (async () => {
-  const projectFilter = process.argv
-    .filter((arg) => arg.startsWith('--projects='))
-    .map((arg) => arg.split('=')[1]);
+  const searchParams = new URLSearchParams(process.argv.slice(2).join('&'));
+  const projectFilter = searchParams.getAll('projects');
 
   console.log(gray(`Collecting projects to migrate to eslint next...\n`));
   const projects = await getProjectsWithEslintTarget(
