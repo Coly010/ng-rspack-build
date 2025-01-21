@@ -21,7 +21,7 @@ export function createConfig(
     '@angular/platform-server/init',
   ];
 
-  const isRunningDevServer = process.argv.splice(2)[0] === 'dev';
+  const isRunningDevServer = process.argv.at(2) === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
   const rsbuildPluginAngularConfig = defineConfig({
@@ -130,24 +130,27 @@ export function withConfigurations(
   > = {},
   configEnvVar = 'NGRS_CONFIG'
 ) {
-  const configuration = process.env[configEnvVar] ?? 'production';
+  const configurationMode = process.env[configEnvVar] ?? 'production';
+  const isDefault = configurationMode === 'default';
+  const isModeConfigured = configurationMode in configurations;
+
   const mergedBuildOptionsOptions = {
     ...defaultOptions.options,
-    ...((configuration !== 'default' && configuration in configurations
-      ? configurations[configuration]?.options
+    ...((!isDefault && isModeConfigured
+      ? configurations[configurationMode]?.options
       : {}) ?? {}),
   };
 
   let mergedRsbuildConfigOverrides =
     defaultOptions.rsbuildConfigOverrides ?? {};
   if (
-    configuration !== 'default' &&
-    configuration in configurations &&
-    configurations[configuration]?.rsbuildConfigOverrides
+    !isDefault &&
+    isModeConfigured &&
+    configurations[configurationMode]?.rsbuildConfigOverrides
   ) {
     mergedRsbuildConfigOverrides = mergeRsbuildConfig(
       mergedRsbuildConfigOverrides,
-      configurations[configuration]?.rsbuildConfigOverrides ?? {}
+      configurations[configurationMode]?.rsbuildConfigOverrides ?? {}
     );
   }
 

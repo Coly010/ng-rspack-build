@@ -13,7 +13,13 @@ export default {
         ({ projectType }) =>
           projectType === 'library' || projectType === 'application'
       );
-      const scopes = [...projects, 'tools', 'workflows', 'testing'].sort();
+      const scopes = [
+        ...projects,
+        'tools',
+        'workflows',
+        'testing',
+        'repo',
+      ].sort();
       return [RuleConfigSeverity.Error, 'always', scopes];
     },
     'type-enum': () => {

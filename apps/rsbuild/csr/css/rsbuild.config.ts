@@ -1,6 +1,10 @@
-import { createConfig } from '@ng-rsbuild/plugin-angular';
-
-export default createConfig({
-  browser: './src/main.ts',
-  inlineStylesExtension: 'css',
-});
+export default () => {
+  if (global.NX_GRAPH_CREATION === undefined) {
+    const { createConfig } = require('@ng-rsbuild/plugin-angular');
+    return createConfig({
+      browser: './src/main.ts',
+      inlineStylesExtension: 'css',
+    });
+  }
+  return {};
+};
