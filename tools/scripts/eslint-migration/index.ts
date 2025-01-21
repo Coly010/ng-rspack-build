@@ -11,7 +11,7 @@ import { cyan, green, red, yellow, bold } from 'ansis';
 import { ESLint } from 'eslint';
 import { getFile } from './src/file-creation';
 import { existsSync } from 'node:fs';
-import { copyFile, readFile, rm, writeFile } from 'node:fs/promises';
+import { readFile, rename, writeFile } from 'node:fs/promises';
 import { getEslintConfigPath } from './src/nx';
 import { ProjectConfiguration } from 'nx/src/config/workspace-json-project-json';
 import { dirname } from 'path';
@@ -31,7 +31,7 @@ export const lintAllProjects = async (projects: ProjectConfiguration[]) => {
   await Promise.all(
     projects.map(async (project, index) => {
       try {
-        const result = await lintCodeBase({
+        const result = await updateEsLintMigrationPlan({
           lintFilePatterns:
             project.targets.lint?.options?.lintFilePatterns ?? project.root,
           name: project.name,
@@ -131,14 +131,11 @@ type LintResult = LintResultError | LintResultSuccess;
  *     - if it does, use it to create the eslintConfig
  *     - else, rename the existing `eslint.config.js` to `eslint.next.config.js`
  *  2. Lint the files with the `eslint.next.config.js` and collect rule violations
+ *  Are there new lint results compared to last generation?
  *    - if there are any violations, generate the updated ESLint configuration
  *    - else, return data
- *  3. Generate the updated ESLint configuration
- *
- * @param project
- * @param eslintConfig
  */
-export const lintCodeBase = async ({
+export const updateEsLintMigrationPlan = async ({
   name,
   lintFilePatterns,
   eslintConfig,
@@ -154,7 +151,7 @@ export const lintCodeBase = async ({
     // Does the next file exist in the file system?
     //    - if it does not, rename the existing `eslint.config.js` to `eslint.next.config.js`
     if (!existsSync(nextConfigPath)) {
-      await copyFile(eslintConfig, nextConfigPath);
+      await rename(eslintConfig, nextConfigPath);
       console.log(
         green(
           `✔ Created create target config inc. all rules on: "${nextConfigPath}"`
@@ -210,6 +207,8 @@ export const lintCodeBase = async ({
     // Handle no-violations scenario
     if (totalViolations === 0) {
       console.log(green(`✔ No updates for target "${targetName}".`));
+      // @TODO if there are no rules configured in the eslint config and next did not find any violations,
+      // we should rename the next config no default naming
       return { status: 'valid', data: result };
     }
 

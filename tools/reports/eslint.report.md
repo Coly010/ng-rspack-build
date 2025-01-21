@@ -13,6 +13,6 @@
 
 - [x] **@nx/dependency-checks**: ❌ 2 🛠️
 - [x] **no-var**: ❌ 2 🛠️
-- [x] **@typescript-eslint/no-explicit-any**: ⚠️ 27
-- [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 26
-- [x] **@typescript-eslint/no-unused-vars**: ⚠️ 13
+- [x] **@typescript-eslint/no-explicit-any**: ⚠️ 27 
+- [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 26 
+- [x] **@typescript-eslint/no-unused-vars**: ⚠️ 13 
