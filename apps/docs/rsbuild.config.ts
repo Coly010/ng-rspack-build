@@ -9,7 +9,6 @@ const options = {
 };
 
 export default () => {
-  console.log('global.NX_GRAPH_CREATION', global.NX_GRAPH_CREATION);
   if (global.NX_GRAPH_CREATION === undefined) {
     const { withConfigurations } = require('@ng-rsbuild/plugin-angular');
     return withConfigurations(
