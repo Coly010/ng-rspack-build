@@ -34,8 +34,8 @@ export class AngularRspackPlugin implements RspackPluginInstance {
     ReturnType<typeof setupCompilationWithParallelCompilation>
   >;
 
-  constructor(options: Partial<AngularRspackPluginOptions>) {
-    this.#_options = normalizeOptions(options);
+  constructor(options: AngularRspackPluginOptions) {
+    this.#_options = options;
     this.#typescriptFileCache = new Map<string, string>();
     this.#javascriptTransformer = new JavaScriptTransformer(
       {

@@ -11,6 +11,7 @@ import { basename, extname, join } from 'path';
 import { RxjsEsmResolutionPlugin } from './rxjs-esm-resolution';
 import { AngularRspackPlugin } from './angular-rspack-plugin';
 import { AngularRspackPluginOptions } from '../models';
+import { AngularSsrDevServer } from './angular-ssr-dev-server';
 
 export class NgRspackPlugin implements RspackPluginInstance {
   pluginOptions: AngularRspackPluginOptions;
@@ -21,6 +22,7 @@ export class NgRspackPlugin implements RspackPluginInstance {
 
   apply(compiler: Compiler) {
     const isProduction = process.env['NODE_ENV'] === 'production';
+    const isDevServer = process.env['WEBPACK_SERVE'];
 
     const polyfills = this.pluginOptions.polyfills ?? [];
     if (polyfills.length > 0) {
@@ -51,6 +53,12 @@ export class NgRspackPlugin implements RspackPluginInstance {
         scriptLoading: 'module',
         template: join(this.pluginOptions.root, this.pluginOptions.index),
       }).apply(compiler);
+      if (this.pluginOptions.ssrEntry !== undefined) {
+        new AngularSsrDevServer().apply(compiler);
+      }
+    }
+    if (!isDevServer) {
+      new ProgressPlugin().apply(compiler);
     }
     new DefinePlugin({
       ngDevMode: isProduction ? 'false' : {},
@@ -67,13 +75,7 @@ export class NgRspackPlugin implements RspackPluginInstance {
       }).apply(compiler);
     }
     new RxjsEsmResolutionPlugin().apply(compiler);
-    new AngularRspackPlugin({
-      tsconfigPath: this.pluginOptions.tsconfigPath?.startsWith(
-        this.pluginOptions.tsconfigPath
-      )
-        ? this.pluginOptions.tsconfigPath
-        : join(this.pluginOptions.root, this.pluginOptions.tsconfigPath),
-    }).apply(compiler);
+    new AngularRspackPlugin(this.pluginOptions).apply(compiler);
   }
 
   private getEntryName(path: string) {

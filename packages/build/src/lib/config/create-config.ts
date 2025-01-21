@@ -7,6 +7,7 @@ import {
 import { merge as rspackMerge } from 'webpack-merge';
 import { join } from 'path';
 import { AngularRspackPluginOptions, normalizeOptions } from '../models';
+import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from '@ng-rspack/compiler';
 
 export function createConfig(
   options: AngularRspackPluginOptions,
@@ -75,6 +76,11 @@ export function createConfig(
                 },
               },
             },
+          ],
+        },
+        {
+          test: TS_ALL_EXT_REGEX,
+          use: [
             {
               loader: require.resolve(
                 '@ng-rspack/build/loaders/angular-loader'
@@ -83,7 +89,7 @@ export function createConfig(
           ],
         },
         {
-          test: /\.[cm]?js$/,
+          test: JS_ALL_EXT_REGEX,
           use: [
             {
               loader: require.resolve(
@@ -114,6 +120,34 @@ export function createConfig(
         path: join(normalizedOptions.root, 'dist', 'server'),
         filename: '[name].js',
         chunkFilename: '[name].js',
+      },
+      devServer: {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        allowedHosts: 'auto',
+        client: {
+          webSocketURL: {
+            hostname: 'localhost',
+            port: 4200,
+          },
+          overlay: {
+            errors: true,
+            warnings: false,
+            runtimeErrors: true,
+          },
+          reconnect: true,
+        },
+        hot: false,
+        liveReload: true,
+        watchFiles: ['./src/**/*.*', './public/**/*.*'],
+        historyApiFallback: {
+          index: '/index.html',
+          rewrites: [{ from: /^\/$/, to: 'index.html' }],
+        },
+        devMiddleware: {
+          writeToDisk: (file) => !file.includes('.hot-update.'),
+        },
       },
       optimization: isProduction
         ? {
@@ -186,6 +220,7 @@ export function createConfig(
       },
       hot: false,
       liveReload: true,
+      watchFiles: ['./src/**/*.*', './public/**/*.*'],
       historyApiFallback: {
         index: '/index.html',
         rewrites: [{ from: /^\/$/, to: 'index.html' }],
