@@ -1,6 +1,10 @@
-# ESLint Next - 🛠️ Enterprise-Ready Code-Mods Streamlined for ESLint
+# 🛠️ ESLint Next ⏭️
 
-Effortlessly enable incremental migration of ESLint rules with this automated script.
+### Enterprise-Ready Code-Transformations ⏭️ <br/> Streamlined for ESLint 🛠️
+
+---
+
+Effortlessly **enable incremental migration of ESLint rules** with this automated script.
 
 ---
 
@@ -28,9 +32,11 @@ This tool supports:
 
 ### 2. **Automatic Migration** ⚙️
 
-- Creates a backup of the current configuration as `eslint.next.config.js`.
-- Updates the existing configuration to extend `eslint.next.config.js`.
-- Disables failing rules, allowing for incremental fixes.
+- 1. Creates a backup of the current configuration as `eslint.next.config.js`.
+- 2. Updates the existing configuration to extend `eslint.next.config.js`.
+- 3. Disables failing rules, allowing for incremental fixes.
+
+Find all details about the process in out [migrations](./docs/migrations.md) documentation.
 
 ### 3. **Detailed Reporting** 📈
 

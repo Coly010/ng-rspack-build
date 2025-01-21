@@ -37,11 +37,9 @@ Migrating to a new ESLint configuration can be challenging, particularly for lar
 
 ---
 
-- **Too many errors**: A new configuration may produce numerous errors and warnings.
-- **High effort**: Fixing all issues at once is time-intensive.
-- **Incremental migration**: Adopting rules gradually can be difficult.
-- **Progress tracking**: Monitoring migration progress often becomes tedious.
-- **Configuration preservation**: Retaining original configurations for reference is rarely prioritized.
+- ❌ **Too many errors**: A new configuration may produce numerous errors and warnings.
+- ❌ **Big bang refactoring**: Fixing all issues at once is time-intensive.
+- ❌ **Regression prone**: Monitoring migration progress often becomes tedious.
 
 To tackle these challenges, an automated **migration strategy** is essential. This script was designed to eliminate repetitive manual tasks, ensuring a streamlined process.
 
@@ -49,9 +47,12 @@ To tackle these challenges, an automated **migration strategy** is essential. Th
 
 To ensure flexibility and limit the impact radius of changes the script:
 
-1. **Creates a new `eslint.config.js`**: Ensures it passes CI and documents disabled rules with comments.
-2. **Maintains a target configuration**: Stores your current setup in `eslint.next.config.js`.
-3. **Extends the new config**: Links `eslint.config.js` to `eslint.next.config.js` to allow progressive migration.
+1. **🆕 Creates a new `eslint.config.js`**:  
+   Ensures it passes CI ✅ and documents disabled rules with comments 📝.
+2. **📁 Maintains a target configuration**:
+   Stores your current setup in `eslint.next.config.js` 📜.
+3. **🔗 Extends the new config**:
+   Links `eslint.config.js` to `eslint.next.config.js` 🔄 to allow progressive migration 🚀.
 
 ---
 
@@ -84,7 +85,7 @@ graph LR
 
 ### Warnings and Errors
 
-By default EsLint has two types of issues: warnings and errors.
+By default, EsLint has two types of issues: **⚠️ warnings** and **❌ errors**.  
 Warnings are less severe and can be fixed later. Errors are more severe and should be fixed immediately.
 
 Both of them are displayed in the terminal output.
@@ -94,8 +95,8 @@ Both of them are displayed in the terminal output.
 ```javascript
 module.exports = {
   rules: {
-    '@typescript-eslint/no-non-null-assertion': 'warn', // Generates warnings
-    '@typescript-eslint/no-explicit-any': 'error', // Fails CI
+    '@typescript-eslint/no-non-null-assertion': 'warn', // ⚠️ Generates warnings in termilan  🖥️
+    '@typescript-eslint/no-explicit-any': 'error', // ❌ Fails process in CI  ⚙️
   },
 };
 ```
@@ -107,8 +108,8 @@ $ eslint
    <CWD>/path/to/file.ts
         62:11  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
         26:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
-✖ 8 problems (1 errors, 1 warnings)
-  0 errors and 1 warning potentially fixable with the `--fix` option.
+✖ 2 problems (1 errors, 1 warnings)
+  1 errors and 1 warning potentially fixable with the `--fix` option.
 ```
 
 To limit avoid terminal pollution and have a meaningful use of warnings the CLI provides parameter `--max-warnings` to fail the process if there are too many warnings.

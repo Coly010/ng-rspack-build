@@ -3,9 +3,6 @@ import { minimatch } from 'minimatch';
 import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'url';
 import { TEST_FILE_PATTERNS } from '../index';
-import { bold, green, red, yellow } from 'ansis';
-import { writeFile } from 'fs/promises';
-import path from 'node:path';
 
 type ConfigEntry = {
   files: string[];
@@ -91,15 +88,17 @@ export function collectRuleViolations(
   );
 }
 
+export type RuleCountSummary = {
+  errors: number;
+  warnings: number;
+  fixable: boolean;
+};
 export type RuleSummary = {
   totalErrors: number;
   totalWarnings: number;
   fixableErrors: number;
   fixableWarnings: number;
-  ruleCounts: Record<
-    string,
-    { errors: number; warnings: number; fixable: boolean }
-  >;
+  ruleCounts: Record<string, RuleCountSummary>;
 };
 
 export function aggregateRuleSummary(
@@ -195,105 +194,57 @@ export function mergeRuleSummaries(summaries: RuleSummary[]): RuleSummary {
   );
 }
 
-export function printRuleSummary(summary: RuleSummary): void {
-  console.log(bold('ESLint Migration Overview:\n'));
-
-  console.log(
-    `${green(`✔ 🛠️ Fixable Errors: ${bold(summary.fixableErrors)}`)}`
-  );
-  console.log(
-    `${green(`✔ 🛠️ Fixable Warnings: ${bold(summary.fixableWarnings)}`)}`
-  );
-  console.log(`${red(`❌ Total Errors: ${bold(summary.totalErrors)}`)}`);
-  console.log(
-    `${yellow(`⚠️ Total Warnings: ${bold(summary.totalWarnings)}`)}\n`
-  );
-
-  const rules = Object.entries(summary.ruleCounts);
-  if (rules.length > 0) {
-    console.log(bold('Rule Details By Effort:'));
-
-    rules
-      .sort(sortByEffort)
-      .forEach(([ruleId, { errors, warnings, fixable }]) => {
-        const errorPart = errors ? `${red(`❌ ${errors}`)}` : '';
-        const warningPart = warnings ? `${yellow(`⚠️ ${warnings}`)}` : '';
-        const fixableTag = fixable ? green('🛠️') : '';
-
-        console.log(
-          `- ${bold(ruleId)}: ${[errorPart, warningPart]
-            .filter(Boolean)
-            .join(', ')} ${fixableTag}`
-        );
-      });
-  } else {
-    console.log('No rules violated 🎉');
-  }
-  console.log('\n');
-}
-
-export async function mdRuleSummary(
-  summary: RuleSummary,
-  file: string = path.join(process.cwd(), 'tools', 'reports', 'eslint-next.md')
-): Promise<void> {
-  let md = '';
-  md += '# ESLint Rule Summary\n\n';
-  md += '---\n\n';
-
-  md += `- **Fixable Errors:** ${summary.fixableErrors}\n`;
-  md += `- **Fixable Warnings:** ${summary.fixableWarnings}\n`;
-  md += `- **Total Errors:** ${summary.totalErrors}\n`;
-  md += `- **Total Warnings:** ${summary.totalWarnings}\n\n`;
-
-  md += '---\n\n';
-  const rules = Object.entries(summary.ruleCounts);
-  if (rules.length > 0) {
-    md += '## Rule Details By Effort\n\n';
-
-    rules
-      .sort(sortByEffort)
-      .forEach(([ruleId, { errors, warnings, fixable }]) => {
-        const errorPart = errors ? `❌ ${errors}` : '';
-        const warningPart = warnings ? `⚠️ ${warnings}` : '';
-        const fixableTag = fixable ? '🛠️' : '';
-
-        md += `- [x] **${ruleId}**: ${[errorPart, warningPart]
-          .filter(Boolean)
-          .join(', ')} ${fixableTag}\n`;
-      });
-  } else {
-    md += 'No rules violated 🎉';
-  }
-
-  //  await mkdir(path.dirname(file)).catch()
-  await writeFile(file, md);
-}
-
-function sortByEffort(
-  [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }],
-  [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]
+export function sortByEffort(
+  [ruleA, { errors: errorsA, warnings: warningsA, fixable: fixableA }]: [
+    string,
+    RuleCountSummary
+  ],
+  [ruleB, { errors: errorsB, warnings: warningsB, fixable: fixableB }]: [
+    string,
+    RuleCountSummary
+  ]
 ) {
-  // Sort by type (errors before warnings)
+  // Sort by type ( ❌ errors > ⚠️ warnings)
   if (errorsA > 0 && warningsA === 0 && errorsB === 0 && warningsB > 0)
     return -1;
   if (errorsB > 0 && warningsB === 0 && errorsA === 0 && warningsA > 0)
     return 1;
 
-  // Sort fixable errors before non-fixable
+  // Sort type errors by fixable (❌🛠 errors > ❌ errors)
   if (errorsA > 0 && errorsB > 0) {
     if (fixableA !== fixableB) return fixableB ? -1 : 1;
   }
 
-  // Sort fixable warnings before non-fixable
+  // Sort type warnings fixable (⚠️🛠 warnings > ⚠️ warnings)
   if (warningsA > 0 && warningsB > 0) {
     if (fixableA !== fixableB) return fixableB ? -1 : 1;
   }
 
-  // Sort by total number of issues (errors + warnings, descending)
+  // Sort by total number of issues (❌ errors + ⚠️ warnings count descending)
   const totalA = errorsA + warningsA;
   const totalB = errorsB + warningsB;
   if (totalA !== totalB) return totalB - totalA;
 
-  // Sort alphabetically by rule ID
+  // Sort alphabetically by rule ID (❌ errors + ⚠️ warnings name descending)
+  return ruleA.localeCompare(ruleB);
+}
+
+/**
+ * Compares two rule entries for sorting by fixability, issue count, and rule ID.
+ * @param a - The first rule entry ([ruleId, [count, fixable]]).
+ * @param b - The second rule entry ([ruleId, [count, fixable]]).
+ * @returns A number indicating the sort order.
+ */
+export function sortByFixable(
+  [ruleA, [countA, fixableA]]: [string, RuleViolations],
+  [ruleB, [countB, fixableB]]: [string, RuleViolations]
+): number {
+  // Sort by fixable (🛠❌⚠️ > ❌⚠️)
+  if (fixableA !== fixableB) return fixableB ? 1 : -1;
+
+  // Sort by number of issues (⚠️2 > ❌1)
+  if (countB !== countA) return countB - countA;
+
+  // Sort alphabetically by rule ID (a-rule > b-rule)
   return ruleA.localeCompare(ruleB);
 }
