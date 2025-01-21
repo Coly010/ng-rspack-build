@@ -86,6 +86,17 @@ ESLint Next Migration supports flexible configuration strategies tailored to you
 
 ---
 
+## **Reports**
+
+Reports help you to understand where low-hanging fruits or huge efforts are hidden.
+[Smart sorting](./docs/report.md#smart-sorting) optimizes the review process.
+
+The CLI serves the following reports:
+
+- [Inline Report](./docs/report.md#inline-report)
+- [Terminal Reports](./docs/report.md#terminal-report)
+- [Md Reports](./docs/report.md#md-report)
+
 ## **Usage Examples** 📚
 
 Explore practical scenarios to understand how to use ESLint Next Migration. Check out the following guides:

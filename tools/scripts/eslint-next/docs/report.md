@@ -1,6 +1,6 @@
 # EsLint Report
 
-## General Sorting
+## Smart Sorting
 
 ### Sort by effort
 
