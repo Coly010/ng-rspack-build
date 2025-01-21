@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@ng-rsbuild/plugin-angular": "workspace:*"
+  }
+}
