@@ -1,7 +1,7 @@
 const nx = require('@nx/eslint-plugin');
+const tseslint = require('typescript-eslint');
 
-module.exports = [
-  { ignores: ['**/*.d.ts', '**/*.d.ts.map', '**/dist'] },
+module.exports = tseslint.config(
   {
     files: ['**/*.json'],
     // Override or add rules here
@@ -34,4 +34,18 @@ module.exports = [
     // Override or add rules here
     rules: {},
   },
-];
+  {
+    ignores: [
+      '**/*.d.ts',
+      '**/*.d.ts.map',
+      '**/dist',
+      '**/*.mock.*',
+      '**/code-pushup.config.ts',
+      '**/rsbuild.config.ts',
+      '**/mocks/fixtures/**',
+      '**/__snapshots__/**',
+      '**/dist',
+      '**/*.md',
+    ],
+  }
+);

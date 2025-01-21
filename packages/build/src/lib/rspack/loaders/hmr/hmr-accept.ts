@@ -23,7 +23,6 @@ import { filter, take } from 'rxjs';
 // In future when we remove `yarn admin build` we should have this as a seperate compilation unit
 // which includes DOM lib.
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare const ng: any;
 declare const document: any;
 declare const MutationObserver: any;

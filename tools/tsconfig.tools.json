@@ -6,7 +6,9 @@
     "module": "ESNext",
     "target": "es5",
     "types": ["node"],
-    "importHelpers": false
+    "importHelpers": false,
+    "esModuleInterop": true,
+    "downlevelIteration": true
   },
   "include": ["**/*.ts"]
 }

@@ -59,7 +59,6 @@ export async function applicationGenerator(
     bundler: 'esbuild',
     ssr: false,
     addTailwind: false,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any);
 
   const projectOffsetFromRoot = offsetFromRoot(projectRoot);
