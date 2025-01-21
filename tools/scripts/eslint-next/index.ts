@@ -1,13 +1,11 @@
 import {
   aggregateRuleSummary,
   collectRuleViolations,
-  mdRuleSummary,
   mergeRuleSummaries,
-  printRuleSummary,
   RulesCollectionResult,
   RuleSummary,
 } from './src/utils';
-import { cyan, green, red, yellow, bold } from 'ansis';
+import { bold, cyan, green, red, yellow } from 'ansis';
 import { ESLint } from 'eslint';
 import { getFile } from './src/file-creation';
 import { existsSync } from 'node:fs';
@@ -20,7 +18,9 @@ import { dirname } from 'path';
  * Lints all projects.
  * @param projects List of Nx projects to lint.
  */
-export const lintAllProjects = async (projects: ProjectConfiguration[]) => {
+export const lintAllProjects = async (
+  projects: ProjectConfiguration[]
+): Promise<RuleSummary> => {
   let allResults: RuleSummary = {
     fixableErrors: 0,
     fixableWarnings: 0,
@@ -103,8 +103,7 @@ export const lintAllProjects = async (projects: ProjectConfiguration[]) => {
     })
   );
 
-  printRuleSummary(allResults);
-  await mdRuleSummary(allResults);
+  return allResults;
 };
 
 export const TEST_FILE_PATTERNS = [

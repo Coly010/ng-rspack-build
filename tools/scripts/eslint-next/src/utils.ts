@@ -234,12 +234,7 @@ export function printRuleSummary(summary: RuleSummary): void {
 
 export async function mdRuleSummary(
   summary: RuleSummary,
-  file: string = path.join(
-    process.cwd(),
-    'tools',
-    'reports',
-    'eslint.report.md'
-  )
+  file: string = path.join(process.cwd(), 'tools', 'reports', 'eslint-next.md')
 ): Promise<void> {
   let md = '';
   md += '# ESLint Rule Summary\n\n';

@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky",
-    "eslint-migration-next": "pnpx tsx --tsconfig tools/tsconfig.tools.json tools/scripts/eslint-migration-next/bin.ts",
+    "eslint-next/nx": "pnpx tsx --tsconfig tools/tsconfig.tools.json tools/scripts/eslint-next/bin.ts",
     "check-format": "pnpx nx format:check",
     "check-commit": "pnpm exec commitlint --from HEAD~1 --to HEAD",
     "release:rsbuild:dry": "pnpm nx release --projects=rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
