@@ -94,12 +94,15 @@ export async function buildAndAnalyze(
     builder = ts.createAbstractBuilder(typeScriptProgram, host);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getTypeChecker = () => builder.getProgram().getTypeChecker();
   const fileEmitter = createFileEmitter(
     builder,
-    mergeTransformers({}, angularCompiler!.prepareEmit().transformers),
+    // @ts-expect-error: angular compiler will be defined
+    mergeTransformers({}, angularCompiler?.prepareEmit().transformers ?? {}),
     () => [],
-    angularCompiler!
+    // @ts-expect-error: angular compiler will be defined
+    angularCompiler ?? undefined
   );
 
   return fileEmitter;

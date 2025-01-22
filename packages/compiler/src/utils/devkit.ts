@@ -33,12 +33,14 @@ const angularPackageJsonPath = require.resolve(
 const angularPackageJson = require(angularPackageJsonPath);
 const VERSION = angularPackageJson.version.split('.').at(0);
 
-const angularMajor = Number(VERSION.major);
+const angularMajor = Number(VERSION);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let sourceFileCache: any;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 let cjt: Function;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let jt: any;
 
 if (angularMajor < 15) {

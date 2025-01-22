@@ -390,17 +390,32 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/build
 
+  apps/rspack/ssr/css:
+    dependencies:
+      '@ng-rspack/build':
+        specifier: workspace:*
+        version: link:../../../../packages/build
+
   packages/build:
     dependencies:
       '@angular/build':
         specifier: '>=18.0.0 <20.0.0'
         version: 19.0.5(@angular/compiler-cli@19.0.5(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.7.2))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/platform-server@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/compiler@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.0.5(@angular/animations@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))))(@angular/ssr@19.0.5(whst2uom2sykn2ay52lywk7vqm))(@types/node@18.16.9)(chokidar@4.0.3)(less@4.2.0)(postcss@8.5.1)(sass-embedded@1.83.4)(stylus@0.64.0)(terser@5.36.0)(typescript@5.7.2)
+      '@angular/common':
+        specifier: 19.0.5
+        version: 19.0.5(@angular/core@19.0.5(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
+      '@angular/ssr':
+        specifier: 19.0.5
+        version: 19.0.5(whst2uom2sykn2ay52lywk7vqm)
       '@ng-rspack/compiler':
         specifier: workspace:*
         version: link:../compiler
       '@rspack/core':
         specifier: '>=1.0.5 <2.0.0'
         version: 1.1.8(@swc/helpers@0.5.15)
+      express:
+        specifier: 4.21.1
+        version: 4.21.1
       sass-embedded:
         specifier: ^1.79.3
         version: 1.83.4
@@ -413,6 +428,9 @@ importers:
       webpack-merge:
         specifier: ^6.0.1
         version: 6.0.1
+      ws:
+        specifier: ^8.18.0
+        version: 8.18.0
 
   packages/compiler:
     dependencies:
@@ -463,7 +481,7 @@ importers:
         version: 1.1.8(@swc/helpers@0.5.15)
       '@rspack/dev-server':
         specifier: '>=1.0.5 <2.0.0'
-        version: 1.0.10(@rspack/core@1.1.8(@swc/helpers@0.5.15))(@types/express@4.17.21)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+        version: 1.0.9(@rspack/core@1.1.8(@swc/helpers@0.5.15))(@types/express@4.17.21)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -3063,12 +3081,6 @@ packages:
     peerDependenciesMeta:
       '@swc/helpers':
         optional: true
-
-  '@rspack/dev-server@1.0.10':
-    resolution: {integrity: sha512-iDsEtP0jNHRm4LJxL00QFTlOuqkdxIFxnd69h0KrFadmtxAWiDLIe4vYdZXWF74w4MezsJFx6dB2nUM/Ok8utA==}
-    engines: {node: '>= 18.12.0'}
-    peerDependencies:
-      '@rspack/core': '*'
 
   '@rspack/dev-server@1.0.9':
     resolution: {integrity: sha512-VF+apLFfl5LWIhVbfkJ5ccU0Atl5mi+sGTkx+XtE1tbUmMJkde0nm/4+eaQCud7oGl+ZCzt4kW14uuzLSiEGDw==}
@@ -10133,7 +10145,7 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.26.2
-      '@babel/generator': 7.26.2
+      '@babel/generator': 7.26.5
       '@babel/helper-compilation-targets': 7.26.5
       '@babel/helper-module-transforms': 7.26.0(@babel/core@7.26.0)
       '@babel/helpers': 7.26.0
@@ -13898,27 +13910,6 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.15
 
-  '@rspack/dev-server@1.0.10(@rspack/core@1.1.8(@swc/helpers@0.5.15))(@types/express@4.17.21)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))':
-    dependencies:
-      '@rspack/core': 1.1.8(@swc/helpers@0.5.15)
-      chokidar: 3.6.0
-      connect-history-api-fallback: 2.0.0
-      express: 4.21.1
-      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
-      mime-types: 2.1.35
-      p-retry: 4.6.2
-      webpack-dev-middleware: 7.4.2(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
-      webpack-dev-server: 5.0.4(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
-      ws: 8.18.0
-    transitivePeerDependencies:
-      - '@types/express'
-      - bufferutil
-      - debug
-      - supports-color
-      - utf-8-validate
-      - webpack
-      - webpack-cli
-
   '@rspack/dev-server@1.0.9(@rspack/core@1.1.8(@swc/helpers@0.5.15))(@types/express@4.17.21)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))':
     dependencies:
       '@rspack/core': 1.1.8(@swc/helpers@0.5.15)
@@ -15753,12 +15744,12 @@ snapshots:
 
   css-loader@7.1.2(@rspack/core@1.1.8(@swc/helpers@0.5.15))(webpack@5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.49)
-      postcss: 8.4.49
-      postcss-modules-extract-imports: 3.1.0(postcss@8.4.49)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.4.49)
-      postcss-modules-scope: 3.2.1(postcss@8.4.49)
-      postcss-modules-values: 4.0.0(postcss@8.4.49)
+      icss-utils: 5.1.0(postcss@8.5.1)
+      postcss: 8.5.1
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.1)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.1)
+      postcss-modules-scope: 3.2.1(postcss@8.5.1)
+      postcss-modules-values: 4.0.0(postcss@8.5.1)
       postcss-value-parser: 4.2.0
       semver: 7.6.3
     optionalDependencies:
@@ -17103,10 +17094,6 @@ snapshots:
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
-
-  icss-utils@5.1.0(postcss@8.4.49):
-    dependencies:
-      postcss: 8.4.49
 
   icss-utils@5.1.0(postcss@8.5.1):
     dependencies:
@@ -19137,20 +19124,9 @@ snapshots:
       postcss: 8.5.1
       postcss-selector-parser: 6.1.2
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.4.49):
-    dependencies:
-      postcss: 8.4.49
-
   postcss-modules-extract-imports@3.1.0(postcss@8.5.1):
     dependencies:
       postcss: 8.5.1
-
-  postcss-modules-local-by-default@4.2.0(postcss@8.4.49):
-    dependencies:
-      icss-utils: 5.1.0(postcss@8.4.49)
-      postcss: 8.4.49
-      postcss-selector-parser: 7.0.0
-      postcss-value-parser: 4.2.0
 
   postcss-modules-local-by-default@4.2.0(postcss@8.5.1):
     dependencies:
@@ -19159,20 +19135,10 @@ snapshots:
       postcss-selector-parser: 7.0.0
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.4.49):
-    dependencies:
-      postcss: 8.4.49
-      postcss-selector-parser: 7.0.0
-
   postcss-modules-scope@3.2.1(postcss@8.5.1):
     dependencies:
       postcss: 8.5.1
       postcss-selector-parser: 7.0.0
-
-  postcss-modules-values@4.0.0(postcss@8.4.49):
-    dependencies:
-      icss-utils: 5.1.0(postcss@8.4.49)
-      postcss: 8.4.49
 
   postcss-modules-values@4.0.0(postcss@8.5.1):
     dependencies:
@@ -19496,7 +19462,7 @@ snapshots:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.4.49
+      postcss: 8.5.1
       source-map: 0.6.1
 
   resolve.exports@2.0.3: {}

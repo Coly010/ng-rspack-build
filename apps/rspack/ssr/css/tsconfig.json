@@ -13,6 +13,12 @@
   "include": [],
   "references": [
     {
+      "path": "../../../../packages/compiler"
+    },
+    {
+      "path": "../../../../packages/build"
+    },
+    {
       "path": "./tsconfig.editor.json"
     },
     {

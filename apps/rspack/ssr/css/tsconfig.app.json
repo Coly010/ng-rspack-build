@@ -20,5 +20,13 @@
     "src/**/*.spec.js",
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx"
+  ],
+  "references": [
+    {
+      "path": "../../../../packages/compiler/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../../packages/build/tsconfig.lib.json"
+    }
   ]
 }

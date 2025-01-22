@@ -3,6 +3,14 @@ import { createFileEmitter } from './file-emitter';
 import { sourceFileFromCode } from '@ng-rspack/testing-utils';
 import { NgtscProgram } from '@angular/compiler-cli';
 
+vi.mock('../utils/load-compiler-cli', () => ({
+  loadCompilerCli: vi.fn().mockReturnValue({
+    OptimizeFor: {
+      WholeProgram: 1,
+    },
+  }),
+}));
+
 describe('createFileEmitter', () => {
   const mockSourceFile = sourceFileFromCode({
     path: 'file.ts',

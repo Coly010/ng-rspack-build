@@ -35,13 +35,14 @@ export function augmentHostWithResources(
     code: string,
     id: string,
     options?: { ssr?: boolean }
-  ) => ReturnType<any> | null,
+  ) => Promise<string> | null,
   options: {} & {
     inlineStylesExtension?: InlineStyleExtension;
     isProd?: boolean;
   } = {}
 ) {
   const resourceHost = host as CompilerHost;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const baseGetSourceFile = (
     resourceHost as ts.CompilerHost
   ).getSourceFile.bind(resourceHost);

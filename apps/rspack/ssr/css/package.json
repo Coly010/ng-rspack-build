@@ -2,5 +2,8 @@
   "name": "rspack-ssr-css",
   "version": "0.0.1",
   "private": true,
-  "scripts": {}
+  "scripts": {},
+  "dependencies": {
+    "@ng-rspack/build": "workspace:*"
+  }
 }

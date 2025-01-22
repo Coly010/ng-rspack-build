@@ -5,20 +5,28 @@ import {
   describe,
   expect,
   MockInstance,
+  vi,
 } from 'vitest';
 import {
   DEFAULT_NG_COMPILER_OPTIONS,
   setupCompilation,
-} from './setup-compilation.ts';
-import { PluginAngularOptions } from '../../models/plugin-options.ts';
+  SetupCompilationOptions,
+} from './setup-compilation';
 import { RsbuildConfig } from '@rsbuild/core';
 import * as ts from 'typescript';
 import * as ngCli from '@angular/compiler-cli';
-import * as augmentModule from './augments.ts';
+import * as loadCompilerCli from '../utils/load-compiler-cli';
+import * as augmentModule from './augments';
 
 vi.mock('@angular/compiler-cli');
 
 vi.mock('typescript');
+
+vi.mock('../utils/load-compiler-cli', () => ({
+  loadCompilerCli: vi.fn().mockReturnValue({
+    readConfiguration: vi.fn(),
+  }),
+}));
 
 describe('setupCompilation', () => {
   const rsBuildConfig: RsbuildConfig = {
@@ -29,7 +37,7 @@ describe('setupCompilation', () => {
   };
 
   const pluginAngularOptions: Pick<
-    PluginAngularOptions,
+    SetupCompilationOptions,
     'tsconfigPath' | 'jit' | 'inlineStylesExtension'
   > = {
     tsconfigPath: 'tsconfig.angular.json',
@@ -57,21 +65,20 @@ describe('setupCompilation', () => {
         options?: { ssr?: boolean }
       ) => unknown,
       options?: {
-        inlineStylesExtension?: PluginAngularOptions['inlineStylesExtension'];
+        inlineStylesExtension?: 'css' | 'scss' | 'sass';
         isProd?: boolean;
       }
     ],
     void
   >;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     readConfigurationSpy = vi
-      .spyOn(ngCli, 'readConfiguration')
+      .spyOn(await loadCompilerCli.loadCompilerCli(), 'readConfiguration')
       .mockReturnValue({
         options: pluginAngularOptions,
         rootNames: ['main.ts'],
       });
-
     createIncrementalCompilerHostSpy = vi
       .spyOn(ts, 'createIncrementalCompilerHost')
       .mockReturnValue(mockHost);
@@ -89,25 +96,24 @@ describe('setupCompilation', () => {
     vi.restoreAllMocks();
   });
 
-  it('should return correct compilation configuration', () => {
-    expect(setupCompilation(rsBuildConfig, pluginAngularOptions)).toStrictEqual(
-      {
-        compilerOptions: {
-          inlineStylesExtension: 'css',
-          jit: false,
-          tsconfigPath: expect.stringMatching(/tsconfig.angular.json$/),
-        },
-        host: expect.any(Object),
-        rootNames: ['main.ts'],
-      }
-    );
+  it('should return correct compilation configuration', async () => {
+    expect(
+      await setupCompilation(rsBuildConfig, pluginAngularOptions)
+    ).toStrictEqual({
+      compilerOptions: {
+        inlineStylesExtension: 'css',
+        jit: false,
+        tsconfigPath: expect.stringMatching(/tsconfig.angular.json$/),
+      },
+      host: expect.any(Object),
+      rootNames: ['main.ts'],
+    });
   });
 
-  it('should read configuration from rs build configuration if given', () => {
-    expect(() =>
+  it('should read configuration from rs build configuration if given', async () => {
+    await expect(
       setupCompilation(rsBuildConfig, pluginAngularOptions)
-    ).not.toThrow();
-
+    ).resolves.not.toThrow();
     expect(readConfigurationSpy).toHaveBeenCalledTimes(1);
     expect(readConfigurationSpy).toHaveBeenCalledWith(
       expect.stringMatching(/tsconfig.rsbuild.json$/),
@@ -115,8 +121,8 @@ describe('setupCompilation', () => {
     );
   });
 
-  it('should read configuration from plugin angular options if rs build configuration is not given', () => {
-    expect(() =>
+  it('should read configuration from plugin angular options if rs build configuration is not given', async () => {
+    await expect(
       setupCompilation(
         {
           ...rsBuildConfig,
@@ -124,7 +130,7 @@ describe('setupCompilation', () => {
         },
         pluginAngularOptions
       )
-    ).not.toThrow();
+    ).resolves.not.toThrow();
 
     expect(readConfigurationSpy).toHaveBeenCalledTimes(1);
     expect(readConfigurationSpy).toHaveBeenCalledWith(
@@ -133,10 +139,10 @@ describe('setupCompilation', () => {
     );
   });
 
-  it('should use the parsed compiler options to create an incremental compiler host', () => {
-    expect(() =>
+  it('should use the parsed compiler options to create an incremental compiler host', async () => {
+    await expect(
       setupCompilation(rsBuildConfig, pluginAngularOptions)
-    ).not.toThrow();
+    ).resolves.not.toThrow();
     expect(createIncrementalCompilerHostSpy).toHaveBeenCalledTimes(1);
     expect(createIncrementalCompilerHostSpy).toHaveBeenCalledWith({
       inlineStylesExtension: 'css',
@@ -145,24 +151,25 @@ describe('setupCompilation', () => {
     });
   });
 
-  it('should augment the host with resources if not in JIT mode', () => {
-    expect(() =>
+  it('should augment the host with resources if not in JIT mode', async () => {
+    await expect(
       setupCompilation(rsBuildConfig, pluginAngularOptions)
-    ).not.toThrow();
+    ).resolves.not.toThrow();
     expect(augmentHostWithResourcesSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should augment the host with resources if in JIT mode', () => {
-    expect(() =>
-      setupCompilation(rsBuildConfig, {
-        ...pluginAngularOptions,
-        jit: true,
-      })
+    expect(
+      async () =>
+        await setupCompilation(rsBuildConfig, {
+          ...pluginAngularOptions,
+          jit: true,
+        })
     ).not.toThrow();
     expect(augmentHostWithResourcesSpy).not.toHaveBeenCalled();
   });
 
-  it('should not filter rootNames if useAllRoots is true', () => {
+  it('should not filter rootNames if useAllRoots is true', async () => {
     const rootNames = ['src/main.ts', 'src/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
@@ -171,12 +178,18 @@ describe('setupCompilation', () => {
     const useAllRoots = true;
 
     expect(
-      setupCompilation(rsBuildConfig, pluginAngularOptions, false, useAllRoots)
-        .rootNames
+      (
+        await setupCompilation(
+          rsBuildConfig,
+          pluginAngularOptions,
+          false,
+          useAllRoots
+        )
+      ).rootNames
     ).toBe(rootNames);
   });
 
-  it('should filter rootNames for files ending with "main.ts" if useAllRoots is false and isServer is false', () => {
+  it('should filter rootNames for files ending with "main.ts" if useAllRoots is false and isServer is false', async () => {
     const rootNames = ['src/main.ts', 'other/main.ts', 'src/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
@@ -186,16 +199,18 @@ describe('setupCompilation', () => {
     const isServer = false;
 
     expect(
-      setupCompilation(
-        rsBuildConfig,
-        pluginAngularOptions,
-        isServer,
-        useAllRoots
+      (
+        await setupCompilation(
+          rsBuildConfig,
+          pluginAngularOptions,
+          isServer,
+          useAllRoots
+        )
       ).rootNames
     ).toStrictEqual(['src/main.ts', 'other/main.ts']);
   });
 
-  it('should filter rootNames for files not ending with "main.ts" if useAllRoots is false and isServer is true', () => {
+  it('should filter rootNames for files not ending with "main.ts" if useAllRoots is false and isServer is true', async () => {
     const rootNames = ['src/main.ts', 'src/server.ts', 'other/server.ts'];
     readConfigurationSpy.mockReturnValue({
       options: {},
@@ -205,7 +220,7 @@ describe('setupCompilation', () => {
     const isServer = true;
 
     expect(
-      setupCompilation(
+      await setupCompilation(
         rsBuildConfig,
         pluginAngularOptions,
         isServer,

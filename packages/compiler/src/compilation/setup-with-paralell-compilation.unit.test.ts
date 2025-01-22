@@ -31,7 +31,8 @@ describe('setupCompilationWithParallelCompilation', () => {
   };
 
   const initializeSpy = vi
-    .fn((..._: any[]) => Promise.resolve(void 0))
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .fn((..._: unknown[]) => Promise.resolve(void 0))
     .mockResolvedValue(void 0) as unknown as I;
   const parallelCompilationSpy = vi
     .spyOn(parallelCompilation, 'ParallelCompilation')
