@@ -41,9 +41,6 @@
     "tslib": "^2.3.0",
     "typescript": "5.6.3"
   },
-  "devDependencies": {
-    "@ng-rspack/testing-utils": "workspace:*"
-  },
   "peerDependencies": {
     "@angular/compiler-cli": ">=19.0.0 <20.0.0",
     "@angular-devkit/build-angular": ">=19.0.0 <20.0.0",

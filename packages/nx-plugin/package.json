@@ -22,7 +22,7 @@
     "@nx/devkit": "20.2.2",
     "@nx/angular": "20.2.2",
     "@nx/js": "20.2.2",
-    "@ng-rspack/build": "19.0.0-alpha.14",
+    "@ng-rspack/build": "workspace:*",
     "webpack-merge": "^6.0.1",
     "tslib": "^2.3.0"
   },
