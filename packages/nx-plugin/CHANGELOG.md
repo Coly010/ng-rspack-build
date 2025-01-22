@@ -1,3 +1,18 @@
+## 19.0.0-alpha.20 (2025-01-22)
+
+### 🚀 Features
+
+- **compiler:** add compiler package to house compiler logic ([#63](https://github.com/Coly010/ng-rspack-build/pull/63))
+
+### 🩹 Fixes
+
+- **nx:** fix lint ([#48](https://github.com/Coly010/ng-rspack-build/pull/48))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+- Michael Hladky @BioPhoton
+
 ## 19.0.0-alpha.14 (2025-01-06)
 
 ### 🧱 Updated Dependencies

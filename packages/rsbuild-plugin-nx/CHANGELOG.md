@@ -1,3 +1,18 @@
+## 19.0.0-alpha.20 (2025-01-22)
+
+### 🚀 Features
+
+- **rsbuild-plugin-nx:** ensure style is set in createConfig ([d90bee5](https://github.com/Coly010/ng-rspack-build/commit/d90bee5))
+- **rsbuild-plugin-nx:** add nx plugin ([9d9dcc1](https://github.com/Coly010/ng-rspack-build/commit/9d9dcc1))
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-nx:** ensure plugin-angular is installed ([0d60730](https://github.com/Coly010/ng-rspack-build/commit/0d60730))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.18 (2025-01-15)
 
 This was a version bump only for rsbuild-plugin-nx to align it with other projects, there were no code changes.

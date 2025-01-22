@@ -1,3 +1,50 @@
+## 19.0.0-alpha.20 (2025-01-22)
+
+### 🚀 Features
+
+- **build:** allow creating server config via util ([19205fb](https://github.com/Coly010/ng-rspack-build/commit/19205fb))
+- **compiler:** add compiler package to house compiler logic ([#63](https://github.com/Coly010/ng-rspack-build/pull/63))
+- **docs:** add docs site ([#42](https://github.com/Coly010/ng-rspack-build/pull/42))
+- **nx:** fix compiler options for rspack ([b677061](https://github.com/Coly010/ng-rspack-build/commit/b677061))
+- **rsbuild-plugin-angular:** add initial package ([#30](https://github.com/Coly010/ng-rspack-build/pull/30))
+- **rsbuild-plugin-angular:** add createServer util ([39840fd](https://github.com/Coly010/ng-rspack-build/commit/39840fd))
+- **rsbuild-plugin-angular:** correctly set ng env vars ([b81c6d8](https://github.com/Coly010/ng-rspack-build/commit/b81c6d8))
+- **rsbuild-plugin-angular:** expose express app from createServer for modification ([002d602](https://github.com/Coly010/ng-rspack-build/commit/002d602))
+- **rsbuild-plugin-angular:** update dev server config ([efde6fc](https://github.com/Coly010/ng-rspack-build/commit/efde6fc))
+- **rsbuild-plugin-angular:** setup rsbuild environments correctly ([8265f96](https://github.com/Coly010/ng-rspack-build/commit/8265f96))
+- **rsbuild-plugin-angular:** handle ssr dev server changes ([7475540](https://github.com/Coly010/ng-rspack-build/commit/7475540))
+- **rsbuild-plugin-angular:** improve build speed using parallel compilation ([becac29](https://github.com/Coly010/ng-rspack-build/commit/becac29))
+- **rsbuild-plugin-angular:** allow overriding paths to static assets ([2c6f318](https://github.com/Coly010/ng-rspack-build/commit/2c6f318))
+- **rsbuild-plugin-angular:** add withConfigurations and fileReplacement support #43 ([#46](https://github.com/Coly010/ng-rspack-build/pull/46), [#43](https://github.com/Coly010/ng-rspack-build/issues/43))
+- **rsbuild-plugin-angular:** use compileStringAsync for faster sass compilation #61 ([#62](https://github.com/Coly010/ng-rspack-build/pull/62), [#61](https://github.com/Coly010/ng-rspack-build/issues/61))
+- **rsbuild-plugin-nx:** add nx plugin ([9d9dcc1](https://github.com/Coly010/ng-rspack-build/commit/9d9dcc1))
+- **rsbuild-plugin-nx:** ensure style is set in createConfig ([d90bee5](https://github.com/Coly010/ng-rspack-build/commit/d90bee5))
+
+### 🩹 Fixes
+
+- **docs:** deploy ([5cec56e](https://github.com/Coly010/ng-rspack-build/commit/5cec56e))
+- **docs:** content should be below navbar ([137b7c9](https://github.com/Coly010/ng-rspack-build/commit/137b7c9))
+- **docs:** hero container should be full size ([1932873](https://github.com/Coly010/ng-rspack-build/commit/1932873))
+- **docs:** mobile ui tidy up ([d883ace](https://github.com/Coly010/ng-rspack-build/commit/d883ace))
+- **docs:** mobile styling ([89f6c8e](https://github.com/Coly010/ng-rspack-build/commit/89f6c8e))
+- **docs:** add seo emta ([2928bda](https://github.com/Coly010/ng-rspack-build/commit/2928bda))
+- **docs:** plugin package name in get started guide ([#47](https://github.com/Coly010/ng-rspack-build/pull/47))
+- **nx:** fix lint ([#48](https://github.com/Coly010/ng-rspack-build/pull/48))
+- **rsbuild-plugin-angular:** only set isServer when running in server env ([48332d1](https://github.com/Coly010/ng-rspack-build/commit/48332d1))
+- **rsbuild-plugin-angular:** handle ssr dev server live reloads ([481dfcb](https://github.com/Coly010/ng-rspack-build/commit/481dfcb))
+- **rsbuild-plugin-angular:** ensure package patch is resolved correctly ([b11ae63](https://github.com/Coly010/ng-rspack-build/commit/b11ae63))
+- **rsbuild-plugin-angular:** process all npm packages in build ([0361bc7](https://github.com/Coly010/ng-rspack-build/commit/0361bc7))
+- **rsbuild-plugin-angular:** force rsbuild to use node.js module resolution ([34b6b80](https://github.com/Coly010/ng-rspack-build/commit/34b6b80))
+- **rsbuild-plugin-angular:** ensure ssr server serves assets correctly ([0a69b55](https://github.com/Coly010/ng-rspack-build/commit/0a69b55))
+- **rsbuild-plugin-angular:** allow tsconfig sourcemap pass through ([#56](https://github.com/Coly010/ng-rspack-build/pull/56))
+- **rsbuild-plugin-nx:** ensure plugin-angular is installed ([0d60730](https://github.com/Coly010/ng-rspack-build/commit/0d60730))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+- Michael Hladky @BioPhoton
+- Muhammad Faisal @mfa-leanix
+
 ## 0.0.35 (2024-12-29)
 
 ### 🚀 Features
