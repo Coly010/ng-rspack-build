@@ -1,9 +1,11 @@
 !dist
 dist/tsconfig.lib.tsbuildinfo
-eslint.config.js
+eslint.config.*js
 project.json
 tsconfig.json
 tsconfig.lib.json
 tsconfig.spec.json
-vite.config.ts
+vitest*.config.*ts
 src/**/*.ts
+mocks
+**/*.tgz

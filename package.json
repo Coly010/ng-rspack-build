@@ -7,12 +7,12 @@
     "eslint-next/nx": "pnpx tsx --tsconfig tools/tsconfig.tools.json tools/scripts/eslint-next/bin.ts",
     "check-format": "pnpx nx format:check",
     "check-commit": "pnpm exec commitlint --from HEAD~1 --to HEAD",
-    "release:rsbuild:dry": "pnpm nx release --projects=rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
-    "release:rsbuild:pre": "pnpm nx release prerelease --projects=rsbuild-plugin-angular,rsbuild-plugin-nx",
-    "release:rspack:dry": "pnpm nx release --projects=build,nx --dry-run",
-    "release:rspack:pre": "pnpm nx release prerelease --projects=build,nx",
-    "release:all:dry": "pnpm nx release --projects=build,nx,rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
-    "release:all:pre": "pnpm nx release prerelease --projects=build,nx,rsbuild-plugin-angular,rsbuild-plugin-nx"
+    "release:rsbuild:dry": "pnpm nx release --projects=compiler,rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
+    "release:rsbuild:pre": "pnpm nx release prerelease --projects=compiler,rsbuild-plugin-angular,rsbuild-plugin-nx",
+    "release:rspack:dry": "pnpm nx release --projects=compiler,build,nx --dry-run",
+    "release:rspack:pre": "pnpm nx release prerelease --projects=compiler,build,nx",
+    "release:all:dry": "pnpm nx release --projects=compiler,build,nx,rsbuild-plugin-angular,rsbuild-plugin-nx --dry-run",
+    "release:all:pre": "pnpm nx release prerelease --projects=compiler,build,nx,rsbuild-plugin-angular,rsbuild-plugin-nx"
   },
   "private": true,
   "devDependencies": {

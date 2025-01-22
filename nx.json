@@ -74,7 +74,8 @@
     },
     "version": {
       "generatorOptions": {
-        "currentVersionResolver": "git-tag"
+        "currentVersionResolver": "git-tag",
+        "fallbackCurrentVersionResolver": "disk"
       },
       "preVersionCommand": "pnpm nx run-many -t build --exclude=\"apps/**\" --skip-sync"
     }
