@@ -1,4 +1,3 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { createServer } from '@ng-rsbuild/plugin-angular/ssr';
 import bootstrap from './main.server';
 

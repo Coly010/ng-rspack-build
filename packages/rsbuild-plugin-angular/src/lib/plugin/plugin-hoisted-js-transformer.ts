@@ -2,19 +2,19 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { NgtscProgram } from '@angular/compiler-cli';
 import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import * as ts from 'typescript';
-import { setupCompilation } from './compilation/setup-compilation';
-import { augmentHostWithCaching } from './compilation/augments';
 import {
+  FileEmitter,
+  SourceFileCache,
+  augmentHostWithCaching,
   buildAndAnalyze,
   buildAndAnalyzeWithParallelCompilation,
-} from './compilation/build-and-analyze';
+  setupCompilation,
+  setupCompilationWithParallelCompilation,
+  JS_ALL_EXT_REGEX,
+} from '@ng-rspack/compiler';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
-import { SourceFileCache } from './utils/devkit';
-import { FileEmitter } from './models';
-import { JS_ALL_EXT_REGEX } from './utils/regex-filters';
 import { maxWorkers } from '../utils/utils';
-import { setupCompilationWithParallelCompilation } from './compilation/setup-with-paralell-compilation';
 
 export const pluginHoistedJsTransformer = (
   options: PluginAngularOptions
@@ -51,7 +51,7 @@ export const pluginHoistedJsTransformer = (
 
     api.onBeforeEnvironmentCompile(async () => {
       if (!pluginOptions.useParallelCompilation) {
-        const { rootNames, compilerOptions, host } = setupCompilation(
+        const { rootNames, compilerOptions, host } = await setupCompilation(
           config,
           pluginOptions,
           isServer,

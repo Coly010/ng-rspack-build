@@ -19,6 +19,7 @@ export default {
         'workflows',
         'testing',
         'repo',
+        'build',
       ].sort();
       return [RuleConfigSeverity.Error, 'always', scopes];
     },

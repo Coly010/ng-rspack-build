@@ -58,6 +58,9 @@
       "options": {
         "max-warnings": 0
       }
+    },
+    "integration-test": {
+      "cache": true
     }
   },
   "release": {

@@ -1,6 +1,10 @@
 {
   "name": "@ng-rspack/build",
+  "version": "19.0.0-alpha.14",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Rspack Plugin and Loaders for building Angular.",
   "author": "Colum Ferry",
   "license": "MIT",
@@ -17,62 +21,48 @@
     "Angular",
     "Rspack"
   ],
-  "version": "19.0.0-alpha.14",
-  "scripts": {
-    "postinstall": "node ./src/lib/patch/patch-angular-build.js"
-  },
-  "dependencies": {
-    "sass-loader": "^16.0.2",
-    "sass-embedded": "^1.79.3",
-    "express": "4.21.1",
-    "http-proxy-middleware": "3.0.3",
-    "tslib": "^2.3.0"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21"
-  },
-  "peerDependencies": {
-    "@angular/compiler-cli": ">=19.0.0 <20.0.0",
-    "@rspack/core": ">=1.0.5 <2.0.0",
-    "@angular/build": ">=18.0.0 <20.0.0",
-    "sass": "^1.79.3",
-    "@module-federation/enhanced": "^0.8.5",
-    "@module-federation/sdk": "^0.8.5",
-    "@nx/devkit": ">=20.0.0 <21.0.0",
-    "@nx/js": ">=20.0.0 <21.0.0",
-    "nx": ">=20.0.0 <21.0.0"
-  },
+  "scripts": {},
   "type": "commonjs",
   "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
   "typings": "./dist/lib/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/lib/index.d.ts",
       "default": "./dist/lib/index.js"
     },
-    "./rsbuild": {
-      "types": "./dist/lib/rsbuild/index.d.ts",
-      "default": "./dist/lib/rsbuild/index.js"
+    "./loaders/angular-partial-transform-loader": {
+      "types": "./dist/lib/plugins/loaders/angular-partial-transform.loader.d.ts",
+      "default": "./dist/lib/plugins/loaders/angular-partial-transform.loader.js"
     },
-    "./rspack": {
-      "types": "./dist/lib/rspack/index.d.ts",
-      "default": "./dist/lib/rspack/index.js"
+    "./loaders/angular-loader": {
+      "types": "./dist/lib/plugins/loaders/angular-transform.loader.d.ts",
+      "default": "./dist/lib/plugins/loaders/angular-transform.loader.js"
     },
-    "./rspack/loaders/hmr-loader": {
-      "types": "./dist/lib/rspack/loaders/hmr/hmr-loader.d.ts",
-      "default": "./dist/lib/rspack/loaders/hmr/hmr-loader.js"
-    },
-    "./rspack/loaders/js-loader": {
-      "types": "./dist/lib/rspack/loaders/js-loader.d.ts",
-      "default": "./dist/lib/rspack/loaders/js-loader.js"
-    },
-    "./rspack/loaders/angular-loader": {
-      "types": "./dist/lib/rspack/loaders/angular-loader.d.ts",
-      "default": "./dist/lib/rspack/loaders/angular-loader.js"
+    "./ssr": {
+      "types": "./dist/lib/ssr/server.d.ts",
+      "default": "./dist/lib/ssr/server.js"
     }
   },
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "sass-loader": "^16.0.2",
+    "sass-embedded": "^1.79.3",
+    "tslib": "^2.3.0",
+    "@ng-rspack/compiler": "workspace:*",
+    "webpack-merge": "^6.0.1",
+    "ws": "^8.18.0",
+    "@angular/common": "19.0.5",
+    "@angular/ssr": "19.0.5",
+    "express": "4.21.1"
   },
-  "types": "./dist/lib/index.d.ts"
+  "devDependencies": {},
+  "peerDependencies": {
+    "@rspack/core": ">=1.0.5 <2.0.0",
+    "@angular/build": ">=18.0.0 <20.0.0"
+  },
+  "nx": {
+    "name": "build",
+    "sourceRoot": "packages/build/src",
+    "projectType": "library"
+  }
 }

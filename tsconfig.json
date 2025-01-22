@@ -20,6 +20,9 @@
     },
     {
       "path": "./testing/vitest-setup"
+    },
+    {
+      "path": "./packages/compiler"
     }
   ]
 }
