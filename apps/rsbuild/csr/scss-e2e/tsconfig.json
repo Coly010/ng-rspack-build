@@ -24,6 +24,9 @@
   ],
   "references": [
     {
+      "path": "../../../../testing/utils"
+    },
+    {
       "path": "../../../../packages/compiler"
     },
     {

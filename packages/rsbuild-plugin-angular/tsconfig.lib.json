@@ -18,6 +18,9 @@
   "include": ["src/**/*.ts", "src/lib/patch/patch-angular-build.ts"],
   "references": [
     {
+      "path": "../../testing/utils/tsconfig.lib.json"
+    },
+    {
       "path": "../compiler/tsconfig.lib.json"
     }
   ],

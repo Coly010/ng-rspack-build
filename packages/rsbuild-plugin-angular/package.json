@@ -49,9 +49,17 @@
     "name": "rsbuild-plugin-angular",
     "targets": {
       "integration-test": {
+        "dependsOn": [
+          "^build"
+        ],
         "options": {
           "config": "vitest.integration.config.mts"
         }
+      },
+      "unit-test": {
+        "dependsOn": [
+          "^build"
+        ]
       }
     }
   }
