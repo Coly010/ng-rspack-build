@@ -1,3 +1,7 @@
+## 19.0.0-alpha.21 (2025-01-23)
+
+This was a version bump only for nx to align it with other projects, there were no code changes.
+
 ## 19.0.0-alpha.20 (2025-01-22)
 
 ### 🚀 Features

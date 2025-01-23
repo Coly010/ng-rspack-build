@@ -1,3 +1,14 @@
+## 19.0.0-alpha.21 (2025-01-23)
+
+### 🩹 Fixes
+
+- **build:** do not use advanccedOptimizations ([88d17b5](https://github.com/Coly010/ng-rspack-build/commit/88d17b5))
+- **compiler:** use sass-embedded compileString ([8077778](https://github.com/Coly010/ng-rspack-build/commit/8077778))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.20 (2025-01-22)
 
 ### 🚀 Features
