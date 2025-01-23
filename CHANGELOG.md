@@ -1,3 +1,7 @@
+## 19.0.0-alpha.22 (2025-01-23)
+
+This was a version bump only, there were no code changes.
+
 ## 19.0.0-alpha.21 (2025-01-23)
 
 ### 🩹 Fixes
