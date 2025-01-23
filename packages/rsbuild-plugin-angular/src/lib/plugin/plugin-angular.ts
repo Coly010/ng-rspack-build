@@ -161,6 +161,7 @@ export const pluginAngular = (
             typescriptFileCache,
             javascriptTransformer
           );
+          await parallelCompilation.close();
         }
       });
     }
