@@ -1,6 +1,6 @@
 import { RsbuildConfig } from '@rsbuild/core';
 import * as ts from 'typescript';
-import { compileStringAsync } from 'sass-embedded';
+import { compileString } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { InlineStyleExtension, FileReplacement } from '../models';
 import { loadCompilerCli } from '../utils';
@@ -68,7 +68,8 @@ export async function setupCompilation(
 
 export async function styleTransform(styles: string) {
   try {
-    return (await compileStringAsync(styles)).css;
+    // While compileStringAsync should be faster, it can cause issues when being spawned for large projects
+    return (await compileString(styles)).css;
   } catch (e) {
     console.error(
       'Failed to compile styles. Continuing execution ignoring failing stylesheet...',
