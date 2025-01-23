@@ -10,6 +10,15 @@ const config: RsbuildConfig = {
       "post": [
         "plugin-angular"
       ]
+    },
+    {
+      "name": "plugin-angular",
+      "pre": [
+        "plugin-hoisted-js-transformer"
+      ],
+      "post": [
+        "plugin-angular-jit"
+      ]
     }
   ],
   "mode": "development",
@@ -31,17 +40,6 @@ const config: RsbuildConfig = {
   "tools": {},
   "environments": {
     "browser": {
-      "plugins": [
-        {
-          "name": "plugin-angular",
-          "pre": [
-            "plugin-hoisted-js-transformer"
-          ],
-          "post": [
-            "plugin-angular-jit"
-          ]
-        }
-      ],
       "source": {
         "preEntry": [
           "zone.js",
