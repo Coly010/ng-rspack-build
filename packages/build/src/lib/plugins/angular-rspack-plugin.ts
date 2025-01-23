@@ -41,7 +41,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
       {
         sourcemap: false,
         thirdPartySourcemaps: false,
-        advancedOptimizations: true,
+        advancedOptimizations: false,
         jit: this.#_options.jit,
       },
       maxWorkers
