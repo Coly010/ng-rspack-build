@@ -78,6 +78,7 @@ export const pluginHoistedJsTransformer = (
           typescriptFileCache,
           javascriptTransformer
         );
+        await parallelCompilation.close();
       }
     });
 
