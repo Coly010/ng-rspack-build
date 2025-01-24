@@ -1,3 +1,13 @@
+## 19.0.0-alpha.23 (2025-01-24)
+
+### 🩹 Fixes
+
+- **compiler:** ensure all ts files are processed correctly ([94180f8](https://github.com/Coly010/ng-rspack-build/commit/94180f8))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.22 (2025-01-23)
 
 This was a version bump only for compiler to align it with other projects, there were no code changes.

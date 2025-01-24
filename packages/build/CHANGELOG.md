@@ -1,3 +1,13 @@
+## 19.0.0-alpha.23 (2025-01-24)
+
+### 🩹 Fixes
+
+- **build:** rspack plugin double processing transpiled files ([0baf7dd](https://github.com/Coly010/ng-rspack-build/commit/0baf7dd))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.22 (2025-01-23)
 
 This was a version bump only for build to align it with other projects, there were no code changes.

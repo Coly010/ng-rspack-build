@@ -1,3 +1,13 @@
+## 19.0.0-alpha.23 (2025-01-24)
+
+### 🩹 Fixes
+
+- **rsbuild-plugin-angular:** close parallel compilation workers ([#76](https://github.com/Coly010/ng-rspack-build/pull/76))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 19.0.0-alpha.22 (2025-01-23)
 
 This was a version bump only for rsbuild-plugin-angular to align it with other projects, there were no code changes.

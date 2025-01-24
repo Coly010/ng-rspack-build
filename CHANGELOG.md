@@ -1,3 +1,16 @@
+## 19.0.0-alpha.23 (2025-01-24)
+
+### 🩹 Fixes
+
+- **build:** rspack plugin double processing transpiled files ([0baf7dd](https://github.com/Coly010/ng-rspack-build/commit/0baf7dd))
+- **compiler:** ensure all ts files are processed correctly ([94180f8](https://github.com/Coly010/ng-rspack-build/commit/94180f8))
+- **rsbuild-plugin-angular:** close parallel compilation workers ([#76](https://github.com/Coly010/ng-rspack-build/pull/76))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+- Edouard Bozon
+
 ## 19.0.0-alpha.22 (2025-01-23)
 
 This was a version bump only, there were no code changes.
