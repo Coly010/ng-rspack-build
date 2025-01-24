@@ -1,3 +1,13 @@
+## 19.0.0-alpha.24 (2025-01-24)
+
+### 🩹 Fixes
+
+- **build:** ensure advancedOptimizations are run ([ca5bdcf](https://github.com/Coly010/ng-rspack-build/commit/ca5bdcf))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.23 (2025-01-24)
 
 ### 🩹 Fixes
