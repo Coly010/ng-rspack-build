@@ -15,6 +15,7 @@ export interface SetupCompilationOptions {
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   suppressOutputPathCheck: true,
   outDir: undefined,
+  sourceMap: true,
   declaration: false,
   declarationMap: false,
   allowEmptyCodegenFiles: false,
