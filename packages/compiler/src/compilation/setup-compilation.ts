@@ -15,7 +15,6 @@ export interface SetupCompilationOptions {
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
   suppressOutputPathCheck: true,
   outDir: undefined,
-  sourceMap: false,
   declaration: false,
   declarationMap: false,
   allowEmptyCodegenFiles: false,
@@ -66,10 +65,10 @@ export async function setupCompilation(
   };
 }
 
-export async function styleTransform(styles: string) {
+export function styleTransform(styles: string) {
   try {
     // While compileStringAsync should be faster, it can cause issues when being spawned for large projects
-    return (await compileString(styles)).css;
+    return compileString(styles).css;
   } catch (e) {
     console.error(
       'Failed to compile styles. Continuing execution ignoring failing stylesheet...',

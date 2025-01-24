@@ -18,7 +18,7 @@ describe('styleTransform', () => {
       }
     `;
 
-    expect(await styleTransform(code)).toMatchInlineSnapshot(`
+    expect(styleTransform(code)).toMatchInlineSnapshot(`
       "h1 {
         font-size: 40px;
       }

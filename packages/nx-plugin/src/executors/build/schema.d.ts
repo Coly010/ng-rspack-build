@@ -9,4 +9,10 @@ export interface BuildExecutorSchema {
   polyfills?: string[];
   assets?: string[];
   customRspackConfig?: string;
+  inlineStylesExtension?: 'css' | 'scss' | 'sass';
+  jit?: boolean;
+  fileReplacements?: {
+    replace: string;
+    with: string;
+  }[];
 }

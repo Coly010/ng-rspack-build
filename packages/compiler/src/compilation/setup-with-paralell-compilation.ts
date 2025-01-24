@@ -29,7 +29,8 @@ export async function setupCompilationWithParallelCompilation(
         ...compilerOptions,
         fileReplacements,
         modifiedFiles: new Set(rootNames),
-        transformStylesheet: (styles) => styleTransform(styles),
+        transformStylesheet: (styles) =>
+          Promise.resolve(styleTransform(styles)),
         processWebWorker(workerFile: string) {
           return transformFileSync(workerFile).code;
         },

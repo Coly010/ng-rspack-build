@@ -35,7 +35,7 @@ export function augmentHostWithResources(
     code: string,
     id: string,
     options?: { ssr?: boolean }
-  ) => Promise<string> | null,
+  ) => string | null,
   options: {} & {
     inlineStylesExtension?: InlineStyleExtension;
     isProd?: boolean;
@@ -73,10 +73,14 @@ export function augmentHostWithResources(
           return `.${options?.inlineStylesExtension}`;
         })}`;
 
+      if (options.inlineStylesExtension === 'css') {
+        return { content: data || '' };
+      }
+
       let stylesheetResult;
 
       try {
-        stylesheetResult = await transform(data, `${filename}?direct`);
+        stylesheetResult = transform(data, `${filename}?direct`);
       } catch (e) {
         console.error(`${e}`);
       }
