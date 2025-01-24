@@ -64,21 +64,6 @@ export function createConfig(
         },
         { test: /[/\\]rxjs[/\\]add[/\\].+\.js$/, sideEffects: true },
         {
-          test: /\.[cm]?[jt]sx?$/,
-          use: [
-            {
-              loader: 'builtin:swc-loader',
-              options: {
-                jsc: {
-                  parser: {
-                    syntax: 'typescript',
-                  },
-                },
-              },
-            },
-          ],
-        },
-        {
           test: TS_ALL_EXT_REGEX,
           use: [
             {
