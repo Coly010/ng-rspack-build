@@ -23,6 +23,33 @@
     },
     {
       "path": "./packages/compiler"
+    },
+    {
+      "path": "./apps/rsbuild/csr/scss-e2e"
+    },
+    {
+      "path": "./apps/rsbuild/csr/css-e2e"
+    },
+    {
+      "path": "./apps/rsbuild/ssr/css-e2e"
+    },
+    {
+      "path": "./apps/rsbuild/csr/scss"
+    },
+    {
+      "path": "./apps/rsbuild/csr/css"
+    },
+    {
+      "path": "./apps/rsbuild/ssr/css"
+    },
+    {
+      "path": "./apps/rspack/csr/css"
+    },
+    {
+      "path": "./apps/rspack/ssr/css"
+    },
+    {
+      "path": "./apps/docs"
     }
   ]
 }

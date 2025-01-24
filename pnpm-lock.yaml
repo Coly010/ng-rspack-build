@@ -404,6 +404,9 @@ importers:
       '@angular/ssr':
         specifier: 19.0.5
         version: 19.0.5(whst2uom2sykn2ay52lywk7vqm)
+      '@ng-rspack/build':
+        specifier: workspace:*
+        version: 'link:'
       '@ng-rspack/compiler':
         specifier: workspace:*
         version: link:../compiler
