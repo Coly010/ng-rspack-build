@@ -24,6 +24,12 @@
   ],
   "references": [
     {
+      "path": "../../../../testing/utils"
+    },
+    {
+      "path": "../../../../packages/compiler"
+    },
+    {
       "path": "../../../../packages/rsbuild-plugin-angular"
     }
   ]

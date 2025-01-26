@@ -1,7 +1,7 @@
-export interface FileReplacement {
-  replace: string;
-  with: string;
-}
+import type {
+  FileReplacement,
+  InlineStyleExtension,
+} from '@ng-rspack/compiler';
 
 export interface PluginAngularOptions {
   root: string;
@@ -15,7 +15,7 @@ export interface PluginAngularOptions {
   scripts: string[];
   fileReplacements: FileReplacement[];
   jit: boolean;
-  inlineStylesExtension: 'css' | 'scss' | 'sass' | 'less';
+  inlineStylesExtension: InlineStyleExtension;
   tsconfigPath: string;
   hasServer: boolean;
   useParallelCompilation: boolean;

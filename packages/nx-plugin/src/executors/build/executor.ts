@@ -16,8 +16,8 @@ export async function* runExecutor(
     );
   }
 
-  const rspackConfig = await createRspackConfig(options, context);
-  const compiler = createCompiler(rspackConfig);
+  const rspackConfigs = await createRspackConfig(options, context);
+  const compiler = createCompiler(rspackConfigs);
   const iterable = createAsyncIterable<{
     success: boolean;
     outfile?: string;
