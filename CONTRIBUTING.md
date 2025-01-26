@@ -28,21 +28,29 @@ npx nx run-many -t unit-test
 # run integration tests for all projects
 npx nx run-many -t integration-test
 
-# run E2E tests for CLI
-npx nx e2e css-e2e
-
-# build CLI along with packages it depends on
-npx nx build css
-
 # lint projects affected by changes (compared to main branch)
 npx nx affected:lint
 ```
 
 ## Lint
 
-### CLI Configuration
+### Configuration
 
 This projects has a default linting target `lint`. Every task has 0 configured as `maxWarnings`.
+
+You can find more information on our [EsLint strategy](./tools/scripts/eslint-migration-next/docs/eslint-strategies.md) in the docs.
+
+```json
+{
+  "targetDefaults": {
+    "lint": {
+      "options": {
+        "maxWarnings": 0
+      }
+    }
+  }
+}
+```
 
 ### Violation Categories
 
@@ -94,7 +102,7 @@ module.exports = {
 
 ### EsLint Migration
 
-We run the "eslint next" migration strategy.
+We run the "[eslint next](./tools/scripts/eslint-next/README.md)" migration strategy.
 That means we maintain a second config that maintains the target rules `eslint.next.config.js` and a default config `eslint.config.js` that has all faining rules enabled.
 
 After every change on EsLint rule migrations run the update script to keep your configurations automatically in sync.
@@ -225,25 +233,18 @@ Projects are tagged in two different dimensions - scope and type:
 | `scope:shared`      | data models, utility functions, etc. (not specific to core or plugins) | `scope:shared`                     |
 | `scope:tooling`     | supplementary tooling, e.g. code generation                            | `scope:tooling`, `scope:shared`    |
 | `scope:internal`    | internal project, e.g. example plugin                                  | any                                |
-| `type:app`          | application, e.g. CLI or example web app                               | `type:util` or `type:testing-util` |
+| `type:app`          | application, e.g. e2e-css or example web app                           | `type:util` or `type:testing-util` |
 | `type:util`         | general purpose utilities and types intended for reuse                 | `type:util` or `type:testing-util` |
 | `type:e2e`          | E2E testing                                                            | `type:app` or `type:testing-util`  |
 | `type:testing-util` | testing utilities                                                      | `type:util`                        |
 
-## Special targets
-
-The repository includes a couple of common optional targets:
-
-- `bench` - runs micro benchmarks of a project e.g. `nx bench utils` or `nx affected -t bench`
-
 ## Special folders
 
 The repository standards organize reusable code specific to a target in dedicated folders at project root level.
-This helps to organize and share target related code.
+This helps to organize and share target related code. Note, all special targets also are applicable to the root directory.
 
 The following optional folders can be present in a project root;
 
 - `test` - test fixtures and utilities specific for a given project
-- `bench` - micro benchmarks related code
 - `docs` - files related to documentation
 - `tooling` - tooling related code
