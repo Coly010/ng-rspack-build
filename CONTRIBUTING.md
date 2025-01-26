@@ -118,7 +118,7 @@ For more detail read the [`eslint-next` docs](./tools/scripts/eslint-next/README
 ### Test suites
 
 On this project, we distinguish three types of functional tests by scope - unit tests, integration tests and E2E tests.
-Unit and integration tests are written using [Vitest](https://vitest.dev/), e2e tests in [playwrite]().
+Unit and integration tests are written using [Vitest](https://vitest.dev/), e2e tests in [Playwright](https://playwright.dev/).
 
 **Unit Tests:**
 
