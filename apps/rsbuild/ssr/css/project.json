@@ -6,6 +6,9 @@
   "sourceRoot": "rsbuild/ssr/css/src",
   "tags": [],
   "targets": {
+    "build": {
+      "parallelism": false
+    },
     "start": {
       "dependsOn": ["build"],
       "command": "node dist/server/server.js",

@@ -20,6 +20,7 @@
     "vite.config.mts",
     "vitest.config.ts",
     "vitest.config.mts",
+    "mocks/**/*.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.tsx",
@@ -31,6 +32,7 @@
     "src/**/*.d.ts",
     "package.json"
   ],
+  "exclude": ["src/**/__snapshots__/*.ts"],
   "references": [
     {
       "path": "./tsconfig.lib.json"

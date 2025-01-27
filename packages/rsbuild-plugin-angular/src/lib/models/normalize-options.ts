@@ -1,4 +1,5 @@
-import { FileReplacement, PluginAngularOptions } from './plugin-options';
+import { FileReplacement } from '@ng-rspack/compiler';
+import { PluginAngularOptions } from './plugin-options';
 import { join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
 
@@ -32,34 +33,43 @@ export function getHasServer({
   );
 }
 
+export const DEFAULT_PLUGIN_ANGULAR_OPTIONS: PluginAngularOptions = {
+  root: process.cwd(),
+  index: './src/index.html',
+  browser: './src/main.ts',
+  server: undefined,
+  ssrEntry: undefined,
+  fileReplacements: [],
+  hasServer: false,
+  polyfills: [],
+  assets: ['./public'],
+  styles: ['./src/styles.css'],
+  scripts: [],
+  jit: false,
+  inlineStylesExtension: 'css',
+  tsconfigPath: join(process.cwd(), 'tsconfig.app.json'),
+  useHoistedJavascriptProcessing: true,
+  useParallelCompilation: true,
+};
+
 export function normalizeOptions(
   options: Partial<PluginAngularOptions> = {}
 ): PluginAngularOptions {
   const {
-    root = process.cwd(),
+    root = DEFAULT_PLUGIN_ANGULAR_OPTIONS.root,
     fileReplacements = [],
     server,
     ssrEntry,
+    ...restOptions
   } = options;
 
   return {
-    root,
-    index: options.index ?? './src/index.html',
-    browser: options.browser ?? './src/main.ts',
-    ...(server ? { server } : {}),
-    ...(ssrEntry ? { ssrEntry } : {}),
-    polyfills: options.polyfills ?? [],
-    assets: options.assets ?? ['./public'],
-    styles: options.styles ?? ['./src/styles.css'],
-    scripts: options.scripts ?? [],
+    ...DEFAULT_PLUGIN_ANGULAR_OPTIONS,
+    ...restOptions,
+    ...(root != null ? { root } : {}),
+    ...(server != null ? { server } : {}),
+    ...(ssrEntry != null ? { ssrEntry } : {}),
     fileReplacements: resolveFileReplacements(fileReplacements, root),
-    jit: options.jit ?? false,
-    inlineStylesExtension: options.inlineStylesExtension ?? 'css',
-    tsconfigPath:
-      options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
     hasServer: getHasServer({ server, ssrEntry, root }),
-    useHoistedJavascriptProcessing:
-      options.useHoistedJavascriptProcessing ?? true,
-    useParallelCompilation: options.useParallelCompilation ?? true,
   };
 }

@@ -7,3 +7,4 @@
 
 .angular
 apps/docs/src/pages/**/*.html
+__snapshots__

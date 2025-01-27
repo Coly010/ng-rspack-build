@@ -21,5 +21,16 @@
     "src/**/*.test.ts",
     "src/**/*.test.js",
     "src/**/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "../../../../testing/utils"
+    },
+    {
+      "path": "../../../../packages/compiler"
+    },
+    {
+      "path": "../../../../packages/rsbuild-plugin-angular"
+    }
   ]
 }

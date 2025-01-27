@@ -6,7 +6,7 @@ import {
 } from '@rspack/core';
 
 export function createCompiler(
-  config: Configuration
+  config: Configuration[]
 ): Compiler | MultiCompiler {
   return rspack(config);
 }

@@ -1,0 +1,9 @@
+{
+  "name": "rspack-csr-css",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@ng-rspack/build": "workspace:*"
+  }
+}

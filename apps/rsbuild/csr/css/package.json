@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "dependencies": {
+    "@angular/common": "19.0.5",
+    "@angular/core": "19.0.5",
+    "@angular/platform-browser": "19.0.5",
+    "@angular/router": "19.0.5",
+    "@ng-rsbuild/plugin-angular": "workspace:*"
+  },
+  "devDependencies": {
+    "jsonc-eslint-parser": "2.4.0"
+  }
+}

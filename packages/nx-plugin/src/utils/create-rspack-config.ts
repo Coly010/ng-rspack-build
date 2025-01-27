@@ -2,7 +2,7 @@ import { ExecutorContext, joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { registerTsProject } from '@nx/js/src/internal';
 import { clearRequireCache } from '@nx/devkit/src/utils/config-utils';
 import { Configuration } from '@rspack/core';
-import { rspack } from '@ng-rspack/build';
+import { createConfig } from '@ng-rspack/build';
 import { join } from 'path';
 import { merge as rspackMerge } from 'webpack-merge';
 import { BuildExecutorSchema } from '../executors/build/schema';
@@ -10,23 +10,24 @@ import { BuildExecutorSchema } from '../executors/build/schema';
 export async function createRspackConfig(
   options: BuildExecutorSchema & { port?: number },
   context: ExecutorContext
-): Promise<Configuration> {
-  const { root, name } = context.projectGraph.nodes[context.projectName!].data;
+): Promise<Configuration[]> {
+  const { root } = context.projectGraph.nodes[context.projectName!].data;
 
   process.env['NODE_ENV'] = options.mode;
 
-  const createdConfig: Configuration = rspack.createConfig({
+  const createdConfig: Configuration[] = createConfig({
     root: joinPathFragments(workspaceRoot, root),
-    name: name!,
-    main: options.main,
+    browser: options.main,
     index: options.index,
-    tsConfig: options.tsConfig,
-    outputPath: options.outputPath,
+    tsconfigPath: options.tsConfig,
     polyfills: options.polyfills ?? [],
     assets: options.assets ?? [],
     styles: options.styles ?? [],
     scripts: options.scripts ?? [],
-    port: options.port ?? 4200,
+    inlineStylesExtension: options.inlineStylesExtension ?? 'css',
+    jit: options.jit ?? false,
+    fileReplacements: options.fileReplacements ?? [],
+    hasServer: false,
   });
 
   if (!options.customRspackConfig) {
@@ -68,7 +69,7 @@ function resolveUserDefinedRspackConfig(
   }
 
   const cleanupTranspiler = registerTsProject(tsConfig);
-   
+
   const maybeCustomRspackConfig = require(path);
   cleanupTranspiler();
 

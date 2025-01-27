@@ -12,7 +12,7 @@ import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transfor
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
   rsbuildConfigOverrides?: Partial<RsbuildConfig>
-) {
+): RsbuildConfig {
   const normalizedOptions = normalizeOptions(pluginOptions);
   const browserPolyfills = [...normalizedOptions.polyfills, 'zone.js'];
   const serverPolyfills = [
@@ -21,7 +21,7 @@ export function createConfig(
     '@angular/platform-server/init',
   ];
 
-  const isRunningDevServer = process.argv.splice(2)[0] === 'dev';
+  const isRunningDevServer = process.argv.at(2) === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
   const rsbuildPluginAngularConfig = defineConfig({
@@ -69,7 +69,7 @@ export function createConfig(
           },
           define: {
             ...(isProd ? { ngDevMode: 'false' } : undefined),
-            ngJitMode: pluginOptions.jit,
+            ngJitMode: pluginOptions.jit, // @TODO: use normalizedOptions
           },
         },
         output: {
@@ -98,7 +98,7 @@ export function createConfig(
                 define: {
                   ngServerMode: true,
                   ...(isProd ? { ngDevMode: 'false' } : undefined),
-                  ngJitMode: pluginOptions.jit,
+                  ngJitMode: pluginOptions.jit, // @TODO: use normalizedOptions
                 },
               },
               output: {
@@ -130,24 +130,27 @@ export function withConfigurations(
   > = {},
   configEnvVar = 'NGRS_CONFIG'
 ) {
-  const configuration = process.env[configEnvVar] ?? 'production';
+  const configurationMode = process.env[configEnvVar] ?? 'production';
+  const isDefault = configurationMode === 'default';
+  const isModeConfigured = configurationMode in configurations;
+
   const mergedBuildOptionsOptions = {
     ...defaultOptions.options,
-    ...((configuration !== 'default' && configuration in configurations
-      ? configurations[configuration]?.options
+    ...((!isDefault && isModeConfigured
+      ? configurations[configurationMode]?.options
       : {}) ?? {}),
   };
 
   let mergedRsbuildConfigOverrides =
     defaultOptions.rsbuildConfigOverrides ?? {};
   if (
-    configuration !== 'default' &&
-    configuration in configurations &&
-    configurations[configuration]?.rsbuildConfigOverrides
+    !isDefault &&
+    isModeConfigured &&
+    configurations[configurationMode]?.rsbuildConfigOverrides
   ) {
     mergedRsbuildConfigOverrides = mergeRsbuildConfig(
       mergedRsbuildConfigOverrides,
-      configurations[configuration]?.rsbuildConfigOverrides ?? {}
+      configurations[configurationMode]?.rsbuildConfigOverrides ?? {}
     );
   }
 

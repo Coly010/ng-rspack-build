@@ -16,12 +16,20 @@
     "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "src/lib/patch/patch-angular-build.ts"],
-  "references": [],
+  "references": [
+    {
+      "path": "../../testing/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../compiler/tsconfig.lib.json"
+    }
+  ],
   "exclude": [
     "vite.config.ts",
     "vite.config.mts",
     "vitest.config.ts",
     "vitest.config.mts",
+    "src/**/__snapshots__/*.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.tsx",

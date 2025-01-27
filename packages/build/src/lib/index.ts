@@ -1,1 +1,2 @@
-export * as rspack from './rspack';
+export * from './config/create-config';
+export * from './plugins/ng-rspack';

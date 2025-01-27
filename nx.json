@@ -54,13 +54,17 @@
       "cache": true
     },
     "lint": {
+      "cache": true,
+      "options": {
+        "max-warnings": 0
+      }
+    },
+    "integration-test": {
       "cache": true
     }
   },
   "release": {
     "projects": ["packages/*"],
-    "projectsRelationship": "independent",
-    "releaseTagPattern": "release/{projectName}/{version}",
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github"
@@ -68,7 +72,9 @@
     },
     "version": {
       "generatorOptions": {
-        "currentVersionResolver": "git-tag"
+        "preserveLocalDependencyProtocols": true,
+        "currentVersionResolver": "git-tag",
+        "fallbackCurrentVersionResolver": "disk"
       },
       "preVersionCommand": "pnpm nx run-many -t build --exclude=\"apps/**\" --skip-sync"
     }
@@ -104,6 +110,7 @@
     {
       "plugin": "@nx/js/typescript",
       "include": ["packages/**", "testing/*"],
+      "exclude": ["apps/**"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"

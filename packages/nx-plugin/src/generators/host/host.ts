@@ -60,7 +60,6 @@ export async function applicationGenerator(
     ssr: false,
     addTailwind: false,
     remotes: [],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any);
 
   const projectOffsetFromRoot = offsetFromRoot(projectRoot);
