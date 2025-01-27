@@ -53,7 +53,8 @@
     "ws": "^8.18.0",
     "@angular/common": "19.0.5",
     "@angular/ssr": "19.0.5",
-    "express": "4.21.1"
+    "express": "4.21.1",
+    "@ng-rspack/build": "workspace:*"
   },
   "devDependencies": {},
   "peerDependencies": {
