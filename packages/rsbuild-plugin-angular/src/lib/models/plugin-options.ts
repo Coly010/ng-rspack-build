@@ -18,6 +18,4 @@ export interface PluginAngularOptions {
   inlineStylesExtension: InlineStyleExtension;
   tsconfigPath: string;
   hasServer: boolean;
-  useParallelCompilation: boolean;
-  useHoistedJavascriptProcessing: boolean;
 }

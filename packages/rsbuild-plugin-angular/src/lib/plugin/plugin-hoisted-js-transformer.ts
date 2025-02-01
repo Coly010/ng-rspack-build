@@ -24,10 +24,7 @@ export const pluginHoistedJsTransformer = (
   setup(api) {
     const pluginOptions = normalizeOptions(options);
     const config = api.getRsbuildConfig();
-    const sourceFileCache = new SourceFileCache();
     const typescriptFileCache = new Map<string, string | Uint8Array>();
-    let nextProgram: NgtscProgram | undefined | ts.Program;
-    let builderProgram: ts.EmitAndSemanticDiagnosticsBuilderProgram;
     let watchMode = false;
     let fileEmitter: FileEmitter;
     let isServer = pluginOptions.hasServer;
@@ -50,36 +47,16 @@ export const pluginHoistedJsTransformer = (
     });
 
     api.onBeforeEnvironmentCompile(async () => {
-      if (!pluginOptions.useParallelCompilation) {
-        const { rootNames, compilerOptions, host } = await setupCompilation(
-          config,
-          pluginOptions,
-          isServer,
-          true
-        );
-        // Only store cache if in watch mode
-        if (watchMode) {
-          augmentHostWithCaching(host, sourceFileCache);
-        }
-
-        fileEmitter = await buildAndAnalyze(
-          rootNames,
-          host,
-          compilerOptions,
-          nextProgram,
-          builderProgram,
-          { watchMode, jit: pluginOptions.jit }
-        );
-      } else {
-        const parallelCompilation =
-          await setupCompilationWithParallelCompilation(config, pluginOptions);
-        await buildAndAnalyzeWithParallelCompilation(
-          parallelCompilation,
-          typescriptFileCache,
-          javascriptTransformer
-        );
-        await parallelCompilation.close();
-      }
+      const parallelCompilation = await setupCompilationWithParallelCompilation(
+        config,
+        pluginOptions
+      );
+      await buildAndAnalyzeWithParallelCompilation(
+        parallelCompilation,
+        typescriptFileCache,
+        javascriptTransformer
+      );
+      await parallelCompilation.close();
     });
 
     api.transform({ test: JS_ALL_EXT_REGEX }, ({ code, resource }) => {

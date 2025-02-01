@@ -48,8 +48,6 @@ export const DEFAULT_PLUGIN_ANGULAR_OPTIONS: PluginAngularOptions = {
   jit: false,
   inlineStylesExtension: 'css',
   tsconfigPath: join(process.cwd(), 'tsconfig.app.json'),
-  useHoistedJavascriptProcessing: true,
-  useParallelCompilation: true,
 };
 
 export function normalizeOptions(
