@@ -1,3 +1,15 @@
+## 19.0.0-alpha.25 (2025-02-01)
+
+### 🚀 Features
+
+- **compiler:** remove unused non-parallel compilation ([#81](https://github.com/Coly010/ng-rspack-build/pull/81))
+- **compiler:** add ts proj ref flag ([#82](https://github.com/Coly010/ng-rspack-build/pull/82))
+- **rsbuild-plugin-angular:** remove non parallel build ([#80](https://github.com/Coly010/ng-rspack-build/pull/80))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.24 (2025-01-24)
 
 ### 🩹 Fixes
