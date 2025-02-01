@@ -10,6 +10,7 @@ export interface SetupCompilationOptions {
   jit: boolean;
   inlineStylesExtension: InlineStyleExtension;
   fileReplacements: Array<FileReplacement>;
+  useTsProjectReferences?: boolean;
 }
 
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -30,17 +31,23 @@ export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
 
 export async function setupCompilation(
   config: Pick<RsbuildConfig, 'mode' | 'source'>,
-  options: SetupCompilationOptions,
-  // @TODO isServer is only used if useAllRoots is false, so the logical order of the parameter should be changed
-  isServer = false,
-  useAllRoots = false
+  options: SetupCompilationOptions
 ) {
   const isProd = config.mode === 'production';
 
   const { readConfiguration } = await loadCompilerCli();
   const { options: tsCompilerOptions, rootNames } = readConfiguration(
     config.source?.tsconfigPath ?? options.tsconfigPath,
-    DEFAULT_NG_COMPILER_OPTIONS
+    {
+      ...DEFAULT_NG_COMPILER_OPTIONS,
+      ...(options.useTsProjectReferences
+        ? {
+            sourceMap: false,
+            inlineSources: false,
+            isolatedModules: true,
+          }
+        : {}),
+    }
   );
 
   const compilerOptions = tsCompilerOptions;
@@ -53,14 +60,8 @@ export async function setupCompilation(
     });
   }
 
-  const filteredRootNames = useAllRoots
-    ? rootNames
-    : rootNames.filter((n) =>
-        isServer ? !n.endsWith('main.ts') : n.endsWith('main.ts')
-      );
-
   return {
-    rootNames: filteredRootNames,
+    rootNames,
     compilerOptions,
     host,
   };

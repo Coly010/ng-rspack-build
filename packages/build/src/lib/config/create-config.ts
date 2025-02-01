@@ -66,6 +66,21 @@ export function createConfig(
         {
           test: TS_ALL_EXT_REGEX,
           use: [
+            ...(normalizedOptions.useTsProjectReferences
+              ? [
+                  {
+                    loader: 'builtin:swc-loader',
+                    options: {
+                      jsc: {
+                        parser: {
+                          syntax: 'typescript',
+                        },
+                        target: 'es2022',
+                      },
+                    },
+                  },
+                ]
+              : []),
             {
               loader: require.resolve(
                 '@ng-rspack/build/loaders/angular-loader'
@@ -157,7 +172,20 @@ export function createConfig(
                 },
               },
             },
-            minimizer: [new SwcJsMinimizerRspackPlugin()],
+            minimizer: [
+              new SwcJsMinimizerRspackPlugin({
+                minimizerOptions: {
+                  minify: true,
+                  mangle: true,
+                  compress: {
+                    passes: 2,
+                  },
+                  format: {
+                    comments: false,
+                  },
+                },
+              }),
+            ],
           }
         : {
             minimize: false,
@@ -260,7 +288,20 @@ export function createConfig(
               },
             },
           },
-          minimizer: [new SwcJsMinimizerRspackPlugin()],
+          minimizer: [
+            new SwcJsMinimizerRspackPlugin({
+              minimizerOptions: {
+                minify: true,
+                mangle: true,
+                compress: {
+                  passes: 2,
+                },
+                format: {
+                  comments: false,
+                },
+              },
+            }),
+          ],
         }
       : {
           minimize: false,

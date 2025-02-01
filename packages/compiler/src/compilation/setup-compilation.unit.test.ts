@@ -36,13 +36,12 @@ describe('setupCompilation', () => {
     },
   };
 
-  const pluginAngularOptions: Pick<
-    SetupCompilationOptions,
-    'tsconfigPath' | 'jit' | 'inlineStylesExtension'
-  > = {
+  const pluginAngularOptions: SetupCompilationOptions = {
     tsconfigPath: 'tsconfig.angular.json',
     jit: false,
     inlineStylesExtension: 'css',
+    useTsProjectReferences: false,
+    fileReplacements: [],
   };
 
   const mockHost = { mocked: 'host' } as unknown as ts.CompilerHost;
@@ -104,6 +103,8 @@ describe('setupCompilation', () => {
         inlineStylesExtension: 'css',
         jit: false,
         tsconfigPath: expect.stringMatching(/tsconfig.angular.json$/),
+        useTsProjectReferences: false,
+        fileReplacements: [],
       },
       host: expect.any(Object),
       rootNames: ['main.ts'],
@@ -148,6 +149,8 @@ describe('setupCompilation', () => {
       inlineStylesExtension: 'css',
       jit: false,
       tsconfigPath: expect.stringMatching(/tsconfig.angular.json$/),
+      useTsProjectReferences: false,
+      fileReplacements: [],
     });
   });
 
@@ -175,61 +178,9 @@ describe('setupCompilation', () => {
       options: {},
       rootNames,
     });
-    const useAllRoots = true;
 
     expect(
-      (
-        await setupCompilation(
-          rsBuildConfig,
-          pluginAngularOptions,
-          false,
-          useAllRoots
-        )
-      ).rootNames
+      (await setupCompilation(rsBuildConfig, pluginAngularOptions)).rootNames
     ).toBe(rootNames);
-  });
-
-  it('should filter rootNames for files ending with "main.ts" if useAllRoots is false and isServer is false', async () => {
-    const rootNames = ['src/main.ts', 'other/main.ts', 'src/server.ts'];
-    readConfigurationSpy.mockReturnValue({
-      options: {},
-      rootNames,
-    });
-    const useAllRoots = false;
-    const isServer = false;
-
-    expect(
-      (
-        await setupCompilation(
-          rsBuildConfig,
-          pluginAngularOptions,
-          isServer,
-          useAllRoots
-        )
-      ).rootNames
-    ).toStrictEqual(['src/main.ts', 'other/main.ts']);
-  });
-
-  it('should filter rootNames for files not ending with "main.ts" if useAllRoots is false and isServer is true', async () => {
-    const rootNames = ['src/main.ts', 'src/server.ts', 'other/server.ts'];
-    readConfigurationSpy.mockReturnValue({
-      options: {},
-      rootNames,
-    });
-    const useAllRoots = false;
-    const isServer = true;
-
-    expect(
-      await setupCompilation(
-        rsBuildConfig,
-        pluginAngularOptions,
-        isServer,
-        useAllRoots
-      )
-    ).toStrictEqual(
-      expect.objectContaining({
-        rootNames: ['src/server.ts', 'other/server.ts'],
-      })
-    );
   });
 });
