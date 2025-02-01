@@ -5,7 +5,6 @@ import {
 } from '@rspack/core';
 import {
   AngularRspackPluginOptions,
-  normalizeOptions,
   NG_RSPACK_SYMBOL_NAME,
   NgRspackCompilation,
 } from '../models';
@@ -156,6 +155,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         tsconfigPath: tsconfigPath,
         inlineStylesExtension: this.#_options.inlineStylesExtension,
         fileReplacements: this.#_options.fileReplacements,
+        useTsProjectReferences: this.#_options.useTsProjectReferences,
       }
     );
   }
