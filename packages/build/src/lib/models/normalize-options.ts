@@ -59,5 +59,6 @@ export function normalizeOptions(
     tsconfigPath:
       options.tsconfigPath ?? join(process.cwd(), 'tsconfig.app.json'),
     hasServer: getHasServer({ server, ssrEntry, root }),
+    useTsProjectReferences: options.useTsProjectReferences ?? false,
   };
 }

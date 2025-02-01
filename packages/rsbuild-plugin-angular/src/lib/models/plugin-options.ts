@@ -18,4 +18,5 @@ export interface PluginAngularOptions {
   inlineStylesExtension: InlineStyleExtension;
   tsconfigPath: string;
   hasServer: boolean;
+  useTsProjectReferences?: boolean;
 }
