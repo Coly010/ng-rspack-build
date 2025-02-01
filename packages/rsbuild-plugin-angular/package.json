@@ -13,8 +13,7 @@
     "@ng-rspack/compiler": "workspace:*",
     "sass-embedded": "^1.79.3",
     "express": "4.21.1",
-    "tslib": "^2.3.0",
-    "typescript": "5.6.3"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21"
@@ -22,9 +21,7 @@
   "peerDependencies": {
     "@angular/common": ">=19.0.0 <20.0.0",
     "@angular/ssr": ">=19.0.0 <20.0.0",
-    "@angular/compiler-cli": ">=19.0.0 <20.0.0",
-    "@rsbuild/core": ">=1.0.5 <2.0.0",
-    "@angular/build": ">=18.0.0 <20.0.0"
+    "@rsbuild/core": ">=1.0.5 <2.0.0"
   },
   "type": "commonjs",
   "main": "./dist/index.js",

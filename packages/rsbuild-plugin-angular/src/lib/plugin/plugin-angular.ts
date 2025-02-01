@@ -1,22 +1,10 @@
 import { type RsbuildPlugin } from '@rsbuild/core';
-import { NgtscProgram } from '@angular/compiler-cli';
 import {
-  FileEmitter,
   StyleUrlsResolver,
   TemplateUrlsResolver,
-  SourceFileCache,
-  augmentHostWithCaching,
-  buildAndAnalyze,
-  buildAndAnalyzeWithParallelCompilation,
-  setupCompilation,
-  setupCompilationWithParallelCompilation,
-  JS_ALL_EXT_REGEX,
   TS_ALL_EXT_REGEX,
 } from '@ng-rspack/compiler';
-import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
-import * as ts from 'typescript';
 import { PluginAngularOptions } from '../models/plugin-options';
-import { maxWorkers } from '../utils/utils';
 import { normalizeOptions } from '../models/normalize-options';
 import { dirname, normalize, resolve } from 'path';
 import { pluginAngularJit } from './plugin-angular-jit';
@@ -30,7 +18,7 @@ export const pluginAngular = (
   post: ['plugin-angular-jit'],
   setup(api) {
     const pluginOptions = normalizeOptions(options);
-    const { typescriptFileCache, getFileEmitter } = api.useExposed(
+    const { typescriptFileCache } = api.useExposed(
       'plugin-hoisted-js-transformer'
     );
     let watchMode = false;

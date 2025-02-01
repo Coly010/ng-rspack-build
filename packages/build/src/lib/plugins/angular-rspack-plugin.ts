@@ -9,11 +9,11 @@ import {
   NG_RSPACK_SYMBOL_NAME,
   NgRspackCompilation,
 } from '../models';
-import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
 import { maxWorkers } from '../utils/utils';
 import {
   setupCompilationWithParallelCompilation,
   buildAndAnalyzeWithParallelCompilation,
+  JavaScriptTransformer,
 } from '@ng-rspack/compiler';
 import { dirname, normalize, resolve } from 'path';
 
