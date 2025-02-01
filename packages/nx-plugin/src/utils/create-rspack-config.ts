@@ -28,6 +28,7 @@ export async function createRspackConfig(
     jit: options.jit ?? false,
     fileReplacements: options.fileReplacements ?? [],
     hasServer: false,
+    skipTypeChecking: false,
   });
 
   if (!options.customRspackConfig) {
