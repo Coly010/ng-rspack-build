@@ -1,15 +1,8 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { NgtscProgram } from '@angular/compiler-cli';
-import { JavaScriptTransformer } from '@angular/build/src/tools/esbuild/javascript-transformer';
-import * as ts from 'typescript';
 import {
-  FileEmitter,
-  SourceFileCache,
-  augmentHostWithCaching,
-  buildAndAnalyze,
   buildAndAnalyzeWithParallelCompilation,
-  setupCompilation,
   setupCompilationWithParallelCompilation,
+  JavaScriptTransformer,
   JS_ALL_EXT_REGEX,
 } from '@ng-rspack/compiler';
 import { PluginAngularOptions } from '../models/plugin-options';
@@ -26,7 +19,6 @@ export const pluginHoistedJsTransformer = (
     const config = api.getRsbuildConfig();
     const typescriptFileCache = new Map<string, string | Uint8Array>();
     let watchMode = false;
-    let fileEmitter: FileEmitter;
     let isServer = pluginOptions.hasServer;
     const javascriptTransformer = new JavaScriptTransformer(
       {
@@ -82,7 +74,6 @@ export const pluginHoistedJsTransformer = (
 
     api.expose('plugin-hoisted-js-transformer', {
       typescriptFileCache,
-      getFileEmitter: () => fileEmitter,
     });
   },
 });

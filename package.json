@@ -124,5 +124,21 @@
     "ws": "^8.18.0",
     "zone.js": "~0.15.0"
   },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@angular/core",
+        "@angular/compiler",
+        "@angular/compiler-cli",
+        "@angular/build"
+      ],
+      "allowedVersions": {
+        "@angular/core": "19.0.5",
+        "@angular/compiler": "19.0.5",
+        "@angular/compiler-cli": "19.0.5",
+        "@angular/build": "19.0.5"
+      }
+    }
+  },
   "packageManager": "pnpm@9.8.0"
 }

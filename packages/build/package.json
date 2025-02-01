@@ -51,14 +51,13 @@
     "@ng-rspack/compiler": "workspace:*",
     "webpack-merge": "^6.0.1",
     "ws": "^8.18.0",
-    "@angular/common": "19.0.5",
-    "@angular/ssr": "19.0.5",
     "express": "4.21.1"
   },
   "devDependencies": {},
   "peerDependencies": {
     "@rspack/core": ">=1.0.5 <2.0.0",
-    "@angular/build": ">=18.0.0 <20.0.0"
+    "@angular/common": ">=19.0.0 <20.0.0",
+    "@angular/ssr": ">=19.0.0 <20.0.0"
   },
   "nx": {
     "name": "build",
