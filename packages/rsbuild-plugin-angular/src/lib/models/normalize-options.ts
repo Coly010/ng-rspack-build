@@ -49,6 +49,7 @@ export const DEFAULT_PLUGIN_ANGULAR_OPTIONS: PluginAngularOptions = {
   inlineStylesExtension: 'css',
   tsconfigPath: join(process.cwd(), 'tsconfig.app.json'),
   useTsProjectReferences: false,
+  skipTypeChecking: false,
 };
 
 export function normalizeOptions(

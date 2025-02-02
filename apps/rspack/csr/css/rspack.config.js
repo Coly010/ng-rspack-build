@@ -1,7 +1,6 @@
-const { createConfig } = require('@ng-rspack/build');
-
 module.exports = () => {
-  if (global.NX_GRAPH_CREATION !== undefined) {
+  if (global.NX_GRAPH_CREATION === undefined) {
+    const { createConfig } = require('@ng-rspack/build');
     return createConfig({
       root: __dirname,
       name: 'rspack-csr-css',
@@ -12,6 +11,7 @@ module.exports = () => {
       main: './src/main.ts',
       outputPath: './dist/browser',
       tsConfig: './tsconfig.app.json',
+      skipTypeChecking: false,
     });
   }
   return {};

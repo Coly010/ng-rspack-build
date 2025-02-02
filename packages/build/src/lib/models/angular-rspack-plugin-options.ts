@@ -18,5 +18,6 @@ export interface AngularRspackPluginOptions {
   inlineStylesExtension: InlineStyleExtension;
   tsconfigPath: string;
   hasServer: boolean;
+  skipTypeChecking: boolean;
   useTsProjectReferences?: boolean;
 }
