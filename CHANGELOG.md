@@ -1,3 +1,13 @@
+## 19.0.0-alpha.26 (2025-02-02)
+
+### 🚀 Features
+
+- **build:** add type checking ([#83](https://github.com/Coly010/ng-rspack-build/pull/83))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.25 (2025-02-01)
 
 ### 🚀 Features
