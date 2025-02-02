@@ -20,6 +20,7 @@ export default {
         'testing',
         'repo',
         'build',
+        'release',
       ].sort();
       return [RuleConfigSeverity.Error, 'always', scopes];
     },
