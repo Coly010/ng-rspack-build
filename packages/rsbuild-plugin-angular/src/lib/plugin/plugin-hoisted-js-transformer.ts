@@ -4,10 +4,10 @@ import {
   setupCompilationWithParallelCompilation,
   JavaScriptTransformer,
   JS_ALL_EXT_REGEX,
+  maxWorkers
 } from '@ng-rspack/compiler';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
-import { maxWorkers } from '../utils/utils';
 
 export const pluginHoistedJsTransformer = (
   options: PluginAngularOptions

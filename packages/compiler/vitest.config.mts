@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/rsbuild-plugin-angular',
+  cacheDir: '../../node_modules/.vite/packages/compiler',
   plugins: [],
   resolve: {
     alias: {
@@ -18,7 +18,7 @@ export default defineConfig({
     setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs.setup-file.ts'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/packages/rsbuild-plugin-angular/unit',
+      reportsDirectory: '../../coverage/packages/compiler/unit',
       provider: 'v8',
     },
   },
