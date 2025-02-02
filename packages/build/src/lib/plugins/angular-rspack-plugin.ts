@@ -8,7 +8,7 @@ import {
   NG_RSPACK_SYMBOL_NAME,
   NgRspackCompilation,
 } from '../models';
-import { maxWorkers } from '../utils/utils';
+import { maxWorkers } from '@ng-rspack/compiler';
 import {
   setupCompilationWithParallelCompilation,
   buildAndAnalyzeWithParallelCompilation,
@@ -43,7 +43,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         advancedOptimizations: true,
         jit: this.#_options.jit,
       },
-      maxWorkers
+      maxWorkers()
     ) as unknown as ResolvedJavascriptTransformer;
   }
 

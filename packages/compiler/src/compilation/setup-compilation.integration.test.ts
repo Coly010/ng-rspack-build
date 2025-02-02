@@ -72,6 +72,7 @@ describe('setupCompilation', () => {
         tsconfigPath: 'irrelevant-if-tsconfig-is-in-rsbuild-config',
         jit: false,
         inlineStylesExtension: 'css',
+        fileReplacements: [],
       })
     ).toStrictEqual(
       expect.objectContaining({
@@ -97,6 +98,7 @@ describe('setupCompilation', () => {
           tsconfigPath: path.join(fixturesDir, 'tsconfig.other.mock.json'),
           jit: false,
           inlineStylesExtension: 'css',
+          fileReplacements: [],
         }
       )
     ).toStrictEqual(

@@ -4,10 +4,10 @@ import {
   setupCompilationWithParallelCompilation,
   JavaScriptTransformer,
   JS_ALL_EXT_REGEX,
+  maxWorkers,
 } from '@ng-rspack/compiler';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
-import { maxWorkers } from '../utils/utils';
 
 export const pluginHoistedJsTransformer = (
   options: PluginAngularOptions
@@ -27,7 +27,7 @@ export const pluginHoistedJsTransformer = (
         advancedOptimizations: false,
         jit: pluginOptions.jit,
       },
-      maxWorkers
+      maxWorkers()
     );
     api.onBeforeStartDevServer(() => {
       watchMode = true;
