@@ -4,7 +4,7 @@ import {
   setupCompilationWithParallelCompilation,
   JavaScriptTransformer,
   JS_ALL_EXT_REGEX,
-  maxWorkers
+  maxWorkers,
 } from '@ng-rspack/compiler';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';

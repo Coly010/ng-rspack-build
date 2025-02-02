@@ -2,10 +2,11 @@ import { afterEach, beforeEach, describe, expect } from 'vitest';
 import {
   getAllTextByProperty,
   getTextByProperty,
-  isPresent, isUsingWindows,
+  isPresent,
+  isUsingWindows,
   maxWorkers,
   normalizeQuotes,
-  parseMaxWorkers
+  parseMaxWorkers,
 } from './utils';
 import * as nodeOSModule from 'node:os';
 import { ENV_NG_BUILD_MAX_WORKERS } from './constants.ts';
@@ -184,14 +185,14 @@ describe('isUsingWindows', async () => {
   beforeEach(() => {
     platformSpy.mockClear();
     // platformSpy.mockReturnValue('linux');
-  })
+  });
 
   afterEach(() => {
     vi.clearAllMocks();
-  })
+  });
 
   it('should return true if the platform is win32', () => {
-    platformSpy.mockReturnValue('win32')
+    platformSpy.mockReturnValue('win32');
     expect(isUsingWindows()).toBe(true);
     expect(platformSpy).toHaveBeenCalledTimes(1);
   });
@@ -213,4 +214,3 @@ describe('isUsingWindows', async () => {
     expect(platformSpy).toHaveBeenCalledTimes(1);
   });
 });
-
