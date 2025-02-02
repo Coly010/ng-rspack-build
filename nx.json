@@ -99,7 +99,7 @@
       "options": {
         "testTargetName": "integration-test"
       },
-      "include": ["packages/rsbuild-plugin-angular/*"]
+      "include": ["packages/**"]
     },
     {
       "plugin": "@nx/playwright/plugin",

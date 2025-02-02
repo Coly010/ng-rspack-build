@@ -3,8 +3,7 @@ import { styleTransform } from './setup-compilation.ts';
 import { setupCompilation } from './setup-compilation.ts';
 import * as compilerCli from '@angular/compiler-cli';
 import path from 'node:path';
-// @TODO At the moment this tests rely on another function (createConfig)
-// The tests should be free of any dependencies.
+
 import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
 
 describe('styleTransform', () => {
