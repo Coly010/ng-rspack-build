@@ -1,10 +1,8 @@
 import { describe, expect } from 'vitest';
-import { styleTransform } from './setup-compilation.ts';
-import { setupCompilation } from './setup-compilation.ts';
-import * as compilerCli from '@angular/compiler-cli';
+import { setupCompilation, styleTransform } from './setup-compilation.ts';
+// import * as compilerCli from '@angular/compiler-cli';
 import path from 'node:path';
-
-import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
+import { defineConfig } from '@rsbuild/core';
 
 describe('styleTransform', () => {
   it('should call scss.compileString and return the value of the css property', async () => {
@@ -28,7 +26,14 @@ describe('styleTransform', () => {
   });
 });
 
-describe('setupCompilation', () => {
+describe.only('setupCompilation', async () => {
+  const rsBuildMockConfig = await defineConfig({
+    root: './',
+    source: {
+      tsconfigPath: './mocks/fixtures/integration/minimal/tsconfig.mock.json',
+    },
+  });
+
   const fixturesDir = path.join(
     process.cwd(),
     'mocks',
@@ -37,8 +42,8 @@ describe('setupCompilation', () => {
     'minimal'
   );
 
-  // @TODO remove when test data are independent onbjects
-  it.skip('should read from correct tsconfigPath in rsBuildMockConfig', () => {
+  // @TODO remove when test data are independent objects
+  it('should read from correct tsconfigPath in rsBuildMockConfig', () => {
     expect(rsBuildMockConfig.source?.tsconfigPath).toBe(
       './mocks/fixtures/integration/minimal/tsconfig.mock.json'
     );
@@ -52,7 +57,7 @@ describe('setupCompilation', () => {
   });
 
   // @TODO remove when test data are independent onbjects
-  it.skip('should read from correct tsconfigPath in other tsconfig', () => {
+  it('should read from correct tsconfigPath in other tsconfig', () => {
     expect(
       compilerCli.readConfiguration(
         path.join(fixturesDir, 'tsconfig.other.mock.json'),
@@ -83,8 +88,8 @@ describe('setupCompilation', () => {
     );
   });
 
-  it('should create compiler options form ts compiler options if rsBuildConfig tsconfigPath is undefined', () => {
-    expect(
+  it('should create compiler options form ts compiler options if rsBuildConfig tsconfigPath is undefined', async () => {
+    await expect(
       setupCompilation(
         {
           ...rsBuildMockConfig,
@@ -100,7 +105,7 @@ describe('setupCompilation', () => {
           fileReplacements: [],
         }
       )
-    ).toStrictEqual(
+    ).resolves.toStrictEqual(
       expect.objectContaining({
         compilerOptions: expect.objectContaining({}),
         rootNames: [expect.stringMatching(/other\/mock.main.ts$/)],
