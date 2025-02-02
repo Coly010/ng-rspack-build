@@ -27,7 +27,7 @@ export const pluginHoistedJsTransformer = (
         advancedOptimizations: false,
         jit: pluginOptions.jit,
       },
-      maxWorkers
+      maxWorkers()
     );
     api.onBeforeStartDevServer(() => {
       watchMode = true;
