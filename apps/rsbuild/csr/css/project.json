@@ -27,7 +27,7 @@
       "options": {
         "buildTarget": "rsbuild-csr-css:build",
         "port": 4200,
-        "staticFilePath": "dist/rsbuild/csr/css/browser",
+        "staticFilePath": "apps/rsbuild/csr/css/dist/browser",
         "spa": true
       }
     }
