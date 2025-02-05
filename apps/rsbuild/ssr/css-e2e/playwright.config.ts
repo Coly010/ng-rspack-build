@@ -26,7 +26,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npx nx run rsbuild-ssr-css:dev',
-    url: 'http://localhost:4000',
+    url: 'http://localhost:4200',
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
