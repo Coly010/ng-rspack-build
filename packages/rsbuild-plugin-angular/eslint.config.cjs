@@ -9,10 +9,11 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ⚠️ Warnings: 3
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 5 warnings
-      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 5 warnings
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 4 warnings
+      // ⚠️ Warnings: 4
+      'vitest/prefer-to-be': 'off', // ⚠️ 2 warnings 🛠️
+      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 3 warnings
+      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 2 warnings
+      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
     },
   },
 ];
