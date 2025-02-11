@@ -9,9 +9,11 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
+      // ❌ Errors: 1
+      'vitest/valid-describe-callback': 'off', // ❌ 2 errors
       // ⚠️ Warnings: 2
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 11 warnings
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 4 warnings
+      'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️
+      'vitest/no-disabled-tests': 'off', // ⚠️ 2 warnings
     },
   },
 ];
