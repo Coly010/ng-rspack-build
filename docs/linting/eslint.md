@@ -2,7 +2,7 @@
 
 ### Configuration
 
-The repositories projects hava a default linting target `lint`.  Every task has `0` configured as `maxWarnings`.
+The repositories projects hava a default linting target `lint`. Every task has `0` configured as `maxWarnings`.
 
 ```json
 {
@@ -36,14 +36,14 @@ root
 ┃       ┣━━ angular.js
 ┃       ┗━━ vitest.js
 ┣━━ 📂apps
-┃   ┣━━ 📂docs 
+┃   ┣━━ 📂docs
 ┃   ┃   ┗━━ eslint.config.js # extends root; uses angular.js
-┃   ┣━━ 📂rsbuild 
-┃   ┃   ┣━━ 📂csr  
+┃   ┣━━ 📂rsbuild
+┃   ┃   ┣━━ 📂csr
 ┃   ┃   ┃   ┗━━ eslint.config.js # extends root; uses angular.js
-┃   ┃   ┗━━ 📂ssr  
+┃   ┃   ┗━━ 📂ssr
 ┃   ┃       ┗━━ eslint.config.js # extends root; uses angular.js
-┃   ┗━━ 📂rspack 
+┃   ┗━━ 📂rspack
 ┃       ┣━━ 📂... # similar to rsbuild, css and ssr folders
 ┣━━ 📂packages
 ┃   ┣━━ 📂build

@@ -31,8 +31,8 @@ npx nx run-many -t integration-test
 # lint projects affected by changes (compared to main branch)
 npx nx affected:lint
 ```
-## Linting
 
+## Linting
 
 ## Testing
 
