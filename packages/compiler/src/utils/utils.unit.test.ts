@@ -46,6 +46,7 @@ describe('isUsingWindows', async () => {
 });
 
 describe('normalizeQuotes', () => {
+
   it.each(["'", '"', '`'])('should remove (%s) quotes if given', (quote) => {
     expect(normalizeQuotes(`${quote}test${quote}`)).toBe('test');
   });
