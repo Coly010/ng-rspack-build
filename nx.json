@@ -51,11 +51,6 @@
   },
   "release": {
     "projects": ["packages/*"],
-    "changelog": {
-      "projectChangelogs": {
-        "createRelease": "github"
-      }
-    },
     "version": {
       "generatorOptions": {
         "preserveLocalDependencyProtocols": true,
@@ -86,7 +81,7 @@
       "options": {
         "testTargetName": "integration-test"
       },
-      "include": ["packages/rsbuild-plugin-angular/*"]
+      "include": ["packages/**"]
     },
     {
       "plugin": "@nx/playwright/plugin",
@@ -115,6 +110,15 @@
         "devTargetName": "dev",
         "previewTargetName": "preview",
         "inspectTargetName": "inspect",
+        "typecheckTargetName": "typecheck"
+      }
+    },
+    {
+      "plugin": "@nx/rspack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "previewTargetName": "preview",
         "typecheckTargetName": "typecheck"
       }
     }

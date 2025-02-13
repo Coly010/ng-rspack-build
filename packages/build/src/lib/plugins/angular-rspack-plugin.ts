@@ -1,18 +1,19 @@
 import {
   Compiler,
-  RspackPluginInstance,
   RspackOptionsNormalized,
+  RspackPluginInstance,
 } from '@rspack/core';
 import {
   AngularRspackPluginOptions,
   NG_RSPACK_SYMBOL_NAME,
   NgRspackCompilation,
 } from '../models';
-import { maxWorkers } from '../utils/utils';
+import { maxWorkers } from '@ng-rspack/compiler';
 import {
-  setupCompilationWithParallelCompilation,
   buildAndAnalyzeWithParallelCompilation,
   JavaScriptTransformer,
+  setupCompilationWithParallelCompilation,
+  DiagnosticModes,
 } from '@ng-rspack/compiler';
 import { dirname, normalize, resolve } from 'path';
 
@@ -43,7 +44,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         advancedOptimizations: true,
         jit: this.#_options.jit,
       },
-      maxWorkers
+      maxWorkers()
     ) as unknown as ResolvedJavascriptTransformer;
   }
 
@@ -66,6 +67,14 @@ export class AngularRspackPlugin implements RspackPluginInstance {
             callback();
           }
         );
+
+        compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
+          if (stats.hasErrors() || stats.hasWarnings()) {
+            setTimeout(() => {
+              process.exit(stats.hasErrors() ? 1 : 0);
+            }, 1000);
+          }
+        });
 
         callback();
       }
@@ -109,6 +118,36 @@ export class AngularRspackPlugin implements RspackPluginInstance {
       }
     );
 
+    compiler.hooks.emit.tapAsync(PLUGIN_NAME, async (compilation, callback) => {
+      if (!this.#_options.skipTypeChecking) {
+        const { errors, warnings } =
+          await this.#angularCompilation.diagnoseFiles(DiagnosticModes.All);
+        for (const error of errors ?? []) {
+          compilation.errors.push({
+            name: PLUGIN_NAME,
+            message: error.text || '',
+            file: error.location?.file,
+            loc: `${error.location?.line}:${error.location?.column}`,
+            moduleIdentifier: error.location?.file,
+            stack: error.text,
+          });
+        }
+        for (const warning of warnings ?? []) {
+          compilation.warnings.push({
+            name: PLUGIN_NAME,
+            message: warning.text || '',
+            file: warning.location?.file,
+            loc: `${warning.location?.line}:${warning.location?.column}`,
+            stack: warning.text,
+            moduleIdentifier: warning.location?.file,
+          });
+        }
+      }
+      await this.#angularCompilation.close();
+      await this.#javascriptTransformer.close();
+      callback();
+    });
+
     compiler.hooks.normalModuleFactory.tap(
       PLUGIN_NAME,
       (normalModuleFactory) => {
@@ -129,10 +168,6 @@ export class AngularRspackPlugin implements RspackPluginInstance {
           .#javascriptTransformer as unknown as JavaScriptTransformer,
         typescriptFileCache: this.#typescriptFileCache,
       });
-    });
-
-    compiler.hooks.afterDone.tap(PLUGIN_NAME, () => {
-      this.#angularCompilation.close();
     });
   }
 

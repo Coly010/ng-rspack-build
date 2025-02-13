@@ -70,6 +70,7 @@ export async function setupCompilation(
 export function styleTransform(styles: string) {
   try {
     // While compileStringAsync should be faster, it can cause issues when being spawned for large projects
+    // Investigate if there is an alternative method that could be used to compile the styles performantly
     return compileString(styles).css;
   } catch (e) {
     console.error(
