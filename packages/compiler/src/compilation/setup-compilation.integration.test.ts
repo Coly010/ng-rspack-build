@@ -1,7 +1,6 @@
-import { describe, expect } from 'vitest';
+import { describe, expect, vi } from 'vitest';
 import { styleTransform } from './setup-compilation.ts';
 import { setupCompilation } from './setup-compilation.ts';
-import * as compilerCli from '@angular/compiler-cli';
 import path from 'node:path';
 
 import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
@@ -36,34 +35,6 @@ describe('setupCompilation', () => {
     'integration',
     'minimal'
   );
-
-  // @TODO remove when test data are independent onbjects
-  it.skip('should read from correct tsconfigPath in rsBuildMockConfig', () => {
-    expect(rsBuildMockConfig.source?.tsconfigPath).toBe(
-      './mocks/fixtures/integration/minimal/tsconfig.mock.json'
-    );
-    expect(
-      compilerCli.readConfiguration(rsBuildMockConfig.source?.tsconfigPath, {})
-    ).toStrictEqual(
-      expect.objectContaining({
-        rootNames: [expect.stringMatching(/mock.main.ts$/)],
-      })
-    );
-  });
-
-  // @TODO remove when test data are independent onbjects
-  it.skip('should read from correct tsconfigPath in other tsconfig', () => {
-    expect(
-      compilerCli.readConfiguration(
-        path.join(fixturesDir, 'tsconfig.other.mock.json'),
-        {}
-      )
-    ).toStrictEqual(
-      expect.objectContaining({
-        rootNames: [expect.stringMatching(/mock.main.ts$/)],
-      })
-    );
-  });
 
   it('should create compiler options form rsBuildConfig tsconfigPath', () => {
     expect(
