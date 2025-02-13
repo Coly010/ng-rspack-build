@@ -53,6 +53,7 @@ describe('normalizeQuotes', () => {
 });
 
 describe('getTextByProperty', () => {
+
   it.each(["'", '"', '`'])(
     'should return the property value and remove containing (%s) quotes',
     (quote) => {
@@ -91,6 +92,7 @@ describe('getTextByProperty', () => {
 });
 
 describe('getAllTextByProperty', () => {
+
   it.each(["'", '"', '`'])(
     'should return the property value containing (%s) quotes if set',
     (quote) => {
