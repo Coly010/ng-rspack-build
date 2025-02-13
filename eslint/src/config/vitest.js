@@ -37,9 +37,9 @@ module.exports = tseslint.config({
         'vitest/consistent-test-filename': [
           'warn',
           {
-            "pattern": String.raw`.*\.(e2e|unit|integration)\.test\.[tj]sx?$`,
-            "allTestPattern": String.raw`.*\.(test|spec)\.[tj]sx?$`
-          }
+            pattern: String.raw`.*\.(e2e|unit|integration)\.test\.[tj]sx?$`,
+            allTestPattern: String.raw`.*\.(test|spec)\.[tj]sx?$`,
+          },
         ],
         'vitest/consistent-test-it': 'warn',
         'vitest/max-nested-describe': ['warn', { max: 2 }],
