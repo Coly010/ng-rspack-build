@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/nx/integration-test',
+  cacheDir: '../../node_modules/.vite/packages/nx/unit-test',
   plugins: [],
   resolve: {
     alias: {
