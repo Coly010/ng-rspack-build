@@ -65,11 +65,6 @@
   },
   "release": {
     "projects": ["packages/*"],
-    "changelog": {
-      "projectChangelogs": {
-        "createRelease": "github"
-      }
-    },
     "version": {
       "generatorOptions": {
         "preserveLocalDependencyProtocols": true,
@@ -128,6 +123,15 @@
         "devTargetName": "dev",
         "previewTargetName": "preview",
         "inspectTargetName": "inspect",
+        "typecheckTargetName": "typecheck"
+      }
+    },
+    {
+      "plugin": "@nx/rspack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "previewTargetName": "preview",
         "typecheckTargetName": "typecheck"
       }
     }

@@ -17,7 +17,7 @@ export function createConfig(
   const isProduction = process.env['NODE_ENV'] === 'production';
 
   const defaultConfig = {
-    context: options.root,
+    context: normalizedOptions.root,
     mode: isProduction ? 'production' : 'development',
     output: {
       uniqueName: 'rspack-angular',
@@ -258,7 +258,7 @@ export function createConfig(
       hashFunction: isProduction ? 'xxhash64' : undefined,
       publicPath: 'auto',
       clean: true,
-      path: join(normalizedOptions.root, 'dist', 'browser'),
+      path: join(normalizedOptions.root, 'dist/browser'),
       cssFilename: isProduction ? '[name].[contenthash].css' : '[name].css',
       filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
