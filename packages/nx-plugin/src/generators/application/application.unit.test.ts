@@ -2,6 +2,7 @@ import { readProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { AngularApplicationSchema } from './schema';
 import applicationGenerator from './application';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('Application Generator', () => {
   let tree: Tree;
