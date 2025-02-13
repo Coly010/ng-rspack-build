@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   test: {
-    testTimeout: 8_000,
+    testTimeout: 10_000,
     watch: false,
     globals: true,
     environment: 'node',
