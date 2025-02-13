@@ -1,8 +1,7 @@
 import { bold, green, red, yellow } from 'ansis';
 import { writeFile } from 'fs/promises';
 import { RuleSummary, sortByEffort } from './utils';
-import { join, extname } from 'node:path';
-import prettier from 'prettier';
+import { join } from 'node:path';
 
 export function printRuleSummary(summary: RuleSummary): void {
   console.log(bold('ESLint Migration Overview:\n'));
@@ -74,36 +73,6 @@ export async function mdRuleSummary(
     md += 'No rules violated 🎉';
   }
 
-  await formatAndWriteFile(file, md);
-}
-
-async function formatAndWriteFile(filePath: string, content: string) {
-  try {
-    // Determine file extension
-    const ext = extname(filePath);
-
-    // Map extensions to correct Prettier parser
-    const parserMap = {
-      '.js': 'babel',
-      '.ts': 'typescript',
-      '.json': 'json',
-      '.md': 'markdown',
-      '.html': 'html',
-      '.css': 'css',
-    };
-
-    const options = (await prettier.resolveConfig(filePath)) || {
-      parser: 'babel',
-    };
-
-    const formatted = prettier.format(content, {
-      options,
-      parser: parserMap[ext] || 'babel',
-    });
-
-    // Write formatted content to file
-    await writeFile(filePath, formatted);
-  } catch (error) {
-    console.error('Error formatting content:', error);
-  }
+  //  await mkdir(path.dirname(file)).catch()
+  await writeFile(file, md);
 }

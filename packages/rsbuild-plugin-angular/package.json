@@ -57,13 +57,6 @@
         "dependsOn": [
           "^build"
         ]
-      },
-      "cp": {
-        "command": "pnpx @code-pushup/cli collect",
-        "options": {
-          "persist.outputDir": ".code-pushup/{projectName}",
-          "config": "{projectRoot}/code-pushup.config.ts"
-        }
       }
     }
   }

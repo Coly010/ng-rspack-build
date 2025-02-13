@@ -1,6 +1,5 @@
 const nx = require('@nx/eslint-plugin');
 const tseslint = require('typescript-eslint');
-const vitest = require('./eslint/src/config/vitest');
 
 module.exports = tseslint.config(
   {
@@ -12,7 +11,6 @@ module.exports = tseslint.config(
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
-  ...vitest,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
@@ -30,6 +28,11 @@ module.exports = tseslint.config(
         },
       ],
     },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    // Override or add rules here
+    rules: {},
   },
   {
     ignores: [

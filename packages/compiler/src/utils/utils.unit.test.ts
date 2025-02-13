@@ -20,19 +20,15 @@ describe('isPresent', () => {
   it('should return true if the variable is a non empty string', () => {
     expect(isPresent('not-a-number')).toBe(true);
   });
-
   it('should return true if the variable is a non empty string and parseable to number', () => {
     expect(isPresent('4')).toBe(true);
   });
-
   it('should return false if the variable is an empty string', () => {
     expect(isPresent('')).toBe(false);
   });
-
   it('should return false if the variable is an empty string after trim', () => {
     expect(isPresent('   ')).toBe(false);
   });
-
   it('should return false if the variable is a non empty string', () => {
     expect(isPresent(undefined)).toBe(false);
   });
