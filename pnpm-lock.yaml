@@ -46,7 +46,7 @@ importers:
         version: 19.0.5(whst2uom2sykn2ay52lywk7vqm)
       '@code-pushup/cli':
         specifier: ^0.57.0
-        version: 0.57.0(zod@3.24.1)
+        version: 0.57.0(zod@3.24.2)
       '@code-pushup/eslint-plugin':
         specifier: ^0.57.0
         version: 0.57.0(@nx/devkit@20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))))(eslint@9.19.0(jiti@2.4.2))
@@ -9706,8 +9706,8 @@ packages:
     peerDependencies:
       zod: ^3.18.0
 
-  zod@3.24.1:
-    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
 
   zone.js@0.15.0:
     resolution: {integrity: sha512-9oxn0IIjbCZkJ67L+LkhYWRyAy7axphb3VgE2MBDlOqnmHMPWGYMxJxBYFueFq/JGY2GMwS0rU+UCLunEmy5UA==}
@@ -11763,11 +11763,11 @@ snapshots:
 
   '@bufbuild/protobuf@2.2.3': {}
 
-  '@code-pushup/cli@0.57.0(zod@3.24.1)':
+  '@code-pushup/cli@0.57.0(zod@3.24.2)':
     dependencies:
-      '@code-pushup/core': 0.57.0(zod@3.24.1)
+      '@code-pushup/core': 0.57.0(zod@3.24.2)
       '@code-pushup/models': 0.57.0
-      '@code-pushup/utils': 0.57.0(zod@3.24.1)
+      '@code-pushup/utils': 0.57.0(zod@3.24.2)
       ansis: 3.10.0
       simple-git: 3.27.0
       yargs: 17.7.2
@@ -11776,12 +11776,12 @@ snapshots:
       - supports-color
       - zod
 
-  '@code-pushup/core@0.57.0(zod@3.24.1)':
+  '@code-pushup/core@0.57.0(zod@3.24.2)':
     dependencies:
       '@code-pushup/models': 0.57.0
-      '@code-pushup/utils': 0.57.0(zod@3.24.1)
+      '@code-pushup/utils': 0.57.0(zod@3.24.2)
       ansis: 3.10.0
-      zod-validation-error: 3.4.0(zod@3.24.1)
+      zod-validation-error: 3.4.0(zod@3.24.2)
     transitivePeerDependencies:
       - supports-color
       - zod
@@ -11789,9 +11789,9 @@ snapshots:
   '@code-pushup/eslint-plugin@0.57.0(@nx/devkit@20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))))(eslint@9.19.0(jiti@2.4.2))':
     dependencies:
       '@code-pushup/models': 0.57.0
-      '@code-pushup/utils': 0.57.0(zod@3.24.1)
+      '@code-pushup/utils': 0.57.0(zod@3.24.2)
       eslint: 9.19.0(jiti@2.4.2)
-      zod: 3.24.1
+      zod: 3.24.2
     optionalDependencies:
       '@nx/devkit': 20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
     transitivePeerDependencies:
@@ -11800,9 +11800,9 @@ snapshots:
   '@code-pushup/models@0.57.0':
     dependencies:
       vscode-material-icons: 0.1.1
-      zod: 3.24.1
+      zod: 3.24.2
 
-  '@code-pushup/utils@0.57.0(zod@3.24.1)':
+  '@code-pushup/utils@0.57.0(zod@3.24.2)':
     dependencies:
       '@code-pushup/models': 0.57.0
       '@isaacs/cliui': 8.0.2
@@ -11814,7 +11814,7 @@ snapshots:
       multi-progress-bars: 5.0.3
       semver: 7.7.0
       simple-git: 3.27.0
-      zod-validation-error: 3.4.0(zod@3.24.1)
+      zod-validation-error: 3.4.0(zod@3.24.2)
     transitivePeerDependencies:
       - supports-color
       - zod
@@ -13281,7 +13281,7 @@ snapshots:
 
   '@npmcli/fs@4.0.0':
     dependencies:
-      semver: 7.7.0
+      semver: 7.6.3
 
   '@npmcli/git@6.0.1':
     dependencies:
@@ -19617,7 +19617,7 @@ snapshots:
       make-fetch-happen: 14.0.3
       nopt: 8.1.0
       proc-log: 5.0.0
-      semver: 7.7.0
+      semver: 7.6.3
       tar: 7.4.3
       which: 5.0.0
     transitivePeerDependencies:
@@ -22724,10 +22724,10 @@ snapshots:
 
   yoctocolors-cjs@2.1.2: {}
 
-  zod-validation-error@3.4.0(zod@3.24.1):
+  zod-validation-error@3.4.0(zod@3.24.2):
     dependencies:
-      zod: 3.24.1
+      zod: 3.24.2
 
-  zod@3.24.1: {}
+  zod@3.24.2: {}
 
   zone.js@0.15.0: {}
