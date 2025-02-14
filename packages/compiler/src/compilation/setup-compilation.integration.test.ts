@@ -11,7 +11,7 @@ vi.mock('../utils/load-compiler-cli', async (importOriginal) => {
   return {
     ...original,
     loadCompilerCli: async () => {
-      return import('@angular/compiler-cli');
+      return import('@angular/compiler-clix');
     }
   }
 });
