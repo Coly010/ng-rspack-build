@@ -38,6 +38,13 @@ export const appRoutes: Route[] = [
         path: 'migration',
         children: [
           {
+            path: 'from-webpack',
+            loadComponent: () =>
+              import(
+                '../pages/guide/migration/from-webpack/from-webpack.component'
+              ).then((m) => m.FromWebpackComponent),
+          },
+          {
             path: 'configurations',
             loadComponent: () =>
               import(
@@ -58,23 +65,35 @@ export const appRoutes: Route[] = [
           {
             path: 'create-config',
             loadComponent: () =>
-              import('../pages/api/create-config/create-config.component').then(
-                (m) => m.CreateConfigComponent
-              ),
+              import(
+                '../pages/api/rsbuild/create-config/create-config.component'
+              ).then((m) => m.CreateConfigComponent),
           },
           {
             path: 'with-configurations',
             loadComponent: () =>
               import(
-                '../pages/api/with-configurations/with-configurations.component'
+                '../pages/api/rsbuild/with-configurations/with-configurations.component'
               ).then((m) => m.WithConfigurationsComponent),
           },
           {
             path: 'create-server',
             loadComponent: () =>
-              import('../pages/api/create-server/create-server.component').then(
-                (m) => m.CreateServerComponent
-              ),
+              import(
+                '../pages/api/rsbuild/create-server/create-server.component'
+              ).then((m) => m.CreateServerComponent),
+          },
+        ],
+      },
+      {
+        path: 'rspack',
+        children: [
+          {
+            path: 'create-config',
+            loadComponent: () =>
+              import(
+                '../pages/api/rspack/create-config/create-config.component'
+              ).then((m) => m.CreateConfigComponent),
           },
         ],
       },

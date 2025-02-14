@@ -3,8 +3,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {
   ApiOption,
   ApiOptionComponent,
-} from '../../../ui/api/api-option.component';
-import { CodeBlockComponent } from '../../../ui/code-block/code-block.component';
+} from '../../../../ui/api/api-option.component';
+import { CodeBlockComponent } from '../../../../ui/code-block/code-block.component';
 import { MatList, MatListItem, MatNavList } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 

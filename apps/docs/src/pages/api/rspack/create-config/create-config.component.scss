@@ -1,0 +1,8 @@
+:host {
+  max-width: 90vw;
+  margin: 0 auto;
+
+  .spacer {
+    border-top: 1px solid var(--mat-sys-surface-variant);
+  }
+}
