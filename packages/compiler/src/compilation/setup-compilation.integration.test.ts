@@ -6,14 +6,14 @@ import path from 'node:path';
 import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
 
 vi.mock('../utils/load-compiler-cli', async (importOriginal) => {
-
-  const original = await importOriginal() as typeof import('@angular/compiler-cli');
+  const original =
+    (await importOriginal()) as typeof import('@angular/compiler-cli');
   return {
     ...original,
     loadCompilerCli: async () => {
-      return Promise.resolve();
-    }
-  }
+      return import('@angular/compiler-cli');
+    },
+  };
 });
 
 describe('styleTransform', () => {
