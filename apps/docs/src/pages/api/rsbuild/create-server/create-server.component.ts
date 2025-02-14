@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CodeBlockComponent } from '../../../ui/code-block/code-block.component';
+import { CodeBlockComponent } from '../../../../ui/code-block/code-block.component';
 import {
   ApiOption,
   ApiOptionComponent,
-} from '../../../ui/api/api-option.component';
+} from '../../../../ui/api/api-option.component';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 
 @Component({
