@@ -34,12 +34,12 @@ npx nx affected:lint
 
 ## Linting
 
-- The docs are located in the [./docs/linting/eslint.md](./docs/linting/eslint.md) folder.
+- The docs are located in the [./contributing/linting/eslint.md](./contributing/linting/eslint.md) folder.
 - The configs in the [eslint](./eslint/README.md) folder.
 
 ## Testing
 
-- The docs are located in the [./docs/testing/readme.md](./docs/testing/readme.md) folder.
+- The docs are located in the [./contributing/testing/readme.md](./contributing/testing/readme.md) folder.
 
 ## Git
 

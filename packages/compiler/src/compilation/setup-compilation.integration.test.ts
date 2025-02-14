@@ -6,9 +6,9 @@ import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.
 vi.mock('../utils', () => ({
   loadCompilerCli: vi.fn().mockImplementation(() => ({
     readConfiguration: vi.fn().mockReturnValue({
-      options: { },
+      options: {},
       rootNames: ['main.ts'],
-    })
+    }),
   })),
 }));
 
