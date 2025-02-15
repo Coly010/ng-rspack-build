@@ -81,7 +81,7 @@ describe('setupCompilation', () => {
           fileReplacements: [],
         }
       )
-    ).toStrictEqual(
+    ).resolves.toStrictEqual(
       expect.objectContaining({
         compilerOptions: expect.objectContaining({}),
         rootNames: [expect.stringMatching(/other\/mock.main.ts$/)],
