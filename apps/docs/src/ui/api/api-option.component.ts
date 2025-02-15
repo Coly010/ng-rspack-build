@@ -24,7 +24,9 @@ export interface ApiOption {
       @if (option.internal) {
       <h4 class="internal"><code>internal</code></h4>
       } @if (option.default) {
-      <h4 class="default">Default: <code>true</code></h4>
+      <h4 class="default">
+        Default: <code>{{ option.default }}</code>
+      </h4>
       }
       <p [innerHtml]="apiOptionDescription()"></p>
     </div>`,
