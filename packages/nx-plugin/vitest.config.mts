@@ -3,8 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir:
-    '../../node_modules/.vite/packages/rsbuild-plugin-angular/unit-test',
+  cacheDir: '../../node_modules/.vite/packages/nx/unit-test',
   plugins: [],
   resolve: {
     alias: {
@@ -16,10 +15,10 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs.setup-file.ts'],
+    passWithNoTests: true,
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/packages/rsbuild-plugin-angular/unit',
+      reportsDirectory: '../../coverage/packages/nx/unit',
       provider: 'v8',
     },
   },

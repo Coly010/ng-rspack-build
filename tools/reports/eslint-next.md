@@ -2,9 +2,9 @@
 
 ---
 
-- **Fixable Errors:** 2
+- **Fixable Errors:** 4
 - **Fixable Warnings:** 3
-- **Total Errors:** 4
+- **Total Errors:** 6
 - **Total Warnings:** 37
 
 ---
@@ -13,6 +13,7 @@
 
 - [x] **vitest/valid-describe-callback**: ❌ 2
 - [x] **@nx/dependency-checks**: ❌ 2 🛠️
+- [x] **no-var**: ❌ 2 🛠️
 - [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 16
 - [x] **@typescript-eslint/no-explicit-any**: ⚠️ 9
 - [x] **@typescript-eslint/no-unused-vars**: ⚠️ 9

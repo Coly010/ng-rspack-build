@@ -24,11 +24,17 @@
  */
 
 import * as ts from 'typescript';
-import { type CompilerHost } from '@angular/compiler-cli';
+import { type CompilerHost as AngularCompilerHost } from '@angular/compiler-cli';
 import { normalize } from 'path';
 import { createHash } from 'node:crypto';
 import { InlineStyleExtension } from '../models';
 
+/**
+ *
+ * @param host
+ * @param transform
+ * @param options
+ */
 export function augmentHostWithResources(
   host: ts.CompilerHost,
   transform: (
@@ -41,11 +47,7 @@ export function augmentHostWithResources(
     isProd?: boolean;
   } = {}
 ) {
-  const resourceHost = host as CompilerHost;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const baseGetSourceFile = (
-    resourceHost as ts.CompilerHost
-  ).getSourceFile.bind(resourceHost);
+  const resourceHost = host as AngularCompilerHost;
 
   resourceHost.readResource = async function (fileName: string) {
     const filePath = normalize(fileName);
@@ -92,6 +94,7 @@ export function augmentHostWithResources(
   };
 }
 
+// @TODO check if it is used or dead code
 export function augmentProgramWithVersioning(program: ts.Program): void {
   const baseGetSourceFiles = program.getSourceFiles;
   program.getSourceFiles = function (...parameters) {
@@ -108,6 +111,7 @@ export function augmentProgramWithVersioning(program: ts.Program): void {
   };
 }
 
+// @TODO check if it is used or dead code
 export function augmentHostWithCaching(
   host: ts.CompilerHost,
   cache: Map<string, ts.SourceFile>
