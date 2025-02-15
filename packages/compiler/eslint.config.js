@@ -11,8 +11,9 @@ module.exports = [
     rules: {
       // ❌ Errors: 1
       'vitest/valid-describe-callback': 'off', // ❌ 2 errors
-      // ⚠️ Warnings: 1
+      // ⚠️ Warnings: 2
       'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️
+      'vitest/no-disabled-tests': 'off', // ⚠️ 2 warnings
     },
   },
 ];
