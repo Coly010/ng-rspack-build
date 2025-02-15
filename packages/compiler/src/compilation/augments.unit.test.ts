@@ -78,8 +78,7 @@ describe('augmentHostWithCaching', () => {
 });
 
 describe('augmentHostWithResources', () => {
-  const transform = (code: string, id: string, options?: { ssr?: boolean }) =>
-    null;
+  const transform = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
