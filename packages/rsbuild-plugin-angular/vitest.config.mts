@@ -3,7 +3,8 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/rsbuild-plugin-angular/unit-test',
+  cacheDir:
+    '../../node_modules/.vite/packages/rsbuild-plugin-angular/unit-test',
   plugins: [],
   resolve: {
     alias: {
