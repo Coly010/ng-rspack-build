@@ -16,32 +16,6 @@ import * as osModule from 'node:os';
 
 vi.mock('node:os');
 
-describe('maxWorkers', () => {
-  const availableParallelismSpy = vi.spyOn(osModule, 'availableParallelism');
-
-  beforeEach(() => {
-    availableParallelismSpy.mockReturnValue(5);
-  });
-
-  it('should use the environment variable value when set', () => {
-    vi.stubEnv(ENV_NG_BUILD_MAX_WORKERS, '3');
-    expect(maxWorkers()).toBe(3);
-  });
-
-  it('should use availableParallelism() as fallback for env vars', () => {
-    vi.stubEnv(ENV_NG_BUILD_MAX_WORKERS, '');
-    expect(osModule.availableParallelism()).toBeGreaterThan(4);
-    expect(maxWorkers()).toBe(4);
-  });
-
-  it('should use availableParallelism() as fallback for env vars a', () => {
-    vi.stubEnv(ENV_NG_BUILD_MAX_WORKERS, '');
-    availableParallelismSpy.mockReturnValue(3);
-    expect(osModule.availableParallelism()).toBeLessThan(4);
-    expect(maxWorkers()).toBe(osModule.availableParallelism() - 1);
-  });
-});
-
 describe('isPresent', () => {
   it('should return true if the variable is a non empty string', () => {
     expect(isPresent('not-a-number')).toBe(true);

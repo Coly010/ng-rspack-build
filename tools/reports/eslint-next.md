@@ -4,7 +4,7 @@
 
 - **Fixable Errors:** 2
 - **Fixable Warnings:** 3
-- **Total Errors:** 5
+- **Total Errors:** 4
 - **Total Warnings:** 37
 
 ---
@@ -12,7 +12,6 @@
 ## Rule Details By Effort
 
 - [x] **vitest/valid-describe-callback**: ❌ 2
-- [x] **vitest/no-identical-title**: ❌ 1
 - [x] **@nx/dependency-checks**: ❌ 2 🛠️
 - [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 16
 - [x] **@typescript-eslint/no-explicit-any**: ⚠️ 9

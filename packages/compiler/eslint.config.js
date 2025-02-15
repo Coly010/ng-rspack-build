@@ -9,9 +9,8 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 2
+      // ❌ Errors: 1
       'vitest/valid-describe-callback': 'off', // ❌ 2 errors
-      'vitest/no-identical-title': 'off', // ❌ 1 error
       // ⚠️ Warnings: 1
       'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️
     },
