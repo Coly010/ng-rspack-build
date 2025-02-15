@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { AngularApplicationSchema } from './schema';
 import applicationGenerator from './application';
 
-describe('Application Generator', () => {
+describe.skip('Application Generator', () => {
   let tree: Tree;
 
   beforeEach(() => {

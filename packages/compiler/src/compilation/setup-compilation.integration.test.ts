@@ -2,7 +2,6 @@ import { describe, expect, vi } from 'vitest';
 import { styleTransform } from './setup-compilation.ts';
 import { setupCompilation } from './setup-compilation.ts';
 import path from 'node:path';
-
 import rsBuildMockConfig from '../../mocks/fixtures/integration/minimal/rsbuild.mock.config.ts';
 
 vi.mock('../utils/load-compiler-cli', async (importOriginal) => {
