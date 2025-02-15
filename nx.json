@@ -66,8 +66,7 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
-      },
-      "exclude": ["e2e/**", "integration-testing/**"]
+      }
     },
     {
       "plugin": "@nx/vite/plugin",
@@ -81,7 +80,7 @@
       "options": {
         "testTargetName": "integration-test"
       },
-      "include": ["packages/**"]
+      "include": ["packages/**", "testing/**"]
     },
     {
       "plugin": "@nx/playwright/plugin",
