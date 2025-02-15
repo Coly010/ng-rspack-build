@@ -3,13 +3,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {
   ApiOption,
   ApiOptionComponent,
-} from '../../../ui/api/api-option.component';
-import { CodeBlockComponent } from '../../../ui/code-block/code-block.component';
+} from '../../../../ui/api/api-option.component';
+import { CodeBlockComponent } from '../../../../ui/code-block/code-block.component';
 
 @Component({
   imports: [MatTabsModule, ApiOptionComponent, CodeBlockComponent],
   preserveWhitespaces: true,
-  selector: 'app-create-config',
+  selector: 'app-rspack-create-config',
   templateUrl: './create-config.component.html',
   styleUrls: ['./create-config.component.scss'],
 })
@@ -103,18 +103,18 @@ export class CreateConfigComponent {
       internal: true,
     },
     {
-      name: 'useParallelCompilation',
+      name: 'skipTypeChecking',
       type: 'boolean',
       description:
-        'A boolean value indicating whether to use parallel compilation. Parallel compilation uses workers to speed up the compilation process.',
-      default: 'true',
+        'A boolean value indicating whether to skip type checking. This is used to skip the type checking process during the build process.',
+      default: 'false',
     },
     {
-      name: 'useHoistedJavascriptProcessing',
+      name: 'useTsProjectReferences',
       type: 'boolean',
       description:
-        'Hoisted javascript processing is a technique used to improve build speeds by moving processing of the `JavaScriptTransformer` to a separate plugin in order to share cache between server and browser builds.',
-      default: 'true',
+        'A boolean value indicating whether to use TypeScript project references.',
+      default: 'false',
     },
   ];
 }

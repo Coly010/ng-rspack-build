@@ -1,0 +1,113 @@
+<div class="api-header">
+  <h1>createConfig</h1>
+  <h3 class="import-path">import &#123; createConfig &#125; from '&#64;ng-rspack/build';</h3>
+</div>
+
+<p>
+  The <code class="inline-code">createConfig</code> function is used to create an Rspack
+  configuration object setup for Angular applications.
+</p>
+<p>
+  It takes an optional <code class="inline-code">Configuration</code> object as an argument, which
+  allows for customization of the Rspack configuration.
+</p>
+
+<app-code-block language="typescript">
+function createConfig(
+  options: Partial&lt;AngularRspackPluginOptions&gt;,
+  rspackConfigOverrides?: Partial&lt;Configuration&gt;
+)
+</app-code-block>
+
+<div class="spacer"></div>
+
+<h2>Examples</h2>
+
+<mat-tab-group>
+  <mat-tab label="Server-Side Rendering (SSR)">
+    <p>
+      The following example shows how to create a configuration for a SSR
+      application:
+    </p>
+    <app-code-block fileName="rspack.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rspack/build';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;);
+      </app-code-block>
+  </mat-tab>
+  <mat-tab label="Client-Side Rendering (CSR)">
+    <p>
+      The following example shows how to create a configuration for a CSR
+      application:
+    </p>
+    <app-code-block fileName="rspack.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rspack/build';
+
+export default createConfig(&#123;
+    browser: './src/main.ts',
+&#125;);
+    </app-code-block>
+  </mat-tab>
+  <mat-tab label="Modify Rspack Configuration">
+    <p>
+      The following example shows how to modify the base Rspack configuration:
+    </p>
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rspack/build';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;, &#123;
+  plugins: [
+    new ModuleFederationPlugin(&#123;
+      name: 'shell',
+      remotes: &#123;
+         cart: 'cart&#64;http://localhost:4201/remoteEntry.js',
+         checkout: 'checkout&#64;http://localhost:4201/remoteEntry.js',
+      &#125;,
+    &#125;)
+  ],
+&#125;);
+    </app-code-block>
+    </mat-tab>
+</mat-tab-group>
+
+<div class="spacer"></div>
+
+<h2 id="AngularRspackPluginOptions">AngularRspackPluginOptions</h2>
+
+<p>
+  The <code>AngularRspackPluginOptions</code> object is an object that contains the
+  following properties:
+</p>
+
+<app-code-block language="typescript">
+export interface AngularRspackPluginOptions &#123;
+  root: string;
+  index: string;
+  browser: string;
+  server?: string;
+  ssrEntry?: string;
+  polyfills: string[];
+  assets: string[];
+  styles: string[];
+  scripts: string[];
+  fileReplacements: FileReplacement[];
+  jit: boolean;
+  inlineStylesExtension: InlineStyleExtension;
+  tsconfigPath: string;
+  hasServer: boolean;
+  skipTypeChecking: boolean;
+  useTsProjectReferences?: boolean;
+&#125;
+</app-code-block>
+
+@for (option of options; track option.name) {
+  <app-api-option [apiOption]="option"></app-api-option>
+}
