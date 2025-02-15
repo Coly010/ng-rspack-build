@@ -5,7 +5,7 @@
 - **Fixable Errors:** 2
 - **Fixable Warnings:** 3
 - **Total Errors:** 4
-- **Total Warnings:** 39
+- **Total Warnings:** 37
 
 ---
 
@@ -16,6 +16,5 @@
 - [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 16
 - [x] **@typescript-eslint/no-explicit-any**: ⚠️ 9
 - [x] **@typescript-eslint/no-unused-vars**: ⚠️ 9
-- [x] **vitest/no-disabled-tests**: ⚠️ 2
 - [x] **vitest/prefer-to-be**: ⚠️ 2 🛠️
 - [x] **vitest/prefer-expect-resolves**: ⚠️ 1 🛠️
