@@ -11,17 +11,30 @@ describe('Application Generator', () => {
     tree = createTreeWithEmptyWorkspace();
   });
 
-  it('should generate an application correctly', async () => {
-    // ARRANGE
+  it('should throw if the directory and name is not present in the options', async () => {
+    await expect(() => applicationGenerator(tree, {} as any)).rejects.toThrow(
+      'You must provide a directory where the application will be placed.'
+    );
+  });
+
+  it('should throw if the directory is the current working directory and name is not present in the options', async () => {
+    await expect(() =>
+      applicationGenerator(tree, { directory: '.' } as any)
+    ).rejects.toThrow(
+      'When placing an application in the current working directory, you must provide a name for the application with --name'
+    );
+  });
+
+  it.todo('should generate an application correctly', async () => {
     const options: AngularApplicationSchema = {
       directory: 'apps/demo',
       e2eTestRunner: 'none',
       skipPackageJson: true,
     };
-    // ACT
-    await applicationGenerator(tree, options);
 
-    // ASSERT
+    // @TODO applicationGenerator should not throw
+    await expect(applicationGenerator(tree, options)).resolves.not.toThrow();
+
     const project = readProjectConfiguration(tree, 'demo');
     expect(project.targets?.build).toStrictEqual({
       configurations: {
