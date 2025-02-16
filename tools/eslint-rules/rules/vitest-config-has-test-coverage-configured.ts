@@ -44,10 +44,7 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
       },
     ],
     create(
-      context: ESLintUtils.RuleContext<
-        typeof RULE_NAME,
-        [(typeof rule.defaultOptions)[0]]
-      >
+      context
     ) {
       return {
         CallExpression(node: TSESTree.CallExpression) {
@@ -87,7 +84,7 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
                 fix: (fixer: RuleFixer) => {
                   if (testObject.properties.length > 0) {
                     return fixer.insertTextBefore(
-                      testObject.properties.at(0)!,
+                      testObject.properties.at(0) as TSESTree.Property,
                       `${coverageText},\n`
                     );
                   } else {
@@ -153,7 +150,7 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
                       messageId: 'missingCoverageReporterType',
                       fix: (fixer: RuleFixer) =>
                         fixer.insertTextAfter(
-                          reporterProp.value.elements.at(-1)!,
+                          reporterProp.value.elements.at(-1) as TSESTree.Property,
                           `, "lcov"`
                         ),
                     });
