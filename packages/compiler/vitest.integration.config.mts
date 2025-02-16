@@ -3,8 +3,6 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir:
-    '../../node_modules/.vite/packages/rsbuild-plugin-angular/integration-test',
   plugins: [],
   resolve: {
     alias: {
@@ -18,10 +16,5 @@ export default defineConfig({
     include: ['src/**/*.integration.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     passWithNoTests: true,
     reporters: ['default'],
-    coverage: {
-      reportsDirectory:
-        '../../coverage/packages/rsbuild-plugin-angular/integration',
-      provider: 'v8',
-    },
   },
 });

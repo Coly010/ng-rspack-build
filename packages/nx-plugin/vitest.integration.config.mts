@@ -3,7 +3,6 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/nx/integration-test',
   plugins: [],
   resolve: {
     alias: {
@@ -17,9 +16,5 @@ export default defineConfig({
     include: ['src/**/*.integration.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     passWithNoTests: true,
     reporters: ['default'],
-    coverage: {
-      reportsDirectory: '../../coverage/packages/nx/integration',
-      provider: 'v8',
-    },
   },
 });
