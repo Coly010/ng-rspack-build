@@ -23,6 +23,9 @@
     },
     {
       "path": "./packages/compiler"
+    },
+    {
+      "path": "./tools/eslint-rules"
     }
   ]
 }
