@@ -50,3 +50,5 @@ vitest.config.*.timestamp*
 apps/docs/__deploy
 .env
 .code-pushup
+
+test-output

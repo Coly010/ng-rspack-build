@@ -50,6 +50,15 @@ const withExtensions = (patterns, options = {}) =>
     (pattern) => `${pattern}.?(c|m)[jt]s${options.skipJSX ? '' : '?(x)'}`
   );
 
+const VITEST_CONFIG_FILE_PATTERNS = withExtensions(
+  [
+    '**/vitest.config',
+    '**/vitest.unit.config',
+    '**/vitest.integration.config',
+    '**/vitest.e2e.config'
+  ],
+  { skipJSX: true }
+);
 /**
  * Predefined glob patterns for configuration files.
  * Includes various config files commonly used in JavaScript projects.
@@ -143,6 +152,7 @@ module.exports = {
   fromSuffix,
   fromDirectory,
   withExtensions,
+  VITEST_CONFIG_FILE_PATTERNS,
   CONFIG_FILE_PATTERNS,
   UNIT_INTEGRATION_TEST_FILE_PATTERNS,
   TEST_FILE_PATTERNS,

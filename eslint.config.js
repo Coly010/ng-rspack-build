@@ -1,6 +1,6 @@
 const nx = require('@nx/eslint-plugin');
 const tseslint = require('typescript-eslint');
-const vitest = require('./eslint/src/config/vitest');
+const vitest = require('./eslint/src/lib/config/vitest');
 
 module.exports = tseslint.config(
   {
