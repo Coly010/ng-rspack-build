@@ -1,5 +1,11 @@
-import { rule as vitestConfigHasTestCoverageConfigured, RULE_NAME as vitestConfigHasTestCoverageConfiguredName } from './rules/vitest-config-has-test-coverage-configured';
-import { rule as vitestConfigHasUniqueCachedirConfigured, RULE_NAME as vitestConfigHasUniqueCachedirConfiguredName } from './rules/vitest-config-has-unique-cachedir-configured';
+import {
+  rule as vitestConfigHasTestCoverageConfigured,
+  RULE_NAME as vitestConfigHasTestCoverageConfiguredName,
+} from './rules/vitest-config-has-test-coverage-configured';
+import {
+  rule as vitestConfigHasUniqueCachedirConfigured,
+  RULE_NAME as vitestConfigHasUniqueCachedirConfiguredName,
+} from './rules/vitest-config-has-unique-cachedir-configured';
 /**
  * Import your custom workspace rules at the top of this file.
  *
@@ -17,7 +23,9 @@ import { rule as vitestConfigHasUniqueCachedirConfigured, RULE_NAME as vitestCon
 
 module.exports = {
   rules: {
-    [vitestConfigHasTestCoverageConfiguredName]: vitestConfigHasTestCoverageConfigured,
-    [vitestConfigHasUniqueCachedirConfiguredName]: vitestConfigHasUniqueCachedirConfigured
+    [vitestConfigHasTestCoverageConfiguredName]:
+      vitestConfigHasTestCoverageConfigured,
+    [vitestConfigHasUniqueCachedirConfiguredName]:
+      vitestConfigHasUniqueCachedirConfigured,
   },
 };

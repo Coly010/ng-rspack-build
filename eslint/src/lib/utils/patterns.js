@@ -55,7 +55,7 @@ const VITEST_CONFIG_FILE_PATTERNS = withExtensions(
     '**/vitest.config',
     '**/vitest.unit.config',
     '**/vitest.integration.config',
-    '**/vitest.e2e.config'
+    '**/vitest.e2e.config',
   ],
   { skipJSX: true }
 );

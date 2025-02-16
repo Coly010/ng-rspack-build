@@ -43,4 +43,3 @@ export function getCacheDirFolder(): string {
   );
   return vitestCacheDir;
 }
-

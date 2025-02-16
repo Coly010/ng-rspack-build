@@ -43,9 +43,7 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
         reportsDirectory: '../../coverage/nx-plugin/integration-tests',
       },
     ],
-    create(
-      context
-    ) {
+    create(context) {
       return {
         CallExpression(node: TSESTree.CallExpression) {
           if (isVitestConfigObject(node)) {
@@ -150,7 +148,9 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
                       messageId: 'missingCoverageReporterType',
                       fix: (fixer: RuleFixer) =>
                         fixer.insertTextAfter(
-                          reporterProp.value.elements.at(-1) as TSESTree.Property,
+                          reporterProp.value.elements.at(
+                            -1
+                          ) as TSESTree.Property,
                           `, "lcov"`
                         ),
                     });

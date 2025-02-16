@@ -28,15 +28,15 @@ export const rule = ESLintUtils.RuleCreator(() => __filename)({
         'The `cacheDir` property is not unique across vite config files.',
     },
   },
-  defaultOptions: [
-    'node_modules/.vite',
-],
+  defaultOptions: ['node_modules/.vite'],
   create(context) {
     return {
       CallExpression(node: TSESTree.CallExpression) {
         if (isVitestConfigObject(node)) {
           const configObject = node.arguments[0] as TSESTree.ObjectExpression;
-          const cacheDirText = join(context.options.at(0) || getVitestCacheDirFolder(context.filename));
+          const cacheDirText = join(
+            context.options.at(0) || getVitestCacheDirFolder(context.filename)
+          );
 
           // Find `cacheDir` property inside the root config
           const cacheDirProperty = visitObjectExpression(
@@ -51,7 +51,6 @@ export const rule = ESLintUtils.RuleCreator(() => __filename)({
               node: configObject,
               messageId: 'missingCacheDirConfig',
               fix(fixer) {
-
                 return addCacheDir(cacheDirText, configObject, fixer);
               },
             });
