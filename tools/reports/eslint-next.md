@@ -2,9 +2,9 @@
 
 ---
 
-- **Fixable Errors:** 8
+- **Fixable Errors:** 4
 - **Fixable Warnings:** 3
-- **Total Errors:** 11
+- **Total Errors:** 6
 - **Total Warnings:** 37
 
 ---
@@ -15,6 +15,7 @@
 - [x] **@nx/workspace-vitest-config-has-unique-cachedir-configured**: ❌ 1
 - [x] **@nx/workspace-vitest-config-has-test-coverage-configured**: ❌ 6 🛠️
 - [x] **@nx/dependency-checks**: ❌ 2 🛠️
+- [x] **no-var**: ❌ 2 🛠️
 - [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 16
 - [x] **@typescript-eslint/no-explicit-any**: ⚠️ 9
 - [x] **@typescript-eslint/no-unused-vars**: ⚠️ 9

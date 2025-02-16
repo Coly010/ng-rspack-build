@@ -5,21 +5,6 @@ export default defineConfig({
   source: {
     tsconfigPath: './mocks/fixtures/integration/minimal/tsconfig.mock.json',
   },
-  server: {
-    host: 'localhost',
-    port: 4200,
-    htmlFallback: false,
-    historyApiFallback: {
-      index: '/index.html',
-      rewrites: [{ from: /^\/$/, to: 'index.html' }],
-    },
-  },
-  tools: {
-    rspack(config) {
-      config.resolve ??= {};
-      config.resolve.extensionAlias = {};
-    },
-  },
   environments: {
     browser: {
       source: {

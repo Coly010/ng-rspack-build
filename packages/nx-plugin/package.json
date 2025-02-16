@@ -37,5 +37,17 @@
   "generators": "./generators.json",
   "publishConfig": {
     "access": "public"
+  },
+  "nx": {
+    "sourceRoot": "packages/nx-plugin/src",
+    "projectType": "library",
+    "name": "nx",
+    "targets": {
+      "integration-test": {
+        "options": {
+          "config": "vitest.integration.config.mts"
+        }
+      }
+    }
   }
 }
