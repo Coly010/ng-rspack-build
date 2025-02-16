@@ -2,20 +2,21 @@
 
 ---
 
-- **Fixable Errors:** 2
+- **Fixable Errors:** 8
 - **Fixable Warnings:** 3
-- **Total Errors:** 4
-- **Total Warnings:** 39
+- **Total Errors:** 11
+- **Total Warnings:** 37
 
 ---
 
 ## Rule Details By Effort
 
 - [x] **vitest/valid-describe-callback**: ❌ 2
+- [x] **@nx/workspace-vitest-config-has-unique-cachedir-configured**: ❌ 1
+- [x] **@nx/workspace-vitest-config-has-test-coverage-configured**: ❌ 6 🛠️
 - [x] **@nx/dependency-checks**: ❌ 2 🛠️
 - [x] **@typescript-eslint/no-non-null-assertion**: ⚠️ 16
 - [x] **@typescript-eslint/no-explicit-any**: ⚠️ 9
 - [x] **@typescript-eslint/no-unused-vars**: ⚠️ 9
-- [x] **vitest/no-disabled-tests**: ⚠️ 2
 - [x] **vitest/prefer-to-be**: ⚠️ 2 🛠️
 - [x] **vitest/prefer-expect-resolves**: ⚠️ 1 🛠️
