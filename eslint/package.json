@@ -1,0 +1,16 @@
+{
+  "name": "@ng-rspack/eslint",
+  "private": false,
+  "nx": {
+    "sourceRoot": "eslint/eslint/src",
+    "projectType": "library",
+    "name": "eslint-config",
+    "targets": {
+      "integration-test": {
+        "options": {
+          "config": "vitest.integration.config.mts"
+        }
+      }
+    }
+  }
+}
