@@ -72,15 +72,13 @@
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "unit-test"
-      },
-      "include": ["packages/**", "testing/**"]
+      }
     },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "integration-test"
-      },
-      "include": ["packages/**", "testing/**"]
+      }
     },
     {
       "plugin": "@nx/playwright/plugin",
