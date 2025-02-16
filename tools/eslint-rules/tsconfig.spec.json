@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/vitest",
+    "types": [
+      "vitest",
+      "node"
+    ]
+  },
+  "include": [
+    "vitest.config.ts",
+    "**/unit.test.ts",
+    "**/integration.test.ts"
+  ]
+}
