@@ -2,5 +2,26 @@
   "private": true,
   "devDependencies": {
     "@ng-rsbuild/plugin-angular": "workspace:*"
+  },
+  "nx": {
+    "name": "rsbuild-ssr-css",
+    "projectType": "application",
+    "prefix": "app",
+    "sourceRoot": "rsbuild/ssr/css/src",
+    "tags": [],
+    "targets": {
+      "build": {
+        "parallelism": false
+      },
+      "start": {
+        "dependsOn": [
+          "build"
+        ],
+        "command": "node dist/server/server.js",
+        "options": {
+          "cwd": "apps/rsbuild/ssr/css"
+        }
+      }
+    }
   }
 }

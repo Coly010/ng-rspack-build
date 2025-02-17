@@ -2,8 +2,8 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
-  cacheDir: '../../node_modules/.vite/nx/unit',
   root: __dirname,
+  cacheDir: '../../node_modules/.vite/rsbuild-ssr-css/unit',
   plugins: [],
   resolve: {
     alias: {
@@ -11,17 +11,17 @@ export default defineConfig({
     },
   },
   test: {
+    watch: false,
+    globals: true,
+    passWithNoTests: true,
+    environment: 'node',
+    include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    reporters: ['default'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      reportsDirectory: '../../coverage/nx/unit',
+      reportsDirectory: '../../../../coverage/rsbuild-ssr-css/unit',
       exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     },
-    watch: false,
-    globals: true,
-    environment: 'node',
-    include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    passWithNoTests: true,
-    reporters: ['default'],
   },
 });

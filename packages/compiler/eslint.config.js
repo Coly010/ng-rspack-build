@@ -9,8 +9,7 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 2
-      '@nx/workspace-vitest-config-has-test-coverage-configured': 'off', // ❌ 2 errors 🛠️
+      // ❌ Errors: 1
       'vitest/valid-describe-callback': 'off', // ❌ 2 errors
       // ⚠️ Warnings: 1
       'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️

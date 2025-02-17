@@ -29,6 +29,7 @@ module.exports = [
           ignoredFiles: [
             '{projectRoot}/eslint.config.{js,cjs,mjs}',
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
+            '{projectRoot}/vitest.config.{js,ts,mjs,mts}',
           ],
           ignoredDependencies: ['jsonc-eslint-parser'],
         },

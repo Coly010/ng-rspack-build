@@ -23,6 +23,7 @@
   "nx": {
     "sourceRoot": "testing/utils/src",
     "projectType": "library",
-    "name": "testing-utils"
+    "name": "testing-utils",
+    "targets": {}
   }
 }

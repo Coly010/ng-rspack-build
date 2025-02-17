@@ -9,9 +9,6 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 2
-      '@nx/workspace-vitest-config-has-test-coverage-configured': 'off', // ❌ 2 errors 🛠️
-      '@nx/workspace-vitest-config-has-unique-cachedir-configured': 'off', // ❌ 1 error
       // ⚠️ Warnings: 4
       'vitest/prefer-to-be': 'off', // ⚠️ 2 warnings 🛠️
       '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 3 warnings
