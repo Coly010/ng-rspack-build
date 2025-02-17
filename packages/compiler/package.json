@@ -53,17 +53,10 @@
     "name": "compiler",
     "targets": {
       "integration-test": {
-        "dependsOn": [
-          "^build"
-        ],
-        "options": {
-          "config": "vitest.integration.config.mts"
-        }
+        "configName": "vitest.integration.config.mts"
       },
       "unit-test": {
-        "dependsOn": [
-          "^build"
-        ]
+        "configName": "vitest.unit.config.mts"
       }
     }
   }

@@ -167,6 +167,8 @@ export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
 function getCoverageConfig(filename: string, options?: Options[number]) {
   const userConfig = options || ({} as Options[number]);
   return {
+    provider: 'v8',
+    exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     reporter: Array.isArray(userConfig.reporter)
       ? [...new Set([...userConfig.reporter, 'lcov'])] // Ensure `lcov` is included
       : ['text', 'lcov'],

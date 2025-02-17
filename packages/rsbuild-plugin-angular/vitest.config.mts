@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  cacheDir: '../../node_modules/.vite/rsbuild-plugin-angular/unit',
   root: __dirname,
   plugins: [],
   resolve: {
@@ -16,5 +17,11 @@ export default defineConfig({
     include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     setupFiles: ['../../testing/vitest-setup/src/lib/fs-memfs.setup-file.ts'],
     reporters: ['default'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      reportsDirectory: '../../coverage/rsbuild-plugin-angular/unit',
+      exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
+    },
   },
 });

@@ -3,6 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
+  cacheDir: '../../node_modules/.vite/compiler/integration',
   plugins: [],
   resolve: {
     alias: {
@@ -16,5 +17,11 @@ export default defineConfig({
     include: ['src/**/*.integration.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     passWithNoTests: true,
     reporters: ['default'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      reportsDirectory: '../../coverage/compiler/integration',
+      exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
+    },
   },
 });
