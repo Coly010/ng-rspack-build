@@ -11,6 +11,7 @@ export interface SetupCompilationOptions {
   inlineStylesExtension: InlineStyleExtension;
   fileReplacements: Array<FileReplacement>;
   useTsProjectReferences?: boolean;
+  hasServer?: boolean;
 }
 
 export const DEFAULT_NG_COMPILER_OPTIONS: ts.CompilerOptions = {
