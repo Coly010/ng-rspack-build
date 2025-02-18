@@ -15,7 +15,10 @@ export async function setupCompilationWithParallelCompilation(
     config,
     options
   );
-  const parallelCompilation = new ParallelCompilation(options.jit ?? false);
+  const parallelCompilation = new ParallelCompilation(
+    options.jit ?? false,
+    options.hasServer === false
+  );
   const fileReplacements: Record<string, string> =
     options.fileReplacements.reduce((r, f) => {
       r[f.replace] = f.with;
