@@ -1,3 +1,15 @@
+## 19.0.0-alpha.27 (2025-02-18)
+
+### 🚀 Features
+
+- **build:** add type checking ([#83](https://github.com/Coly010/ng-rspack-build/pull/83))
+- **compiler:** support Angular 19.1 ([#97](https://github.com/Coly010/ng-rspack-build/pull/97))
+- **docs:** add migration from webpack docs ([#91](https://github.com/Coly010/ng-rspack-build/pull/91))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.26 (2025-02-02)
 
 ### 🚀 Features
