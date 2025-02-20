@@ -47,7 +47,10 @@
       }
     },
     "integration-test": {
-      "cache": true
+      "cache": true,
+      "options": {
+        "config": "vitest.integration.config.mts"
+      }
     }
   },
   "release": {
@@ -72,15 +75,14 @@
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "unit-test"
-      },
-      "include": ["packages/**", "testing/**"]
+      }
     },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "integration-test"
       },
-      "include": ["packages/**", "testing/**"]
+      "exclude": ["apps/**"]
     },
     {
       "plugin": "@nx/playwright/plugin",
