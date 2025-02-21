@@ -1,1 +1,1 @@
-export type InlineStyleExtension = 'css' | 'scss' | 'sass';
+export type InlineStyleExtension = 'css' | 'scss' | 'sass' | 'less';
