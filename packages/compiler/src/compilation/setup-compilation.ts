@@ -4,8 +4,12 @@ import { compileString } from 'sass-embedded';
 import { augmentHostWithResources } from './augments';
 import { InlineStyleExtension, FileReplacement } from '../models';
 import { loadCompilerCli } from '../utils';
+import { ComponentStylesheetBundler } from '@angular/build/src/tools/esbuild/angular/component-stylesheets';
+import { transformSupportedBrowsersToTargets } from '../utils/targets-from-browsers';
+import { getSupportedBrowsers } from '@angular/build/private';
 
 export interface SetupCompilationOptions {
+  root: string;
   tsconfigPath: string;
   jit: boolean;
   inlineStylesExtension: InlineStyleExtension;
@@ -54,8 +58,31 @@ export async function setupCompilation(
   const compilerOptions = tsCompilerOptions;
   const host = ts.createIncrementalCompilerHost(compilerOptions);
 
+  const componentStylesheetBundler = new ComponentStylesheetBundler(
+    {
+      workspaceRoot: options.root,
+      optimization: config.mode === 'production',
+      cacheOptions: { path: '', basePath: '', enabled: false },
+      inlineFonts: false,
+      outputNames: {
+        bundles: config.mode === 'production' ? '[name]-[hash]' : '[name]',
+        media: `media/${
+          config.mode === 'production' ? '[name]-[hash]' : '[name]'
+        }`,
+      },
+      sourcemap: false,
+      target: transformSupportedBrowsersToTargets(
+        getSupportedBrowsers(options.root, {
+          warn: (message) => console.warn(message),
+        })
+      ),
+    },
+    options.inlineStylesExtension,
+    false
+  );
+
   if (!options.jit) {
-    augmentHostWithResources(host, styleTransform, {
+    augmentHostWithResources(host, (code) => compileString(code).css, {
       inlineStylesExtension: options.inlineStylesExtension,
       isProd,
     });
@@ -65,19 +92,38 @@ export async function setupCompilation(
     rootNames,
     compilerOptions,
     host,
+    componentStylesheetBundler,
   };
 }
 
-export function styleTransform(styles: string) {
-  try {
-    // While compileStringAsync should be faster, it can cause issues when being spawned for large projects
-    // Investigate if there is an alternative method that could be used to compile the styles performantly
-    return compileString(styles).css;
-  } catch (e) {
-    console.error(
-      'Failed to compile styles. Continuing execution ignoring failing stylesheet...',
-      e
-    );
-    return '';
-  }
+export function styleTransform(
+  componentStylesheetBundler: ComponentStylesheetBundler
+) {
+  return async (
+    styles: string,
+    containingFile: string,
+    stylesheetFile?: string
+  ) => {
+    try {
+      let stylesheetResult;
+      if (stylesheetFile) {
+        stylesheetResult = await componentStylesheetBundler.bundleFile(
+          stylesheetFile
+        );
+      } else {
+        stylesheetResult = await componentStylesheetBundler.bundleInline(
+          styles,
+          containingFile,
+          containingFile.endsWith('.html') ? 'css' : undefined
+        );
+      }
+      return stylesheetResult.contents;
+    } catch (e) {
+      console.error(
+        'Failed to compile styles. Continuing execution ignoring failing stylesheet...',
+        e
+      );
+      return '';
+    }
+  };
 }

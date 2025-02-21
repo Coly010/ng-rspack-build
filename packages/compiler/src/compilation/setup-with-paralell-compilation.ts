@@ -11,10 +11,8 @@ export async function setupCompilationWithParallelCompilation(
   config: Pick<RsbuildConfig, 'source'>,
   options: SetupCompilationOptions
 ) {
-  const { rootNames, compilerOptions } = await setupCompilation(
-    config,
-    options
-  );
+  const { rootNames, compilerOptions, componentStylesheetBundler } =
+    await setupCompilation(config, options);
   const parallelCompilation = new ParallelCompilation(
     options.jit ?? false,
     options.hasServer === false
@@ -32,8 +30,7 @@ export async function setupCompilationWithParallelCompilation(
         ...compilerOptions,
         fileReplacements,
         modifiedFiles: new Set(rootNames),
-        transformStylesheet: (styles) =>
-          Promise.resolve(styleTransform(styles)),
+        transformStylesheet: styleTransform(componentStylesheetBundler),
         processWebWorker(workerFile: string) {
           return transformFileSync(workerFile).code;
         },

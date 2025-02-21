@@ -186,6 +186,7 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         },
       },
       {
+        root: this.#_options.root,
         jit: this.#_options.jit,
         tsconfigPath: tsconfigPath,
         inlineStylesExtension: this.#_options.inlineStylesExtension,
