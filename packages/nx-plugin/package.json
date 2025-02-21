@@ -2,7 +2,7 @@
   "name": "@ng-rspack/nx",
   "private": false,
   "description": "Nx Plugin for building Angular applications with Rspack.",
-  "version": "19.0.0-alpha.27",
+  "version": "19.0.0-alpha.28",
   "author": "Colum Ferry",
   "license": "MIT",
   "bugs": {
