@@ -31,9 +31,6 @@
     },
     {
       "path": "../../packages/rsbuild-plugin-angular"
-    },
-    {
-      "path": "../rsbuild-csr-css"
     }
   ]
 }
