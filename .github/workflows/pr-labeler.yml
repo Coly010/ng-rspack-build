@@ -8,10 +8,11 @@ jobs:
   label:
     name: Add PR labels
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/labeler@v5
         with:
