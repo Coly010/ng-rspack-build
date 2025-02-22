@@ -14,7 +14,7 @@
     "name": "rsbuild-csr-css",
     "projectType": "application",
     "prefix": "app",
-    "sourceRoot": "rsbuild/csr/css/src",
+    "sourceRoot": "e2e/fixtures/rsbuild-csr-css/src",
     "targets": {
       "extract-i18n": {
         "executor": "@angular-devkit/build-angular:extract-i18n",

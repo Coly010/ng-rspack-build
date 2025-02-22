@@ -5,5 +5,12 @@
   "sourceRoot": "e2e/rsbuild-csr-css-e2e/src",
   "implicitDependencies": ["rsbuild-csr-css"],
   "// targets": "to see all targets run: nx show project rsbuild-csr-css-e2e --web",
-  "targets": {}
+  "targets": {
+    "setup-e2e": {
+      "command": "node-deps"
+    },
+    "pre-e2e": {
+      "command": "tsx ./e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts"
+    }
+  }
 }
