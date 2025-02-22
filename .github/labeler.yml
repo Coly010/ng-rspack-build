@@ -1,18 +1,14 @@
-🧩 compiler:
-  - changed-files:
-      - any-glob-to-any-file: 'packages/compiler/src/**'
+# 🏷️ GitHub Actions Labeler Configuration
+# Automatically assigns labels to PRs based on changed files.
 
-🧩 nx:
-  - changed-files:
-      - any-glob-to-any-file: 'packages/nx-plugin/src/**'
-
+# 📦 Packages (Top-Level Prioritization)
 🧩 build:
   - changed-files:
       - any-glob-to-any-file: 'packages/build/src/**'
 
-🧩 utils:
+🧩 compiler:
   - changed-files:
-      - any-glob-to-any-file: 'packages/utils/src/**'
+      - any-glob-to-any-file: 'packages/compiler/src/**'
 
 🧩 rsbuild-plugin-angular:
   - changed-files:
@@ -22,48 +18,54 @@
   - changed-files:
       - any-glob-to-any-file: 'packages/rsbuild-plugin-nx/src/**'
 
-🔬 testing:
+🧩 nx:
   - changed-files:
-      - any-glob-to-any-file:
-          - '**/*.test.ts'
-          - '**/mocks/**'
-          - e2e/**
-          - testing/**
-          - '**/vite.config*.ts'
-          - '**/vitest.config*.ts'
-          - '**/vitest.unit.config*.ts'
-          - '**/vitest.integration.config*.ts'
-          - '**/vitest.e2e.config*.ts'
-          - 'vitest.workspace.ts'
+      - any-glob-to-any-file: 'packages/nx-plugin/src/**'
 
-🦾 CI/CD:
+# ⚙️ CI/CD (Workflows & Templates Only)
+⚙️ CI/CD:
   - changed-files:
-      - any-glob-to-any-file: .github/workflows/**
+      - any-glob-to-any-file: '.github/workflows/**' # GitHub Actions workflows
+      - any-glob-to-any-file: '.github/ISSUE_TEMPLATE/**' # Issue templates
 
-📖 Project documentation:
+# 📖 Documentation (Merged `docs` + `code documentation`)
+📖 documentation:
   - changed-files:
+      - any-glob-to-any-file: 'contributing/**'
+      - any-glob-to-any-file: 'docs/**'
       - any-glob-to-any-file: '**/*.md'
-      # FIXME: this labels everything instead of just ignoring .md snapshots
-      # - all-globs-to-all-files: '!**/__snapshots__/**'
+      - not-any-glob-to-any-file: '**/__snapshots__/**/*.md' # Excludes Markdown snapshots
 
-🌊 nx:
+# 🔥 Performance (Benchmarks Only)
+🔥 performance:
+  - changed-files:
+      - any-glob-to-any-file: 'bench/**' # Only label if changes affect performance benchmarks
+
+# 🧪 Testing (Includes `testing/` & its utilities)
+🧪 testing:
   - changed-files:
       - any-glob-to-any-file:
-          - '**/project.json'
-          - '**/package*.json'
-          - 'nx.json'
+          - 'testing/**' # Test helper
+          - '**/*.test.ts' # Unit tests
+          - '**/mocks/**' # Mock files
+          - e2e/** # End-to-end tests
+          - testing/** # General testing utilities
+          - testing/utils/** # Utility functions for testing
+          - testing/vitest-setup/** # Vitest setup configurations
+          - '**/vitest.*.ts' # Vitest configs
+          - 'vitest.workspace.ts' # Vitest workspace config
 
+# 🛠️ Tooling & Configurations
 🛠️ tooling:
   - changed-files:
       - any-glob-to-any-file:
-          - 'tools/**'
-          - 'eslint/**'
-          - '**/tsconfig*.json'
-          - '**/*eslintrc*'
-          - '**/*eslint.config.*'
-          - '.nvmrc'
-          - '.prettierrc'
-          - '.github/ISSUE_TEMPLATE/**'
-          - '.husky/**'
-          - '.editorconfig'
-          - 'commitlint.config.mjs'
+          - 'tools/**' # Internal scripts and CLI tools
+          - 'eslint/**' # ESLint rules and configs
+          - '**/tsconfig*.json' # TypeScript configurations
+          - '**/*eslintrc*' # ESLint rule files
+          - '**/*eslint.config.*' # Additional ESLint configurations
+          - '.nvmrc' # Node.js version control
+          - '.prettierrc' # Prettier rules
+          - '.husky/**' # Git hooks
+          - '.editorconfig' # Editor settings
+          - 'commitlint.config.mjs' # Commit linting rules
