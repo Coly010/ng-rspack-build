@@ -9,8 +9,11 @@
     "setup-e2e": {
       "command": "node-deps"
     },
+    "e2e": {
+      "dependsOn": ["pre-e2e"]
+    },
     "pre-e2e": {
-      "command": "tsx ./e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts"
+      "command": "pnpx tsx ./e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts"
     }
   }
 }
