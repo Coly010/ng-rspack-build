@@ -60,6 +60,7 @@
           - 'eslint/**'
           - '**/tsconfig*.json'
           - '**/*eslintrc*'
+          - '**/*eslint.config.*'
           - '.nvmrc'
           - '.prettierrc'
           - '.github/ISSUE_TEMPLATE/**'
