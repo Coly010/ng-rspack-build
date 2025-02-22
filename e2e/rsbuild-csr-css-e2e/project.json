@@ -13,7 +13,7 @@
       "dependsOn": ["pre-e2e"]
     },
     "pre-e2e": {
-      "command": "pnpx tsx ./e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts"
+      "command": "pnpx tsx ./e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts --tsconfig=./e2e/rsbuild-csr-css-e2e/tsconfig.test.json"
     }
   }
 }

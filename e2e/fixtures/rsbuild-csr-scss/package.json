@@ -1,37 +1,31 @@
+
 {
   "private": true,
-  "dependencies": {
-    "@angular/common": "19.1.6",
-    "@angular/core": "19.1.6",
-    "@angular/platform-browser": "19.1.6",
-    "@angular/router": "19.1.6",
+  "devDependencies": {
     "@ng-rsbuild/plugin-angular": "workspace:*"
   },
-  "devDependencies": {
-    "jsonc-eslint-parser": "2.4.0"
-  },
   "nx": {
-    "name": "rsbuild-csr-css",
+    "name": "rsbuild-csr-scss",
     "projectType": "application",
     "prefix": "app",
     "sourceRoot": "e2e/fixtures/rsbuild-csr-css/src",
+    "tags": [],
     "targets": {
       "extract-i18n": {
         "executor": "@angular-devkit/build-angular:extract-i18n",
         "options": {
-          "buildTarget": "rsbuild-csr-css:build"
+          "buildTarget": "rsbuild-csr-scss:build"
         }
       },
       "serve-static": {
         "executor": "@nx/web:file-server",
         "options": {
-          "buildTarget": "rsbuild-csr-css:build",
+          "buildTarget": "rsbuild-csr-scss:build",
           "port": 4200,
-          "staticFilePath": "dist/rsbuild-csr-css/browser",
+          "staticFilePath": "dist/rsbuild-csr-scss/browser",
           "spa": true
         }
-      },
-      "tags": []
+      }
     }
   }
 }
