@@ -1,0 +1,127 @@
+<div class="api-header">
+  <h1>createConfig</h1>
+  <h3 class="import-path">import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';</h3>
+</div>
+
+<p>
+  The <code class="inline-code">createConfig</code> function is used to create a Rsbuild
+  configuration object setup for Angular applications.
+</p>
+<p>
+  It takes an optional <code class="inline-code">RsbuildConfig</code> object as an argument, which
+  allows for customization of the Rsbuild configuration.
+</p>
+
+<app-code-block language="typescript">
+function createConfig(
+  options: Partial&lt;PluginAngularOptions&gt;,
+  additionalConfig?: Partial&lt;RsbuildConfig&gt;
+)
+</app-code-block>
+
+<div class="spacer"></div>
+
+<h2>Examples</h2>
+
+<mat-tab-group>
+  <mat-tab label="Server-Side Rendering (SSR)">
+    <p>
+      The following example shows how to create a configuration for a SSR
+      application:
+    </p>
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;);
+      </app-code-block>
+  </mat-tab>
+  <mat-tab label="Client-Side Rendering (CSR)">
+    <p>
+      The following example shows how to create a configuration for a CSR
+      application:
+    </p>
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+    browser: './src/main.ts',
+&#125;);
+    </app-code-block>
+  </mat-tab>
+  <mat-tab label="Modify Rsbuild Configuration">
+    <p>
+      The following example shows how to modify the base Rsbuild configuration:
+    </p>
+    <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+&#125;, &#123;
+  plugins: [
+    pluginSass(),
+  ],
+  moduleFederation: &#123;&#125;,
+&#125;);
+    </app-code-block>
+    </mat-tab>
+    <mat-tab label="File Replacements">
+      <p>
+        The following example shows how to use file replacements:
+      </p>
+      <app-code-block fileName="rsbuild.config.ts" language="typescript">
+import &#123; createConfig &#125; from '&#64;ng-rsbuild/plugin-angular';
+
+export default createConfig(&#123;
+  browser: './src/main.ts',
+  server: './src/main.server.ts',
+  ssrEntry: './src/server.ts',
+  fileReplacements: [
+    &#123;
+      replace: './src/environments/environment.ts',
+      with: './src/environments/environment.prod.ts',
+    &#125;,
+  ],
+&#125;);
+      </app-code-block>
+    </mat-tab>
+</mat-tab-group>
+
+<div class="spacer"></div>
+
+<h2 id="PluginAngularOptions">PluginAngularOptions</h2>
+
+<p>
+  The <code>PluginAngularOptions</code> object is an object that contains the
+  following properties:
+</p>
+
+<app-code-block language="typescript">
+export interface PluginAngularOptions &#123;
+    root: string;
+    index: string;
+    browser: string;
+    server?: string;
+    ssrEntry?: string;
+    polyfills: string[];
+    assets: string[];
+    styles: string[];
+    scripts: string[];
+    jit: boolean;
+    inlineStylesExtension: 'css' | 'scss' | 'sass';
+    tsconfigPath: string;
+    hasServer: boolean;
+    skipTypeChecking: boolean;
+    useTsProjectReferences?: boolean;
+&#125;
+</app-code-block>
+
+@for (option of options; track option.name) {
+  <app-api-option [apiOption]="option"></app-api-option>
+}

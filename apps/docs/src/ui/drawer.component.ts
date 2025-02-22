@@ -113,6 +113,11 @@ export class DrawerComponent {
       children: [
         {
           isActive: false,
+          href: '/guide/migration/from-webpack',
+          label: 'From Webpack',
+        },
+        {
+          isActive: false,
           href: '/guide/migration/configurations',
           label: 'Configurations',
         },
@@ -144,6 +149,19 @@ export class DrawerComponent {
           isActive: false,
           href: '/api/rsbuild/create-server',
           label: 'createServer',
+        },
+      ],
+    },
+    {
+      isActive: false,
+      href: '/api/rspack',
+      label: '@ng-rspack/build',
+      subheader: true,
+      children: [
+        {
+          isActive: false,
+          href: '/api/rspack/create-config',
+          label: 'createConfig',
         },
       ],
     },

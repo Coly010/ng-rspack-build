@@ -2,7 +2,7 @@
   "name": "@ng-rspack/nx",
   "private": false,
   "description": "Nx Plugin for building Angular applications with Rspack.",
-  "version": "19.0.0-alpha.24",
+  "version": "19.0.0-alpha.28",
   "author": "Colum Ferry",
   "license": "MIT",
   "bugs": {
@@ -37,5 +37,17 @@
   "generators": "./generators.json",
   "publishConfig": {
     "access": "public"
+  },
+  "nx": {
+    "sourceRoot": "packages/nx-plugin/src",
+    "projectType": "library",
+    "name": "nx",
+    "targets": {
+      "integration-test": {
+        "options": {
+          "config": "vitest.integration.config.mts"
+        }
+      }
+    }
   }
 }

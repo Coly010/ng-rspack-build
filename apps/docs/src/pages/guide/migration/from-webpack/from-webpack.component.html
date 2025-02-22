@@ -1,0 +1,72 @@
+<h1>Migrate Angular with Webpack to Rspack</h1>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/c901cbdb948e41208ab4cabb06aea8cb?sid=82be20cd-0b0b-4187-ad34-95818a6742e8" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<p>
+  Until recently, Angular used Webpack to build applications. Based on this,
+  some third-party builders emerged to allow users to use a custom Webpack
+  configuration when building their Angular applications.<br />
+  When Angular switched to Esbuild, this meant that it became difficult for
+  applications that used custom Webpack configurations to migrate to the new
+  build system. This guide will help you migrate from Angular with Webpack to
+  Rspack.<br />
+  By migrating to Rspack, you can gain an immediate build performance benefit
+  while maintaining the your existing Webpack build toolchain.
+</p>
+
+<h2>Step 1: Initialize Nx</h2>
+
+<app-callout type="warning" title="Optional Step">
+  <p>If you are already using Nx with version <code class="inline-code">{{nxVersionWithGenerator}}</code> or greater, you can skip this step.</p>
+</app-callout>
+
+<p>
+  Nx provides a generator to convert existing Angular Webpack projects to use
+<code class="inline-code">&#64;ng-rspack/build</code>. This generator is
+currently available in Nx {{nxVersionWithGenerator}}.
+</p>
+
+<p>At the root of your project, run the following command:</p>
+
+<app-code-block language="shell">
+  npx nx&#64;{{nxVersionWithGenerator}} init
+</app-code-block>
+<br />
+<app-callout type="info" title="What is Nx?">
+  <p>
+    Nx is a build system, optimized for monorepos, with plugins for popular
+    frameworks and tools and advanced CI capabilities including caching and
+    distribution. You can learn more about Nx at
+    <a href="https://nx.dev" target="_blank">nx.dev</a>.
+  </p>
+</app-callout>
+
+<h2>Step 2: Run the Convert to Rspack Generator</h2>
+
+<p>
+  With Nx now initialized, the
+  <code class="inline-code">&#64;nx/angular</code> plugin will have been
+  installed providing access to a series of generators and executors that aid
+  Angular development.<br />
+  In particular, the
+  <code class="inline-code">&#64;nx/angular:convert-to-rspack</code> generator
+  will convert an Angular project to use Rspack.<br />
+  To use it, run the following command:
+</p>
+
+<app-code-block language="shell">
+  npx nx g convert-to-rspack
+</app-code-block>
+
+<h2>Step 3: Run your application</h2>
+
+<p>
+  After running the generator, you can run tasks such as
+  <code class="inline-code">build</code> and
+  <code class="inline-code">serve</code> to build and serve your application.
+</p>
+
+<app-code-block language="shell">
+  npx nx build yourProjectName
+  npx nx serve yourProjectName
+</app-code-block>

@@ -21,7 +21,7 @@
     "rsbuild",
     "compiler"
   ],
-  "version": "19.0.0-alpha.24",
+  "version": "19.0.0-alpha.28",
   "scripts": {
     "postinstall": "node ./patch/patch-angular-build.js"
   },
@@ -53,17 +53,10 @@
     "name": "compiler",
     "targets": {
       "integration-test": {
-        "dependsOn": [
-          "^build"
-        ],
-        "options": {
-          "config": "vitest.integration.config.mts"
-        }
+        "configName": "vitest.integration.config.mts"
       },
       "unit-test": {
-        "dependsOn": [
-          "^build"
-        ]
+        "configName": "vitest.unit.config.mts"
       }
     }
   }

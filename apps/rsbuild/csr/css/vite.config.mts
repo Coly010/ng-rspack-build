@@ -6,18 +6,6 @@ import angular from '@analogjs/vite-plugin-angular';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../../node_modules/.vite/rsbuild/csr/css',
+  cacheDir: '../../../node_modules/.vite/rsbuild-csr-css',
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md']), angular({}) as any],
-  test: {
-    watch: false,
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: 'test-setup.ts',
-    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    reporters: ['default'],
-    coverage: {
-      reportsDirectory: '../../../coverage/rsbuild/csr/css',
-      provider: 'v8',
-    },
-  },
 });

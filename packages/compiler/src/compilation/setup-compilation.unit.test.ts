@@ -108,6 +108,7 @@ describe('setupCompilation', () => {
       },
       host: expect.any(Object),
       rootNames: ['main.ts'],
+      componentStylesheetBundler: expect.any(Object),
     });
   });
 

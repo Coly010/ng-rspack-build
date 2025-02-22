@@ -10,8 +10,8 @@ module.exports = [
     files: ['**/*'],
     rules: {
       // ⚠️ Warnings: 2
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 12 warnings
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 4 warnings
+      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 11 warnings
+      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 6 warnings
     },
   },
 ];

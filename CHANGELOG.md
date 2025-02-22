@@ -1,3 +1,50 @@
+## 19.0.0-alpha.28 (2025-02-21)
+
+### 🚀 Features
+
+- **build:** add type checking ([#83](https://github.com/Coly010/ng-rspack-build/pull/83))
+- **compiler:** support Angular 19.1 ([#97](https://github.com/Coly010/ng-rspack-build/pull/97))
+- **compiler:** use ComponentStylesheetBundler to handle stylesheets ([#98](https://github.com/Coly010/ng-rspack-build/pull/98))
+- **docs:** add migration from webpack docs ([#91](https://github.com/Coly010/ng-rspack-build/pull/91))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
+## 19.0.0-alpha.27 (2025-02-18)
+
+### 🚀 Features
+
+- **build:** add type checking ([#83](https://github.com/Coly010/ng-rspack-build/pull/83))
+- **compiler:** support Angular 19.1 ([#97](https://github.com/Coly010/ng-rspack-build/pull/97))
+- **docs:** add migration from webpack docs ([#91](https://github.com/Coly010/ng-rspack-build/pull/91))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
+## 19.0.0-alpha.26 (2025-02-02)
+
+### 🚀 Features
+
+- **build:** add type checking ([#83](https://github.com/Coly010/ng-rspack-build/pull/83))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
+## 19.0.0-alpha.25 (2025-02-01)
+
+### 🚀 Features
+
+- **compiler:** remove unused non-parallel compilation ([#81](https://github.com/Coly010/ng-rspack-build/pull/81))
+- **compiler:** add ts proj ref flag ([#82](https://github.com/Coly010/ng-rspack-build/pull/82))
+- **rsbuild-plugin-angular:** remove non parallel build ([#80](https://github.com/Coly010/ng-rspack-build/pull/80))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+
 ## 19.0.0-alpha.24 (2025-01-24)
 
 ### 🩹 Fixes

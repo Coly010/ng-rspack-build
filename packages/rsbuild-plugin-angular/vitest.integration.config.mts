@@ -2,9 +2,8 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  cacheDir: '../../node_modules/.vite/rsbuild-plugin-angular/integration',
   root: __dirname,
-  cacheDir:
-    '../../node_modules/.vite/packages/rsbuild-plugin-angular/integration',
   plugins: [],
   resolve: {
     alias: {
@@ -19,9 +18,10 @@ export default defineConfig({
     passWithNoTests: true,
     reporters: ['default'],
     coverage: {
-      reportsDirectory:
-        '../../coverage/packages/rsbuild-plugin-angular/integration',
       provider: 'v8',
+      reporter: ['text', 'lcov'],
+      reportsDirectory: '../../coverage/rsbuild-plugin-angular/integration',
+      exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     },
   },
 });

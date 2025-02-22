@@ -39,17 +39,4 @@ export default defineConfig({
       external: [],
     },
   },
-  test: {
-    passWithNoTests: true,
-    watch: false,
-    globals: true,
-    environment: 'node',
-    include: ['src/**/*.unit.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    reporters: ['default'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'lcov'],
-      reportsDirectory: '../../coverage/packages/testing-vitest-setup/unit',
-    },
-  },
 });

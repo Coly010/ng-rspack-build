@@ -42,7 +42,7 @@ import { RouterLink } from '@angular/router';
     `,
   ],
 })
-class BenchmarkGraphComponent {
+export class BenchmarkGraphComponent {
   maxValue = input.required<number>();
   value = input.required<number>();
   filledPercentage = computed(() => {

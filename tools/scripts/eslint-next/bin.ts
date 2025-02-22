@@ -3,8 +3,16 @@
 import { getProjectsWithEslintTarget } from './src/nx';
 import { gray, green } from 'ansis';
 import { lintAllProjects } from './index';
-import { mdRuleSummary, printRuleSummary } from './src/utils';
+import { mdRuleSummary, printRuleSummary } from './src/reporting';
 
+/**
+ * Main function to lint all projects.
+ * @returns void
+ *
+ * @process.argv
+ * --projects=project1 --projects=project2 // Optional. Filter projects to lint.
+ * --report // Optional. Generate a markdown report.
+ */
 (async () => {
   const searchParams = new URLSearchParams(process.argv.slice(2).join('&'));
   const projectFilter = Array.from(searchParams.getAll('--projects'));

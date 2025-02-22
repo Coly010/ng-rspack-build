@@ -11,6 +11,10 @@ export function createCompiler(
   return rspack(config);
 }
 
+/**
+ * Check if the compiler object has the property ´compilers´ defined
+ * @param compiler
+ */
 export function isMultiCompiler(
   compiler: Compiler | MultiCompiler
 ): compiler is MultiCompiler {

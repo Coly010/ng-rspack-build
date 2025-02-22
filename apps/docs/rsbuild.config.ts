@@ -6,6 +6,7 @@ const options = {
   ssrEntry: './src/server.ts',
   inlineStylesExtension: 'scss' as any,
   styles: ['./src/styles.scss', './src/hljs.theme.scss'],
+  skipTypeChecking: true,
 };
 
 export default () => {
