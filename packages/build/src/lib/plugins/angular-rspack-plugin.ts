@@ -186,11 +186,13 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         },
       },
       {
+        root: this.#_options.root,
         jit: this.#_options.jit,
         tsconfigPath: tsconfigPath,
         inlineStylesExtension: this.#_options.inlineStylesExtension,
         fileReplacements: this.#_options.fileReplacements,
         useTsProjectReferences: this.#_options.useTsProjectReferences,
+        hasServer: this.#_options.hasServer,
       }
     );
   }

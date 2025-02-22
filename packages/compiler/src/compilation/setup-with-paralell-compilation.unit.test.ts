@@ -103,11 +103,25 @@ describe('setupCompilationWithParallelCompilation', () => {
       setupCompilationWithParallelCompilation(rsBuildConfig, {
         ...pluginAngularOptions,
         jit: true,
+        hasServer: false,
       })
     ).not.toThrow();
 
     expect(parallelCompilationSpy).toHaveBeenCalledTimes(1);
-    expect(parallelCompilationSpy).toHaveBeenCalledWith(true);
+    expect(parallelCompilationSpy).toHaveBeenCalledWith(true, true);
+  });
+
+  it('should instantiate ParallelCompilation based on server option', async () => {
+    await expect(() =>
+      setupCompilationWithParallelCompilation(rsBuildConfig, {
+        ...pluginAngularOptions,
+        jit: true,
+        hasServer: true,
+      })
+    ).not.toThrow();
+
+    expect(parallelCompilationSpy).toHaveBeenCalledTimes(1);
+    expect(parallelCompilationSpy).toHaveBeenCalledWith(true, false);
   });
 
   it('should initialize parallel compilation', async () => {

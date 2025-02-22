@@ -15,6 +15,9 @@ function main() {
   fileContentsJson.exports[
     './src/tools/angular/compilation/parallel-compilation'
   ] = './src/tools/angular/compilation/parallel-compilation.js';
+  fileContentsJson.exports[
+    './src/tools/esbuild/angular/component-stylesheets'
+  ] = './src/tools/esbuild/angular/component-stylesheets.js';
 
   writeFileSync(
     angularBuildPackageJson,
