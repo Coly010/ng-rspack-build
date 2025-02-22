@@ -8,11 +8,13 @@ jobs:
   label:
     name: Add PR labels
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/labeler@v5
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
