@@ -29,7 +29,10 @@ export function createConfig(
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
-    plugins: [pluginHoistedJsTransformer(normalizedOptions)],
+    plugins: [
+      pluginHoistedJsTransformer(normalizedOptions),
+      pluginAngular(normalizedOptions),
+    ],
     mode: isProd ? 'production' : 'development',
     dev: {
       ...(isRunningDevServer && normalizedOptions.hasServer
@@ -61,7 +64,6 @@ export function createConfig(
     },
     environments: {
       browser: {
-        plugins: [pluginAngular(normalizedOptions)],
         source: {
           preEntry: [...browserPolyfills, ...normalizedOptions.styles],
           entry: {
@@ -89,7 +91,6 @@ export function createConfig(
       ...(normalizedOptions.hasServer
         ? {
             server: {
-              plugins: [pluginAngular(normalizedOptions)],
               source: {
                 preEntry: [...serverPolyfills],
                 entry: {
