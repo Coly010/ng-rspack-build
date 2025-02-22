@@ -20,7 +20,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      reportsDirectory: '../../../../coverage/rsbuild-ssr-css/unit',
+      reportsDirectory: '../../coverage/rsbuild-ssr-css/unit',
       exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     },
   },

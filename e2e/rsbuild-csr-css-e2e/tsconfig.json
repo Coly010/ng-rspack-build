@@ -33,7 +33,7 @@
       "path": "../../packages/rsbuild-plugin-angular"
     },
     {
-      "path": "../../e2e/rsbuild-csr-css"
+      "path": "../rsbuild-csr-css"
     }
   ]
 }
