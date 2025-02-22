@@ -1,0 +1,69 @@
+🧩 compiler:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/compiler/src/**'
+
+🧩 nx:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/nx-plugin/src/**'
+
+🧩 build:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/build/src/**'
+
+🧩 utils:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/utils/src/**'
+
+🧩 rsbuild-plugin-angular:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/rsbuild-plugin-angular/src/**'
+
+🧩 rsbuild-plugin-nx:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/rsbuild-plugin-nx/src/**'
+
+🔬 testing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.test.ts'
+          - '**/mocks/**'
+          - e2e/**
+          - testing/**
+          - '**/vite.config*.ts'
+          - '**/vitest.config*.ts'
+          - '**/vitest.unit.config*.ts'
+          - '**/vitest.integration.config*.ts'
+          - '**/vitest.e2e.config*.ts'
+          - 'vitest.workspace.ts'
+
+🦾 CI/CD:
+  - changed-files:
+      - any-glob-to-any-file: .github/workflows/**
+
+📖 Project documentation:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.md'
+      # FIXME: this labels everything instead of just ignoring .md snapshots
+      # - all-globs-to-all-files: '!**/__snapshots__/**'
+
+🌊 nx:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/project.json'
+          - '**/package*.json'
+          - 'nx.json'
+
+🛠️ tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tools/**'
+          - 'eslint/**'
+          - '**/tsconfig*.json'
+          - '**/*eslintrc*'
+          - '**/*eslint.config.*'
+          - '.nvmrc'
+          - '.prettierrc'
+          - '.github/ISSUE_TEMPLATE/**'
+          - '.husky/**'
+          - '.editorconfig'
+          - 'commitlint.config.mjs'
