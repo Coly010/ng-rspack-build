@@ -46,6 +46,7 @@
   - changed-files:
       - any-glob-to-any-file:
           - 'tools/**'
+          - 'eslint/**'
           - '**/tsconfig*.json'
           - '**/project.json'
           - '**/package*.json'
@@ -55,5 +56,5 @@
           - '.prettierrc'
           - '.github/ISSUE_TEMPLATE/**'
           - '.husky/**'
+          - '.editorconfig'
           - 'commitlint.config.mjs'
-          - '.verdaccio/config.yml'
