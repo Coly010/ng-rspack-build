@@ -347,7 +347,7 @@ importers:
         specifier: ^1.1.2
         version: 1.2.1(@rsbuild/core@1.2.8)
 
-  apps/rsbuild/csr/css:
+  e2e/rsbuild-csr-css:
     dependencies:
       '@angular/common':
         specifier: 19.1.6
@@ -363,35 +363,35 @@ importers:
         version: 19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/animations@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
       '@ng-rsbuild/plugin-angular':
         specifier: workspace:*
-        version: link:../../../../packages/rsbuild-plugin-angular
+        version: link:../../packages/rsbuild-plugin-angular
     devDependencies:
       jsonc-eslint-parser:
         specifier: 2.4.0
         version: 2.4.0
 
-  apps/rsbuild/csr/scss:
+  e2e/rsbuild-csr-scss:
     devDependencies:
       '@ng-rsbuild/plugin-angular':
         specifier: workspace:*
-        version: link:../../../../packages/rsbuild-plugin-angular
+        version: link:../../packages/rsbuild-plugin-angular
 
-  apps/rsbuild/ssr/css:
+  e2e/rsbuild-ssr-css:
     devDependencies:
       '@ng-rsbuild/plugin-angular':
         specifier: workspace:*
-        version: link:../../../../packages/rsbuild-plugin-angular
+        version: link:../../packages/rsbuild-plugin-angular
 
-  apps/rspack/csr/css:
+  e2e/rspack-csr-css:
     dependencies:
       '@ng-rspack/build':
         specifier: workspace:*
-        version: link:../../../../packages/build
+        version: link:../../packages/build
 
-  apps/rspack/ssr/css:
+  e2e/rspack-ssr-css:
     dependencies:
       '@ng-rspack/build':
         specifier: workspace:*
-        version: link:../../../../packages/build
+        version: link:../../packages/build
 
   packages/build:
     dependencies:

@@ -26,6 +26,18 @@
     },
     {
       "path": "./tools/eslint-rules"
+    },
+    {
+      "path": "./e2e/rsbuild-csr-scss-e2e"
+    },
+    {
+      "path": "./e2e/rsbuild-csr-css-e2e"
+    },
+    {
+      "path": "./e2e/rsbuild-ssr-css-e2e"
+    },
+    {
+      "path": "./apps/docs"
     }
   ]
 }
