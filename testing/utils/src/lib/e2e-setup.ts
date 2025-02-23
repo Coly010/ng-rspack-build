@@ -19,7 +19,10 @@ export async function setupE2eApp(
     __dirname,
     `../../../e2e/fixtures/${fixtureProjectName}`
   );
-  const target = path.join(__dirname, `../../../e2e/__test__/${targetProjectName}`);
+  const target = path.join(
+    __dirname,
+    `../../../e2e/__test__/${targetProjectName}`
+  );
   try {
     await fs.stat(fixture);
   } catch (e) {
