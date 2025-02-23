@@ -35,7 +35,7 @@ export async function setupE2eApp(
   await cp(fixture, target, {
     recursive: true,
     force: true,
-    filter(source: string, destination: string): boolean | Promise<boolean> {
+    filter(source: string, _: string): boolean | Promise<boolean> {
       return !source.includes('node_modules') && !source.includes('dist');
     },
   });
