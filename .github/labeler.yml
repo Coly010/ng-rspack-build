@@ -1,0 +1,71 @@
+# 🏷️ GitHub Actions Labeler Configuration
+# Automatically assigns labels to PRs based on changed files.
+
+# 📦 Packages (Top-Level Prioritization)
+🧩 build:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/build/src/**'
+
+🧩 compiler:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/compiler/src/**'
+
+🧩 rsbuild-plugin-angular:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/rsbuild-plugin-angular/src/**'
+
+🧩 rsbuild-plugin-nx:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/rsbuild-plugin-nx/src/**'
+
+🧩 nx:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/nx-plugin/src/**'
+
+# ⚙️ CI/CD (Workflows & Templates Only)
+⚙️ CI/CD:
+  - changed-files:
+      - any-glob-to-any-file: '.github/workflows/**' # GitHub Actions workflows
+      - any-glob-to-any-file: '.github/ISSUE_TEMPLATE/**' # Issue templates
+
+# 📖 Documentation (Merged `docs` + `code documentation`)
+📖 documentation:
+  - changed-files:
+      - any-glob-to-any-file: 'contributing/**'
+      - any-glob-to-any-file: 'docs/**'
+      - any-glob-to-any-file: '**/*.md'
+      - not-any-glob-to-any-file: '**/__snapshots__/**/*.md' # Excludes Markdown snapshots
+
+# 🔥 Performance (Benchmarks Only)
+🔥 performance:
+  - changed-files:
+      - any-glob-to-any-file: 'bench/**' # Only label if changes affect performance benchmarks
+
+# 🧪 Testing (Includes `testing/` & its utilities)
+🧪 testing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'testing/**' # Test helper
+          - '**/*.test.ts' # Unit tests
+          - '**/mocks/**' # Mock files
+          - e2e/** # End-to-end tests
+          - testing/** # General testing utilities
+          - testing/utils/** # Utility functions for testing
+          - testing/vitest-setup/** # Vitest setup configurations
+          - '**/vitest.*.ts' # Vitest configs
+          - 'vitest.workspace.ts' # Vitest workspace config
+
+# 🛠️ Tooling & Configurations
+🛠️ tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tools/**' # Internal scripts and CLI tools
+          - 'eslint/**' # ESLint rules and configs
+          - '**/tsconfig*.json' # TypeScript configurations
+          - '**/*eslintrc*' # ESLint rule files
+          - '**/*eslint.config.*' # Additional ESLint configurations
+          - '.nvmrc' # Node.js version control
+          - '.prettierrc' # Prettier rules
+          - '.husky/**' # Git hooks
+          - '.editorconfig' # Editor settings
+          - 'commitlint.config.mjs' # Commit linting rules

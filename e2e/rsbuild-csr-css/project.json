@@ -1,0 +1,25 @@
+{
+  "name": "rsbuild-csr-css",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "e2e/rsbuild-csr-css/src",
+  "targets": {
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "rsbuild-csr-css:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "rsbuild-csr-css:build",
+        "port": 4200,
+        "staticFilePath": "dist/rsbuild/csr/css/browser",
+        "spa": true
+      }
+    },
+    "tags": {}
+  }
+}
