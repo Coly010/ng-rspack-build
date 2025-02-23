@@ -37,4 +37,4 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: pnpm exec nx affected -t lint build unit-test integration-test e2e-ci
+      - run: pnpm exec nx affected --projects compiler -t lint build unit-test integration-test e2e-ci
