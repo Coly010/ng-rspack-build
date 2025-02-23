@@ -14,7 +14,7 @@ export async function setupE2eApp(
   e2eFixtures?: string
 ) {
   const targetProjectName =
-    getE2eAppProjectName() ?? fixtureProjectName + '-e2e-app';
+    getE2eAppProjectName() ?? `${fixtureProjectName}-e2e-app`;
   const fixture = path.join(
     __dirname,
     `../../../e2e/fixtures/${fixtureProjectName}`
@@ -39,8 +39,8 @@ export async function setupE2eApp(
   await fs.cp(fixture, target, {
     recursive: true,
     force: true,
-    filter(source: string, _: string): boolean | Promise<boolean> {
-      return !source.includes('node_modules') && !source.includes('dist');
+    filter(source: string, _: string): boolean {
+      return source.includes('node_modules') || source.includes('dist');
     },
   });
 

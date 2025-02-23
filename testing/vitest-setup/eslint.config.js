@@ -9,10 +9,8 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 3
+      // ❌ Errors: 1
       '@nx/dependency-checks': 'off', // ❌ 1 error 🛠️
-      'import/no-unresolved': 'off', // ❌ 3 errors
-      'import/named': 'off', // ❌ 1 error
     },
   },
 ];

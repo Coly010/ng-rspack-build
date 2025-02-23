@@ -29,13 +29,13 @@ module.exports = tseslint.config(
       sonarjs.configs.recommended,
       promise.configs['flat/recommended'],
       {
-        name: '@nx/workspace/javascript/unused-disable',
+        name: '@nx/workspace-javascript/unused-disable',
         linterOptions: {
           reportUnusedDisableDirectives: 'warn',
         },
       },
       {
-        name: '@nx/workspace/javascript/customized',
+        name: '@nx/workspace-javascript/customized',
         plugins: {
           // unicorn,
         },
@@ -82,7 +82,7 @@ module.exports = tseslint.config(
         },
       },
       {
-        name: '@nx/workspace/javascript/disabled',
+        name: '@nx/workspace-javascript/disabled',
         rules: {
           'no-case-declarations': 'off',
           '@typescript-eslint/consistent-indexed-object-style': 'off',
@@ -100,7 +100,7 @@ module.exports = tseslint.config(
         },
       },
       {
-        name: '@nx/workspace/javascript/additional',
+        name: '@nx/workspace-javascript/additional',
         plugins: {
           // functional,
         },
@@ -201,7 +201,7 @@ module.exports = tseslint.config(
     ],
   },
   {
-    name: '@nx/workspace/javascript/tests/disabled',
+    name: '@nx/workspace-javascript/tests/disabled',
     files: TEST_FILE_PATTERNS,
     rules: {
       '@typescript-eslint/no-magic-numbers': 'off',
@@ -218,14 +218,14 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/tests/customized',
+    name: '@nx/workspace-javascript/tests/customized',
     files: TEST_FILE_PATTERNS,
     rules: {
       'max-nested-callbacks': ['warn', { max: 10 }],
     },
   },
   {
-    name: '@nx/workspace/javascript/mocks/disabled',
+    name: '@nx/workspace-javascript/mocks/disabled',
     files: MOCKS_FILE_PATTERNS,
     rules: {
       'import/no-commonjs': 'off',
@@ -234,7 +234,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/configs/disabled',
+    name: '@nx/workspace-javascript/configs/disabled',
     files: CONFIG_FILE_PATTERNS,
     rules: {
       'import/no-anonymous-default-export': 'off',
@@ -246,7 +246,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/generated/disabled',
+    name: '@nx/workspace-javascript/generated/disabled',
     files: GENERATED_FILE_PATTERNS,
     rules: {
       '@typescript-eslint/ban-tslint-comment': 'off',
@@ -254,7 +254,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/json/disabled',
+    name: '@nx/workspace-javascript/json/disabled',
     files: JSON_FILE_PATTERNS,
     rules: {
       'max-lines': 'off',
@@ -268,7 +268,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/cjs/disabled',
+    name: '@nx/workspace-javascript/cjs/disabled',
     files: COMMONJS_FILE_PATTERNS,
     rules: {
       'import/no-commonjs': 'off',
@@ -277,7 +277,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/javascript/dts/disabled',
+    name: '@nx/workspace-javascript/dts/disabled',
     files: TYPESCRIPT_DECLARATION_FILE_PATTERNS,
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',
