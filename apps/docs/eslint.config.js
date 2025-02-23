@@ -10,10 +10,10 @@ module.exports = [
     files: ['**/*'],
     rules: {
       // ❌ Errors: 5
-      'import/no-unresolved': 'off', // ❌ 20 errors
+      'import/no-unresolved': 'off', // ❌ 58 errors
       '@typescript-eslint/no-unused-vars': 'off', // ❌ 6 errors
       'sonarjs/unused-import': 'off', // ❌ 6 errors
-      '@typescript-eslint/no-extraneous-class': 'off', // ❌ 5 errors
+      'import/named': 'off', // ❌ 5 errors
       'sonarjs/no-angular-bypass-sanitization': 'off', // ❌ 1 error
       // ⚠️ Warnings: 4
       'arrow-body-style': 'off', // ⚠️ 3 warnings 🛠️
