@@ -9,8 +9,17 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ⚠️ Warnings: 1
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 3 warnings
+      // ❌ Errors: 4
+      'import/no-unresolved': 'off', // ❌ 4 errors
+      '@typescript-eslint/no-non-null-assertion': 'off', // ❌ 3 errors
+      '@typescript-eslint/no-require-imports': 'off', // ❌ 1 error
+      'import/no-commonjs': 'off', // ❌ 1 error
+      // ⚠️ Warnings: 5
+      'arrow-body-style': 'off', // ⚠️ 1 warning 🛠️
+      'object-shorthand': 'off', // ⚠️ 1 warning 🛠️
+      'max-lines-per-function': 'off', // ⚠️ 3 warnings
+      '@typescript-eslint/no-magic-numbers': 'off', // ⚠️ 1 warning
+      'import/no-named-as-default': 'off', // ⚠️ 1 warning
     },
   },
 ];

@@ -37,12 +37,15 @@ module.exports = tseslint.config(
       '**/*.d.ts.map',
       '**/dist',
       '**/*.mock.*',
+      '**/.npmignore',
       '**/code-pushup.config.ts',
       '**/rsbuild.config.ts',
       '**/mocks/fixtures/**',
       '**/__snapshots__/**',
       '**/dist',
       '**/*.md',
+      // angular
+      '**/public',
     ],
   }
 );

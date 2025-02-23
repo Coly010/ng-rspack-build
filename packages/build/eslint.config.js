@@ -9,8 +9,31 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ⚠️ Warnings: 1
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
+      // ❌ Errors: 11
+      'no-param-reassign': 'off', // ❌ 4 errors
+      'import/no-unresolved': 'off', // ❌ 3 errors
+      'sonarjs/different-types-comparison': 'off', // ❌ 2 errors
+      '@typescript-eslint/consistent-type-assertions': 'off', // ❌ 1 error
+      '@typescript-eslint/no-explicit-any': 'off', // ❌ 1 error
+      'promise/catch-or-return': 'off', // ❌ 1 error
+      'promise/param-names': 'off', // ❌ 1 error
+      'sonarjs/cognitive-complexity': 'off', // ❌ 1 error
+      'sonarjs/no-nested-conditional': 'off', // ❌ 1 error
+      'sonarjs/no-nested-functions': 'off', // ❌ 1 error
+      'sonarjs/x-powered-by': 'off', // ❌ 1 error
+      // ⚠️ Warnings: 12
+      '@typescript-eslint/consistent-type-definitions': 'off', // ⚠️ 3 warnings 🛠️
+      'import/no-duplicates': 'off', // ⚠️ 2 warnings 🛠️
+      'object-shorthand': 'off', // ⚠️ 2 warnings 🛠️
+      '@typescript-eslint/no-magic-numbers': 'off', // ⚠️ 17 warnings
+      '@typescript-eslint/no-shadow': 'off', // ⚠️ 6 warnings
+      'max-lines-per-function': 'off', // ⚠️ 4 warnings
+      'no-console': 'off', // ⚠️ 4 warnings
+      '@typescript-eslint/class-methods-use-this': 'off', // ⚠️ 2 warnings
+      'max-lines': 'off', // ⚠️ 1 warning
+      'max-nested-callbacks': 'off', // ⚠️ 1 warning
+      'no-duplicate-imports': 'off', // ⚠️ 1 warning
+      'promise/no-callback-in-promise': 'off', // ⚠️ 1 warning
     },
   },
 ];

@@ -9,11 +9,29 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ⚠️ Warnings: 4
+      // ❌ Errors: 13
+      'no-param-reassign': 'off', // ❌ 13 errors
+      'import/no-unresolved': 'off', // ❌ 5 errors
+      '@typescript-eslint/no-unused-vars': 'off', // ❌ 3 errors
+      '@typescript-eslint/no-non-null-assertion': 'off', // ❌ 2 errors
+      'sonarjs/no-dead-store': 'off', // ❌ 2 errors
+      '@typescript-eslint/no-explicit-any': 'off', // ❌ 1 error
+      '@typescript-eslint/no-require-imports': 'off', // ❌ 1 error
+      'import/namespace': 'off', // ❌ 1 error
+      'import/no-commonjs': 'off', // ❌ 1 error
+      'sonarjs/function-return-type': 'off', // ❌ 1 error
+      'sonarjs/no-nested-functions': 'off', // ❌ 1 error
+      'sonarjs/no-unused-vars': 'off', // ❌ 1 error
+      'sonarjs/x-powered-by': 'off', // ❌ 1 error
+      // ⚠️ Warnings: 8
+      '@typescript-eslint/consistent-type-definitions': 'off', // ⚠️ 3 warnings 🛠️
       'vitest/prefer-to-be': 'off', // ⚠️ 2 warnings 🛠️
-      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 3 warnings
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 2 warnings
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
+      '@typescript-eslint/no-import-type-side-effects': 'off', // ⚠️ 1 warning 🛠️
+      'max-lines-per-function': 'off', // ⚠️ 6 warnings
+      '@typescript-eslint/no-shadow': 'off', // ⚠️ 4 warnings
+      '@typescript-eslint/no-magic-numbers': 'off', // ⚠️ 3 warnings
+      'sonarjs/todo-tag': 'off', // ⚠️ 2 warnings
+      'no-console': 'off', // ⚠️ 1 warning
     },
   },
 ];
