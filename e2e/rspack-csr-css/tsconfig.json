@@ -19,7 +19,7 @@
       "path": "../../packages/compiler"
     },
     {
-      "path": "../../packages/rsbuild-plugin-angular"
+      "path": "../../packages/build"
     },
     {
       "path": "./tsconfig.editor.json"

@@ -75,14 +75,15 @@
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "unit-test"
-      }
+      },
+      "exclude": ["e2e/**"]
     },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "integration-test"
       },
-      "exclude": ["apps/**"]
+      "exclude": ["apps/**", "e2e/**"]
     },
     {
       "plugin": "@nx/playwright/plugin",

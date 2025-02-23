@@ -1,0 +1,9 @@
+{
+  "name": "rsbuild-ssr-css-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "e2e/rsbuild-ssr-css-e2e/src",
+  "implicitDependencies": ["rsbuild-ssr-css"],
+  "// targets": "to see all targets run: nx show project rsbuild-ssr-css-e2e --web",
+  "targets": {}
+}
