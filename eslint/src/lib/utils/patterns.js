@@ -148,6 +148,61 @@ const TEST_FILE_PATTERNS = [
   ...CONFIG_FILE_PATTERNS,
 ];
 
+const MOCKS_FILE_PATTERNS = [fromDirectory('__mocks__')];
+
+// @angular-eslint's inline templates processor transforms .ts files to .html
+// https://github.com/angular-eslint/angular-eslint/blob/main/packages/eslint-plugin-template/src/processors.ts#L164
+const TEST_FILE_PATTERNS_INLINE_TEMPLATES = TEST_FILE_PATTERNS.map(
+  pattern => (pattern.startsWith('**/*.') ? `${pattern}*` : pattern),
+);
+
+const TYPESCRIPT_FILE_PATTERNS = ['**/*.ts', '**/*.tsx'];
+
+const TYPESCRIPT_DECLARATION_FILE_PATTERNS = ['**/*.d.ts'];
+
+const JSON_FILE_PATTERNS = ['**/*.json', '**/*.jsonc'];
+
+const JS_TS_JSON_FILE_PATTERNS = [
+  ...withExtensions(['**/*']),
+  ...JSON_FILE_PATTERNS,
+];
+
+const REACT_FILE_PATTERNS = withExtensions(['**/*']);
+
+const HTML_FILE_PATTERNS = ['**/*.html'];
+
+const CYPRESS_FILE_PATTERNS = [
+  '**/*.cy.[jt]s?(x)',
+  '**/?(*-)e2e/**/*.[jt]s?(x)',
+];
+
+const PLAYWRIGHT_FILE_PATTERNS = [
+  '**/*.+(test|spec).[jt]s?(x)',
+  '**/*.po.[jt]s?(x)',
+  '**/?(*-)e2e/**/*.[jt]s?(x)',
+];
+
+const NODE_FILE_PATTERNS = ['**/*.ts', '**/*.js'];
+
+const GRAPHQL_FILE_PATTERNS = ['**/*.graphql'];
+
+const STORYBOOK_FILE_PATTERNS = withExtensions([fromSuffix('stories')]);
+
+const ANGULAR_COMPONENT_FILE_PATTERNS = '**/*.component.ts';
+const ANGULAR_PIPE_FILE_PATTERNS = '**/*.pipe.ts';
+
+const GENERATED_FILE_PATTERNS = withExtensions([
+  fromDirectory('generated'),
+  '**/generated',
+]);
+
+const COMMONJS_FILE_PATTERNS = ['**/*.cjs', '**/*.cts'];
+
+/** @param {string[]} patterns  */
+function negatePatterns(patterns) {
+  return patterns.map(pattern => `!${pattern}`);
+}
+
 module.exports = {
   fromSuffix,
   fromDirectory,
@@ -156,4 +211,22 @@ module.exports = {
   CONFIG_FILE_PATTERNS,
   UNIT_INTEGRATION_TEST_FILE_PATTERNS,
   TEST_FILE_PATTERNS,
+  MOCKS_FILE_PATTERNS,
+  TEST_FILE_PATTERNS_INLINE_TEMPLATES,
+  TYPESCRIPT_FILE_PATTERNS,
+  TYPESCRIPT_DECLARATION_FILE_PATTERNS,
+  JSON_FILE_PATTERNS,
+  JS_TS_JSON_FILE_PATTERNS,
+  REACT_FILE_PATTERNS,
+  HTML_FILE_PATTERNS,
+  CYPRESS_FILE_PATTERNS,
+  PLAYWRIGHT_FILE_PATTERNS,
+  NODE_FILE_PATTERNS,
+  GRAPHQL_FILE_PATTERNS,
+  STORYBOOK_FILE_PATTERNS,
+  ANGULAR_COMPONENT_FILE_PATTERNS,
+  ANGULAR_PIPE_FILE_PATTERNS,
+  GENERATED_FILE_PATTERNS,
+  COMMONJS_FILE_PATTERNS,
+  negatePatterns,
 };
