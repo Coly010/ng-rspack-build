@@ -217,6 +217,7 @@ module.exports = tseslint.config(
       'promise/catch-or-return': 'off',
     },
   },
+];
   {
     name: '@nx/workspace/javascript/tests/customized',
     files: TEST_FILE_PATTERNS,
