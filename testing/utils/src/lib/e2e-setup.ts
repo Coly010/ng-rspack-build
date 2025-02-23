@@ -25,7 +25,9 @@ export async function setupE2eApp(
     await stat(fixture);
   } catch (e) {
     console.warn(
-      `Fixture folder not found. Did you change the file or move it? Error: ${(e as Error).message}`
+      `Fixture folder not found. Did you change the file or move it? Error: ${
+        (e as Error).message
+      }`
     );
     return;
   }
@@ -54,7 +56,7 @@ export async function setupE2eApp(
   if (e2eFixtures) {
     await cp(e2eFixtures, target, {
       recursive: true,
-      force: true
+      force: true,
     });
   }
 }

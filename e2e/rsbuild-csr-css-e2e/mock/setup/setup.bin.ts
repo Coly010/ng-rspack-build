@@ -1,5 +1,5 @@
 import globalSetup from './create-app-css.setup';
 
-(async ()=> {
+(async () => {
   await globalSetup();
-})()
+})();

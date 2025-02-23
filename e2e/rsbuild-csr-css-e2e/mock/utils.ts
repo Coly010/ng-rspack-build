@@ -56,7 +56,7 @@ export async function setupE2eApp(
   if (e2eFixtures) {
     await cp(e2eFixtures, target, {
       recursive: true,
-      force: true
+      force: true,
     });
   }
 }

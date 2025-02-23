@@ -7,7 +7,10 @@ export default defineConfig({
   plugins: [],
   resolve: {
     alias: {
-      '@ng-rspack/testing-utils': resolve(__dirname, '../../../testing/utils/src'),
+      '@ng-rspack/testing-utils': resolve(
+        __dirname,
+        '../../../testing/utils/src'
+      ),
     },
   },
   test: {
