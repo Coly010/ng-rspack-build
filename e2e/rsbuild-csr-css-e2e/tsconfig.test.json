@@ -12,7 +12,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
+  "exclude": [
     "**/*.ts",
     "**/*.js",
     "playwright.config.ts",
@@ -22,18 +22,10 @@
     "src/**/*.test.js",
     "src/**/*.d.ts"
   ],
+  "include": ["./mocks/**/*.ts"],
   "references": [
     {
       "path": "../../testing/utils"
-    },
-    {
-      "path": "../../packages/compiler"
-    },
-    {
-      "path": "../../packages/rsbuild-plugin-angular"
-    },
-    {
-      "path": "./tsconfig.test.json"
     }
   ]
 }
