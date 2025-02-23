@@ -15,7 +15,7 @@ module.exports = [
       'no-param-reassign': 'off', // ❌ 3 errors
       'vitest/valid-describe-callback': 'off', // ❌ 2 errors
       '@typescript-eslint/no-require-imports': 'off', // ❌ 1 error
-      'eqeqeq': 'off', // ❌ 1 error
+      eqeqeq: 'off', // ❌ 1 error
       'import/no-commonjs': 'off', // ❌ 1 error
       'sonarjs/no-commented-code': 'off', // ❌ 1 error
       'sonarjs/no-nested-assignment': 'off', // ❌ 1 error
@@ -26,7 +26,7 @@ module.exports = [
       'import/no-duplicates': 'off', // ⚠️ 4 warnings 🛠️
       'arrow-body-style': 'off', // ⚠️ 3 warnings 🛠️
       '@typescript-eslint/array-type': 'off', // ⚠️ 1 warning 🛠️
-      'curly': 'off', // ⚠️ 1 warning 🛠️
+      curly: 'off', // ⚠️ 1 warning 🛠️
       'prefer-template': 'off', // ⚠️ 1 warning 🛠️
       'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️
       'no-bitwise': 'off', // ⚠️ 5 warnings

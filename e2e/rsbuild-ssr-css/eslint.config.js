@@ -9,8 +9,11 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
+      // ❌ Errors: 2
+      'import/no-unresolved': 'off', // ❌ 15 errors
+      'import/named': 'off', // ❌ 3 errors
       // ⚠️ Warnings: 1
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
+      'max-lines': 'off', // ⚠️ 1 warning
     },
   },
 ];

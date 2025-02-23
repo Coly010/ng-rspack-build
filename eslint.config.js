@@ -51,7 +51,6 @@ module.exports = tseslint.config(
       '.swcrc',
       // angular
       '**/public',
-
     ],
   }
 );
