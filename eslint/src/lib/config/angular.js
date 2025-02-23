@@ -38,7 +38,7 @@ module.exports = tseslint.config(
       ...angular.configs.tsRecommended,
       rxjs.configs.recommended,
       {
-        name: '@nx/workspace/angular/customized',
+        name: '@nx/workspace-angular/angular/customized',
         rules: {
           '@angular-eslint/component-class-suffix': 'warn',
           '@angular-eslint/directive-class-suffix': 'warn',
@@ -65,7 +65,7 @@ module.exports = tseslint.config(
         },
       },
       {
-        name: '@nx/workspace/angular/disabled',
+        name: '@nx/workspace-angular/angular/disabled',
         rules: {
           '@typescript-eslint/class-methods-use-this': 'off',
           '@typescript-eslint/no-extraneous-class': 'off',
@@ -77,7 +77,7 @@ module.exports = tseslint.config(
         },
       },
       {
-        name: '@nx/workspace/angular/additional',
+        name: '@nx/workspace-angular/angular/additional',
         rules: {
           // https://github.com/angular-eslint/angular-eslint/tree/main/packages/eslint-plugin#rules
           '@angular-eslint/component-max-inline-declarations': 'warn',
@@ -121,7 +121,7 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
       {
-        name: '@nx/workspace/angular/template/customized',
+        name: '@nx/workspace-angular/angular/template/customized',
         rules: {
           '@angular-eslint/template/eqeqeq': [
             'error',
@@ -131,7 +131,7 @@ module.exports = tseslint.config(
         },
       },
       {
-        name: '@nx/workspace/angular/template/additional',
+        name: '@nx/workspace-angular/angular/template/additional',
         rules: {
           // https://github.com/angular-eslint/angular-eslint/tree/main/packages/eslint-plugin-template#rules
           '@angular-eslint/template/conditional-complexity': 'warn',
@@ -160,13 +160,13 @@ module.exports = tseslint.config(
     ignores: negatePatterns(TYPESCRIPT_FILE_PATTERNS),
     extends: [
       {
-        name: '@nx/workspace/angular/tests/customized',
+        name: '@nx/workspace-angular/angular/tests/customized',
         rules: {
           '@angular-eslint/no-lifecycle-call': 'warn',
         },
       },
       {
-        name: '@nx/workspace/angular/tests/disabled',
+        name: '@nx/workspace-angular/angular/tests/disabled',
         rules: {
           '@angular-eslint/component-max-inline-declarations': 'off',
           '@angular-eslint/prefer-on-push-component-change-detection': 'off',
@@ -179,7 +179,7 @@ module.exports = tseslint.config(
   },
   {
     // duplicated from typescript config to re-apply over angular's naming convention
-    name: '@nx/workspace/angular/storybook/customized',
+    name: '@nx/workspace-angular/angular/storybook/customized',
     files: STORYBOOK_FILE_PATTERNS,
     ignores: negatePatterns(TYPESCRIPT_FILE_PATTERNS),
     rules: {
@@ -190,7 +190,7 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/angular/components/customized',
+    name: '@nx/workspace-angular/angular/components/customized',
     files: [ANGULAR_COMPONENT_FILE_PATTERNS],
     rules: {
       'max-lines': [
@@ -200,14 +200,14 @@ module.exports = tseslint.config(
     },
   },
   {
-    name: '@nx/workspace/angular/pipes/customized',
+    name: '@nx/workspace-angular/angular/pipes/customized',
     files: [ANGULAR_PIPE_FILE_PATTERNS],
     rules: {
       // 'functional/prefer-tacit': 'off',
     },
   },
   {
-    name: '@nx/workspace/angular/templates/inline/disabled',
+    name: '@nx/workspace-angular/angular/templates/inline/disabled',
     files: TEST_FILE_PATTERNS_INLINE_TEMPLATES,
     rules: {
       '@angular-eslint/template/no-inline-styles': 'off',
@@ -215,5 +215,5 @@ module.exports = tseslint.config(
       '@angular-eslint/template/prefer-ngsrc': 'off',
       '@angular-eslint/template/use-track-by-function': 'off',
     },
-  },
+  }
 );

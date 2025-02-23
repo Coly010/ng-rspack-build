@@ -46,33 +46,33 @@ const NAMING_CONVENTION_OPTIONS_GRAPHQL = NAMING_CONVENTION_OPTIONS.map(
   (option, i) =>
     i === 0
       ? {
-        ...option,
-        filter: {
-          regex: '^(_id|__typename|__resolveType)$',
-          match: false,
-        },
-      }
-      : option,
+          ...option,
+          filter: {
+            regex: '^(_id|__typename|__resolveType)$',
+            match: false,
+          },
+        }
+      : option
 );
 
-const NAMING_CONVENTION_OPTIONS_STORYBOOK =
-  NAMING_CONVENTION_OPTIONS.map(option =>
+const NAMING_CONVENTION_OPTIONS_STORYBOOK = NAMING_CONVENTION_OPTIONS.map(
+  (option) =>
     option.selector === 'variable'
       ? {
-        ...option,
-        format: [...(option.format ?? []), 'PascalCase'],
-      }
-      : option,
-  );
+          ...option,
+          format: [...(option.format ?? []), 'PascalCase'],
+        }
+      : option
+);
 
 const NAMING_CONVENTION_OPTIONS_ANGULAR = [
-  ...NAMING_CONVENTION_OPTIONS.map(option =>
+  ...NAMING_CONVENTION_OPTIONS.map((option) =>
     Array.isArray(option.selector)
       ? {
-        ...option,
-        selector: option.selector.filter(s => s !== 'classProperty'),
-      }
-      : option,
+          ...option,
+          selector: option.selector.filter((s) => s !== 'classProperty'),
+        }
+      : option
   ),
   {
     selector: 'classProperty',
@@ -86,7 +86,6 @@ const IMMUTABLE_DATA_OPTIONS = {
   ignoreAccessorPattern: 'module.exports',
 };
 
-
 module.exports = {
   NAMING_CONVENTION_OPTIONS,
   NAMING_CONVENTION_OPTIONS_GRAPHQL,
@@ -94,4 +93,3 @@ module.exports = {
   NAMING_CONVENTION_OPTIONS_ANGULAR,
   IMMUTABLE_DATA_OPTIONS,
 };
-

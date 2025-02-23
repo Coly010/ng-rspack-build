@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@angular-eslint/eslint-plugin-template':
+        specifier: ^19.1.0
+        version: 19.1.0(@typescript-eslint/types@8.24.1)(@typescript-eslint/utils@8.24.1(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.6.3)
       '@angular/animations':
         specifier: 19.1.6
         version: 19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))

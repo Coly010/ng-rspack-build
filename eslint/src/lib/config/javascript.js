@@ -53,7 +53,7 @@ module.exports = tseslint.config(
             },
           ],
           '@typescript-eslint/prefer-namespace-keyword': 'warn',
-         /* ...convertErrorsToWarnings(unicorn.configs['flat/recommended'].rules),
+          /* ...convertErrorsToWarnings(unicorn.configs['flat/recommended'].rules),
           'unicorn/switch-case-braces': ['warn', 'avoid'],
           'unicorn/better-regex': ['warn', { sortCharacterClasses: false }],
           'unicorn/no-useless-undefined': ['warn', { checkArguments: false }],

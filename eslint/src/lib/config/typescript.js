@@ -128,8 +128,8 @@ module.exports = tseslint.config(
           '@typescript-eslint/require-await': 'warn',
           ...('related-getter-setter-pairs' in
             (tseslint.plugin.rules ?? {}) && {
-              '@typescript-eslint/related-getter-setter-pairs': 'warn',
-            }),
+            '@typescript-eslint/related-getter-setter-pairs': 'warn',
+          }),
           // 'functional/immutable-data': ['warn', IMMUTABLE_DATA_OPTIONS],
         },
       },
@@ -156,5 +156,5 @@ module.exports = tseslint.config(
   {
     files: negatePatterns(TYPESCRIPT_FILE_PATTERNS),
     ...tseslint.configs.disableTypeChecked,
-  },
+  } /**/
 );

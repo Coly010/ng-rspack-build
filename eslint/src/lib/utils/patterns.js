@@ -69,6 +69,7 @@ const VITEST_CONFIG_FILE_PATTERNS = withExtensions(
  * //   '**\/*.config.?(c|m)[jt]s',
  * //   '**\/.prettierrc.?(c|m)[jt]s',
  * //   '**\/codegen.?(c|m)[jt]s',
+ * //   '**\/.npmignore.?(c|m)[jt]s',
  * //   '**\/test-setup.?(c|m)[jt]s',
  * //   '**\/code-pushup.config.?(c|m)[jt]s'
  * // ]
@@ -152,8 +153,8 @@ const MOCKS_FILE_PATTERNS = [fromDirectory('__mocks__')];
 
 // @angular-eslint's inline templates processor transforms .ts files to .html
 // https://github.com/angular-eslint/angular-eslint/blob/main/packages/eslint-plugin-template/src/processors.ts#L164
-const TEST_FILE_PATTERNS_INLINE_TEMPLATES = TEST_FILE_PATTERNS.map(
-  pattern => (pattern.startsWith('**/*.') ? `${pattern}*` : pattern),
+const TEST_FILE_PATTERNS_INLINE_TEMPLATES = TEST_FILE_PATTERNS.map((pattern) =>
+  pattern.startsWith('**/*.') ? `${pattern}*` : pattern
 );
 
 const TYPESCRIPT_FILE_PATTERNS = ['**/*.ts', '**/*.tsx'];
@@ -200,7 +201,7 @@ const COMMONJS_FILE_PATTERNS = ['**/*.cjs', '**/*.cts'];
 
 /** @param {string[]} patterns  */
 function negatePatterns(patterns) {
-  return patterns.map(pattern => `!${pattern}`);
+  return patterns.map((pattern) => `!${pattern}`);
 }
 
 module.exports = {
