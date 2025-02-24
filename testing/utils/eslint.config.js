@@ -9,7 +9,7 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 2
+      // ❌ Errors: 1
       'import/no-unresolved': 'off', // ❌ 6 errors
     },
   },
