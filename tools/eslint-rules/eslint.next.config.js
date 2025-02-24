@@ -9,7 +9,7 @@ module.exports = [
         projectService: true,
         tsconfigRootDir: __dirname,
       },
-    }
+    },
   },
   {
     files: ['**/*.json'],
