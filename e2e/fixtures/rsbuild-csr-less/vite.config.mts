@@ -7,5 +7,9 @@ import angular from '@analogjs/vite-plugin-angular';
 export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/rsbuild-csr-less',
-  plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md']), angular({}) as any],
+  plugins: [
+    nxViteTsPaths(),
+    nxCopyAssetsPlugin(['*.md']),
+    angular({}) as never,
+  ],
 });
