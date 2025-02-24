@@ -1,6 +1,7 @@
 import type {
   FileReplacement,
   InlineStyleExtension,
+  StylePreprocessorOptions,
 } from '@ng-rspack/compiler';
 
 export interface PluginAngularOptions {
@@ -20,4 +21,5 @@ export interface PluginAngularOptions {
   hasServer: boolean;
   skipTypeChecking: boolean;
   useTsProjectReferences?: boolean;
+  stylePreprocessorOptions?: StylePreprocessorOptions;
 }

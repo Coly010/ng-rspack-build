@@ -16,6 +16,19 @@ export function createConfig(
   const normalizedOptions = normalizeOptions(options);
   const isProduction = process.env['NODE_ENV'] === 'production';
 
+  let lessPathOptions: { paths?: string[] } = {};
+  let sassPathOptions: { includePaths?: string[] } = {};
+  if (options.stylePreprocessorOptions?.includePaths) {
+    if (options.stylePreprocessorOptions.includePaths.length > 0) {
+      lessPathOptions = {
+        paths: options.stylePreprocessorOptions.includePaths,
+      };
+      sassPathOptions = {
+        includePaths: options.stylePreprocessorOptions.includePaths,
+      };
+    }
+  }
+
   const defaultConfig = {
     context: normalizedOptions.root,
     mode: isProduction ? 'production' : 'development',
@@ -57,9 +70,25 @@ export function createConfig(
               options: {
                 api: 'modern-compiler',
                 implementation: require.resolve('sass-embedded'),
+                ...sassPathOptions,
+                ...(options.stylePreprocessorOptions?.sass ?? {}),
               },
             },
           ],
+          type: 'css/auto',
+        },
+        {
+          test: /\.less$/,
+          use: [
+            {
+              loader: 'less-loader',
+              options: {
+                javascriptEnabled: true,
+                ...lessPathOptions,
+              },
+            },
+          ],
+          // set to 'css/auto' if you want to support '*.module.less' as CSS Modules, otherwise set type to 'css'
           type: 'css/auto',
         },
         { test: /[/\\]rxjs[/\\]add[/\\].+\.js$/, sideEffects: true },
