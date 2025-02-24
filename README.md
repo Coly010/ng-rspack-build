@@ -43,7 +43,7 @@ A comparison can be done in **two sections**:
 | ---------------------- | -------------------------- | ------------------------------------ |
 | **Performance**        | 🚀 Faster (Rust-based)     | 🐢 Slower (JS-based)                 |
 | **HMR**                | ⚠️ Partial Support         | ✅ Full Support                      |
-| **Plugins & Loaders**  | ✅ Many Webpack-compatible | ✅ Extensive ecosystem               |
+| **Plugins & Loaders**  | ✅ Many Webpack-compatible and new Rspack specific | ✅ Extensive ecosystem               |
 | - **CSS Loader**       | ✅ Supported               | ✅ Supported                         |
 | - **SCSS/SASS Loader** | ✅ Supported               | ✅ Supported                         |
 | - **LESS Loader**      | ✅ Supported               | ✅ Supported                         |
