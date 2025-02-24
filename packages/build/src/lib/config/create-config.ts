@@ -8,6 +8,7 @@ import { merge as rspackMerge } from 'webpack-merge';
 import { join } from 'path';
 import { AngularRspackPluginOptions, normalizeOptions } from '../models';
 import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from '@ng-rspack/compiler';
+import { getStyleLoaders } from './style-config-utils';
 
 export function createConfig(
   options: AngularRspackPluginOptions,
@@ -15,19 +16,6 @@ export function createConfig(
 ): Configuration[] {
   const normalizedOptions = normalizeOptions(options);
   const isProduction = process.env['NODE_ENV'] === 'production';
-
-  let lessPathOptions: { paths?: string[] } = {};
-  let sassPathOptions: { includePaths?: string[] } = {};
-  if (options.stylePreprocessorOptions?.includePaths) {
-    if (options.stylePreprocessorOptions.includePaths.length > 0) {
-      lessPathOptions = {
-        paths: options.stylePreprocessorOptions.includePaths,
-      };
-      sassPathOptions = {
-        includePaths: options.stylePreprocessorOptions.includePaths,
-      };
-    }
-  }
 
   const defaultConfig = {
     context: normalizedOptions.root,
@@ -62,35 +50,7 @@ export function createConfig(
         },
       },
       rules: [
-        {
-          test: /\.?(sa|sc|c)ss$/,
-          use: [
-            {
-              loader: 'sass-loader',
-              options: {
-                api: 'modern-compiler',
-                implementation: require.resolve('sass-embedded'),
-                ...sassPathOptions,
-                ...(options.stylePreprocessorOptions?.sass ?? {}),
-              },
-            },
-          ],
-          type: 'css/auto',
-        },
-        {
-          test: /\.less$/,
-          use: [
-            {
-              loader: 'less-loader',
-              options: {
-                javascriptEnabled: true,
-                ...lessPathOptions,
-              },
-            },
-          ],
-          // set to 'css/auto' if you want to support '*.module.less' as CSS Modules, otherwise set type to 'css'
-          type: 'css/auto',
-        },
+        ...getStyleLoaders(options.stylePreprocessorOptions),
         { test: /[/\\]rxjs[/\\]add[/\\].+\.js$/, sideEffects: true },
         {
           test: TS_ALL_EXT_REGEX,

@@ -12,15 +12,6 @@ module.exports = [
     },
   },
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
     files: ['**/*'],
     rules: {},
   },
