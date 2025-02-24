@@ -20,6 +20,70 @@
 
 The goal of `@ng-rsbuild/plugin-angular` and `@ng-rspack/build` is to make easy and straightforward to build Angular applications with [Rspack](https://rspack.dev) and [Rsbuild](https://rsbuild.dev).
 
+## Feature Parity - Rspack & Rsbuild vs Angular CLI & Webpack
+
+The following aims to compare features of **Rspack** and **Rsbuild** with **Angular's standards** (Angular CLI and Webpack).
+
+Rspack and Rsbuild are modern, high-performance JavaScript build tools designed as alternatives to Webpack and other traditional bundlers.
+
+A comparison can be done in **two sections**:
+
+- **Rspack vs Webpack**
+- **Rsbuild vs Angular CLI**
+
+---
+
+## 1. Rspack
+
+[Rspack](https://www.rspack.dev/) is a **Rust-based JavaScript bundler** that aims to be a **faster alternative to Webpack** while maintaining compatibility with its ecosystem. It is designed to accelerate the build process, making it ideal for large-scale applications.
+
+### **Rspack vs. Webpack**
+
+| Feature                | Rspack                     | Webpack (Used internally in Angular) |
+| ---------------------- | -------------------------- | ------------------------------------ |
+| **Performance**        | 🚀 Faster (Rust-based)     | 🐢 Slower (JS-based)                 |
+| **HMR**                | ⚠️ Partial Support         | ✅ Full Support                      |
+| **Plugins & Loaders**  | ✅ Many Webpack-compatible | ✅ Extensive ecosystem               |
+| - **CSS Loader**       | ✅ Supported               | ✅ Supported                         |
+| - **SCSS/SASS Loader** | ✅ Supported               | ✅ Supported                         |
+| - **LESS Loader**      | ✅ Supported               | ✅ Supported                         |
+| **Tree Shaking**       | ✅ Optimized               | ✅ Available                         |
+| **Asset Management**   | ✅ Supported               | ✅ Supported                         |
+| **Development Server** | ✅ Available               | ✅ Available                         |
+| **Webpack Dependency** | ✅ DropIn Replacement      | ✅ Uses Webpack internally           |
+
+For more details, visit the [Rspack Documentation](https://www.rspack.dev/) and [Webpack Documentation](https://webpack.js.org/).
+
+---
+
+## 2. Rsbuild
+
+[Rsbuild](https://modern-js.dev/en/rsbuild) is a **Rust-based build system** optimized for modern frontend applications. Unlike Rspack, which focuses on bundling, Rsbuild provides a more **high-level abstraction** over the build process, managing **compilation, bundling, and optimizations**.
+
+### **NgRsbuild vs. Angular CLI**
+
+| Feature                    | Rsbuild                   | Angular CLI                |
+| -------------------------- | ------------------------- | -------------------------- |
+| **Performance**            | 🚀 Optimized (Rust-based) | 🐢 Slower (JS-based)       |
+| **Zero-Config Support**    | ✅ Minimal config needed  | ❌ Requires `angular.json` |
+| **Optimized Tree Shaking** | ✅ Automatic              | ✅ Available               |
+| **Schematics**             | ⚠️ Limited                | ✅ Extensive               |
+| - **Generate Application** | ⚠️ Partial Support        | ✅ `ng generate app`       |
+| - **Serve Application**    | ✅ Supported              | ✅ `ng serve`              |
+| - **Build Application**    | ✅ Supported              | ✅ `ng build`              |
+
+For more details, visit the [Rsbuild Documentation](https://modern-js.dev/en/rsbuild) and [Angular CLI Documentation](https://angular.io/cli).
+
+---
+
+## Configuration
+
+Configuration is **controlled entirely** via the **Rspack/Rsbuild config**.  
+Both tools offer a `createConfig` function to **aid in the creation of the configuration**.
+
+- [Rspack Configuration Guide](https://www.rspack.dev/docs/config/)
+- [Rsbuild Configuration Guide](https://modern-js.dev/en/rsbuild/docs/config/)
+
 ## Documentation
 
 The documentation for this project can be found at [angular-rspack.dev](https://angular-rspack.dev).
