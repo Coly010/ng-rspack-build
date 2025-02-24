@@ -21,6 +21,7 @@ import {
  * npx nx g @nx/eslint:workspace-rule {{ NEW_RULE_NAME }}
  * ```
  */
+// eslint-disable-next-lint @typescript-eslint/utils
 module.exports = {
   rules: {
     [vitestConfigHasTestCoverageConfiguredName]:

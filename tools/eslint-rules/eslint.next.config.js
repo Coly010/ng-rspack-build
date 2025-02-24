@@ -9,10 +9,7 @@ module.exports = [
         projectService: true,
         tsconfigRootDir: __dirname,
       },
-    },
-    rules: {
-      '@typescript-eslint/utils': 'off',
-    },
+    }
   },
   {
     files: ['**/*.json'],
