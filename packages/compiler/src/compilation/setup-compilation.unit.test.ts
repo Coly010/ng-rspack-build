@@ -4,7 +4,7 @@ import {
   beforeEach,
   describe,
   expect,
-  MockInstance,
+  type MockInstance,
   vi,
 } from 'vitest';
 import {
