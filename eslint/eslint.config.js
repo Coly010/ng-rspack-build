@@ -10,7 +10,7 @@ module.exports = [
     files: ['**/*'],
     rules: {
       // ⚠️ Warnings: 1
-      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 2 warnings
+      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 1 warning
     },
   },
 ];
