@@ -10,15 +10,12 @@ const {
 } = require('../utils/patterns.js');
 
 const {
-  IMMUTABLE_DATA_OPTIONS,
+  // IMMUTABLE_DATA_OPTIONS,
   NAMING_CONVENTION_OPTIONS,
   NAMING_CONVENTION_OPTIONS_STORYBOOK,
 } = require('../utils/rule-options.js');
 
-const javascript = require('./javascript.js');
-
 module.exports = tseslint.config(
-  ...javascript,
   {
     files: TYPESCRIPT_FILE_PATTERNS,
     extends: [
