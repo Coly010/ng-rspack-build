@@ -4,8 +4,7 @@
   "dependencies": {
     "vitest": "^1.3.1",
     "memfs": "^4.17.0",
-    "jsonc-eslint-parser": "2.4.0",
-    "@ng-rspack/testing-utils": "0.0.1"
+    "jsonc-eslint-parser": "2.4.0"
   },
   "devDependencies": {
     "vite-plugin-dts": "^4.5.0"
