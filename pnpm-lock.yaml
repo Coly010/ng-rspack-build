@@ -488,9 +488,6 @@ importers:
       '@angular/ssr':
         specifier: '>=19.0.0 <20.0.0'
         version: 19.1.6(ufzxe4wxd22z3jdz3d3mzy5roy)
-      '@code-pushup/portal-client':
-        specifier: ^0.10.0
-        version: 0.10.0(encoding@0.1.13)
       '@ng-rspack/compiler':
         specifier: workspace:*
         version: link:../compiler
