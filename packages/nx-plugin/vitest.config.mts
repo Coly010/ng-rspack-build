@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
-  cacheDir: '../../node_modules/.vite/nx/unit',
+  cacheDir: '../../node_modules/.vite/nx-plugin/unit',
   root: __dirname,
   plugins: [],
   resolve: {
@@ -14,7 +14,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      reportsDirectory: '../../coverage/nx/unit',
+      reportsDirectory: '../../coverage/nx-plugin/unit',
       exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     },
     watch: false,
