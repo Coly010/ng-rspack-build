@@ -29,6 +29,8 @@ jobs:
 
       - name: Collect Code PushUp report
         uses: code-pushup/github-action@v0
+        env:
+          CP_VERBOSE: true
         with:
           monorepo: nx
           parallel: true
