@@ -46,6 +46,13 @@
         "max-warnings": 0
       }
     },
+    "code-pushup": {
+      "command": "pnpx @code-pushup/cli",
+      "options": {
+        "config": "{projectRoot}/code-pushup.config.ts",
+        "persist.outputDir": ".code-pushup/{projectName}"
+      }
+    },
     "integration-test": {
       "cache": true,
       "options": {
@@ -69,6 +76,13 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint-next",
+        "configPath": ".eslint.next.config.js"
       }
     },
     {

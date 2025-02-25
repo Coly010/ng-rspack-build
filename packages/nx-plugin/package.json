@@ -41,8 +41,9 @@
   "nx": {
     "sourceRoot": "packages/nx-plugin/src",
     "projectType": "library",
-    "name": "nx",
+    "name": "nx-plugin",
     "targets": {
+      "code-pushup": {},
       "integration-test": {
         "options": {
           "config": "vitest.integration.config.mts"
