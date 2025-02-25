@@ -2,8 +2,6 @@ import * as console from 'node:console';
 import { join } from 'node:path';
 import { cp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 
-const path = require('path');
-
 export function getE2eAppProjectName(): string | undefined {
   const e2eProjectName = process.env['NX_TASK_TARGET_PROJECT'] ?? '';
   if (e2eProjectName == null) {
@@ -37,7 +35,7 @@ export async function setupE2eApp(
   await cp(fixture, target, {
     recursive: true,
     force: true,
-    filter(source: string, destination: string): boolean | Promise<boolean> {
+    filter(source: string): boolean | Promise<boolean> {
       return !source.includes('node_modules') && !source.includes('dist');
     },
   });
