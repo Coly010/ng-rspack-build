@@ -2,7 +2,6 @@
   "name": "workspace",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "targets": {
-    "code-pushup": {},
     "local-registry": {
       "executor": "@nx/js:verdaccio",
       "options": {
