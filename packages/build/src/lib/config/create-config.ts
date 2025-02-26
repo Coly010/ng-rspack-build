@@ -8,6 +8,7 @@ import { merge as rspackMerge } from 'webpack-merge';
 import { join } from 'path';
 import { AngularRspackPluginOptions, normalizeOptions } from '../models';
 import { JS_ALL_EXT_REGEX, TS_ALL_EXT_REGEX } from '@ng-rspack/compiler';
+import { getStyleLoaders } from './style-config-utils';
 
 export function createConfig(
   options: AngularRspackPluginOptions,
@@ -49,19 +50,7 @@ export function createConfig(
         },
       },
       rules: [
-        {
-          test: /\.?(sa|sc|c)ss$/,
-          use: [
-            {
-              loader: 'sass-loader',
-              options: {
-                api: 'modern-compiler',
-                implementation: require.resolve('sass-embedded'),
-              },
-            },
-          ],
-          type: 'css/auto',
-        },
+        ...getStyleLoaders(options.stylePreprocessorOptions),
         { test: /[/\\]rxjs[/\\]add[/\\].+\.js$/, sideEffects: true },
         {
           test: TS_ALL_EXT_REGEX,

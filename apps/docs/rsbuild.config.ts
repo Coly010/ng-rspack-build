@@ -15,9 +15,6 @@ export default () => {
     return withConfigurations(
       {
         options,
-        rsbuildConfigOverrides: {
-          plugins: [pluginSass()],
-        },
       },
       {
         production: {
