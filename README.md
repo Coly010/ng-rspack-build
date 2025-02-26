@@ -38,39 +38,38 @@ This table maps the key `ng-rspack` and `ng-rsbuild` packages to their equivalen
 | [@ng-rspack/compiler](https://github.com/Coly010/ng-rspack-build/tree/main/packages/build)        | [@angular/build](https://github.com/angular/angular/tree/main/packages/build)               | [@angular/compiler](https://github.com/angular/angular/tree/main/packages/compiler)                       | Compiler for Angular applications using Rspack, leveraging abstractions from `@angular/build`.   |
 | [@ng-rsbuild/plugin-angular](https://github.com/Coly010/ng-rspack-build/tree/main/packages/build) | [@angular/build](https://github.com/angular/angular/tree/main/packages/build) (Builder API) | [@angular-devkit/build-angular](https://github.com/angular/angular-cli/tree/main/packages/angular_devkit) | Rsbuild plugin for Angular projects, similar to Angular CLI's Webpack-based builder API.         |
 | [@ng-rspack/nx](https://github.com/Coly010/ng-rspack-build/tree/main/packages/build)              | [@nrwl/angular](https://github.com/nrwl/nx/tree/master/packages/angular)                    | [@nrwl/angular](https://github.com/nrwl/nx/tree/master/packages/angular)                                  | Provides Nx integration for RsPack and RsBuild in Angular, like `@nrwl/angular` for Angular CLI. |
-
 ### Feature Comparisons
 
-| Feature                          | [`@ng-rspack/build`](https://www.npmjs.com/package/@ng-rspack/build)                                                    | [`@angular-devkit/build-angular`](https://www.npmjs.com/package/@angular-devkit/build-angular) |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Performance**                  | 🚀 Faster (Rust-based)                                                                                                  | 🐢 Slower (JS-based)                                                                           |
-| **HMR (Hot Module Replacement)** | ⚠️ Partial Support                                                                                                      | ✅ Full Support                                                                                |
-| **Plugins & Loaders**            | ✅ Many Webpack-compatible                                                                                              | ✅ Extensive ecosystem                                                                         |
-| - **CSS Loader**                 | ✅ [`css-loader`](https://www.npmjs.com/package/css-loader)                                                             | ✅ [`??`](??)                                                                                  |
-| - **SCSS/SASS Loader**           | ✅ [`sass-loader`](https://www.npmjs.com/package/sass-loader)                                                           | ✅ [`??`](??)                                                                                  |
-| - **LESS Loader**                | ✅ [`less-loader`](https://www.npmjs.com/package/less-loader)                                                           | ✅ [`??`](??)                                                                                  |
-| **Tree Shaking**                 | ✅ Optimized                                                                                                            | ✅ Available                                                                                   |
-| **Asset Management**             | ✅ [`file-loader`](https://www.npmjs.com/package/file-loader), [`url-loader`](https://www.npmjs.com/package/url-loader) | ✅ Supported                                                                                   |
-| **Development Server**           | ✅ [`rspack-dev-server`](https://www.npmjs.com/package/rspack-dev-server)                                               | ✅ [`webpack-dev-server`](https://www.npmjs.com/package/webpack-dev-server)                    |
-| **SSR Support**                  | ✅ [`@ng-rsbuild/plugin-angular`](https://www.npmjs.com/package/@ng-rsbuild/plugin-angular)                             | ✅ Available (`@angular/platform-server`)                                                      |
-| **PWA Support**                  | ❌ Not yet                                                                                                              | ✅ Available (`@angular/pwa`)                                                                  |
+| Feature                                   | ng-rspack / ng-rsbuild Equivalent                                                   | Angular CLI (@angular/build)                                                   | Notes |
+|-------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|-------|
+| Automatic Downleveling via `browserslist` | ❌ Currently unhandled but easy to support via [Rspack Target](https://rspack.dev/config/target#browserslist) | ✅ Supported via `browserslist` and `esbuild` target                            | |
+| Build Flags (`NG_BUILD_MANGLE=0`, etc.)   | ❌ No current method to override default SWC options                                | ✅ Supports multiple flags via [environment options](https://github.com/angular/angular-cli/blob/main/packages/angular_devkit/build_angular/src/utils/environment-options.ts) | |
+| TypeScript Handling                       | ✅ TS is processed via Rspack’s built-in SWC loader if no Angular transformations are present | ✅ Direct ESBuild support for `isolatedModules: true` optimization ([ref](https://blog.angular.dev/using-isolatedmodules-in-angular-18-2-68a7d3a6c03d)) | |
+| HMR (Hot Module Replacement)              | ⚠️ Partial Support                                                                | ⚠️ Partial Support                                                                | |
+| Plugins & Loaders                          | ✅ Many Webpack-compatible                                                          | ✅ Many Webpack-compatible                                                       | |
+| ├─ [CSS Loader](https://webpack.js.org/loaders/css-loader/)  | ✅ Supported | ✅ Supported | |
+| ├─ [SCSS/SASS Loader](https://webpack.js.org/loaders/sass-loader/) | ✅ Supported | ✅ Supported | |
+| ├─ [LESS Loader](https://webpack.js.org/loaders/less-loader/) | ✅ Supported | ✅ Supported | |
+| ├─ [Style Loader](https://webpack.js.org/loaders/style-loader/) | ✅ Supported | ✅ Supported | |
+| Tree Shaking                               | ✅ Optimized                                                                        | ✅ Optimized                                                                     | |
+| Asset Management                           | ✅ Supported                                                                        | ✅ Supported                                                                     | |
+| Development Server                         | ✅ Available                                                                        | ✅ Available                                                                     | |
+| More Details                               | [Rspack Documentation](https://rspack.dev/) | [Rspack Documentation](https://rspack.dev/) |
 
 ---
 
 ### NgRsbuild vs. Angular CLI
 
-| Feature                    | [`@ng-rspack/build`](https://www.npmjs.com/package/@ng-rspack/build) | [`@angular-devkit/build-angular`](https://www.npmjs.com/package/@angular-devkit/build-angular) |
-| -------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Performance**            | 🚀 Optimized (Rust-based)                                            | 🐢 Slower (JS-based)                                                                           |
-| **Zero-Config Support**    | ✅ Minimal config needed                                             | ❌ Requires `angular.json`                                                                     |
-| **Optimized Tree Shaking** | ✅ Automatic                                                         | ✅ Available                                                                                   |
-| **Schematics**             | ⚠️ Limited                                                           | ✅ Extensive                                                                                   |
-| - **Generate Application** | ⚠️ Partial Support                                                   | ✅ `ng generate app`                                                                           |
-| - **Serve Application**    | ✅ Supported                                                         | ✅ `ng serve`                                                                                  |
-| - **Build Application**    | ✅ Supported                                                         | ✅ `ng build`                                                                                  |
-| **Webpack Dependency**     | ✅ Drop-in Replacement                                               | ✅ Uses Webpack internally                                                                     |
-
-TBD
+| Feature                  | Rsbuild                                   | Angular CLI (@angular/build)                 |
+|--------------------------|------------------------------------------|----------------------------------------------|
+| **Performance**          | 🚀 Optimized (Rust-based)               | 🐢 Slower (JS-based)                        |
+| **Zero-Config Support**  | ✅ Minimal config needed                 | ❌ Requires `angular.json`                   |
+| **Optimized Tree Shaking** | ✅ Automatic                             | ✅ Available                                 |
+| **Schematics**           | ⚠️ Limited                               | ✅ Extensive                                |
+| ├─ Generate Application | ⚠️ Partial Support                      | ✅ `ng generate app`                         |
+| ├─ Serve Application    | ✅ Supported                             | ✅ `ng serve`                                |
+| ├─ Build Application    | ✅ Supported                             | ✅ `ng build`                                |
+| **Webpack Dependency**   | ✅ Drop-in Replacement                   | ✅ Uses Webpack internally                   |
 
 ---
 
