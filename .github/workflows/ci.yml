@@ -38,4 +38,4 @@ jobs:
 
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       # - run: pnpm exec nx run-many -t build unit-test integration-test e2e-ci
-      - run: pnpm exec nx run-many -t lint
+      - run: NODE_OPTIONS=--max-old-space-size=4096 pnpm exec nx run-many -t lint
