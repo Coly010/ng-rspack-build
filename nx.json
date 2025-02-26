@@ -47,7 +47,7 @@
       }
     },
     "code-pushup": {
-      "command": "pnpx @code-pushup/cli",
+      "command": "code-pushup",
       "options": {
         "config": "{projectRoot}/code-pushup.config.ts",
         "persist.outputDir": ".code-pushup/{projectName}"
