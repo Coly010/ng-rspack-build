@@ -4,6 +4,7 @@ export function getIncludePathOptions(includePaths?: string[]) {
   if (!includePaths || includePaths.length === 0) {
     return { less: {}, sass: {} };
   }
+
   return {
     less: { paths: includePaths },
     sass: { includePaths },
@@ -47,6 +48,11 @@ export function getLessLoaderConfig(lessPathOptions?: { paths?: string[] }) {
   };
 }
 
+/**
+ * Returns an array of style loaders for sass and less. Both loader´s are always returned
+ *
+ * @param stylePreprocessorOptions
+ */
 export function getStyleLoaders(
   stylePreprocessorOptions?: StylePreprocessorOptions
 ) {
