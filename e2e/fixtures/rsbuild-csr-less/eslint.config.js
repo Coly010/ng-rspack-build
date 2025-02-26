@@ -1,4 +1,4 @@
-const baseConfig = require('../../eslint.config');
+const baseConfig = require('../../../eslint.config');
 
 module.exports = [
   ...baseConfig,
@@ -22,6 +22,7 @@ module.exports = [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
             '{projectRoot}/vitest.config.{js,ts,mjs,mts}',
           ],
+          ignoredDependencies: ['jsonc-eslint-parser'],
         },
       ],
     },

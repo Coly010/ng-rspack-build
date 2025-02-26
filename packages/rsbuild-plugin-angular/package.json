@@ -12,6 +12,8 @@
   "dependencies": {
     "@ng-rspack/compiler": "workspace:*",
     "sass-embedded": "^1.79.3",
+    "@rsbuild/plugin-sass": "^1.1.2",
+    "@rsbuild/plugin-less": "^1.1.1",
     "express": "4.21.1",
     "tslib": "^2.3.0"
   },
