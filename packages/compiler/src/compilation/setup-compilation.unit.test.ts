@@ -72,6 +72,7 @@ describe('setupCompilation', () => {
   >;
 
   beforeAll(async () => {
+    // @TODO remove await in spy setup
     readConfigurationSpy = vi
       .spyOn(await loadCompilerCli.loadCompilerCli(), 'readConfiguration')
       .mockReturnValue({
