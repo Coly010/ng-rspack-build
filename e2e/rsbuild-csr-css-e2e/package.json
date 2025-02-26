@@ -1,0 +1,12 @@
+{
+  "name": "rsbuild-csr-css-e2e",
+  "nx": {
+    "name": "rsbuild-csr-css-e2e",
+    "sourceRoot": "e2e/rsbuild-csr-css-e2e/src",
+    "targets": {
+      "pre-e2e": {
+        "command": "pnpx tsx e2e/rsbuild-csr-css-e2e/mock/setup/setup.bin.ts"
+      }
+    }
+  }
+}

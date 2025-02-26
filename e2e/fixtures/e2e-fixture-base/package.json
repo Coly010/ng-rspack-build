@@ -11,23 +11,23 @@
     "jsonc-eslint-parser": "2.4.0"
   },
   "nx": {
-    "name": "rsbuild-csr-css",
+    "name": "e2e-fixture-base",
     "projectType": "application",
     "prefix": "app",
-    "sourceRoot": "e2e/fixtures/rsbuild-csr-css/src",
+    "sourceRoot": "e2e/fixtures/e2e-fixture-base/src",
     "targets": {
       "extract-i18n": {
         "executor": "@angular-devkit/build-angular:extract-i18n",
         "options": {
-          "buildTarget": "rsbuild-csr-css:build"
+          "buildTarget": "e2e-fixture-base:build"
         }
       },
       "serve-static": {
         "executor": "@nx/web:file-server",
         "options": {
-          "buildTarget": "rsbuild-csr-css:build",
+          "buildTarget": "e2e-fixture-base:build",
           "port": 4200,
-          "staticFilePath": "dist/rsbuild-csr-css/browser",
+          "staticFilePath": "dist/e2e-fixture-base/browser",
           "spa": true
         }
       },

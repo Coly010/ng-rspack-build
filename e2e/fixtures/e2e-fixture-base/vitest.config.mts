@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/rsbuild-csr-css/unit',
+  cacheDir: '../../node_modules/.vite/e2e-fixture-base/unit',
   plugins: [],
   resolve: {
     alias: {
@@ -20,7 +20,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      reportsDirectory: '../../coverage/rsbuild-csr-css/unit',
+      reportsDirectory: '../../coverage/e2e-fixture-base/unit',
       exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
     },
   },

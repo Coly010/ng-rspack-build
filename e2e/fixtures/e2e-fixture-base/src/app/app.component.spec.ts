@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { WelcomeComponent } from './features/welcome.component';
 import { RouterModule } from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, NxWelcomeComponent, RouterModule.forRoot([])],
+      imports: [AppComponent, WelcomeComponent, RouterModule.forRoot([])],
     }).compileComponents();
   });
 
@@ -15,13 +15,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome rsbuild-csr-css'
+      'Welcome e2e-fixture-base'
     );
   });
 
-  it(`should have as title 'rsbuild-csr-css'`, () => {
+  it(`should have as title 'e2e-fixture-base'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('rsbuild-csr-css');
+    expect(app.menuItems).toHaveLength(1);
   });
 });
