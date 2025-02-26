@@ -31,6 +31,7 @@ jobs:
         uses: code-pushup/github-action@v0
         env:
           NX_NO_CLOUD: true
+          CP_API_KEY: ${{secrets.CP_API_KEY}}
           ACTIONS_STEP_DEBUG: true
         with:
           monorepo: nx
