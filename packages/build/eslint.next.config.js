@@ -22,6 +22,7 @@ module.exports = [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
           ignoredDependencies: [
+            'less-loader',
             'sass-loader',
             'sass-embedded',
             '@angular/core',

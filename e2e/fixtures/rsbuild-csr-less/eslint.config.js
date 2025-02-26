@@ -1,9 +1,16 @@
-const baseConfig = require('../../eslint.config');
-const playwright = require('../../eslint/src/lib/config/playwright.js');
+const baseConfig = require('../../../eslint.config');
 
 module.exports = [
   ...baseConfig,
-  ...playwright,
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
   {
     files: ['**/*.json'],
     rules: {
@@ -15,6 +22,7 @@ module.exports = [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
             '{projectRoot}/vitest.config.{js,ts,mjs,mts}',
           ],
+          ignoredDependencies: ['jsonc-eslint-parser'],
         },
       ],
     },

@@ -213,6 +213,9 @@ importers:
       '@rsbuild/core':
         specifier: ^1.1.12
         version: 1.2.8
+      '@rsbuild/plugin-less':
+        specifier: ^1.1.1
+        version: 1.1.1(@rsbuild/core@1.2.8)
       '@rsbuild/plugin-sass':
         specifier: ^1.1.2
         version: 1.2.1(@rsbuild/core@1.2.8)
@@ -294,6 +297,9 @@ importers:
       kill-port:
         specifier: ^2.0.1
         version: 2.0.1
+      less-loader:
+        specifier: ^12.2.0
+        version: 12.2.0(@rspack/core@1.2.3(@swc/helpers@0.5.15))(less@4.1.3)(webpack@5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       nx:
         specifier: 20.3.0
         version: 20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))
@@ -393,6 +399,28 @@ importers:
         specifier: 2.4.0
         version: 2.4.0
 
+  e2e/fixtures/rsbuild-csr-less:
+    dependencies:
+      '@angular/common':
+        specifier: 19.1.6
+        version: 19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
+      '@angular/core':
+        specifier: 19.1.6
+        version: 19.1.6(rxjs@7.8.1)(zone.js@0.15.0)
+      '@angular/platform-browser':
+        specifier: 19.1.6
+        version: 19.1.6(@angular/animations@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))
+      '@angular/router':
+        specifier: 19.1.6
+        version: 19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/animations@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
+      '@ng-rsbuild/plugin-angular':
+        specifier: workspace:*
+        version: link:../../../packages/rsbuild-plugin-angular
+    devDependencies:
+      jsonc-eslint-parser:
+        specifier: 2.4.0
+        version: 2.4.0
+
   e2e/fixtures/rsbuild-csr-scss:
     devDependencies:
       '@ng-rsbuild/plugin-angular':
@@ -434,6 +462,9 @@ importers:
       express:
         specifier: 4.21.1
         version: 4.21.1
+      less-loader:
+        specifier: ^12.2.0
+        version: 12.2.0(@rspack/core@1.2.3(@swc/helpers@0.5.15))(less@4.2.1)(webpack@5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       sass-embedded:
         specifier: ^1.79.3
         version: 1.85.0
@@ -518,6 +549,12 @@ importers:
       '@rsbuild/core':
         specifier: '>=1.0.5 <2.0.0'
         version: 1.2.8
+      '@rsbuild/plugin-less':
+        specifier: ^1.1.1
+        version: 1.1.1(@rsbuild/core@1.2.8)
+      '@rsbuild/plugin-sass':
+        specifier: ^1.1.2
+        version: 1.2.1(@rsbuild/core@1.2.8)
       express:
         specifier: 4.21.1
         version: 4.21.1
@@ -3394,6 +3431,11 @@ packages:
     resolution: {integrity: sha512-I5cPKnJxkc+K552x17s2BlSs2Ox8bauoWPpy8mPtW7xwT3h9pprPO6zsMPkj/TJhkGLmeJ1bcVxf6NcrP/jWSA==}
     engines: {node: '>=16.7.0'}
     hasBin: true
+
+  '@rsbuild/plugin-less@1.1.1':
+    resolution: {integrity: sha512-Gkp73c9p4CQs2dB4BVCmw/cJ6JpIaWbsKcmZqyr+tlsKqZvZn9aYU+Zx4qWSqPR8I5zatiV2Lh15ObL9CCnlXw==}
+    peerDependencies:
+      '@rsbuild/core': 1.x
 
   '@rsbuild/plugin-sass@1.2.1':
     resolution: {integrity: sha512-Z0VRXI4F8fm+SXfqwziImnYpwqGjw5naFGCzUJ2jUmr3nz0lvc5rl0cpsSotGU8xGKB+HXnN/Cew/7f2p5btMw==}
@@ -15203,6 +15245,12 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
+  '@rsbuild/plugin-less@1.1.1(@rsbuild/core@1.2.8)':
+    dependencies:
+      '@rsbuild/core': 1.2.8
+      deepmerge: 4.3.1
+      reduce-configs: 1.1.0
+
   '@rsbuild/plugin-sass@1.2.1(@rsbuild/core@1.2.8)':
     dependencies:
       '@rsbuild/core': 1.2.8
@@ -19778,12 +19826,26 @@ snapshots:
       less: 4.1.3
       webpack: 5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12)
 
+  less-loader@12.2.0(@rspack/core@1.2.3(@swc/helpers@0.5.15))(less@4.1.3)(webpack@5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12)):
+    dependencies:
+      less: 4.1.3
+    optionalDependencies:
+      '@rspack/core': 1.2.3(@swc/helpers@0.5.15)
+      webpack: 5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12)
+
   less-loader@12.2.0(@rspack/core@1.2.3(@swc/helpers@0.5.15))(less@4.2.1)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.2)):
     dependencies:
       less: 4.2.1
     optionalDependencies:
       '@rspack/core': 1.2.3(@swc/helpers@0.5.15)
       webpack: 5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.2)
+
+  less-loader@12.2.0(@rspack/core@1.2.3(@swc/helpers@0.5.15))(less@4.2.1)(webpack@5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12)):
+    dependencies:
+      less: 4.2.1
+    optionalDependencies:
+      '@rspack/core': 1.2.3(@swc/helpers@0.5.15)
+      webpack: 5.98.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12)
 
   less@4.1.3:
     dependencies:

@@ -2,12 +2,15 @@ import {
   defineConfig,
   type RsbuildConfig,
   mergeRsbuildConfig,
+  RsbuildPlugin,
 } from '@rsbuild/core';
 import { dirname } from 'path';
 import { PluginAngularOptions } from '../models/plugin-options';
 import { normalizeOptions } from '../models/normalize-options';
 import { pluginAngular } from '../plugin/plugin-angular';
 import { pluginHoistedJsTransformer } from '../plugin/plugin-hoisted-js-transformer';
+import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginLess } from '@rsbuild/plugin-less';
 
 export function createConfig(
   pluginOptions: Partial<PluginAngularOptions>,
@@ -24,12 +27,61 @@ export function createConfig(
   const isRunningDevServer = process.argv.at(2) === 'dev';
   const isProd = process.env.NODE_ENV === 'production';
 
+  const stylePlugins: RsbuildPlugin[] = [];
+
+  if (
+    normalizedOptions.inlineStylesExtension === 'scss' ||
+    normalizedOptions.inlineStylesExtension === 'sass'
+  ) {
+    if (
+      normalizedOptions.stylePreprocessorOptions?.includePaths ||
+      normalizedOptions.stylePreprocessorOptions?.sass
+    ) {
+      stylePlugins.push(
+        pluginSass({
+          sassLoaderOptions: {
+            sassOptions: {
+              includePaths:
+                normalizedOptions.stylePreprocessorOptions?.includePaths,
+              ...(normalizedOptions.stylePreprocessorOptions?.sass ?? {}),
+            },
+          },
+        })
+      );
+    } else {
+      stylePlugins.push(pluginSass());
+    }
+  } else if (normalizedOptions.inlineStylesExtension === 'less') {
+    if (normalizedOptions.stylePreprocessorOptions?.includePaths) {
+      stylePlugins.push(
+        pluginLess({
+          lessLoaderOptions: {
+            lessOptions: {
+              javascriptEnabled: true,
+              paths: normalizedOptions.stylePreprocessorOptions?.includePaths,
+            },
+          },
+        })
+      );
+    } else {
+      stylePlugins.push(
+        pluginLess({
+          lessLoaderOptions: {
+            lessOptions: {
+              javascriptEnabled: true,
+            },
+          },
+        })
+      );
+    }
+  }
+
   const rsbuildPluginAngularConfig = defineConfig({
     root: normalizedOptions.root,
     source: {
       tsconfigPath: normalizedOptions.tsconfigPath,
     },
-    plugins: [pluginHoistedJsTransformer(normalizedOptions)],
+    plugins: [pluginHoistedJsTransformer(normalizedOptions), ...stylePlugins],
     mode: isProd ? 'production' : 'development',
     dev: {
       ...(isRunningDevServer && normalizedOptions.hasServer

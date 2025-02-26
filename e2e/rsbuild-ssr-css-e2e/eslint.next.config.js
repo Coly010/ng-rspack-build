@@ -5,15 +5,6 @@ module.exports = [
   ...baseConfig,
   ...playwright,
   {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
-  {
     files: ['**/*'],
     rules: {},
   },
