@@ -77,7 +77,7 @@ _Legend:_
 | **Nx Integration**                            | ✅    | [@ng-rspack/nx](https://github.com/Coly010/ng-rspack-build/tree/main/packages/nx-plugin)                        | 🔘    | n/a                                                                           | 🔘    | n/a                                                                                                       | Already 3rd party ([`@nx/angular`](https://github.com/nrwl/nx/tree/master/packages/angular))                              |
 | **Migration from Webpack**                    | ✅    | -                                                                                                               | ⚠️    | -                                                                             | ⚠️    | -                                                                                                         | Rspack serves as a drop-in replacement for Webpack; Angular is transitioning to Esbuild                                     |
 
-- [1] For build speed comparison see [benchmarks]()
+- [1] For build speed comparison see [benchmarks](https://github.com/Coly010/ng-bundler-benchmark)
 
 ---
 
