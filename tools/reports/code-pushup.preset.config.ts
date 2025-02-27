@@ -1,5 +1,6 @@
 import { CoreConfig } from '@code-pushup/models';
 import eslintPlugin from '@code-pushup/eslint-plugin';
+import coveragePlugin from '@code-pushup/coverage-plugin';
 import jsPackagesPlugin from '@code-pushup/js-packages-plugin';
 import * as process from 'node:process';
 import { slugify } from '@code-pushup/utils';
@@ -95,3 +96,52 @@ export async function eslintConfig(projectName?: string): Promise<CoreConfig> {
     ],
   };
 }
+
+export const coverageCoreConfig = async (
+  projectName?: string
+): Promise<CoreConfig> => {
+  const name = projectName ?? process.env['NX_TASK_TARGET_PROJECT'];
+  if (!name) {
+    throw new Error('Project name is required');
+  }
+  const targetNames = ['unit-test', 'integration-test'];
+  const targetArgs = [
+    '-t',
+    ...targetNames,
+    '--coverage.enabled',
+    '--skipNxCache',
+  ];
+  return {
+    plugins: [
+      await coveragePlugin({
+        coverageToolCommand: {
+          command: 'npx',
+          args: [
+            'nx',
+            'run-many',
+            `--projects ${name} ${targetArgs.join(' ')}`,
+          ],
+        },
+        reports: targetNames.map(
+          (targetName) =>
+            `coverage/${name}/${targetName.replace('-test', '')}/lcov.info`
+        ),
+      }),
+    ],
+    categories: [
+      {
+        slug: 'code-coverage',
+        title: 'Code coverage',
+        description: 'Measures how much of your code is **covered by tests**.',
+        refs: [
+          {
+            type: 'group',
+            plugin: 'coverage',
+            slug: 'coverage',
+            weight: 1,
+          },
+        ],
+      },
+    ],
+  };
+};

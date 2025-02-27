@@ -47,6 +47,9 @@ importers:
       '@code-pushup/cli':
         specifier: ^0.63.0
         version: 0.63.0(@code-pushup/portal-client@0.11.0(encoding@0.1.13))
+      '@code-pushup/coverage-plugin':
+        specifier: ^0.64.0
+        version: 0.64.0(jhaovbxq6232vjby2onj6r55gu)
       '@code-pushup/eslint-plugin':
         specifier: ^0.63.0
         version: 0.63.0(@nx/devkit@20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))))(eslint@9.21.0(jiti@2.4.2))
@@ -1533,6 +1536,20 @@ packages:
       '@code-pushup/portal-client': ^0.9.0
     peerDependenciesMeta:
       '@code-pushup/portal-client':
+        optional: true
+
+  '@code-pushup/coverage-plugin@0.64.0':
+    resolution: {integrity: sha512-eTaxB3q2gJICpJSxNrzI0MRoyX/5h/E47tj/Mpkx/8hc5ByN19vWOZAFzvdPn+e8+boQjUBuiapClvt7grB4Ag==}
+    peerDependencies:
+      '@nx/devkit': '>=17.0.0'
+      '@nx/jest': '>=17.0.0'
+      '@nx/vite': '>=17.0.0'
+    peerDependenciesMeta:
+      '@nx/devkit':
+        optional: true
+      '@nx/jest':
+        optional: true
+      '@nx/vite':
         optional: true
 
   '@code-pushup/eslint-plugin@0.63.0':
@@ -7529,6 +7546,9 @@ packages:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
 
+  parse-lcov@1.0.4:
+    resolution: {integrity: sha512-jE72M66VFyZJ0KYKnmaV70U/Y6FZyPoBCtJ6we5rDIVpWFR/GEkdCSLJn/R3UHJWZ3e3Qf3jAm2AUrmkaso+wA==}
+
   parse-node-version@1.0.1:
     resolution: {integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==}
     engines: {node: '>= 0.10'}
@@ -11770,6 +11790,21 @@ snapshots:
       ansis: 3.16.0
     optionalDependencies:
       '@code-pushup/portal-client': 0.11.0(encoding@0.1.13)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@code-pushup/coverage-plugin@0.64.0(jhaovbxq6232vjby2onj6r55gu)':
+    dependencies:
+      '@code-pushup/models': 0.64.0
+      '@code-pushup/utils': 0.64.0
+      ansis: 3.16.0
+      parse-lcov: 1.0.4
+      yargs: 17.7.2
+      zod: 3.24.2
+    optionalDependencies:
+      '@nx/devkit': 20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      '@nx/jest': 20.3.0(@babel/traverse@7.26.9)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(ts-node@10.9.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(typescript@5.6.3))(typescript@5.6.3)(verdaccio@5.33.0(encoding@0.1.13)(typanion@3.14.0))
+      '@nx/vite': 20.3.0(@babel/traverse@7.26.9)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(verdaccio@5.33.0(encoding@0.1.13)(typanion@3.14.0))(vite@5.4.14(@types/node@18.16.9)(less@4.1.3)(sass-embedded@1.85.1)(sass@1.85.1)(stylus@0.64.0)(terser@5.37.0))(vitest@1.6.1(@types/node@18.16.9)(@vitest/ui@1.6.1)(less@4.1.3)(sass-embedded@1.85.1)(sass@1.85.1)(stylus@0.64.0)(terser@5.37.0))
     transitivePeerDependencies:
       - supports-color
 
@@ -19888,6 +19923,8 @@ snapshots:
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
+
+  parse-lcov@1.0.4: {}
 
   parse-node-version@1.0.1: {}
 

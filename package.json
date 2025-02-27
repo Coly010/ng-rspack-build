@@ -107,6 +107,7 @@
     "@angular/router": "19.1.6",
     "@angular/ssr": "19.1.6",
     "@code-pushup/cli": "^0.63.0",
+    "@code-pushup/coverage-plugin": "^0.64.0",
     "@code-pushup/eslint-plugin": "^0.63.0",
     "@code-pushup/js-packages-plugin": "^0.64.0",
     "@code-pushup/models": "^0.63.0",
