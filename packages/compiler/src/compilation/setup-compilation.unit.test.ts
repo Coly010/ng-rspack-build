@@ -96,9 +96,9 @@ describe('setupCompilation', () => {
   });
 
   it('should return correct compilation configuration', async () => {
-    expect(
-      await setupCompilation(rsBuildConfig, pluginAngularOptions)
-    ).toStrictEqual({
+    await expect(
+      setupCompilation(rsBuildConfig, pluginAngularOptions)
+    ).resolves.toStrictEqual({
       compilerOptions: {
         inlineStylesExtension: 'css',
         jit: false,
