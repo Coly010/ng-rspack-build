@@ -23,7 +23,8 @@ module.exports = [
       'sonarjs/no-nested-functions': 'off', // ❌ 1 error
       'sonarjs/no-unused-vars': 'off', // ❌ 1 error
       'sonarjs/x-powered-by': 'off', // ❌ 1 error
-      // ⚠️ Warnings: 8
+      // ⚠️ Warnings: 9
+      complexity: ['error', 25], // ⚠️ 1 warnings 🛠️
       '@typescript-eslint/consistent-type-definitions': 'off', // ⚠️ 3 warnings 🛠️
       'vitest/prefer-to-be': 'off', // ⚠️ 2 warnings 🛠️
       '@typescript-eslint/no-import-type-side-effects': 'off', // ⚠️ 1 warning 🛠️
