@@ -18,16 +18,20 @@ export const baseConfig: CoreConfig = {
     : {}),
 };
 
-export async function jsPackagesConfig(projectName?: string): Promise<CoreConfig> {
+export async function jsPackagesConfig(
+  projectName?: string
+): Promise<CoreConfig> {
   const name = projectName ?? process.env['NX_TASK_TARGET_PROJECT'];
   if (!name) {
     throw new Error('Project name is required');
   }
   return {
-    plugins: [await jsPackagesPlugin({
-    packageManager: 'pnpm',
-      packageJsonPaths:  [`packages/${name}/package.json`]
-    })],
+    plugins: [
+      await jsPackagesPlugin({
+        packageManager: 'pnpm',
+        packageJsonPaths: [`packages/${name}/package.json`],
+      }),
+    ],
     categories: [
       {
         slug: 'security',
@@ -57,7 +61,6 @@ export async function jsPackagesConfig(projectName?: string): Promise<CoreConfig
       },
     ],
   };
-
 }
 export async function eslintConfig(projectName?: string): Promise<CoreConfig> {
   const name = projectName ?? process.env['NX_TASK_TARGET_PROJECT'];
