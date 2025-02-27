@@ -13,6 +13,7 @@ module.exports = [
       '@typescript-eslint/no-unused-vars': 'off', // ❌ 3 errors
       // ⚠️ Warnings: 3
       'vitest/prefer-to-be': 'off', // ⚠️ 2 warnings 🛠️
+      complexity: ['error', 25], // ⚠️ 1 warnings 🛠️
       '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 2 warnings
       '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
     },
