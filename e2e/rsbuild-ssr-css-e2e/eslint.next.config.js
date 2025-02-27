@@ -1,16 +1,9 @@
 const baseConfig = require('../../eslint.config');
+const playwright = require('../../eslint/src/lib/config/playwright.js');
 
 module.exports = [
   ...baseConfig,
-  {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: __dirname,
-      },
-    },
-  },
+  ...playwright,
   {
     files: ['**/*'],
     rules: {},

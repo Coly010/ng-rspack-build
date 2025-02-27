@@ -4,7 +4,7 @@ import {
   beforeEach,
   describe,
   expect,
-  MockInstance,
+  type MockInstance,
   vi,
 } from 'vitest';
 import {
@@ -72,6 +72,7 @@ describe('setupCompilation', () => {
   >;
 
   beforeAll(async () => {
+    // @TODO remove await in spy setup
     readConfigurationSpy = vi
       .spyOn(await loadCompilerCli.loadCompilerCli(), 'readConfiguration')
       .mockReturnValue({

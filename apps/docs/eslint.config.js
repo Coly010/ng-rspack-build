@@ -9,8 +9,8 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 1
-      '@typescript-eslint/no-unused-vars': 'off', // ❌ 6 errors
+      // ⚠️ Warnings: 1
+      '@typescript-eslint/no-unused-vars': 'off', // ⚠️ 6 warnings
     },
   },
 ];

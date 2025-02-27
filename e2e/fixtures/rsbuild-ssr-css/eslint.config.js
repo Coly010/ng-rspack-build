@@ -9,8 +9,16 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
+      // ❌ Errors: 4
+      'import/no-unresolved': 'off', // ❌ 5 errors
+      'import/named': 'off', // ❌ 3 errors
+      '@angular-eslint/use-component-view-encapsulation': 'off', // ❌ 1 error
+      '@typescript-eslint/no-extraneous-class': 'off', // ❌ 1 error
       // ⚠️ Warnings: 1
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 1 warning
+      '@angular-eslint/template/prefer-self-closing-tags': 'off', // ⚠️ 2 warnings 🛠️
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off', // ⚠️ 2 warnings 🛠️
+      '@angular-eslint/component-max-inline-declarations': 'off', // ⚠️ 1 warnings 🛠️
+      'max-lines': 'off', // ⚠️ 1 warnings 🛠️
     },
   },
 ];
