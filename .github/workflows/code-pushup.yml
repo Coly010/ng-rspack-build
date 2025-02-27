@@ -28,7 +28,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       - name: Collect Code PushUp report
-        uses: code-pushup/github-action@v0
+        uses: code-pushup/github-action@0.6.0
         env:
           NX_NO_CLOUD: true
           CP_API_KEY: ${{ secrets.CP_API_KEY }}
