@@ -79,13 +79,6 @@
       }
     },
     {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint-next",
-        "configPath": ".eslint.next.config.js"
-      }
-    },
-    {
       "plugin": "@nx/vite/plugin",
       "options": {
         "testTargetName": "unit-test"
