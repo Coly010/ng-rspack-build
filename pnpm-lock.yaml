@@ -50,6 +50,9 @@ importers:
       '@code-pushup/eslint-plugin':
         specifier: ^0.63.0
         version: 0.63.0(@nx/devkit@20.3.0(nx@20.3.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))))(eslint@9.21.0(jiti@2.4.2))
+      '@code-pushup/js-packages-plugin':
+        specifier: ^0.64.0
+        version: 0.64.0
       '@code-pushup/models':
         specifier: ^0.63.0
         version: 0.63.0
@@ -1541,14 +1544,24 @@ packages:
       '@nx/devkit':
         optional: true
 
+  '@code-pushup/js-packages-plugin@0.64.0':
+    resolution: {integrity: sha512-0M0upnKvDWcbOcs77VKYYMVmFCB1cQ+b293WhWYtI4o1+cC/y7mdPI5AybiD3kCSuvcvaECOJkMIx3pgJiY9Jw==}
+
   '@code-pushup/models@0.63.0':
     resolution: {integrity: sha512-hVgxnBcKOMkMDf6k8cPy8e5EkGwAr9AEcneDYlR/tAbvSSHYBQAWfiKfjnxItBEjWfVMBwr3TQ6sUKJiaK17Gg==}
+
+  '@code-pushup/models@0.64.0':
+    resolution: {integrity: sha512-P0TdHNP0q7qqIXgPSlfYbbKrNkt3wEcFHULnFi9fMw3E2oyHLJ5p/4+ZvWilM4fNyoIzfes/FivMPh+HNi1jRQ==}
 
   '@code-pushup/portal-client@0.11.0':
     resolution: {integrity: sha512-alnbGgpZdm48QhAqj3nkJF1zfH3Yz2SNnNUdLb9Cup49MVSiVGOjTfLYW4nnDQoBiEd5BpYn4jjrGX9M3yRlbw==}
 
   '@code-pushup/utils@0.63.0':
     resolution: {integrity: sha512-U6VOkZWjOGmwg9wz6gcsmIk/4X7OPLSaKnvh3uLgDbaeVA/qMNR8IjjVo5tfeoqCZHqzHatSKDrI0jvHCzxlww==}
+    engines: {node: '>=17.0.0'}
+
+  '@code-pushup/utils@0.64.0':
+    resolution: {integrity: sha512-t0+Kek7cS+koB+1qH6eKwuaLVSoBU+HWnQLVkCRQtXw5xGvOdePqafnTCHiK+VoTnpBaFryCOz1N7+50FlDNnA==}
     engines: {node: '>=17.0.0'}
 
   '@colors/colors@1.5.0':
@@ -11772,7 +11785,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@code-pushup/js-packages-plugin@0.64.0':
+    dependencies:
+      '@code-pushup/models': 0.64.0
+      '@code-pushup/utils': 0.64.0
+      build-md: 0.4.2
+      semver: 7.7.1
+      yargs: 17.7.2
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@code-pushup/models@0.63.0':
+    dependencies:
+      vscode-material-icons: 0.1.1
+      zod: 3.24.2
+
+  '@code-pushup/models@0.64.0':
     dependencies:
       vscode-material-icons: 0.1.1
       zod: 3.24.2
@@ -11789,6 +11818,23 @@ snapshots:
   '@code-pushup/utils@0.63.0':
     dependencies:
       '@code-pushup/models': 0.63.0
+      '@isaacs/cliui': 8.0.2
+      '@poppinss/cliui': 6.4.2
+      ansis: 3.16.0
+      build-md: 0.4.2
+      bundle-require: 4.2.1(esbuild@0.19.12)
+      esbuild: 0.19.12
+      multi-progress-bars: 5.0.3
+      semver: 7.7.1
+      simple-git: 3.27.0
+      zod: 3.24.2
+      zod-validation-error: 3.4.0(zod@3.24.2)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@code-pushup/utils@0.64.0':
+    dependencies:
+      '@code-pushup/models': 0.64.0
       '@isaacs/cliui': 8.0.2
       '@poppinss/cliui': 6.4.2
       ansis: 3.16.0
@@ -13246,7 +13292,7 @@ snapshots:
 
   '@npmcli/fs@4.0.0':
     dependencies:
-      semver: 7.6.3
+      semver: 7.7.1
 
   '@npmcli/git@6.0.3':
     dependencies:
@@ -13256,7 +13302,7 @@ snapshots:
       npm-pick-manifest: 10.0.0
       proc-log: 5.0.0
       promise-retry: 2.0.1
-      semver: 7.6.3
+      semver: 7.7.1
       which: 5.0.0
 
   '@npmcli/installed-package-contents@3.0.0':
@@ -13273,7 +13319,7 @@ snapshots:
       hosted-git-info: 8.0.2
       json-parse-even-better-errors: 4.0.0
       proc-log: 5.0.0
-      semver: 7.6.3
+      semver: 7.7.1
       validate-npm-package-license: 3.0.4
 
   '@npmcli/promise-spawn@8.0.2':
@@ -18812,7 +18858,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.6.3
+      semver: 7.7.1
 
   jsprim@2.0.2:
     dependencies:
@@ -19443,7 +19489,7 @@ snapshots:
       make-fetch-happen: 14.0.3
       nopt: 8.1.0
       proc-log: 5.0.0
-      semver: 7.6.3
+      semver: 7.7.1
       tar: 7.4.3
       which: 5.0.0
     transitivePeerDependencies:
@@ -19477,7 +19523,7 @@ snapshots:
 
   npm-install-checks@7.1.1:
     dependencies:
-      semver: 7.6.3
+      semver: 7.7.1
 
   npm-normalize-package-bin@4.0.0: {}
 
