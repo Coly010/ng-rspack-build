@@ -3,6 +3,6 @@ import { mergeConfigs } from '@code-pushup/utils';
 import {
   baseConfig,
   eslintConfig,
-} from '../../tools/reports/code-pushup.preset.config';
+} from './tools/reports/code-pushup.preset.config';
 
 export default mergeConfigs(baseConfig as CoreConfig, await eslintConfig());

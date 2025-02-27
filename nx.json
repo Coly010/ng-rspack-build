@@ -46,6 +46,13 @@
         "max-warnings": 0
       }
     },
+    "code-pushup": {
+      "command": "code-pushup",
+      "options": {
+        "config": "{projectRoot}/code-pushup.config.ts",
+        "persist.outputDir": ".code-pushup/{projectName}"
+      }
+    },
     "integration-test": {
       "cache": true,
       "options": {
