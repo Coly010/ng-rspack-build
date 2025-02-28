@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index.ts';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/build/unit',
@@ -12,7 +13,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: '../../coverage/build/unit',
-      exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
+      exclude: [...EXCLUDED_FILES_TEST],
     },
     reporters: ['default'],
     passWithNoTests: true,

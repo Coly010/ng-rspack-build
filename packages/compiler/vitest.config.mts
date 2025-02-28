@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
+// eslint-disable-next-line @nx/dependency-chekc
+import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index.ts';
 
 export default defineConfig({
   root: __dirname,
@@ -21,7 +23,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: '../../coverage/compiler/unit',
-      exclude: ['mocks/**', '**/types.ts', '**/__snapshots__/**'],
+      exclude: [...EXCLUDED_FILES_TEST],
     },
   },
 });
