@@ -41,6 +41,9 @@
     },
     {
       "path": "./e2e/rsbuild-csr-less-e2e"
+    },
+    {
+      "path": "./testing/setup"
     }
   ]
 }

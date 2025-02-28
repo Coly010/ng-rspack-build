@@ -24,6 +24,9 @@
   ],
   "references": [
     {
+      "path": "../../testing/setup"
+    },
+    {
       "path": "../../testing/utils"
     },
     {

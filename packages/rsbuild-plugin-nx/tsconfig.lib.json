@@ -16,7 +16,11 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "src/**/*.json"],
-  "references": [],
+  "references": [
+    {
+      "path": "../../testing/setup/tsconfig.lib.json"
+    }
+  ],
   "exclude": [
     "vite.config.ts",
     "vite.config.mts",
