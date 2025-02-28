@@ -26,6 +26,9 @@ export function transformSupportedBrowsersToTargets(
   for (const browser of supportedBrowsers) {
     let [browserName, version] = browser.toLowerCase().split(' ');
 
+    if (version == null) {
+      throw new Error(`Invalid browser version in: ${browser}`);
+    }
     // browserslist uses the name `ios_saf` for iOS Safari whereas esbuild uses `ios`
     if (browserName === 'ios_saf') {
       browserName = 'ios';
