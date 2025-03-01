@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
-// eslint-disable-next-line @nx/dependency-chekc
 import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index.ts';
 
 export default defineConfig({
