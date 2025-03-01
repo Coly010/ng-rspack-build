@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
-import { EXCLUDED_FILES_TEST } from '@ng-rspack/testing-setup';
+import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index.ts';
 
 export default defineConfig({
   root: __dirname,
