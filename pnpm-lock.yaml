@@ -438,6 +438,9 @@ importers:
       '@ng-rspack/compiler':
         specifier: workspace:*
         version: link:../compiler
+      '@ng-rspack/testing-setup':
+        specifier: workspace:*
+        version: link:../../testing/setup
       '@rspack/core':
         specifier: '>=1.0.5 <2.0.0'
         version: 1.2.6(@swc/helpers@0.5.15)

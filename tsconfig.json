@@ -16,12 +16,6 @@
       "path": "./packages/rsbuild-plugin-nx"
     },
     {
-      "path": "./testing/utils"
-    },
-    {
-      "path": "./testing/vitest-setup"
-    },
-    {
       "path": "./packages/compiler"
     },
     {
@@ -44,6 +38,12 @@
     },
     {
       "path": "./testing/setup"
+    },
+    {
+      "path": "./testing/vitest-setup"
+    },
+    {
+      "path": "./testing/utils"
     }
   ]
 }

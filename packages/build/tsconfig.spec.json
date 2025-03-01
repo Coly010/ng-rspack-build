@@ -8,8 +8,19 @@
       "vite/client",
       "node",
       "vitest"
-    ]
+    ],
+    "paths": {
+      "@ng-rspack/testing-setup": ["../../testing/setup/index.ts"]
+    }
   },
+  "references": [
+    {
+      "path": "../../testing/setup/tsconfig.lib.json"
+    },
+    {
+      "path": "../../testing/utils/tsconfig.lib.json"
+    }
+  ],
   "include": [
     "vite.config.ts",
     "vitest.config.ts",

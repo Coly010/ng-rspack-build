@@ -1,5 +1,6 @@
 {
   "name": "@ng-rspack/testing-setup",
+  "type": "commonjs",
   "version": "0.0.1",
   "dependencies": {
     "vitest": "^1.3.1"
