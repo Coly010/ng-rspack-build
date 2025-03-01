@@ -50,7 +50,6 @@
     "sass-embedded": "^1.79.3",
     "tslib": "^2.3.0",
     "@ng-rspack/compiler": "workspace:*",
-    "@ng-rspack/testing-setup": "workspace:*",
     "webpack-merge": "^6.0.1",
     "ws": "^8.18.0",
     "express": "4.21.1"
