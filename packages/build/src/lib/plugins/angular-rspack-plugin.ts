@@ -1,5 +1,6 @@
 import {
   Compiler,
+  HtmlRspackPlugin,
   RspackOptionsNormalized,
   RspackPluginInstance,
 } from '@rspack/core';
@@ -16,6 +17,7 @@ import {
   DiagnosticModes,
 } from '@ng-rspack/compiler';
 import { dirname, normalize, resolve } from 'path';
+import fs_1 from 'fs';
 
 const PLUGIN_NAME = 'AngularRspackPlugin';
 type Awaited<T> = T extends Promise<infer U> ? U : T;
@@ -167,6 +169,23 @@ export class AngularRspackPlugin implements RspackPluginInstance {
         javascriptTransformer: this
           .#javascriptTransformer as unknown as JavaScriptTransformer,
         typescriptFileCache: this.#typescriptFileCache,
+      });
+    });
+
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
+      const htmlRspackPluginHooks =
+        HtmlRspackPlugin.getCompilationHooks(compilation);
+      htmlRspackPluginHooks.beforeEmit.tap(PLUGIN_NAME, (data) => {
+        const ngJsDispatchEvent = `<script type="text/javascript" id="ng-event-dispatch-contract">
+                ${fs_1.readFileSync(
+                  require.resolve(
+                    '@angular/core/event-dispatch-contract.min.js'
+                  ),
+                  'utf-8'
+                )}
+                </script>`;
+        data.html = data.html.replace('</body>', `${ngJsDispatchEvent}</body>`);
+        return data;
       });
     });
   }

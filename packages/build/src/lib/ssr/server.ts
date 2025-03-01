@@ -52,7 +52,6 @@ export function createServer(
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
       })
       .then((html) => {
-        html = html.replace('</head>', `${ngJsDispatchEvent}\n</head>`);
         res.send(html);
       })
       .catch((err) => next(err));
