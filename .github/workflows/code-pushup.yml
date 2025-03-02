@@ -1,0 +1,38 @@
+name: Code PushUp
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+jobs:
+  code-pushup:
+    runs-on: ubuntu-latest
+    name: Code PushUp
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Collect Code PushUp report
+        uses: code-pushup/github-action@v0.6.0
+        env:
+          NX_NO_CLOUD: true
+          CP_API_KEY: ${{ secrets.CP_API_KEY }}
+          ACTIONS_STEP_DEBUG: true
+        with:
+          monorepo: nx
+          retention: 14

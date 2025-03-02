@@ -52,6 +52,7 @@
     "projectType": "library",
     "name": "compiler",
     "targets": {
+      "code-pushup": {},
       "integration-test": {
         "configName": "vitest.integration.config.mts"
       },
