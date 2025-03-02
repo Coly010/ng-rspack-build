@@ -39,6 +39,7 @@ module.exports = tseslint.config(
       '**/*.mock.*',
       '**/.npmignore',
       '**/code-pushup.config.ts',
+      '**/vitest.config.*',
       '**/rsbuild.config.ts',
       '**/mocks/fixtures/**',
       '**/__snapshots__/**',
