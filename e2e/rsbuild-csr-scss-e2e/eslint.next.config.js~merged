@@ -1,4 +1,12 @@
+<<<<<<< HEAD
+const baseConfig = require('../../eslint.config');
+=======
+<<<<<<< HEAD:e2e/fixtures/rsbuild-csr-scss/eslint.next.config.js
 const baseConfig = require('../../../eslint.config');
+=======
+const baseConfig = require('../../eslint.config');
+>>>>>>> main:e2e/rsbuild-csr-scss-e2e/eslint.next.config.js
+>>>>>>> main
 
 module.exports = [
   ...baseConfig,
