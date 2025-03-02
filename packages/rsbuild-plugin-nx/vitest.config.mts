@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index.ts';
+import { EXCLUDED_FILES_TEST } from '@ng-rspack/testing-setup';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/rsbuild-plugin-nx/unit',

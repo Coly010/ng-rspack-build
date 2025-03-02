@@ -1,9 +1,8 @@
 import { defineConfig } from 'vitest/config';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { EXCLUDED_FILES_TEST } from '../../testing/setup/src/index';
+import { EXCLUDED_FILES_TEST } from '@ng-rspack/testing-setup';
 
 export default defineConfig({
-  cacheDir: '../../node_modules/.vite/build/unit',
+  cacheDir: '../../node_modules/.vite/ng-rspack-build/unit',
   root: __dirname,
   test: {
     watch: false,
