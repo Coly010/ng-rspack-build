@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import { nxE2EPreset } from '@nx/playwright/preset';
 
 import { workspaceRoot } from '@nx/devkit';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { getE2eAppProjectName } from '../../testing/utils/src/lib/e2e-setup';
 
 // For CI, you may want to set BASE_URL to the deployed application.

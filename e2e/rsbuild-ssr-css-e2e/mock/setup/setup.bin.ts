@@ -1,3 +1,4 @@
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   getE2eAppProjectName,
   setupE2eApp,
