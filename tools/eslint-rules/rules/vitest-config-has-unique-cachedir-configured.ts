@@ -1,13 +1,16 @@
 import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 import { isVitestConfigObject, visitObjectExpression } from '../utils/utils';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { getVitestCacheDirFolder } from '../utils/vitest';
+import { REPO_SOURCE_FILE_PATH } from '../utils/constants';
 
 export const RULE_NAME = 'vitest-config-has-unique-cachedir-configured';
 
 const seenCacheDirs = new Set<string>();
 
-export const rule = ESLintUtils.RuleCreator(() => __filename)({
+export const rule = ESLintUtils.RuleCreator(
+  () => `${REPO_SOURCE_FILE_PATH}/${relative(process.cwd(), __filename)}`
+)({
   name: RULE_NAME,
   meta: {
     type: 'problem',

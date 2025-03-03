@@ -1,6 +1,6 @@
 {
   "name": "@ng-rspack/build",
-  "version": "19.0.0-alpha.28",
+  "version": "19.0.0-alpha.29",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -64,6 +64,8 @@
     "name": "build",
     "sourceRoot": "packages/build/src",
     "projectType": "library",
-    "targets": {}
+    "targets": {
+      "code-pushup": {}
+    }
   }
 }

@@ -9,6 +9,7 @@ import { normalizeOptions } from '../models/normalize-options';
 import { dirname, normalize, resolve } from 'path';
 import { pluginAngularJit } from './plugin-angular-jit';
 import { ChildProcess, fork } from 'node:child_process';
+import { readFileSync } from 'fs';
 
 export const pluginAngular = (
   options: Partial<PluginAngularOptions> = {}
@@ -128,5 +129,21 @@ export const pluginAngular = (
         return data;
       }
     );
+
+    api.modifyHTMLTags(({ headTags, bodyTags }) => {
+      bodyTags.push({
+        tag: 'script',
+        attrs: {
+          id: 'ng-event-dispatch-contract',
+          type: 'text/javascript',
+        },
+        children: readFileSync(
+          require.resolve('@angular/core/event-dispatch-contract.min.js'),
+          'utf-8'
+        ),
+      });
+
+      return { headTags, bodyTags };
+    });
   },
 });

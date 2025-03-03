@@ -4,7 +4,9 @@ import {
   propHasObjectExpression,
   visitObjectExpression,
 } from '../utils/utils';
+import { REPO_SOURCE_FILE_PATH } from '../utils/constants';
 import { getReportsDirectory } from '../utils/vitest';
+import { relative } from 'node:path';
 import { RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 
 export const RULE_NAME = 'vitest-config-has-test-coverage-configured';
@@ -25,7 +27,9 @@ type Options = {
 }[];
 
 export const rule: ESLintUtils.RuleModule<messagesIds, Options> =
-  ESLintUtils.RuleCreator(() => __filename)({
+  ESLintUtils.RuleCreator(
+    () => `${REPO_SOURCE_FILE_PATH}/${relative(process.cwd(), __filename)}`
+  )({
     name: RULE_NAME,
     meta: {
       type: 'problem',

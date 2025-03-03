@@ -2,7 +2,7 @@
   "name": "@ng-rsbuild/plugin-nx",
   "private": false,
   "description": "Nx Plugin for building Angular applications with Rspack.",
-  "version": "19.0.0-alpha.28",
+  "version": "19.0.0-alpha.29",
   "author": "Colum Ferry",
   "license": "MIT",
   "bugs": {
@@ -42,6 +42,9 @@
   "nx": {
     "sourceRoot": "packages/rsbuild-plugin-nx/src",
     "projectType": "library",
-    "name": "rsbuild-plugin-nx"
+    "name": "rsbuild-plugin-nx",
+    "targets": {
+      "code-pushup": {}
+    }
   }
 }
