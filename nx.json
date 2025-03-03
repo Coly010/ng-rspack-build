@@ -33,6 +33,11 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
+    "pre-e2e": {
+      "cache": true,
+      "output": ["e2e/__test__/{projectName}-app"],
+      "command": "pnpx tsx e2e/{projectName}/mock/setup/setup.bin.ts"
+    },
     "e2e": {
       "dependsOn": ["pre-e2e"]
     },
