@@ -21,7 +21,7 @@
     "rsbuild",
     "compiler"
   ],
-  "version": "19.0.0-alpha.28",
+  "version": "19.0.0-alpha.29",
   "scripts": {
     "postinstall": "node ./patch/patch-angular-build.js"
   },

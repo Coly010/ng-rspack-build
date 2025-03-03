@@ -1,3 +1,19 @@
+## 19.0.0-alpha.29 (2025-03-03)
+
+### 🚀 Features
+
+- **build,rsbuild-plugin-angular:** add support for incremental hydration ([#124](https://github.com/Coly010/ng-rspack-build/pull/124))
+- **compiler:** add support for stylePreprocessorOptions ([#108](https://github.com/Coly010/ng-rspack-build/pull/108))
+
+### 🩹 Fixes
+
+- improve code quality ([#115](https://github.com/Coly010/ng-rspack-build/pull/115))
+
+### ❤️ Thank You
+
+- Colum Ferry @Coly010
+- Michael Hladky @BioPhoton
+
 ## 19.0.0-alpha.28 (2025-02-21)
 
 ### 🚀 Features
