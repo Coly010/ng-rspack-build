@@ -9,9 +9,22 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ⚠️ Warnings: 2
-      '@typescript-eslint/no-non-null-assertion': 'off', // ⚠️ 11 warnings
-      '@typescript-eslint/no-explicit-any': 'off', // ⚠️ 6 warnings
+      // ❌ Errors: 7
+      '@typescript-eslint/no-non-null-assertion': 'off', // ❌ 11 errors
+      'import/no-unresolved': 'off', // ❌ 9 errors
+      '@typescript-eslint/no-explicit-any': 'off', // ❌ 4 errors
+      '@typescript-eslint/no-require-imports': 'off', // ❌ 3 errors
+      'sonarjs/no-nested-conditional': 'off', // ❌ 2 errors
+      'import/no-commonjs': 'off', // ❌ 1 error
+      'sonarjs/function-return-type': 'off', // ❌ 1 error
+      // ⚠️ Warnings: 7
+      'sonarjs/prefer-immediate-return': 'off', // ⚠️ 1 warning 🛠️
+      '@typescript-eslint/no-magic-numbers': 'off', // ⚠️ 7 warnings
+      'max-lines-per-function': 'off', // ⚠️ 3 warnings
+      'import/no-named-as-default': 'off', // ⚠️ 2 warnings
+      '@typescript-eslint/no-shadow': 'off', // ⚠️ 1 warning
+      'sonarjs/no-collapsible-if': 'off', // ⚠️ 1 warning
+      'sonarjs/todo-tag': 'off', // ⚠️ 1 warning
     },
   },
 ];

@@ -9,8 +9,33 @@ module.exports = [
   {
     files: ['**/*'],
     rules: {
-      // ❌ Errors: 1
+      // ❌ Errors: 10
+      'import/no-unresolved': 'off', // ❌ 8 errors
+      '@typescript-eslint/prefer-literal-enum-member': 'off', // ❌ 4 errors
+      'no-param-reassign': 'off', // ❌ 3 errors
       'vitest/valid-describe-callback': 'off', // ❌ 2 errors
+      '@typescript-eslint/no-require-imports': 'off', // ❌ 1 error
+      eqeqeq: 'off', // ❌ 1 error
+      'import/no-commonjs': 'off', // ❌ 1 error
+      'sonarjs/no-commented-code': 'off', // ❌ 1 error
+      'sonarjs/no-nested-assignment': 'off', // ❌ 1 error
+      'sonarjs/updated-loop-counter': 'off', // ❌ 1 error
+      // ⚠️ Warnings: 15
+      '@typescript-eslint/consistent-type-definitions': 'off', // ⚠️ 8 warnings 🛠️
+      '@typescript-eslint/no-import-type-side-effects': 'off', // ⚠️ 4 warnings 🛠️
+      'import/no-duplicates': 'off', // ⚠️ 4 warnings 🛠️
+      'arrow-body-style': 'off', // ⚠️ 3 warnings 🛠️
+      '@typescript-eslint/array-type': 'off', // ⚠️ 1 warning 🛠️
+      curly: 'off', // ⚠️ 1 warning 🛠️
+      'prefer-template': 'off', // ⚠️ 1 warning 🛠️
+      'vitest/prefer-expect-resolves': 'off', // ⚠️ 1 warning 🛠️
+      'no-bitwise': 'off', // ⚠️ 5 warnings
+      '@typescript-eslint/no-shadow': 'off', // ⚠️ 2 warnings
+      'no-duplicate-imports': 'off', // ⚠️ 2 warnings
+      'sonarjs/todo-tag': 'off', // ⚠️ 2 warnings
+      '@typescript-eslint/max-params': 'off', // ⚠️ 1 warning
+      '@typescript-eslint/no-magic-numbers': 'off', // ⚠️ 1 warning
+      'max-lines-per-function': 'off', // ⚠️ 1 warning
     },
   },
 ];

@@ -1,7 +1,6 @@
 const nx = require('@nx/eslint-plugin');
 const tseslint = require('typescript-eslint');
 const vitest = require('./eslint/src/lib/config/vitest');
-const javascript = require('./eslint/src/lib/config/javascript');
 
 module.exports = tseslint.config(
   {
@@ -14,7 +13,6 @@ module.exports = tseslint.config(
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   ...vitest,
-  ...javascript,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
@@ -39,12 +37,21 @@ module.exports = tseslint.config(
       '**/*.d.ts.map',
       '**/dist',
       '**/*.mock.*',
+      '**/.npmignore',
       '**/code-pushup.config.ts',
+      '**/vitest.config.*',
       '**/rsbuild.config.ts',
       '**/mocks/fixtures/**',
       '**/__snapshots__/**',
       '**/dist',
       '**/*.md',
+      'Dockerfile',
+      // nx
+      '.swcrc',
+      // angular
+      '**/public',
+      // misc
+      '**/*.tsbuildinfo',
     ],
   }
 );

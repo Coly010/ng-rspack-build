@@ -6,6 +6,7 @@ import {
   rule as vitestConfigHasUniqueCachedirConfigured,
   RULE_NAME as vitestConfigHasUniqueCachedirConfiguredName,
 } from './rules/vitest-config-has-unique-cachedir-configured';
+
 /**
  * Import your custom workspace rules at the top of this file.
  *
@@ -20,7 +21,7 @@ import {
  * npx nx g @nx/eslint:workspace-rule {{ NEW_RULE_NAME }}
  * ```
  */
-
+// eslint-disable-next-lint @typescript-eslint/utils
 module.exports = {
   rules: {
     [vitestConfigHasTestCoverageConfiguredName]:

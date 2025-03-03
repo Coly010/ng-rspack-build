@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, MockInstance } from 'vitest';
+import { beforeEach, describe, expect, type MockInstance } from 'vitest';
 import { augmentHostWithCaching, augmentHostWithResources } from './augments';
 import ts, { createCompilerHost } from 'typescript';
 
