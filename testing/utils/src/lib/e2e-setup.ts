@@ -81,7 +81,8 @@ export async function setupE2eApp({
     }
   } catch (e) {
     throw new Error(
-      "Couldn't add e2eFixtures to targets folder. Error: " + (e as Error).message
+      "Couldn't add e2eFixtures to targets folder. Error: " +
+        (e as Error).message
     );
   }
 }

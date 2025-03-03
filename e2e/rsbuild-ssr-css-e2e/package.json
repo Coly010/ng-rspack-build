@@ -6,7 +6,9 @@
   "nx": {
     "name": "rsbuild-ssr-css-e2e",
     "sourceRoot": "e2e/rsbuild-ssr-css-e2e/src",
-    "implicitDependencies": ["e2e-fixture-base"],
+    "implicitDependencies": [
+      "e2e-fixture-base"
+    ],
     "targets": {
       "pre-e2e": {
         "command": "pnpx tsx e2e/rsbuild-ssr-css-e2e/mock/setup/setup.bin.ts"
