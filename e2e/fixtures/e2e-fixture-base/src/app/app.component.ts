@@ -6,6 +6,7 @@ import { appRoutes } from './app.routes';
   imports: [RouterModule],
   selector: 'app-root',
   template: `
+    <h1>Main headline</h1>
     <menu>
       @for (item of menuItems; track item.path) {
       <a routerLink="{{ item.path }}">{{ item.label }}</a>

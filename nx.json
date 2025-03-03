@@ -33,9 +33,12 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
+    "e2e": {
+      "dependsOn": ["pre-e2e"]
+    },
     "e2e-ci--**/*": {
       "parallelism": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "pre-e2e"]
     },
     "build": {
       "cache": true

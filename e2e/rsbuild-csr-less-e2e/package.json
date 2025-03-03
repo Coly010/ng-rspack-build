@@ -1,0 +1,16 @@
+{
+  "name": "rsbuild-csr-less-e2e",
+  "devDependencies": {
+    "@ng-rspack/testing-utils": "workspace:*"
+  },
+  "nx": {
+    "name": "rsbuild-csr-less-e2e",
+    "sourceRoot": "e2e/rsbuild-csr-less-e2e/src",
+    "implicitDependencies": ["e2e-fixture-base"],
+    "targets": {
+      "pre-e2e": {
+        "command": "pnpx tsx e2e/rsbuild-csr-less-e2e/mock/setup/setup.bin.ts"
+      }
+    }
+  }
+}

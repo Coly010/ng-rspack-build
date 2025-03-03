@@ -23,6 +23,9 @@
     "src/**/*.d.ts"
   ],
   "include": ["./mocks/**/*.ts"],
+  "paths": {
+    "@ng-rspack/testing-utils": ["../../testing/utils"]
+  },
   "references": [
     {
       "path": "../../testing/utils"

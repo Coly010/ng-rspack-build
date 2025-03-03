@@ -12,6 +12,6 @@ import { join } from 'node:path';
     fixtureProjectName,
     targetProjectName,
     targetDir: join(__dirname, `../../../__test__/${targetProjectName}`),
-    e2eFixtures: join(__dirname, `../../mock/fixtures/csr-css`),
+    e2eFixtures: join(__dirname, `../../mock/fixtures/ssr-css`),
   }).catch((e) => console.error(e));
 })();

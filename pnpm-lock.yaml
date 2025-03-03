@@ -359,7 +359,7 @@ importers:
         specifier: ^1.1.2
         version: 1.2.2(@rsbuild/core@1.2.12)
 
-  e2e/fixtures/rsbuild-csr-css:
+  e2e/fixtures/e2e-fixture-base:
     dependencies:
       '@angular/common':
         specifier: 19.1.6
@@ -380,40 +380,6 @@ importers:
       jsonc-eslint-parser:
         specifier: 2.4.0
         version: 2.4.0
-
-  e2e/fixtures/rsbuild-csr-less:
-    dependencies:
-      '@angular/common':
-        specifier: 19.1.6
-        version: 19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
-      '@angular/core':
-        specifier: 19.1.6
-        version: 19.1.6(rxjs@7.8.2)(zone.js@0.15.0)
-      '@angular/platform-browser':
-        specifier: 19.1.6
-        version: 19.1.6(@angular/animations@19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))
-      '@angular/router':
-        specifier: 19.1.6
-        version: 19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/animations@19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.1.6(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
-      '@ng-rsbuild/plugin-angular':
-        specifier: workspace:*
-        version: link:../../../packages/rsbuild-plugin-angular
-    devDependencies:
-      jsonc-eslint-parser:
-        specifier: 2.4.0
-        version: 2.4.0
-
-  e2e/fixtures/rsbuild-csr-scss:
-    devDependencies:
-      '@ng-rsbuild/plugin-angular':
-        specifier: workspace:*
-        version: link:../../../packages/rsbuild-plugin-angular
-
-  e2e/fixtures/rsbuild-ssr-css:
-    devDependencies:
-      '@ng-rsbuild/plugin-angular':
-        specifier: workspace:*
-        version: link:../../../packages/rsbuild-plugin-angular
 
   e2e/fixtures/rspack-csr-css:
     dependencies:
@@ -426,6 +392,30 @@ importers:
       '@ng-rspack/build':
         specifier: workspace:*
         version: link:../../../packages/build
+
+  e2e/rsbuild-csr-css-e2e:
+    devDependencies:
+      '@ng-rspack/testing-utils':
+        specifier: workspace:*
+        version: link:../../testing/utils
+
+  e2e/rsbuild-csr-less-e2e:
+    devDependencies:
+      '@ng-rspack/testing-utils':
+        specifier: workspace:*
+        version: link:../../testing/utils
+
+  e2e/rsbuild-csr-scss-e2e:
+    devDependencies:
+      '@ng-rspack/testing-utils':
+        specifier: workspace:*
+        version: link:../../testing/utils
+
+  e2e/rsbuild-ssr-css-e2e:
+    devDependencies:
+      '@ng-rspack/testing-utils':
+        specifier: workspace:*
+        version: link:../../testing/utils
 
   packages/build:
     dependencies:
@@ -13310,7 +13300,7 @@ snapshots:
 
   '@npmcli/fs@4.0.0':
     dependencies:
-      semver: 7.6.3
+      semver: 7.7.1
 
   '@npmcli/git@6.0.3':
     dependencies:
@@ -13320,7 +13310,7 @@ snapshots:
       npm-pick-manifest: 10.0.0
       proc-log: 5.0.0
       promise-retry: 2.0.1
-      semver: 7.6.3
+      semver: 7.7.1
       which: 5.0.0
 
   '@npmcli/installed-package-contents@3.0.0':
@@ -13337,7 +13327,7 @@ snapshots:
       hosted-git-info: 8.0.2
       json-parse-even-better-errors: 4.0.0
       proc-log: 5.0.0
-      semver: 7.6.3
+      semver: 7.7.1
       validate-npm-package-license: 3.0.4
 
   '@npmcli/promise-spawn@8.0.2':
@@ -19507,7 +19497,7 @@ snapshots:
       make-fetch-happen: 14.0.3
       nopt: 8.1.0
       proc-log: 5.0.0
-      semver: 7.6.3
+      semver: 7.7.1
       tar: 7.4.3
       which: 5.0.0
     transitivePeerDependencies:
@@ -19541,7 +19531,7 @@ snapshots:
 
   npm-install-checks@7.1.1:
     dependencies:
-      semver: 7.6.3
+      semver: 7.7.1
 
   npm-normalize-package-bin@4.0.0: {}
 

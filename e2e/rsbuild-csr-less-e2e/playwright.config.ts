@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import { nxE2EPreset } from '@nx/playwright/preset';
 
 import { workspaceRoot } from '@nx/devkit';
+import { getE2eAppProjectName } from '../../testing/utils/src/lib/e2e-setup';
 
 // For CI, you may want to set BASE_URL to the deployed application.
 const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
@@ -25,7 +26,7 @@ export default defineConfig({
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx run rsbuild-csr-less:dev',
+    command: `npx nx run ${getE2eAppProjectName()}:dev`,
     url: 'http://localhost:4200',
     reuseExistingServer: !process.env['CI'],
     cwd: workspaceRoot,
