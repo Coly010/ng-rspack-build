@@ -55,21 +55,17 @@ export function createConfig(
         {
           test: TS_ALL_EXT_REGEX,
           use: [
-            ...(normalizedOptions.useTsProjectReferences
-              ? [
-                  {
-                    loader: 'builtin:swc-loader',
-                    options: {
-                      jsc: {
-                        parser: {
-                          syntax: 'typescript',
-                        },
-                        target: 'es2022',
-                      },
-                    },
+            {
+              loader: 'builtin:swc-loader',
+              options: {
+                jsc: {
+                  parser: {
+                    syntax: 'typescript',
                   },
-                ]
-              : []),
+                  target: 'es2022',
+                },
+              },
+            },
             {
               loader: require.resolve(
                 '@ng-rspack/build/loaders/angular-loader'
