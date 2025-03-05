@@ -1,3 +1,9 @@
+---
+# THIS REPOSITORY HAS BEEN MOVED TO [NRWL/ANGULAR-RSPACK](HTTPS://GITHUB.COM/NRWL/ANGULAR-RSPACK). PLEASE USE THAT REPO FOR FURTHER UPDATES.
+---
+
+
+
 <div style="text-align: center; margin: 0 auto;">
 
 <img src="./rsbuild-plugin-angular.png" alt="Rsbuild Plugin Angular" />
