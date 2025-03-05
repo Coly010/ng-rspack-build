@@ -153,7 +153,7 @@ export const updateEsLintMigrationPlan = async ({
       await rename(eslintConfig, nextConfigPath);
       console.log(
         green(
-          `✔ Created create target config inc. all rules on: "${nextConfigPath}"`
+          `✔ Created create next config inc. all rules on: "${nextConfigPath}"`
         )
       );
     }
@@ -208,6 +208,7 @@ export const updateEsLintMigrationPlan = async ({
       console.log(green(`✔ No updates for target "${targetName}".`));
       // @TODO if there are no rules configured in the eslint config and next did not find any violations,
       // we should rename the next config no default naming
+      await rename(nextConfigPath, eslintConfig);
       return { status: 'valid', data: result };
     }
 
