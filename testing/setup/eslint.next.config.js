@@ -18,17 +18,9 @@ module.exports = [
         'error',
         {
           ignoredFiles: [
-            '{projectRoot}/eslint.config.{js,cjs,mjs}',
+            '{projectRoot}/eslint*.config.{js,cjs,mjs}',
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
             '{projectRoot}/vitest*.config.{js,ts,mjs,mts}',
-          ],
-          ignoredDependencies: [
-            'less-loader',
-            'sass-loader',
-            'sass-embedded',
-            '@angular/core',
-            'rxjs',
-            '@ng-rspack/build',
           ],
         },
       ],

@@ -12,7 +12,7 @@
   "typings": "./dist/index.d.ts",
   "private": true,
   "nx": {
-    "sourceRoot": "testing/utils/src",
+    "sourceRoot": "testing/vitest-setup/src",
     "projectType": "library",
     "name": "testing-vitest-setup"
   },

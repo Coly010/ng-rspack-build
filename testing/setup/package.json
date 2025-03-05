@@ -1,0 +1,19 @@
+{
+  "name": "@ng-rspack/testing-setup",
+  "type": "commonjs",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "vitest": "^1.3.1",
+    "vite-plugin-dts": "^4.5.0"
+  },
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.ts",
+  "private": true,
+  "nx": {
+    "sourceRoot": "testing/setup/src",
+    "projectType": "library",
+    "name": "testing-setup"
+  },
+  "module": "./src/index.mjs"
+}
