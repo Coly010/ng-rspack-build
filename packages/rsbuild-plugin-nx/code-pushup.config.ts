@@ -4,10 +4,12 @@ import {
   baseConfig,
   coverageCoreConfig,
   eslintConfig,
+  jsPackagesConfig,
 } from '../../tools/reports/code-pushup.preset.config';
 
 export default mergeConfigs(
   baseConfig as CoreConfig,
   await eslintConfig(),
+  await jsPackagesConfig(),
   await coverageCoreConfig()
 );

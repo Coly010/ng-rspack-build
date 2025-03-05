@@ -1,6 +1,7 @@
 import { CoreConfig } from '@code-pushup/models';
 import eslintPlugin from '@code-pushup/eslint-plugin';
 import coveragePlugin from '@code-pushup/coverage-plugin';
+import jsPackagesPlugin from '@code-pushup/js-packages-plugin';
 import * as process from 'node:process';
 import { slugify } from '@code-pushup/utils';
 
@@ -18,6 +19,50 @@ export const baseConfig: CoreConfig = {
     : {}),
 };
 
+export async function jsPackagesConfig(
+  projectName?: string
+): Promise<CoreConfig> {
+  const name = projectName ?? process.env['NX_TASK_TARGET_PROJECT'];
+  if (!name) {
+    throw new Error('Project name is required');
+  }
+  return {
+    plugins: [
+      await jsPackagesPlugin({
+        packageManager: 'pnpm',
+        packageJsonPaths: [`packages/${name}/package.json`],
+      }),
+    ],
+    categories: [
+      {
+        slug: 'security',
+        title: 'Security',
+        description: 'Finds known **vulnerabilities** in 3rd-party packages.',
+        refs: [
+          {
+            type: 'group',
+            plugin: 'js-packages',
+            slug: 'pnpm-audit',
+            weight: 1,
+          },
+        ],
+      },
+      {
+        slug: 'updates',
+        title: 'Updates',
+        description: 'Finds **outdated** 3rd-party packages.',
+        refs: [
+          {
+            type: 'group',
+            plugin: 'js-packages',
+            slug: 'pnpm-outdated',
+            weight: 1,
+          },
+        ],
+      },
+    ],
+  };
+}
 export async function eslintConfig(projectName?: string): Promise<CoreConfig> {
   const name = projectName ?? process.env['NX_TASK_TARGET_PROJECT'];
   if (!name) {
