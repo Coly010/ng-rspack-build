@@ -30,6 +30,9 @@
       "path": "../../packages/compiler"
     },
     {
+      "path": "../../testing/setup"
+    },
+    {
       "path": "../../packages/rsbuild-plugin-angular"
     },
     {
